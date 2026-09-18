@@ -1,0 +1,41 @@
+name: Weekly travel intelligence data refresh
+
+on:
+  schedule:
+    # Weekly, Tuesday 00:01 Cyprus time. Cyprus is UTC+3 (EEST) while
+    # daylight saving is in effect, so 00:01 Tuesday Cyprus = 21:01 Monday
+    # UTC. GitHub evaluates cron in UTC. Cyprus drops out of daylight
+    # saving in late October (to UTC+2/EET) — from then, 00:01 Cyprus
+    # time is 22:01 Monday UTC, so this line would need to become
+    # "1 22 * * 1" to stay at 00:01 local. It isn't auto-adjusted.
+    - cron: "1 21 * * 1"
+  workflow_dispatch: {} # lets you also trigger a run manually from the Actions tab
+
+permissions:
+  contents: write   # Claude needs to commit + push the updated data.json
+  id-token: write    # required for the Claude GitHub App's default authentication
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Configure git identity for Claude's commit
+        run: |
+          git config --global user.name "Forged Titanium Bot"
+          git config --global user.email "actions@users.noreply.github.com"
+
+      - uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: >
+            Follow the weekly data refresh procedure in CLAUDE.md exactly,
+            start to finish, including committing and pushing the updated
+            data.json yourself. This is an unattended scheduled run.
+          claude_args: |
+            --model claude-sonnet-5
+            --allowedTools "Bash,Read,Write,Edit,Glob,Grep,WebSearch,WebFetch"
+            --max-turns 60
