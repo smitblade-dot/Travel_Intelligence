@@ -23,19 +23,43 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Configure git identity for Claude's commit
+      - name: Configure git identity
         run: |
           git config --global user.name "Forged Titanium Bot"
           git config --global user.email "actions@users.noreply.github.com"
+
+      - name: Refresh oil & gas summary (deterministic — no AI, no dashboards pushed here)
+        run: python3 scripts/refresh_oilgas.py
 
       - uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           prompt: >
-            Follow the weekly data refresh procedure in CLAUDE.md exactly,
-            start to finish, including committing and pushing the updated
-            data.json yourself. This is an unattended scheduled run.
+            The oilGasSummary section of data.json has already been
+            refreshed by a separate, deterministic script that just ran —
+            do not touch it, and don't re-derive or second-guess it.
+            Follow the rest of the weekly data refresh procedure in
+            CLAUDE.md exactly, start to finish, including committing and
+            pushing the updated data.json yourself (your commit will
+            naturally include the oil & gas script's changes too, since
+            they're already sitting in the working tree — that's
+            expected). This is an unattended scheduled run.
           claude_args: |
             --model claude-sonnet-5
             --allowedTools "Bash,Read,Write,Edit,Glob,Grep,WebSearch,WebFetch"
             --max-turns 60
+
+      - name: Safety-net commit and push
+        # Belt-and-braces: if the step above didn't end up committing (a
+        # transient API error, an unexpected early stop, etc.), make sure
+        # this week's oil & gas refresh — and anything else already staged
+        # in the working tree — still reaches GitHub. Nothing to do here
+        # most weeks, since the Claude step above already pushes.
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            git add -A
+            git commit -m "Automated data refresh (safety-net commit) — $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            git push
+          else
+            echo "Nothing outstanding — the refresh step already committed and pushed."
+          fi
