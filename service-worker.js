@@ -5,14 +5,15 @@
    whatever was cached last). Bump CACHE_VERSION whenever index.html,
    manifest.json or the icons change so returning visitors pick up the
    update instead of a stale cached shell. */
-const CACHE_VERSION = 'ft-shell-v1';
+const CACHE_VERSION = 'ft-shell-v2';
 const SHELL_FILES = [
   './',
   './index.html',
   './manifest.json',
   './icons/icon-192.png',
   './icons/icon-512.png',
-  './icons/icon-maskable-512.png'
+  './icons/icon-maskable-512.png',
+  './assets/img/cyprus-aphrodite-sunset.jpg'
 ];
 
 self.addEventListener('install', (event) => {

@@ -83,12 +83,25 @@ single run would be slow, expensive, and mostly redundant. Instead:
 - Do not touch `locations` in a normal refresh — location hierarchies are
   a separate, deliberate exercise (only Iraq and Saudi Arabia have any at
   present).
+- **Do not touch `oilGasSummary` in a normal refresh.** It's a separate
+  snapshot (crude + gas/LNG production, infrastructure and disruption data
+  per country) pulled from the sibling `crude-flow-dashboard` and
+  `gas-lng-flow-dashboard` repos, keyed by lowercase ISO-2, each entry
+  carrying its own `source_generated` timestamp from those dashboards.
+  Refreshing it means re-pulling and re-summarising from those two repos —
+  a separate, deliberate exercise, not part of the weekly FCDO/Home Office
+  triage this file governs. 28 of the 29 countries have an entry (Jordan
+  doesn't — it's not an oil & gas producer/transit country in those
+  dashboards' data; that's expected, not a gap to fix).
+- **Do not touch `assets/img/*.jpg`** (the subtle background photography)
+  or the `<style>` block in a normal refresh — visual/branding changes are
+  a separate, deliberate exercise.
 
 ## `data.json` structure
 
 Top-level keys: `meta`, `countries`, `sources`, `records`, `locations`,
-`change_log`. Read the current file first to see the exact shape of each
-row before editing — don't guess field names.
+`change_log`, `oilGasSummary`. Read the current file first to see the
+exact shape of each row before editing — don't guess field names.
 
 - `countries`: keyed by lowercase ISO-2. Basic country facts (capital,
   currency, driving side, plug type, region, `oilGas` flag, etc.) plus a
@@ -108,6 +121,11 @@ row before editing — don't guess field names.
   `dateChecked`, `reviewDate`, `notes`.
 - `locations`: keyed by an id like `"loc-iq-zubair"`. Nested hierarchy via
   `parentLocationId`. Not touched by a normal refresh.
+- `oilGasSummary`: keyed by lowercase ISO-2. Each entry has an optional
+  `crude` and/or `gas` object (commodity, main export points, primary
+  route, production, infrastructure with a Red/Amber/Blue/Green
+  `worst_status`, active disruptions, and its own `source_generated`/
+  `source_title`). Not touched by a normal refresh (see above).
 - `change_log`: append one row for **every** substantive edit made this
   run (a corrected figure, an escalated/de-escalated warning, a changed
   requirement). Fields: `change_id` (increment from the highest existing,
