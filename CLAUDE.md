@@ -83,19 +83,58 @@ single run would be slow, expensive, and mostly redundant. Instead:
 - Do not touch `locations` in a normal refresh — location hierarchies are
   a separate, deliberate exercise (only Iraq and Saudi Arabia have any at
   present).
-- **Do not touch `oilGasSummary` in a normal refresh.** It's a separate
-  snapshot (crude + gas/LNG production, infrastructure and disruption data
-  per country) pulled from the sibling `crude-flow-dashboard` and
-  `gas-lng-flow-dashboard` repos, keyed by lowercase ISO-2, each entry
-  carrying its own `source_generated` timestamp from those dashboards.
-  Refreshing it means re-pulling and re-summarising from those two repos —
-  a separate, deliberate exercise, not part of the weekly FCDO/Home Office
-  triage this file governs. 28 of the 29 countries have an entry (Jordan
-  doesn't — it's not an oil & gas producer/transit country in those
-  dashboards' data; that's expected, not a gap to fix).
+- **Never touch `oilGasSummary` yourself.** By the time you (Claude) run
+  each week, a separate, deterministic step
+  (`python3 scripts/refresh_oilgas.py`, no AI involved) has already run
+  earlier in the same workflow and refreshed it in place from the sibling
+  `crude-flow-dashboard` and `gas-lng-flow-dashboard` repos — see "Oil &
+  gas summary — automated, not your job" below. Its changes will already
+  be sitting in your working tree; just leave that key alone and commit
+  normally (`git add data.json` picks up its changes along with yours,
+  which is expected and correct). Don't re-derive it, don't "fix" it,
+  don't revert it if it looks different from last week — that's the
+  refresh working as intended.
 - **Do not touch `assets/img/*.jpg`** (the subtle background photography)
   or the `<style>` block in a normal refresh — visual/branding changes are
   a separate, deliberate exercise.
+
+## Oil & gas summary — automated, not your job
+
+`oilGasSummary` (per-country crude + gas/LNG production, infrastructure
+and disruption data, surfaced on the site's "Oil & Gas" tab/section) is
+kept current fully automatically, without any AI step, so it never
+depends on you noticing it's stale or on anyone pushing a manual update:
+
+- `scripts/refresh_oilgas.py` fetches the current `data.json` straight
+  from the `crude-flow-dashboard` and `gas-lng-flow-dashboard` repos
+  (raw.githubusercontent.com — always their latest `main`), matches
+  countries via the hand-checked `oilgas-country-map.json` (iso2 ->
+  `{crude, gas}` name in each dashboard), rebuilds each country's
+  `crude`/`gas` summary object, and writes the result into this repo's
+  `data.json` under `oilGasSummary`. It's stdlib-only Python — no
+  dependencies to install on the runner.
+- The GitHub Actions workflow (`.github/workflows/weekly-data-refresh.yml`)
+  runs this script as its own step, every week, before the Claude step —
+  so it's on a schedule and requires nobody to run or push anything.
+  It's deliberately defensive: if either dashboard is unreachable, or the
+  data doesn't look sane (too few countries built), it logs a warning and
+  leaves the existing `oilGasSummary` untouched rather than risking a
+  bad or empty overwrite. It never fails the job.
+- A workflow-level "safety-net commit" step runs after the Claude step and
+  pushes anything still uncommitted — so even if the Claude step errors
+  out entirely, this week's oil & gas refresh (and anything else already
+  staged) still reaches GitHub.
+- If a new country is added to this repo's `countries` collection (a
+  separate, deliberate exercise per the conventions above) and it should
+  get oil & gas coverage too, add it to `oilgas-country-map.json` by hand
+  — check the exact spelling of its name in each dashboard's own
+  `data.json` `countries` list first; don't guess. Jordan (`jo`) has no
+  entry in that map on purpose — it isn't a producer/transit country in
+  either dashboard.
+- This mechanism is entirely separate from you and from the FCDO/Home
+  Office triage below. You never run `refresh_oilgas.py` yourself, never
+  edit `oilgas-country-map.json`, and never fetch the two dashboards —
+  just leave `oilGasSummary` exactly as you find it.
 
 ## `data.json` structure
 
@@ -125,7 +164,8 @@ exact shape of each row before editing — don't guess field names.
   `crude` and/or `gas` object (commodity, main export points, primary
   route, production, infrastructure with a Red/Amber/Blue/Green
   `worst_status`, active disruptions, and its own `source_generated`/
-  `source_title`). Not touched by a normal refresh (see above).
+  `source_title`). Refreshed automatically by `scripts/refresh_oilgas.py`
+  before you run — never touched by you (see above).
 - `change_log`: append one row for **every** substantive edit made this
   run (a corrected figure, an escalated/de-escalated warning, a changed
   requirement). Fields: `change_id` (increment from the highest existing,
@@ -137,7 +177,13 @@ exact shape of each row before editing — don't guess field names.
 
 ## What to do, step by step
 
-1. Read the current `data.json` in this repo.
+By the time you run, `scripts/refresh_oilgas.py` has already executed as
+an earlier step in this same workflow run and updated `oilGasSummary` in
+`data.json` directly (see above) — that's already done and is not part
+of what follows.
+
+1. Read the current `data.json` in this repo (this already reflects this
+   week's oil & gas refresh — leave that part as-is).
 2. Run the fast triage (above) to build a prioritised list of sources to
    re-check this run.
 3. For each prioritised source, WebFetch its `url` and compare against

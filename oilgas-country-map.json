@@ -1,0 +1,98 @@
+{
+  "ae": {
+    "crude": "UAE",
+    "gas": "UAE"
+  },
+  "ao": {
+    "crude": "Angola",
+    "gas": "Angola"
+  },
+  "au": {
+    "gas": "Australia"
+  },
+  "az": {
+    "gas": "Azerbaijan"
+  },
+  "br": {
+    "crude": "Brazil"
+  },
+  "ca": {
+    "gas": "Canada"
+  },
+  "cn": {
+    "gas": "China"
+  },
+  "dz": {
+    "crude": "Algeria",
+    "gas": "Algeria"
+  },
+  "eg": {
+    "crude": "Egypt",
+    "gas": "Egypt"
+  },
+  "es": {
+    "gas": "Spain"
+  },
+  "gb": {
+    "gas": "United Kingdom"
+  },
+  "id": {
+    "gas": "Indonesia"
+  },
+  "iq": {
+    "crude": "Iraq"
+  },
+  "ir": {
+    "crude": "Iran",
+    "gas": "Iran"
+  },
+  "jp": {
+    "gas": "Japan"
+  },
+  "kw": {
+    "crude": "Kuwait"
+  },
+  "kz": {
+    "crude": "Kazakhstan",
+    "gas": "Kazakhstan"
+  },
+  "ly": {
+    "crude": "Libya",
+    "gas": "Libya"
+  },
+  "mx": {
+    "gas": "Mexico"
+  },
+  "ng": {
+    "crude": "Nigeria",
+    "gas": "Nigeria"
+  },
+  "no": {
+    "gas": "Norway"
+  },
+  "om": {
+    "crude": "Oman",
+    "gas": "Oman"
+  },
+  "qa": {
+    "crude": "Qatar",
+    "gas": "Qatar"
+  },
+  "ru": {
+    "crude": "Russia",
+    "gas": "Russia"
+  },
+  "sa": {
+    "crude": "Saudi Arabia",
+    "gas": "Saudi Arabia"
+  },
+  "tm": {
+    "gas": "Turkmenistan"
+  },
+  "us": {
+    "gas": "United States"
+  },
+  "ve": {
+    "crude": "Venezuela"
+  }
+}

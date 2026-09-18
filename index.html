@@ -82,10 +82,42 @@
   [hidden]{ display:none !important; }
 
   /* ---------- home ---------- */
-  .home-hero{ margin-block-end:20px; max-width:60ch; }
-  .home-hero h1{ font-size:26px; margin-block-end:6px; }
-  .home-hero p{ color:var(--text-dim); font-size:14px; }
-  .home-stats{ display:flex; gap:18px; margin-block-start:10px; font-family:var(--mono); font-size:11px; color:var(--text-faint); letter-spacing:.03em; }
+  /* ---------- home hero banner (theme more prominent here, fading to the flat surface below) ---------- */
+  .home-hero-banner{ position:relative; margin-inline:-20px; padding:34px 20px 26px; margin-block-end:22px; overflow:hidden; }
+  .home-hero-banner::before{
+    content:""; position:absolute; inset:0; z-index:-1;
+    background:
+      linear-gradient(180deg, rgba(35,39,44,0.55) 0%, rgba(35,39,44,0.72) 55%, var(--bg) 100%),
+      url('./assets/img/cyprus-aphrodite-sunset.jpg') center 30%/cover no-repeat;
+  }
+  .home-hero{ max-width:64ch; }
+  .home-hero .kicker{ font-family:var(--mono); font-size:10.5px; letter-spacing:.22em; text-transform:uppercase; color:var(--accent); margin-block-end:10px; display:block; }
+  .home-hero h1{ font-size:30px; letter-spacing:-0.01em; margin-block-end:8px; }
+  .home-hero p{ color:var(--text-dim); font-size:14.5px; max-width:56ch; }
+  .home-stats{ display:flex; gap:18px; margin-block-start:14px; font-family:var(--mono); font-size:11px; color:var(--text-faint); letter-spacing:.03em; }
+
+  /* ---------- hotspots & hot topics (home) ---------- */
+  .hotspot-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:10px; }
+  .hotspot-card{ display:flex; flex-direction:column; gap:6px; text-align:left; background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--crit); border-radius:var(--radius); padding:13px 15px; cursor:pointer; color:var(--text); font-family:var(--sans); transition:border-color .12s, transform .12s; }
+  .hotspot-card:hover{ border-color:var(--accent); transform:translateY(-1px); }
+  .hotspot-card.sev-amber{ border-left-color:var(--warn); }
+  .hotspot-card .hs-top{ display:flex; align-items:center; gap:6px; }
+  .hotspot-card .hs-flag{ font-size:16px; line-height:1; }
+  .hotspot-card .hs-country{ font-weight:700; font-size:12.5px; flex:1; }
+  .hotspot-card .hs-badge{ font-family:var(--mono); font-size:9px; letter-spacing:.05em; text-transform:uppercase; padding:2px 6px; border-radius:3px; border:1px solid var(--crit); color:var(--crit); background:var(--crit-soft); }
+  .hotspot-card.sev-amber .hs-badge{ border-color:var(--warn); color:var(--warn); background:var(--warn-soft); }
+  .hotspot-card .hs-title{ font-family:var(--disp); font-weight:600; font-size:13.5px; line-height:1.3; }
+  .hotspot-card .hs-snippet{ font-size:12px; color:var(--text-dim); line-height:1.4; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .hotspot-card .hs-date{ font-family:var(--mono); font-size:10px; color:var(--text-faint); margin-block-start:2px; }
+  .hotspot-empty{ font-size:13px; color:var(--text-faint); padding:14px 0; }
+
+  /* ---------- continents (home) ---------- */
+  .continent-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:10px; }
+  .continent-card{ display:flex; flex-direction:column; gap:4px; text-align:left; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:16px 17px; cursor:pointer; color:var(--text); font-family:var(--sans); transition:border-color .12s, transform .12s; }
+  .continent-card:hover{ border-color:var(--accent); transform:translateY(-1px); }
+  .continent-card .co-name{ font-family:var(--disp); font-weight:700; font-size:15.5px; letter-spacing:.01em; }
+  .continent-card .co-count{ font-family:var(--mono); font-size:11px; color:var(--text-faint); }
+  .continent-card .co-og{ font-family:var(--mono); font-size:9.5px; letter-spacing:.04em; color:var(--accent); margin-block-start:4px; }
   .country-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:10px; }
   .country-card{ display:flex; flex-direction:column; gap:6px; align-items:flex-start; text-align:left; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:14px; cursor:pointer; transition:border-color .12s, transform .12s; font-family:var(--sans); color:var(--text); }
   .country-card:hover{ border-color:var(--accent); transform:translateY(-1px); }
@@ -187,9 +219,12 @@
   .ch-emergency .ee-item b{ color:var(--crit); }
 
   /* ---------- category nav ---------- */
-  .cat-nav{ display:flex; gap:6px; overflow-x:auto; padding-block:2px 14px; margin-block-end:4px; scrollbar-width:thin; }
-  .cat-nav button{ flex:none; font-family:var(--mono); font-size:11.5px; letter-spacing:.02em; white-space:nowrap; padding:7px 12px; border-radius:20px; border:1px solid var(--border); background:var(--surface); color:var(--text-dim); cursor:pointer; }
+  .cat-nav{ display:flex; flex-wrap:wrap; gap:7px; padding-block:2px 14px; margin-block-end:4px; }
+  .cat-nav button{ flex:none; display:inline-flex; align-items:center; gap:6px; font-family:var(--mono); font-size:11.5px; letter-spacing:.02em; white-space:nowrap; padding:7px 12px; border-radius:20px; border:1px solid var(--border); background:var(--surface); color:var(--text-dim); cursor:pointer; transition:border-color .12s, color .12s; }
+  .cat-nav button::before{ content:""; width:6px; height:6px; border-radius:50%; background:var(--border); flex:none; }
+  .cat-nav button:hover{ border-color:var(--accent); color:var(--text); }
   .cat-nav button.active{ background:var(--accent); border-color:var(--accent); color:var(--accent-ink); font-weight:600; }
+  .cat-nav button.active::before{ background:var(--accent-ink); }
   .cat-nav button .cnt{ opacity:.7; margin-inline-start:3px; }
 
   /* ---------- record cards ---------- */
@@ -792,8 +827,9 @@
     gas: 'https://smitblade-dot.github.io/gas-lng-flow-dashboard/'
   };
   var currentIso2 = null;
-  var currentView = 'HOME';             // 'HOME' | 'CATEGORY_BROWSE'
+  var currentView = 'HOME';             // 'HOME' | 'CATEGORY_BROWSE' | 'CONTINENT'
   var currentCategoryBrowse = null;     // category key when currentView is CATEGORY_BROWSE
+  var currentContinent = null;          // region name when currentView is CONTINENT
   var currentCategory = 'OVERVIEW';
   var currentRecords = [];     // records for currentIso2, refreshed from allRecords
   var currentSources = {};     // id -> source, for currentIso2, refreshed from allSources
@@ -874,6 +910,8 @@
       main.appendChild(renderCountry());
     } else if(currentView === 'CATEGORY_BROWSE'){
       main.appendChild(renderCategoryBrowse(currentCategoryBrowse));
+    } else if(currentView === 'CONTINENT'){
+      main.appendChild(renderContinent(currentContinent));
     } else {
       main.appendChild(renderHome());
     }
@@ -907,24 +945,131 @@
     return el('button', {class:'country-card', onclick:function(){ openCountry(c.iso2); }}, meta);
   }
 
+  // Recently-checked WARNING records (security escalations, changed entry
+  // rules, etc.) plus any oil & gas country currently at Red/Amber worst
+  // status — self-maintaining "what's live right now" feed. No separate
+  // "hot" flag to keep updated by hand: it's just recency + severity over
+  // data every weekly refresh already touches.
+  // Two different data sources refresh on different cadences, so a single
+  // flat sort-by-timestamp would let whichever one happened to run most
+  // recently crowd the whole feed out (oil & gas dashboards vs. weekly
+  // FCDO/Home Office checks). Instead: build each source's own ranked
+  // list, then interleave — guarantees a genuine cross-section every time,
+  // the way a briefing would actually mix "a security escalation" with
+  // "a pipeline outage" rather than showing six of one kind.
+  var CATEGORY_HOT_PRIORITY = {SECURITY:0, ENTRY:1, HEALTH:2, EMERGENCY:3};
+  function computeHotspots(limit){
+    limit = limit || 6;
+
+    var warnings = [];
+    allRecords.forEach(function(r){
+      if(r.status !== 'ACTIVE' || r.dataType !== 'WARNING') return;
+      var c = countries[r.countryId];
+      if(!c) return;
+      warnings.push({
+        date: r.dateChecked || '',
+        sev: 'red',
+        country: c,
+        badge: (CAT_MAP[r.category] && CAT_MAP[r.category].label) || r.category,
+        title: r.title,
+        snippet: r.content,
+        pri: CATEGORY_HOT_PRIORITY.hasOwnProperty(r.category) ? CATEGORY_HOT_PRIORITY[r.category] : 9,
+        go: function(){ openCountry(c.iso2, r.category); }
+      });
+    });
+    warnings.sort(function(a,b){ return a.pri - b.pri || (b.date||'').localeCompare(a.date||''); });
+
+    var ogHot = [];
+    Object.keys(oilGasSummary).forEach(function(iso2){
+      var c = countries[iso2];
+      if(!c) return;
+      var entry = oilGasSummary[iso2];
+      ['crude','gas'].forEach(function(kind){
+        var d = entry[kind];
+        if(!d) return;
+        var disruption = (d.active_disruptions||[])[0];
+        // Skip generically "elevated" Amber statuses with no actual named
+        // disruption — not newsworthy enough for the home page; Red always
+        // qualifies since that means something is materially shut down.
+        if(d.worst_status !== 'Red' && !(d.worst_status === 'Amber' && disruption)) return;
+        ogHot.push({
+          date: d.source_generated || '',
+          sev: d.worst_status === 'Red' ? 'red' : 'amber',
+          country: c,
+          badge: (kind === 'crude' ? 'Crude' : 'Gas & LNG') + ' — ' + d.worst_status,
+          title: disruption ? disruption.asset : (d.commodity || 'Oil & Gas'),
+          snippet: disruption ? disruption.summary : 'Elevated infrastructure status — see the Oil & Gas tab for detail.',
+          pri: d.worst_status === 'Red' ? 0 : 1,
+          go: function(){ openCountry(c.iso2, 'OIL_GAS'); }
+        });
+      });
+    });
+    ogHot.sort(function(a,b){ return a.pri - b.pri || (b.date||'').localeCompare(a.date||''); });
+
+    // Interleave the two ranked lists so the feed is always a mix.
+    var items = [];
+    var i = 0, j = 0;
+    while(items.length < limit && (i < warnings.length || j < ogHot.length)){
+      if(i < warnings.length){ items.push(warnings[i++]); if(items.length >= limit) break; }
+      if(j < ogHot.length){ items.push(ogHot[j++]); }
+    }
+    return items.slice(0, limit);
+  }
+
+  function hotspotCard(item){
+    return el('button', {class:'hotspot-card sev-' + item.sev, onclick:item.go}, [
+      el('div', {class:'hs-top'}, [
+        el('span', {class:'hs-flag'}, [flagEmoji(item.country.iso2)]),
+        el('span', {class:'hs-country'}, [item.country.name]),
+        el('span', {class:'hs-badge'}, [item.badge])
+      ]),
+      el('div', {class:'hs-title'}, [item.title || '']),
+      el('div', {class:'hs-snippet'}, [item.snippet || '']),
+      el('div', {class:'hs-date'}, [item.date ? 'Checked ' + fmtDate(item.date) : ''])
+    ]);
+  }
+
   function renderHome(){
     var wrap = el('section', {class:'home'});
-    wrap.appendChild(el('div', {class:'home-hero'}, [
-      el('h1', {}, ['Find a country']),
-      el('p', {}, ['Sourced travel intelligence — entry, security, health and emergency — for teams operating across borders.']),
-    ]));
 
+    var banner = el('div', {class:'home-hero-banner'});
+    banner.appendChild(el('div', {class:'home-hero'}, [
+      el('span', {class:'kicker'}, ['Forged Titanium']),
+      el('h1', {}, ['Country travel intelligence']),
+      el('p', {}, ['Sourced entry, security, health and emergency guidance for teams operating across borders — verified against government and specialist sources, refreshed weekly.']),
+    ]));
+    wrap.appendChild(banner);
+
+    // Hotspots & hot topics — the most current thing on the site.
+    var hotspots = computeHotspots(6);
+    wrap.appendChild(el('div', {class:'section-head'}, [
+      el('h2', {}, ['Hotspots & hot topics']),
+      el('span', {class:'section-hint'}, ['most recently checked warnings and disruptions'])
+    ]));
+    if(hotspots.length){
+      var hsGrid = el('div', {class:'hotspot-grid'});
+      hotspots.forEach(function(h){ hsGrid.appendChild(hotspotCard(h)); });
+      wrap.appendChild(hsGrid);
+    } else {
+      wrap.appendChild(el('div', {class:'hotspot-empty'}, ['Nothing flagged as urgent right now.']));
+    }
+
+    // Continents — the primary way into the country list.
     var term = searchTerm.trim().toLowerCase();
     var list = visibleCountryList();
-
-    // All countries, grouped by region — the primary way in.
     wrap.appendChild(el('div', {class:'section-head'}, [
-      el('h2', {}, ['All countries']),
-      el('span', {class:'section-hint'}, [list.length + ' of ' + Object.keys(countries).length])
+      el('h2', {}, ['Browse by continent']),
+      el('span', {class:'section-hint'}, [list.length + ' of ' + Object.keys(countries).length + ' countries'])
     ]));
-
-    if(list.length === 0){
-      wrap.appendChild(el('div', {class:'empty-home'}, [term ? 'No countries match "' + term + '".' : 'No countries in the database yet.']));
+    if(term){
+      // While searching, skip the continent step and show matches directly.
+      if(list.length === 0){
+        wrap.appendChild(el('div', {class:'empty-home'}, ['No countries match "' + term + '".']));
+      } else {
+        var searchGrid = el('div', {class:'country-grid'});
+        list.forEach(function(c){ searchGrid.appendChild(countryCard(c)); });
+        wrap.appendChild(searchGrid);
+      }
     } else {
       var byRegion = {};
       list.forEach(function(c){
@@ -932,85 +1077,84 @@
         (byRegion[r] = byRegion[r] || []).push(c);
       });
       var regionOrder = REGION_ORDER.concat(Object.keys(byRegion).filter(function(r){ return REGION_ORDER.indexOf(r) < 0; }).sort());
+      var contGrid = el('div', {class:'continent-grid'});
       regionOrder.forEach(function(regionName){
         var countriesInRegion = byRegion[regionName];
         if(!countriesInRegion || !countriesInRegion.length) return;
-        var block = el('div', {class:'region-block'});
-        block.appendChild(el('div', {class:'region-heading'}, [
-          el('h3', {}, [regionName]),
-          el('span', {class:'rh-count'}, [countriesInRegion.length + (countriesInRegion.length===1?' country':' countries')])
-        ]));
-        var grid = el('div', {class:'country-grid'});
-        countriesInRegion.forEach(function(c){ grid.appendChild(countryCard(c)); });
-        block.appendChild(grid);
-        wrap.appendChild(block);
+        var ogCount = countriesInRegion.filter(function(c){ return !!oilGasSummary[c.iso2]; }).length;
+        var card = el('button', {class:'continent-card', onclick:function(){ openContinent(regionName); }}, [
+          el('span', {class:'co-name'}, [regionName]),
+          el('span', {class:'co-count'}, [countriesInRegion.length + (countriesInRegion.length===1?' country':' countries')])
+        ]);
+        if(ogCount) card.appendChild(el('span', {class:'co-og'}, [ogCount + ' with oil & gas coverage']));
+        contGrid.appendChild(card);
       });
+      wrap.appendChild(contGrid);
     }
 
-    var stats = el('div', {class:'home-stats'}, [
-      el('span', {}, [Object.keys(countries).length + ' countries']),
-    ]);
-    wrap.appendChild(stats);
     if(dbState !== 'connected'){
       wrap.appendChild(el('div', {class:'offline-note'}, [
         el('span', {class:'dot'}),
         dbState === 'unavailable' ? 'Showing the last saved copy — could not load the latest data' : 'Loading the latest data…'
       ]));
     }
-
     var adminRow = el('div', {class:'admin-row'});
     if(isAdmin){
       adminRow.appendChild(el('button', {class:'btn btn-accent', onclick:openAddCountryModal}, ['+ Add country']));
     }
     wrap.appendChild(adminRow);
 
-    // Browse by category — cross-country view, independent of any single country.
+    // Browse by category — condensed, secondary.
     wrap.appendChild(el('div', {class:'section-head'}, [
       el('h2', {}, ['Browse by category']),
-      el('span', {class:'section-hint'}, ['click a category to compare coverage across countries'])
+      el('span', {class:'section-hint'}, ['compare coverage across every country'])
     ]));
     var catGrid = el('div', {class:'category-grid'});
     CATEGORIES.forEach(function(cat){
       var count = allRecords.filter(function(r){ return r.category === cat.key && r.status !== 'ARCHIVED'; }).length;
       catGrid.appendChild(el('button', {class:'category-card', onclick:function(){ openCategoryBrowse(cat.key); }}, [
         el('span', {class:'cc-label'}, [cat.label]),
-        el('span', {class:'cc-desc'}, [cat.desc || '']),
-        el('span', {class:'cc-count'}, [count + ' record' + (count===1?'':'s') + ' on file'])
+        el('span', {class:'cc-count'}, [count + ' record' + (count===1?'':'s')])
       ]));
     });
     wrap.appendChild(catGrid);
 
-    // Oil & Gas Intelligence — a category of its own, drawing on the two sibling dashboards.
+    // Oil & Gas Intelligence links — condensed.
     wrap.appendChild(el('div', {class:'section-head'}, [
       el('h2', {}, ['Oil & Gas Intelligence']),
-      el('span', {class:'section-hint'}, [Object.keys(oilGasSummary).length + ' countries with production, infrastructure or flow data'])
-    ]));
-    var ogWrap = el('div', {class:'oilgas-home'});
-    ogWrap.appendChild(el('p', {class:'oilgas-blurb'}, [
-      'Per-country crude and gas & LNG summaries — production, key infrastructure and active disruptions — drawn from Forged Titanium’s live flow-intelligence dashboards.'
+      el('span', {class:'section-hint'}, [Object.keys(oilGasSummary).length + ' countries covered'])
     ]));
     var ogLinks = el('div', {class:'oilgas-links'});
     ogLinks.appendChild(el('a', {class:'oilgas-link-card', href:OIL_GAS_LINKS.crude, target:'_blank', rel:'noopener'}, [
       el('span', {class:'ol-kicker'}, ['Live dashboard']),
       el('span', {class:'ol-title'}, ['Crude Flow Intelligence']),
-      el('span', {class:'ol-desc'}, ['Global crude oil flows, infrastructure and disruptions, updated continuously.']),
       el('span', {class:'ol-cta'}, ['Open dashboard →'])
     ]));
     ogLinks.appendChild(el('a', {class:'oilgas-link-card', href:OIL_GAS_LINKS.gas, target:'_blank', rel:'noopener'}, [
       el('span', {class:'ol-kicker'}, ['Live dashboard']),
       el('span', {class:'ol-title'}, ['Gas & LNG Flow Intelligence']),
-      el('span', {class:'ol-desc'}, ['Global gas and LNG flows, terminals and disruptions, updated continuously.']),
       el('span', {class:'ol-cta'}, ['Open dashboard →'])
     ]));
-    ogWrap.appendChild(ogLinks);
-    var ogCountryKeys = Object.keys(oilGasSummary).filter(function(k){ return countries[k]; }).sort(function(a,b){ return byName(countries[a], countries[b]); });
-    if(ogCountryKeys.length){
-      var ogGrid = el('div', {class:'country-grid'});
-      ogCountryKeys.forEach(function(k){ ogGrid.appendChild(countryCard(countries[k])); });
-      ogWrap.appendChild(ogGrid);
-    }
-    wrap.appendChild(ogWrap);
+    wrap.appendChild(ogLinks);
 
+    return wrap;
+  }
+
+  function renderContinent(regionName){
+    var wrap = el('section', {class:'category-browse'});
+    wrap.appendChild(el('button', {class:'back-btn', onclick:goHome}, ['← All continents']));
+    var list = visibleCountryList().filter(function(c){ return (c.region || 'Other') === regionName; });
+    wrap.appendChild(el('div', {class:'cb-head'}, [
+      el('h1', {}, [regionName]),
+      el('p', {}, [list.length + (list.length===1?' country':' countries') + ' on file.'])
+    ]));
+    if(list.length === 0){
+      wrap.appendChild(el('div', {class:'empty-home'}, ['No countries match.']));
+    } else {
+      var grid = el('div', {class:'country-grid'});
+      list.forEach(function(c){ grid.appendChild(countryCard(c)); });
+      wrap.appendChild(grid);
+    }
     return wrap;
   }
 
@@ -1428,11 +1572,17 @@
     currentIso2 = null;
     currentView = 'HOME';
     currentCategoryBrowse = null;
+    currentContinent = null;
     render();
   }
   function openCategoryBrowse(catKey){
     currentView = 'CATEGORY_BROWSE';
     currentCategoryBrowse = catKey;
+    render();
+  }
+  function openContinent(regionName){
+    currentView = 'CONTINENT';
+    currentContinent = regionName;
     render();
   }
 
