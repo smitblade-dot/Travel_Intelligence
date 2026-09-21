@@ -34,6 +34,7 @@ jobs:
       - uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          show_full_output: true
           prompt: >
             The oilGasSummary section of data.json has already been
             refreshed by a separate, deterministic script that just ran —
@@ -48,6 +49,27 @@ jobs:
             --model claude-sonnet-5
             --allowedTools "Bash,Read,Write,Edit,Glob,Grep,WebSearch,WebFetch"
             --max-turns 60
+
+      - name: Ensure meta.generated reflects this run
+        # Deterministic, not AI-driven: guarantees the "data as of" timestamp
+        # on the site always advances every week, regardless of whether the
+        # Claude step above judged any source content worth changing. The
+        # Claude step is still responsible for the substantive source checks
+        # and any real record edits; this step only guarantees the timestamp.
+        run: |
+          python3 - << 'PYEOF'
+          import re, datetime
+          path = "data.json"
+          with open(path, "r", encoding="utf-8") as f:
+              text = f.read()
+          now = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+          new_text, n = re.subn(r'"generated":"[^"]*"', f'"generated":"{now}"', text, count=1)
+          if n != 1:
+              raise SystemExit(f"Expected exactly one meta.generated field, found {n}")
+          with open(path, "w", encoding="utf-8") as f:
+              f.write(new_text)
+          print(f"meta.generated set to {now}")
+          PYEOF
 
       - name: Safety-net commit and push
         # Belt-and-braces: if the step above didn't end up committing (a
