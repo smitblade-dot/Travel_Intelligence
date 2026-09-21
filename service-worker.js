@@ -1,11 +1,10 @@
 /* Forged Titanium — service worker
-   Cache-first for the app shell (so it installs and opens offline),
-   network-first-with-cache-fallback for data.json (so an online visit
-   always tries to get the newest data, but an offline visit still shows
-   whatever was cached last). Bump CACHE_VERSION whenever index.html,
-   manifest.json or the icons change so returning visitors pick up the
-   update instead of a stale cached shell. */
-const CACHE_VERSION = 'ft-shell-v2';
+   Network-first for everything (index.html, data.json, the app shell),
+   with a cache fallback so a previously-visited page still opens offline.
+   A network-first strategy means a visitor with an existing service
+   worker always sees the latest deployed content without needing a
+   manual cache-version bump on every content change. */
+const CACHE_VERSION = 'ft-shell-v3';
 const SHELL_FILES = [
   './',
   './index.html',
@@ -34,26 +33,15 @@ self.addEventListener('fetch', (event) => {
   const req = event.request;
   if (req.method !== 'GET') return;
 
-  const url = new URL(req.url);
-  if (url.pathname.endsWith('/data.json')) {
-    // Network-first: always try to get the freshest data, fall back to
-    // whatever was cached from the last successful fetch when offline.
-    event.respondWith(
-      fetch(req).then((res) => {
-        const copy = res.clone();
-        caches.open(CACHE_VERSION).then((cache) => cache.put(req, copy));
-        return res;
-      }).catch(() => caches.match(req))
-    );
-    return;
-  }
-
-  // Cache-first for everything else (the app shell).
+  // Network-first for everything: always try to get the latest deployed
+  // version, and only fall back to the cache (ignoring the query string,
+  // so a plain request can still match a cache-busted entry and vice
+  // versa) when the network is unavailable, e.g. offline.
   event.respondWith(
-    caches.match(req).then((cached) => cached || fetch(req).then((res) => {
+    fetch(req).then((res) => {
       const copy = res.clone();
       caches.open(CACHE_VERSION).then((cache) => cache.put(req, copy));
       return res;
-    }).catch(() => cached))
+    }).catch(() => caches.match(req, { ignoreSearch: true }))
   );
 });
