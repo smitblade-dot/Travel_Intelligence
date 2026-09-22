@@ -2,6 +2,10 @@ name: TI Artifact Migration
 
 on:
   workflow_dispatch:
+  push:
+    branches: [ti-migration-2026-09]
+    paths:
+      - ".github/workflows/migrate-artifact-export.yml"
 
 permissions:
   contents: write
