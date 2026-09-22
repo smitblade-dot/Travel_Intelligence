@@ -27,6 +27,9 @@ jobs:
           FIRMS_MAP_KEY: ${{ secrets.FIRMS_MAP_KEY }}
         run: python3 scripts/collect_phase1_signals.py
 
+      - name: Resolve signals to TI review queue
+        run: python3 scripts/resolve_phase1_signals.py
+
       - name: Refresh oil & gas summary (deterministic)
         run: python3 scripts/refresh_oilgas.py
 
@@ -36,11 +39,12 @@ jobs:
           show_full_output: true
           prompt: >
             Run the normal Travel Intelligence daily refresh from CLAUDE.md.
-            A Phase 1 open-data signal snapshot has already been collected at
-            data/phase1_signals.json. Treat it as discovery/signal material
-            only: verify important claims against the actual primary source
-            before creating or updating any public TI event. Do not invent
-            events from a signal alone. Preserve source provenance and
+            Phase 1 open-data signals are in data/phase1_signals.json and the
+            deterministic country/category review queue is in
+            data/phase1_review_queue.json. Treat both as discovery/signal
+            material only: verify important claims against the actual primary
+            source before creating or updating any public TI event. Do not
+            invent events from signals alone. Preserve source provenance and
             uncertainty. The oilGasSummary section was refreshed separately;
             do not touch or re-derive it. Commit and push substantive TI
             changes yourself.
