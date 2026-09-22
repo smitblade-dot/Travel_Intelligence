@@ -1,0 +1,121 @@
+{
+  "schemaVersion": "1.0",
+  "generated": "2026-09-22T16:07:16.375891+00:00",
+  "purpose": "Conservative transport reference network. Not a live route database.",
+  "nodes": {
+    "airports": [],
+    "tiLocations": [
+      {
+        "id": "loc-iq-baghdad",
+        "name": "Baghdad",
+        "countryId": "iq",
+        "type": "CITY",
+        "parentLocationId": null
+      },
+      {
+        "id": "loc-iq-basra",
+        "name": "Basra",
+        "countryId": "iq",
+        "type": "CITY",
+        "parentLocationId": null
+      },
+      {
+        "id": "loc-iq-erbil",
+        "name": "Erbil",
+        "countryId": "iq",
+        "type": "CITY",
+        "parentLocationId": null
+      },
+      {
+        "id": "loc-iq-kurdistan",
+        "name": "Kurdistan Region",
+        "countryId": "iq",
+        "type": "REGION",
+        "parentLocationId": null
+      },
+      {
+        "id": "loc-iq-southern-oilfields",
+        "name": "Southern Oilfield Areas",
+        "countryId": "iq",
+        "type": "REMOTE_AREA",
+        "parentLocationId": null
+      },
+      {
+        "id": "loc-iq-zubair",
+        "name": "Zubair",
+        "countryId": "iq",
+        "type": "SITE",
+        "parentLocationId": "loc-iq-southern-oilfields"
+      },
+      {
+        "id": "loc-ly-sharara",
+        "name": "Sharara Oilfield",
+        "countryId": "ly",
+        "type": "SITE",
+        "parentLocationId": null
+      },
+      {
+        "id": "loc-ly-zawiya",
+        "name": "Zawiya",
+        "countryId": "ly",
+        "type": "CITY",
+        "parentLocationId": null
+      },
+      {
+        "id": "loc-sa-petroline-corridor",
+        "name": "East-West Pipeline Corridor (Petroline)",
+        "countryId": "sa",
+        "type": "REGION",
+        "parentLocationId": null
+      },
+      {
+        "id": "loc-sa-yemen-border",
+        "name": "Yemen Border",
+        "countryId": "sa",
+        "type": "BORDER",
+        "parentLocationId": null
+      },
+      {
+        "id": "loc-sd-port-sudan",
+        "name": "Port Sudan",
+        "countryId": "sd",
+        "type": "CITY",
+        "parentLocationId": null
+      },
+      {
+        "id": "loc-ss-export-corridor",
+        "name": "Export Pipeline Corridor (to Port Sudan)",
+        "countryId": "ss",
+        "type": "REMOTE_AREA",
+        "parentLocationId": null
+      },
+      {
+        "id": "loc-ye-aden",
+        "name": "Aden",
+        "countryId": "ye",
+        "type": "CITY",
+        "parentLocationId": null
+      },
+      {
+        "id": "loc-ye-redsea-coast",
+        "name": "Red Sea Coast (Mocha–Bab-el-Mandeb)",
+        "countryId": "ye",
+        "type": "REGION",
+        "parentLocationId": null
+      }
+    ]
+  },
+  "edges": {
+    "airportCountry": [],
+    "scheduledRoutes": [],
+    "roadRoutes": [],
+    "railRoutes": [],
+    "portRoutes": []
+  },
+  "rules": {
+    "airportReference": "OurAirports supplies reference identity/location only.",
+    "liveOperations": "Do not infer closure or operational status from reference data.",
+    "flightRoutes": "No route is created without an explicit route source.",
+    "aircraftSignals": "ADSB observations may support investigation but do not create routes."
+  }
+}

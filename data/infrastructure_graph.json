@@ -1,0 +1,535 @@
+{
+  "schemaVersion": "1.0",
+  "generated": "2026-09-22T16:07:12.414237+00:00",
+  "purpose": "Deterministic relationship graph for travel-impact resolution; not a source of truth.",
+  "nodes": [
+    {
+      "id": "loc-iq-baghdad",
+      "name": "Baghdad",
+      "countryId": "iq",
+      "types": [
+        "CITY"
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "loc-iq-basra",
+      "name": "Basra",
+      "countryId": "iq",
+      "types": [
+        "PORT",
+        "OILFIELD",
+        "CITY"
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "loc-iq-erbil",
+      "name": "Erbil",
+      "countryId": "iq",
+      "types": [
+        "CITY"
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "loc-iq-kurdistan",
+      "name": "Kurdistan Region",
+      "countryId": "iq",
+      "types": [
+        "OTHER"
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "loc-iq-southern-oilfields",
+      "name": "Southern Oilfield Areas",
+      "countryId": "iq",
+      "types": [
+        "OILFIELD"
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "loc-iq-zubair",
+      "name": "Zubair",
+      "countryId": "iq",
+      "types": [
+        "WORKSITE"
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "loc-ly-sharara",
+      "name": "Sharara Oilfield",
+      "countryId": "ly",
+      "types": [
+        "OILFIELD",
+        "WORKSITE"
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "loc-ly-zawiya",
+      "name": "Zawiya",
+      "countryId": "ly",
+      "types": [
+        "PORT",
+        "CITY",
+        "WORKSITE"
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "loc-sa-petroline-corridor",
+      "name": "East-West Pipeline Corridor (Petroline)",
+      "countryId": "sa",
+      "types": [
+        "PORT",
+        "PIPELINE",
+        "ROAD"
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "loc-sa-yemen-border",
+      "name": "Yemen Border",
+      "countryId": "sa",
+      "types": [
+        "BORDER"
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "loc-sd-port-sudan",
+      "name": "Port Sudan",
+      "countryId": "sd",
+      "types": [
+        "PORT",
+        "PIPELINE",
+        "CITY"
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "loc-ss-export-corridor",
+      "name": "Export Pipeline Corridor (to Port Sudan)",
+      "countryId": "ss",
+      "types": [
+        "PORT",
+        "PIPELINE",
+        "ROAD"
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "loc-ye-aden",
+      "name": "Aden",
+      "countryId": "ye",
+      "types": [
+        "CITY"
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "loc-ye-redsea-coast",
+      "name": "Red Sea Coast (Mocha–Bab-el-Mandeb)",
+      "countryId": "ye",
+      "types": [
+        "OTHER"
+      ],
+      "latitude": null,
+      "longitude": null
+    }
+  ],
+  "countryIndex": [
+    {
+      "countryId": "ae",
+      "countryName": "United Arab Emirates",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "ao",
+      "countryName": "Angola",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "ar",
+      "countryName": "Argentina",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "au",
+      "countryName": "Australia",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "az",
+      "countryName": "Azerbaijan",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "bh",
+      "countryName": "Bahrain",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "br",
+      "countryName": "Brazil",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "ca",
+      "countryName": "Canada",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "cg",
+      "countryName": "Congo (Republic)",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "ci",
+      "countryName": "Côte d'Ivoire",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "cm",
+      "countryName": "Cameroon",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "cn",
+      "countryName": "China",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "co",
+      "countryName": "Colombia",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "dz",
+      "countryName": "Algeria",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "ec",
+      "countryName": "Ecuador",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "eg",
+      "countryName": "Egypt",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "es",
+      "countryName": "Spain",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "ga",
+      "countryName": "Gabon",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "gb",
+      "countryName": "United Kingdom",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "gh",
+      "countryName": "Ghana",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "gq",
+      "countryName": "Equatorial Guinea",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "gy",
+      "countryName": "Guyana",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "id",
+      "countryName": "Indonesia",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "il",
+      "countryName": "Israel",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "iq",
+      "countryName": "Iraq",
+      "locationIds": [
+        "loc-iq-baghdad",
+        "loc-iq-basra",
+        "loc-iq-erbil",
+        "loc-iq-kurdistan",
+        "loc-iq-southern-oilfields",
+        "loc-iq-zubair"
+      ],
+      "infrastructureTypes": [
+        "CITY",
+        "OILFIELD",
+        "OTHER",
+        "PORT",
+        "WORKSITE"
+      ]
+    },
+    {
+      "countryId": "ir",
+      "countryName": "Iran",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "jo",
+      "countryName": "Jordan",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "jp",
+      "countryName": "Japan",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "kw",
+      "countryName": "Kuwait",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "kz",
+      "countryName": "Kazakhstan",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "ly",
+      "countryName": "Libya",
+      "locationIds": [
+        "loc-ly-sharara",
+        "loc-ly-zawiya"
+      ],
+      "infrastructureTypes": [
+        "CITY",
+        "OILFIELD",
+        "PORT",
+        "WORKSITE"
+      ]
+    },
+    {
+      "countryId": "mr",
+      "countryName": "Mauritania",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "mx",
+      "countryName": "Mexico",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "ng",
+      "countryName": "Nigeria",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "no",
+      "countryName": "Norway",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "om",
+      "countryName": "Oman",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "pe",
+      "countryName": "Peru",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "qa",
+      "countryName": "Qatar",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "ru",
+      "countryName": "Russia",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "sa",
+      "countryName": "Saudi Arabia",
+      "locationIds": [
+        "loc-sa-petroline-corridor",
+        "loc-sa-yemen-border"
+      ],
+      "infrastructureTypes": [
+        "BORDER",
+        "PIPELINE",
+        "PORT",
+        "ROAD"
+      ]
+    },
+    {
+      "countryId": "sd",
+      "countryName": "Sudan",
+      "locationIds": [
+        "loc-sd-port-sudan"
+      ],
+      "infrastructureTypes": [
+        "CITY",
+        "PIPELINE",
+        "PORT"
+      ]
+    },
+    {
+      "countryId": "sn",
+      "countryName": "Senegal",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "sr",
+      "countryName": "Suriname",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "ss",
+      "countryName": "South Sudan",
+      "locationIds": [
+        "loc-ss-export-corridor"
+      ],
+      "infrastructureTypes": [
+        "PIPELINE",
+        "PORT",
+        "ROAD"
+      ]
+    },
+    {
+      "countryId": "sy",
+      "countryName": "Syria",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "td",
+      "countryName": "Chad",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "tm",
+      "countryName": "Turkmenistan",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "tn",
+      "countryName": "Tunisia",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "ug",
+      "countryName": "Uganda",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "us",
+      "countryName": "United States",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "ve",
+      "countryName": "Venezuela",
+      "locationIds": [],
+      "infrastructureTypes": []
+    },
+    {
+      "countryId": "ye",
+      "countryName": "Yemen",
+      "locationIds": [
+        "loc-ye-aden",
+        "loc-ye-redsea-coast"
+      ],
+      "infrastructureTypes": [
+        "CITY",
+        "OTHER"
+      ]
+    }
+  ],
+  "eventInfrastructureLinks": [
+    {
+      "eventId": "rw-sy-2026-08-18-abualduhur",
+      "infrastructure": "AVIATION",
+      "locationId": null,
+      "countryId": "sy",
+      "status": "EXPLICIT_EVENT_RELATIONSHIP",
+      "resolvedLocation": false
+    }
+  ],
+  "resolutionRules": {
+    "explicitLocation": "Highest precision",
+    "explicitAffectedInfrastructure": "Use when supplied by verified event",
+    "countryFallback": "Candidate scope only; never means the asset is affected",
+    "unresolved": "Keep null rather than inventing a location"
+  }
+}

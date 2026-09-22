@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "1.0",
+  "generated": "2026-09-22T16:07:12.368662+00:00",
+  "purpose": "Review queue only; no item is a published TI event.",
+  "items": [
+    {
+      "id": "sig-ourairports-airports",
+      "sourceId": "ourairports-airports",
+      "discoveryType": "MACHINE_SIGNAL",
+      "countryIds": [],
+      "candidateCategories": [],
+      "claim": "Usable source response collected; specialist geographic/event resolver required.",
+      "status": "READY_FOR_RESOLUTION",
+      "generatedAt": "2026-09-22T16:07:12.368662+00:00"
+    },
+    {
+      "id": "sig-gdacs-alerts",
+      "sourceId": "gdacs-alerts",
+      "discoveryType": "MACHINE_SIGNAL",
+      "countryIds": [],
+      "candidateCategories": [],
+      "claim": "Usable source response collected; specialist geographic/event resolver required.",
+      "status": "READY_FOR_RESOLUTION",
+      "generatedAt": "2026-09-22T16:07:12.368662+00:00"
+    }
+  ]
+}
