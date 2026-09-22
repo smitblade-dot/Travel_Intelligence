@@ -1,0 +1,276 @@
+name: Migrate Artifact Current Intelligence
+
+on:
+  push:
+    branches:
+      - ti-migration-2026-09
+    paths:
+      - '.github/workflows/migrate-artifact-current-intel.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ti-migration-2026-09
+
+      - name: Merge exact Artifact Current Intelligence records
+        env:
+          PYTHONUNBUFFERED: "1"
+        run: |
+          python3 <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path("data.json")
+          data = json.loads(path.read_text(encoding="utf-8"))
+
+          sources = {
+            "gdacs-ecjrc": {
+              "accessMethod": "API",
+              "active": True,
+              "automationPermission": "PERMITTED",
+              "confidence": "MEDIUM",
+              "contentRights": "OPEN_LICENCE",
+              "countryId": None,
+              "dateChecked": "2026-09-22",
+              "geographicScope": "GLOBAL",
+              "notes": "Verified 22 Sep 2026 directly from GDACS's own documentation: API quickstart (data.gdacs.org/Documents/2025/GDACS_API_quickstart_v1.pdf), official Terms of Use (gdacs.org/documents/2025/GDACS_Terms_of_use_Mar_25.pdf, March 2025), and live API responses. No authentication required. Endpoints used: https://www.gdacs.org/gdacsapi/api/events/geteventlist/SEARCH (event search, verified live) and https://www.gdacs.org/gdacsapi/api/events/geteventdata (single-event detail — endpoint documented and confirmed reachable, but could not be reliably pinned to a specific requested eventid in this session; treat single-event detail retrieval as REQUIRES VERIFICATION for production use). Licensing is layered, not a single blanket statement: the RSS channel itself is tagged copyright:'public domain' by GDACS; the geteventdata API resource's own acknowledgements metadata states 'Copyright notice: European Union (CC BY 4.0), reuse is allowed, provided appropriate credit to GDACS is given'; other JRC-sourced resources (episode RSS, CAP, KML) state 'Copyright European Union. Syndication allowed, provided the source is acknowledged.' GDACS's own API quickstart doc: 'We only request to acknowledge the source as \\"Global Disaster Alert and Coordination System, GDACS\\".' Attribution is required in every variant seen; contentRights recorded as OPEN_LICENCE on that basis. The official Terms of Use (Mar 2025) explicitly states earthquake, tsunami and tropical-cyclone notifications are automatic/algorithmic, not reviewed by human experts before issuance, may contain uncertainties/errors, and 'should not be used for decision making without prior confirmation of their validity' — reflected in every derived SourceObservation's uncertainty field; TI never marks a GDACS-only event as CONFIRMED. Some GDACS API resources (e.g. certain polygon geometry endpoints) are marked accesslevel:Private in the feed's own metadata, so not all GDACS data is uniformly public — only geteventlist/SEARCH and geteventdata were verified accesslevel:Public and used here. jurisdiction intentionally left unset: GDACS is a supranational cooperation framework (UN + EC), not a single national jurisdiction. sourceQualityGrade intentionally left unset (not yet graded), consistent with the 121 FCDO sources and with GDACS's own stated need for further validation. independenceGroupId for every GDACS-derived observation is 'gdacs-ecjrc', deliberately distinct from any FCDO group.",
+              "organisation": "GDACS (cooperation framework: UN OCHA, UNOSAT, European Commission JRC and ECHO)",
+              "originalLanguage": "en",
+              "reviewFrequency": "Every 3 months, or on major alert",
+              "sourceName": "GDACS — Global Disaster Alert and Coordination System",
+              "sourceType": "INTERNATIONAL_ORGANISATION",
+              "url": "https://www.gdacs.org",
+              "id": "gdacs-ecjrc"
+            },
+            "reliefweb-ocha": {
+              "accessMethod": "API",
+              "active": True,
+              "automationPermission": "UNKNOWN",
+              "confidence": "MEDIUM",
+              "contentRights": "FACTUAL_SUMMARY_ONLY",
+              "countryId": None,
+              "dateChecked": "2026-09-22",
+              "geographicScope": "GLOBAL",
+              "notes": "Verified 22 Sep 2026 from ReliefWeb's own official documentation (apidoc.reliefweb.int, including its Swagger/OpenAPI spec) and its Terms of Service page. API v2, base https://api.reliefweb.int/v2, read-only, JSON responses; example endpoint https://api.reliefweb.int/v2/reports?appname=...&limit=2. Every call requires an 'appname' parameter, and per ReliefWeb's own documentation, 'From 1 November 2025, API users will require a pre-approved appname' obtained via a request form with roughly one business day's turnaround — TI does NOT currently hold a pre-approved appname, so automationPermission is recorded as UNKNOWN rather than PERMITTED (unlike GDACS, which explicitly permits anyone/any automated use with no onboarding). Quotas: max 1000 entries per call, max 1000 calls per day. Rights position is layered: the API's own Swagger spec states its metadata/schema is licensed CC0 (Creative Commons Zero – Public Domain); OCHA's general site footer states CC BY 4.0; but ReliefWeb's own Terms of Service explicitly warns that 'Reports, Jobs and Training data available via ReliefWeb API is contributed by information partners and may contain copyrighted material owned by the original source. You should respect the intellectual property rights of the original source.' contentRights is therefore recorded conservatively as FACTUAL_SUMMARY_ONLY — TI extracts only concise factual claims from ReliefWeb items, never reproduces original report text, regardless of the underlying licence of any individual report. ReliefWeb itself is a UN OCHA platform, but the great majority of its content is authored by information partners (UN agencies, NGOs, governments, and commercial analysis firms) rather than by OCHA directly — the originating organisation behind each individual report must be identified and used for independenceGroupId per-observation; ReliefWeb-as-platform is never itself treated as an independent corroborating source alongside its own contributors. A direct live test of the reports endpoint (https://api.reliefweb.int/v2/reports?appname=apidoc&limit=2) was blocked by bot detection in this session — genuinely unresolved; REQUIRES VERIFICATION for any future production integration, alongside the pre-approved-appname gap.",
+              "organisation": "UN OCHA (ReliefWeb is a UN OCHA humanitarian information platform; individual reports are authored by a wide range of information partners — UN agencies, NGOs, governments, commercial risk-analysis firms — not by OCHA itself unless OCHA is the named source of a specific report)",
+              "originalLanguage": "en",
+              "reviewFrequency": "Every 3 months, or on major development",
+              "sourceName": "ReliefWeb (UN OCHA)",
+              "sourceType": "INTERNATIONAL_ORGANISATION",
+              "url": "https://reliefweb.int",
+              "id": "reliefweb-ocha"
+            }
+          }
+
+          events = [
+            {
+              "affectedInfrastructure": [], "confidence": "MEDIUM", "conflictingInformation": False,
+              "countryId": "id", "countrySpecificLegalFlag": False, "eventDate": "2026-08-14",
+              "eventStatus": "REPORTED", "eventSubtype": "EARTHQUAKE", "eventTime": "21:58:21",
+              "eventType": "NATURAL_HAZARD", "gdacsEpisodeId": 1725109, "gdacsEventId": 1558059,
+              "gdacsEventType": "EQ", "geographicScope": "NATIONAL", "impactType": ["NONE_IDENTIFIED"],
+              "lastChecked": "2026-09-22", "lastUpdated": "2026-09-21T16:50:17Z",
+              "legalReviewStatus": "NOT_REQUIRED", "locationId": None, "personalDataPresent": False,
+              "publicationStatus": "PUBLISHED", "relatedEventIds": [], "sensitiveAllegation": False,
+              "sourceObservationIds": ["obs-gdacs-eq-1558059"], "specialCategoryDataPresent": False,
+              "statusHistory": [
+                {"date":"2026-09-22","note":"Initial TI record, single automated source (GDACS/NEIC).","status":"REPORTED"},
+                {"date":"2026-09-22","note":"QA pass: all fields verified against live GDACS SEARCH data, no discrepancy found. Published — complete, accurate, clearly attributed (\\"GDACS reports\\"), single-source status correctly reflected throughout (independentSourceCount 1, eventStatus REPORTED, not CONFIRMED).","status":"REPORTED"}
+              ],
+              "summary":"GDACS reports a Magnitude 7.7 earthquake in Indonesia at 14 Aug 2026 21:58:21 UTC, depth approximately 10km, assessed at Red alert level by GDACS (source: USGS NEIC via GDACS). Single-source, automated alert — not independently corroborated by TI.",
+              "supersededByEventId": None,
+              "title":"Magnitude 7.7 earthquake, Indonesia",
+              "uncertaintyNotes":"Single-source (GDACS/NEIC), automated algorithmic detection per GDACS's own Terms of Use — not reviewed by human experts before issuance and not independently corroborated by TI. Magnitude/depth/location are as reported by GDACS; on-the-ground impact (casualties, damage, travel disruption) is not known to TI.",
+              "id":"gdacs-eq-1558059"
+            },
+            {
+              "affectedInfrastructure": [], "confidence": "MEDIUM", "conflictingInformation": False,
+              "countryId": "cn", "countrySpecificLegalFlag": False, "eventDate": "2026-07-31",
+              "eventStatus": "REPORTED", "eventSubtype": "FLOOD", "eventTime": "01:00:00",
+              "eventType": "NATURAL_HAZARD", "gdacsEpisodeId": 19, "gdacsEventId": 1104081,
+              "gdacsEventType": "FL", "geographicScope": "NATIONAL", "impactType": ["NONE_IDENTIFIED"],
+              "lastChecked": "2026-09-22", "lastUpdated": "2026-09-21T06:38:17Z",
+              "legalReviewStatus": "NOT_REQUIRED", "locationId": None, "personalDataPresent": False,
+              "publicationStatus": "PUBLISHED", "relatedEventIds": [], "sensitiveAllegation": False,
+              "sourceObservationIds": ["obs-gdacs-fl-1104081"], "specialCategoryDataPresent": False,
+              "statusHistory": [
+                {"date":"2026-09-22","note":"Initial TI record, single automated/model source (GDACS/GLOFAS). GDACS marks this event iscurrent=true as of retrieval.","status":"REPORTED"},
+                {"date":"2026-09-22","note":"QA pass: all fields verified against live GDACS SEARCH data, no discrepancy found. No severity value fabricated where GDACS provides none. Published — complete, accurate, clearly attributed, single-source status correctly reflected.","status":"REPORTED"}
+              ],
+              "summary":"GDACS reports flooding in China, assessed at Orange alert level, ongoing as of GDACS's most recent update (source: GLOFAS via GDACS). Single-source, model-derived alert — not independently corroborated by TI.",
+              "supersededByEventId": None,
+              "title":"Flood, China (ongoing)",
+              "uncertaintyNotes":"Single-source (GDACS/GLOFAS hydrological model), not independently corroborated by TI. GDACS flags this event as still current (ongoing) as of 21 Sep 2026; extent and on-the-ground impact are not known to TI.",
+              "id":"gdacs-fl-1104081"
+            },
+            {
+              "affectedInfrastructure": [], "confidence": "MEDIUM", "conflictingInformation": False,
+              "countryId": "cn", "countrySpecificLegalFlag": False, "eventDate": "2026-08-18",
+              "eventStatus": "REPORTED", "eventSubtype": "TROPICAL_CYCLONE", "eventTime": "12:00:00",
+              "eventType": "NATURAL_HAZARD", "gdacsEpisodeId": 47, "gdacsEventId": 1001305,
+              "gdacsEventType": "TC", "geographicScope": "MULTI_COUNTRY", "impactType": ["NONE_IDENTIFIED"],
+              "lastChecked": "2026-09-22", "lastUpdated": "2026-09-04T10:04:35Z",
+              "legalReviewStatus": "NOT_REQUIRED", "locationId": None, "personalDataPresent": False,
+              "publicationStatus": "DRAFT", "relatedEventIds": [], "sensitiveAllegation": False,
+              "sourceObservationIds": ["obs-gdacs-tc-1001305"], "specialCategoryDataPresent": False,
+              "statusHistory": [
+                {"date":"2026-09-22","note":"Initial TI record, single automated source (GDACS/JTWC). Event already concluded per GDACS (todate 3 Sep 2026).","status":"REPORTED"},
+                {"date":"2026-09-22","note":"QA pass: corrected lastUpdated (was mistakenly copied from a neighbouring GDACS event, DOLPHIN-26; correct GDACS datemodified is 2026-09-04T10:04:35Z) and corrected countryId from 'jp' to 'cn' to match GDACS's own structured iso3 field (CHN), which is GDACS's own primary-country designation. REMAINS DRAFT: GDACS's own data is internally inconsistent for this event — its free-text country/htmldescription name Japan, China and the Northern Mariana Islands, but its structured affectedcountries[] array lists only Japan and China — flagged for human review before publication rather than resolved unilaterally.","status":"REPORTED"}
+              ],
+              "summary":"GDACS reports Tropical Cyclone SAUDEL-26 affecting Japan, China and the Northern Mariana Islands, 18 Aug–3 Sep 2026, assessed at Orange alert level (source: JTWC via GDACS). Single-source, automated alert — not independently corroborated by TI.",
+              "supersededByEventId": None,
+              "title":"Tropical Cyclone SAUDEL-26 (Japan, China, Northern Mariana Islands)",
+              "uncertaintyNotes":"Single-source (GDACS/JTWC), automated per GDACS's own Terms of Use (tropical-cyclone notifications are automatic/algorithmic, not human-reviewed before issuance). GDACS's own free-text country field names Japan, China and the Northern Mariana Islands, but its structured affectedcountries[] array lists only Japan and China — an inconsistency in GDACS's own data, not resolved by TI. countryId is set to China (cn) to match GDACS's own structured iso3 field; TI's countryId is one field, not an array, so this pilot deliberately does not expand the schema to hold all three named countries.",
+              "id":"gdacs-tc-1001305"
+            },
+            {
+              "affectedInfrastructure": [], "confidence": "MEDIUM", "conflictingInformation": False,
+              "countryId": "id", "countrySpecificLegalFlag": False, "eventDate": "2026-09-04",
+              "eventStatus": "REPORTED", "eventSubtype": "VOLCANIC_ERUPTION", "eventTime": "21:00:00",
+              "eventType": "NATURAL_HAZARD", "gdacsEpisodeId": 1, "gdacsEventId": 1000148,
+              "gdacsEventType": "VO", "geographicScope": "SITE", "impactType": ["NONE_IDENTIFIED"],
+              "lastChecked": "2026-09-22", "lastUpdated": "2026-09-21T16:50:16Z",
+              "legalReviewStatus": "NOT_REQUIRED", "locationId": None, "personalDataPresent": False,
+              "publicationStatus": "PUBLISHED", "relatedEventIds": [], "sensitiveAllegation": False,
+              "sourceObservationIds": ["obs-gdacs-vo-1000148"], "specialCategoryDataPresent": False,
+              "statusHistory": [
+                {"date":"2026-09-22","note":"Initial TI record, single automated source (GDACS/DARWIN VAAC).","status":"REPORTED"},
+                {"date":"2026-09-22","note":"QA pass: all fields verified against live GDACS SEARCH data, no discrepancy found. Published — complete, accurate, clearly attributed, single-source status correctly reflected.","status":"REPORTED"}
+              ],
+              "summary":"GDACS reports an eruption of Krakatau, Indonesia, on 4 Sep 2026 21:00 UTC, assessed at Orange alert level (source: DARWIN Volcanic Ash Advisory Centre via GDACS). Single-source, automated alert — not independently corroborated by TI.",
+              "supersededByEventId": None,
+              "title":"Eruption, Krakatau, Indonesia",
+              "uncertaintyNotes":"Single-source (GDACS/DARWIN VAAC), automated per GDACS's own Terms of Use. GDACS does not report a severity magnitude for this event (severitydata unit/value both empty in the source record) — ash extent and impact are not known to TI.",
+              "id":"gdacs-vo-1000148"
+            },
+            {
+              "affectedInfrastructure": [], "confidence": "MEDIUM", "conflictingInformation": False,
+              "countryId": "sd", "countrySpecificLegalFlag": False, "eventDate": "2026-02-06",
+              "eventStatus": "REPORTED", "eventSubtype": "ATTACK_ON_HUMANITARIAN_CONVOY", "eventTime": None,
+              "eventType": "SECURITY_INCIDENT", "geographicScope": "REGION", "impactType": ["NONE_IDENTIFIED"],
+              "lastChecked": "2026-09-22", "lastUpdated": "2026-02-06", "legalReviewStatus": "REVIEW_RECOMMENDED",
+              "locationId": None, "personalDataPresent": False, "publicationStatus": "DRAFT", "relatedEventIds": [],
+              "reliefwebReportUrl": "https://reliefweb.int/report/sudan/statement-united-nations-resident-and-humanitarian-coordinator-sudan-denise-brown-attack-aid-trucks-transporting-food-north-kordofan-6-february-2026",
+              "sensitiveAllegation": False, "sourceObservationIds": ["obs-rw-sd-2026-02-06-kordofan"],
+              "specialCategoryDataPresent": False,
+              "statusHistory": [
+                {"date":"2026-09-22","note":"Initial TI record. Single source: an official statement by the UN Resident/Humanitarian Coordinator for Sudan, published on ReliefWeb. DRAFT pending human review — first ReliefWeb-sourced pilot event, involves a fatality, deliberately not published automatically.","status":"REPORTED"}
+              ],
+              "summary":"The UN Resident/Humanitarian Coordinator for Sudan reported that WFP-contracted aid trucks travelling from Kosti towards El Obeid, North Kordofan, were struck in a drone attack on 6 February 2026, killing at least one person, injuring others, and destroying food assistance cargo. The same statement noted a separate drone strike near a WFP facility in Yabus, Blue Nile State, earlier that week, in which a staff member was injured. Reported by ReliefWeb (UN OCHA) — not independently corroborated by TI.",
+              "supersededByEventId": None,
+              "title":"Attack on WFP-contracted aid trucks, North Kordofan, Sudan",
+              "uncertaintyNotes":"Single ReliefWeb-sourced observation (an official UN statement) — not independently corroborated by TI within this pilot's scope. The UN statement itself does not name a perpetrator; TI's extracted claim does not attribute responsibility beyond what the source states. No exact TI location matches (this occurred inland, on the Kosti–El Obeid road, not at the existing Port Sudan corridor location already flagged in TI) — locationId deliberately left null rather than misattributed. Involves a fatality; legalReviewStatus set to REVIEW_RECOMMENDED rather than NOT_REQUIRED on that basis.",
+              "id":"rw-sd-2026-02-06-kordofan"
+            },
+            {
+              "affectedInfrastructure": ["AVIATION"], "confidence": "MEDIUM", "conflictingInformation": False,
+              "countryId": "sy", "countrySpecificLegalFlag": False, "eventDate": "2026-08-18",
+              "eventStatus": "REPORTED", "eventSubtype": "AIRSTRIKE", "eventTime": None,
+              "eventType": "SECURITY_INCIDENT", "geographicScope": "SITE", "impactType": ["AVIATION"],
+              "lastChecked": "2026-09-22", "lastUpdated": "2026-08-24",
+              "legalReviewStatus": "REVIEW_RECOMMENDED", "locationId": None, "personalDataPresent": False,
+              "publicationStatus": "DRAFT", "relatedEventIds": [],
+              "reliefwebReportUrl": "https://reliefweb.int/attachments/e65efa45-51ce-4e52-8709-dd7beb9f3ccb/Syria%20Weekly%20SITREP%2C%2014-20%20August%202026%2C%20SARI%20Global.pdf",
+              "sensitiveAllegation": False, "sourceObservationIds": ["obs-rw-sy-2026-08-18-abualduhur"],
+              "specialCategoryDataPresent": False,
+              "statusHistory": [
+                {"date":"2026-09-22","note":"Initial TI record. Single source: SARI Global's Syria Weekly SITREP, distributed via ReliefWeb. DRAFT pending human review — second ReliefWeb-sourced pilot event, from a commercial analysis firm rather than an official government/UN statement.","status":"REPORTED"}
+              ],
+              "summary":"SARI Global's Syria Weekly SITREP (covering 14–20 August 2026), distributed via ReliefWeb, reports Israeli airstrikes on the Abu al-Duhur airbase in rural Idlib, Syria, on 18 August 2026. No casualties were reported; the airfield sustained material damage. Reported by ReliefWeb (source: SARI Global) — not independently corroborated by TI within this pilot's scope, though other, non-ReliefWeb reporting of the same strike exists and was deliberately not ingested here.",
+              "supersededByEventId": None,
+              "title":"Israeli airstrikes on Abu al-Duhur airbase, Idlib, Syria",
+              "uncertaintyNotes":"Single ReliefWeb-sourced observation. The originating author is SARI Global, a commercial security-risk consultancy — genuinely distinct from ReliefWeb-as-platform and from the UN/OCHA family used for the Sudan pilot event; independenceGroupId reflects this. Wire-service and official-government reporting of the same strike exists outside ReliefWeb but was deliberately not ingested in this pilot (scope: ReliefWeb only) — independentSourceCount remains 1 by design, not because no other reporting exists.",
+              "unmappedCountries":["Northern Mariana Islands is unrelated; not applicable here — no multi-country ambiguity for this event"],
+              "id":"rw-sy-2026-08-18-abualduhur"
+            }
+          ]
+
+          observations = [
+            {"dateChecked":"2026-09-22","eventId":"gdacs-eq-1558059","extractedClaim":"GDACS (source: USGS NEIC) reports a Magnitude 7.7 earthquake in Indonesia at 14 Aug 2026 21:58:21 UTC, depth approximately 10km, assessed by GDACS at Red alert level (alert score 3).","independenceGroupId":"gdacs-ecjrc","legalReviewStatus":"NOT_REQUIRED","notes":"Retrieved via GDACS geteventlist/SEARCH API (https://www.gdacs.org/gdacsapi/api/events/geteventlist/SEARCH), 22 Sep 2026. Pilot observation — GDACS source-integration test.","observationStatus":"AUTOMATED_AGGREGATION","originalLanguage":"en","originalTitle":"Earthquake in Indonesia","publicationDate":"2026-08-14T21:58:21","recordId":None,"rightsStatus":"OPEN_LICENCE","sourceId":"gdacs-ecjrc","sourceUrl":"https://www.gdacs.org/report.aspx?eventid=1558059&episodeid=1725109&eventtype=EQ","translated":False,"translationMethod":"NONE","uncertainty":"GDACS Terms of Use (Mar 2025): earthquake notifications are automatic, produced by algorithms, and not reviewed by human experts before issuance; may be subject to uncertainties and errors; should not be used for decision-making without prior confirmation of validity.","id":"obs-gdacs-eq-1558059"},
+            {"dateChecked":"2026-09-22","eventId":"gdacs-fl-1104081","extractedClaim":"GDACS (source: GLOFAS) reports flooding in China from 31 Jul 2026, assessed by GDACS at Orange alert level (overall alert score 2); GDACS marks the event as still current as of its most recent update (21 Sep 2026).","independenceGroupId":"gdacs-ecjrc","legalReviewStatus":"NOT_REQUIRED","notes":"Retrieved via GDACS geteventlist/SEARCH API, 22 Sep 2026. Pilot observation — GDACS source-integration test.","observationStatus":"AUTOMATED_AGGREGATION","originalLanguage":"en","originalTitle":"Flood in China","publicationDate":"2026-07-31T01:00:00","recordId":None,"rightsStatus":"OPEN_LICENCE","sourceId":"gdacs-ecjrc","sourceUrl":"https://www.gdacs.org/report.aspx?eventid=1104081&episodeid=19&eventtype=FL","translated":False,"translationMethod":"NONE","uncertainty":"GDACS-listed source is GLOFAS, a hydrological forecasting model. GDACS's Terms of Use note that GDACS products generally are model-based, may require further validation, and are not a substitute for national disaster-management authorities' own information.","id":"obs-gdacs-fl-1104081"},
+            {"dateChecked":"2026-09-22","eventId":"gdacs-tc-1001305","extractedClaim":"GDACS (source: JTWC) reports Tropical Cyclone SAUDEL-26 affecting Japan, China and the Northern Mariana Islands from 18 Aug 2026 to 3 Sep 2026, assessed by GDACS at Orange alert level (overall alert score 2; peak reported wind speed approximately 213 km/h, Tropical Storm category per GDACS severity text).","independenceGroupId":"gdacs-ecjrc","legalReviewStatus":"NOT_REQUIRED","notes":"Retrieved via GDACS geteventlist/SEARCH API, 22 Sep 2026. Pilot observation — GDACS source-integration test.","observationStatus":"AUTOMATED_AGGREGATION","originalLanguage":"en","originalTitle":"Tropical Cyclone SAUDEL-26","publicationDate":"2026-08-18T12:00:00","recordId":None,"rightsStatus":"OPEN_LICENCE","sourceId":"gdacs-ecjrc","sourceUrl":"https://www.gdacs.org/report.aspx?eventid=1001305&episodeid=47&eventtype=TC","translated":False,"translationMethod":"NONE","uncertainty":"GDACS Terms of Use (Mar 2025): tropical cyclone notifications are automatic, produced by algorithms, and not reviewed by human experts before issuance.","id":"obs-gdacs-tc-1001305"},
+            {"dateChecked":"2026-09-22","eventId":"gdacs-vo-1000148","extractedClaim":"GDACS (source: DARWIN Volcanic Ash Advisory Centre) reports an eruption of Krakatau, Indonesia, at 4 Sep 2026 21:00 UTC, assessed by GDACS at Orange alert level (alert score 2). GDACS records no severity magnitude for this event.","independenceGroupId":"gdacs-ecjrc","legalReviewStatus":"NOT_REQUIRED","notes":"Retrieved via GDACS geteventlist/SEARCH API, 22 Sep 2026. Pilot observation — GDACS source-integration test.","observationStatus":"AUTOMATED_AGGREGATION","originalLanguage":"en","originalTitle":"Eruption  Krakatau","publicationDate":"2026-09-04T21:00:00","recordId":None,"rightsStatus":"OPEN_LICENCE","sourceId":"gdacs-ecjrc","sourceUrl":"https://www.gdacs.org/report.aspx?eventid=1000148&episodeid=1&eventtype=VO","translated":False,"translationMethod":"NONE","uncertainty":"GDACS Terms of Use (Mar 2025): GDACS products are model/algorithm-based and may require further validation before use in decision-making; volcanic ash advisories draw on VAAC monitoring data, not GDACS human review.","id":"obs-gdacs-vo-1000148"},
+            {"dateChecked":"2026-09-22","eventId":"rw-sd-2026-02-06-kordofan","extractedClaim":"The UN Resident/Humanitarian Coordinator for Sudan, Denise Brown, stated that WFP-contracted trucks travelling from Kosti to deliver food assistance near El Obeid, North Kordofan, were struck in a drone attack on 6 February 2026, killing at least one person, injuring several more, and destroying the food cargo when the trucks caught fire. The statement also referenced an earlier drone strike that week near a WFP facility in Yabus, Blue Nile State, injuring a staff member.","independenceGroupId":"un-ocha-rchc-sudan","legalReviewStatus":"REVIEW_RECOMMENDED","notes":"Publishing organisation (ReliefWeb/OCHA) and authoring organisation (UN RC/HC Sudan) are part of the same UN institutional family — recorded under one independenceGroupId, not treated as two independent sources. Retrieved via web search of reliefweb.int, 22 Sep 2026. Pilot observation — ReliefWeb source-integration test.","observationStatus":"DIRECT_OFFICIAL","originalLanguage":"en","originalTitle":"Sudan: Attack On Aid Trucks Transporting Food in North Kordofan","publicationDate":"2026-02-06","recordId":None,"rightsStatus":"FACTUAL_SUMMARY_ONLY","sourceId":"reliefweb-ocha","sourceUrl":"https://reliefweb.int/report/sudan/statement-united-nations-resident-and-humanitarian-coordinator-sudan-denise-brown-attack-aid-trucks-transporting-food-north-kordofan-6-february-2026","translated":False,"translationMethod":"NONE","uncertainty":"ReliefWeb's own Terms of Service note that partner-contributed content may carry the original source's copyright; only a factual summary is extracted here, not the original text. This is a single, official, direct-source statement, but it is the only source used in this pilot — TI has not independently corroborated it, and does not attribute responsibility for the attack beyond what the UN statement itself states.","id":"obs-rw-sd-2026-02-06-kordofan"},
+            {"dateChecked":"2026-09-22","eventId":"rw-sy-2026-08-18-abualduhur","extractedClaim":"SARI Global's Syria Weekly SITREP (14–20 August 2026), distributed via ReliefWeb, reports Israeli airstrikes on the Abu al-Duhur airbase in rural Idlib, Syria, on 18 August 2026, with no casualties reported and material damage to the airfield.","independenceGroupId":"sari-global","legalReviewStatus":"REVIEW_RECOMMENDED","notes":"SARI Global is the originating author; ReliefWeb is only the distribution platform here and performed no independent verification of its own — independenceGroupId is keyed to SARI Global, not to ReliefWeb/OCHA, and is deliberately distinct from the Sudan pilot event's un-ocha-rchc-sudan group. Retrieved via web search (ecoi.net's indexing of the reliefweb.int attachment), 22 Sep 2026. Pilot observation — ReliefWeb source-integration test.","observationStatus":"PRIMARY_REPORTING","originalLanguage":"en","originalTitle":"The Abu al-Duhur Strike and the Turkiye-Israel Competition Over Post-Assad Syria (Syria Weekly SITREP, 14-20 August 2026)","publicationDate":"2026-08-24","recordId":None,"rightsStatus":"FACTUAL_SUMMARY_ONLY","sourceId":"reliefweb-ocha","sourceUrl":"https://reliefweb.int/attachments/e65efa45-51ce-4e52-8709-dd7beb9f3ccb/Syria%20Weekly%20SITREP%2C%2014-20%20August%202026%2C%20SARI%20Global.pdf","translated":False,"translationMethod":"NONE","uncertainty":"A commercial risk-consultancy's own weekly analysis, not an official government or UN statement; ReliefWeb's Terms of Service note that partner-contributed content may carry the original source's own copyright, so only a factual summary is extracted, never the original report text. Single-source within this pilot's scope; not independently corroborated by TI even though other public reporting of the same strike exists.","id":"obs-rw-sy-2026-08-18-abualduhur"}
+          ]
+
+          # Add only the two Artifact sources required by the six observations.
+          existing_sources = data.setdefault("sources", {})
+          for sid, source in sources.items():
+              if sid in existing_sources:
+                  if existing_sources[sid] != source:
+                      raise SystemExit(f"Source {sid} already exists but does not exactly match Artifact export")
+              else:
+                  existing_sources[sid] = source
+
+          existing_events = data.setdefault("events", [])
+          existing_obs = data.setdefault("sourceObservations", [])
+
+          def merge_exact(collection, payload, name):
+              by_id = {x["id"]: x for x in collection}
+              for item in payload:
+                  if item["id"] in by_id:
+                      if by_id[item["id"]] != item:
+                          raise SystemExit(f"{name} {item['id']} already exists but does not exactly match Artifact export")
+                  else:
+                      collection.append(item)
+
+          merge_exact(existing_events, events, "Event")
+          merge_exact(existing_obs, observations, "SourceObservation")
+
+          # Relationship and integrity checks before write.
+          country_ids = set(data["countries"].keys())
+          source_ids = set(existing_sources.keys())
+          event_ids = {e["id"] for e in existing_events}
+          obs_ids = {o["id"] for o in existing_obs}
+          assert len(event_ids) == len(existing_events)
+          assert len(obs_ids) == len(existing_obs)
+          assert len(existing_events) == 6, len(existing_events)
+          assert len(existing_obs) == 6, len(existing_obs)
+          for e in existing_events:
+              assert e["countryId"] in country_ids
+              assert all(x in obs_ids for x in e["sourceObservationIds"])
+              assert e["publicationStatus"] in {"PUBLISHED","DRAFT","INTERNAL_REVIEW","WITHDRAWN"}
+          for o in existing_obs:
+              assert o["sourceId"] in source_ids
+              assert (o["recordId"] is None) ^ (o["eventId"] is None)
+              if o["eventId"] is not None:
+                  assert o["eventId"] in event_ids
+          assert sum(1 for e in existing_events if e["publicationStatus"] == "PUBLISHED") == 3
+          assert sum(1 for e in existing_events if e["publicationStatus"] == "DRAFT") == 3
+
+          data.setdefault("meta", {}).setdefault("counts", {})
+          data["meta"]["counts"]["countries"] = len(data["countries"])
+          data["meta"]["counts"]["records"] = len(data["records"])
+          data["meta"]["counts"]["sources"] = len(existing_sources)
+          data["meta"]["counts"]["locations"] = len(data["locations"])
+          data["meta"]["counts"]["events"] = len(existing_events)
+          data["meta"]["counts"]["sourceObservations"] = len(existing_obs)
+
+          out = json.dumps(data, ensure_ascii=False, indent=2) + "\n"
+          path.write_text(out, encoding="utf-8")
+          print("Merged exact Artifact Current Intelligence payload.")
+          print("events:", len(existing_events), "sourceObservations:", len(existing_obs), "sources:", len(existing_sources))
+          PY
+
+      - name: Validate merged data
+        run: |
+          python3 scripts/validate_ti_data.py data.json
+
+      - name: Commit migration
+        run: |
+          if git diff --quiet -- data.json; then
+            echo "No data.json changes required."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data.json
+          git commit -m "Migrate exact Artifact Current Intelligence data"
+          git push origin ti-migration-2026-09
