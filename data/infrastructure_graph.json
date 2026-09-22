@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generated": "2026-09-22T16:27:42.068975+00:00",
+  "generated": "2026-09-22T18:07:20.866180+00:00",
   "purpose": "Deterministic relationship graph for travel-impact resolution; not a source of truth.",
   "nodes": [
     {
@@ -522,6 +522,30 @@
       "infrastructure": "AVIATION",
       "locationId": null,
       "countryId": "sy",
+      "status": "EXPLICIT_EVENT_RELATIONSHIP",
+      "resolvedLocation": false
+    },
+    {
+      "eventId": "nats-atc-2026-09-21-scotland",
+      "infrastructure": "AVIATION",
+      "locationId": null,
+      "countryId": "gb",
+      "status": "EXPLICIT_EVENT_RELATIONSHIP",
+      "resolvedLocation": false
+    },
+    {
+      "eventId": "ru-moscow-oil-refinery-drone-2026-09-20",
+      "infrastructure": "AVIATION",
+      "locationId": null,
+      "countryId": "ru",
+      "status": "EXPLICIT_EVENT_RELATIONSHIP",
+      "resolvedLocation": false
+    },
+    {
+      "eventId": "ru-moscow-oil-refinery-drone-2026-09-20",
+      "infrastructure": "ENERGY",
+      "locationId": null,
+      "countryId": "ru",
       "status": "EXPLICIT_EVENT_RELATIONSHIP",
       "resolvedLocation": false
     }
