@@ -1,0 +1,209 @@
+{
+  "schemaVersion": "1.0",
+  "generated": "2026-09-22T16:13:16.021243+00:00",
+  "purpose": "Safe first-stage traveller-impact graph; explicit relationships only.",
+  "rules": {
+    "locationContainment": "A verified event at a child location may be inherited by its parent locations for discovery.",
+    "countryScope": "Country-level events are not assumed to affect every route or infrastructure asset.",
+    "routeInference": "No route is inferred until a verified route relationship exists.",
+    "travellerImpact": "Direct impact requires an explicit verified event/location relationship."
+  },
+  "locationContainment": [
+    {
+      "childLocationId": "loc-iq-zubair",
+      "parentLocationId": "loc-iq-southern-oilfields",
+      "relationship": "WITHIN"
+    }
+  ],
+  "eventImpacts": [
+    {
+      "eventId": "gdacs-eq-1558059",
+      "countryId": "id",
+      "locationId": null,
+      "locationChain": [],
+      "affectedInfrastructure": [],
+      "impactType": [
+        "NONE_IDENTIFIED"
+      ],
+      "relationshipPrecision": "COUNTRY",
+      "travellerImpactStatus": "COUNTRY_LEVEL_ONLY"
+    },
+    {
+      "eventId": "gdacs-fl-1104081",
+      "countryId": "cn",
+      "locationId": null,
+      "locationChain": [],
+      "affectedInfrastructure": [],
+      "impactType": [
+        "NONE_IDENTIFIED"
+      ],
+      "relationshipPrecision": "COUNTRY",
+      "travellerImpactStatus": "COUNTRY_LEVEL_ONLY"
+    },
+    {
+      "eventId": "gdacs-vo-1000148",
+      "countryId": "id",
+      "locationId": null,
+      "locationChain": [],
+      "affectedInfrastructure": [],
+      "impactType": [
+        "NONE_IDENTIFIED"
+      ],
+      "relationshipPrecision": "COUNTRY",
+      "travellerImpactStatus": "COUNTRY_LEVEL_ONLY"
+    }
+  ],
+  "infrastructureNodes": [
+    {
+      "id": "loc-iq-baghdad",
+      "name": "Baghdad",
+      "countryId": "iq",
+      "types": [
+        "CITY"
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "loc-iq-basra",
+      "name": "Basra",
+      "countryId": "iq",
+      "types": [
+        "PORT",
+        "OILFIELD",
+        "CITY"
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "loc-iq-erbil",
+      "name": "Erbil",
+      "countryId": "iq",
+      "types": [
+        "CITY"
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "loc-iq-kurdistan",
+      "name": "Kurdistan Region",
+      "countryId": "iq",
+      "types": [
+        "OTHER"
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "loc-iq-southern-oilfields",
+      "name": "Southern Oilfield Areas",
+      "countryId": "iq",
+      "types": [
+        "OILFIELD"
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "loc-iq-zubair",
+      "name": "Zubair",
+      "countryId": "iq",
+      "types": [
+        "WORKSITE"
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "loc-ly-sharara",
+      "name": "Sharara Oilfield",
+      "countryId": "ly",
+      "types": [
+        "OILFIELD",
+        "WORKSITE"
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "loc-ly-zawiya",
+      "name": "Zawiya",
+      "countryId": "ly",
+      "types": [
+        "PORT",
+        "CITY",
+        "WORKSITE"
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "loc-sa-petroline-corridor",
+      "name": "East-West Pipeline Corridor (Petroline)",
+      "countryId": "sa",
+      "types": [
+        "PORT",
+        "PIPELINE",
+        "ROAD"
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "loc-sa-yemen-border",
+      "name": "Yemen Border",
+      "countryId": "sa",
+      "types": [
+        "BORDER"
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "loc-sd-port-sudan",
+      "name": "Port Sudan",
+      "countryId": "sd",
+      "types": [
+        "PORT",
+        "PIPELINE",
+        "CITY"
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "loc-ss-export-corridor",
+      "name": "Export Pipeline Corridor (to Port Sudan)",
+      "countryId": "ss",
+      "types": [
+        "PORT",
+        "PIPELINE",
+        "ROAD"
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "loc-ye-aden",
+      "name": "Aden",
+      "countryId": "ye",
+      "types": [
+        "CITY"
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "loc-ye-redsea-coast",
+      "name": "Red Sea Coast (Mocha–Bab-el-Mandeb)",
+      "countryId": "ye",
+      "types": [
+        "OTHER"
+      ],
+      "latitude": null,
+      "longitude": null
+    }
+  ]
+}
