@@ -51,6 +51,9 @@ jobs:
             --allowedTools "Bash,Read,Write,Edit,Glob,Grep,WebSearch,WebFetch"
             --max-turns 60
 
+      - name: Validate TI data model
+        run: python3 scripts/validate_ti_data.py
+
       - name: Ensure meta.generated reflects this run
         # Deterministic, not AI-driven: guarantees the "data as of" timestamp
         # on the site always advances every day, regardless of whether the
