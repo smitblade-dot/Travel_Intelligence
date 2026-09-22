@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generated": "2026-09-22T16:07:12.414237+00:00",
+  "generated": "2026-09-22T16:27:42.068975+00:00",
   "purpose": "Deterministic relationship graph for travel-impact resolution; not a source of truth.",
   "nodes": [
     {
