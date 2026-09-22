@@ -1,4 +1,4 @@
-# Forged Titanium — weekly data refresh (this repo)
+# Forged Titanium — daily data refresh (this repo)
 
 This repository is a static website (GitHub Pages) — a country travel
 intelligence tool: entry requirements, security, health and emergency
@@ -7,7 +7,8 @@ oil & gas operating regions. `index.html` reads its data from `data.json`
 in this same repo at runtime — nothing else in this repo needs to change
 for a normal data update.
 
-You are run here once a week (GitHub Actions cron) to check for and apply
+You are run here once a day (GitHub Actions cron, 21:00 Cyprus time —
+changed from weekly to daily as of 2026-09-22) to check for and apply
 real changes to `data.json`, then push the update straight to this repo.
 This is an unattended run — there is no one to ask questions; make
 reasonable judgment calls, and finish in one pass: check → (edit
@@ -15,8 +16,9 @@ reasonable judgment calls, and finish in one pass: check → (edit
 
 **No true real-time feed is connected here** (free/public sources only —
 mainly UK gov.uk FCDO travel advice and UK Home Office immigration
-guidance) — weekly polling is the closest practical approximation to
-"kept current" that's achievable this way. Some runs will find nothing
+guidance, plus the two sibling oil & gas dashboards — see the new step 0
+below) — daily polling is the closest practical approximation to "kept
+current" that's achievable this way. Most days will find nothing
 materially new for most sources, and that's expected, not a failure.
 
 ## Keep it fast and cheap — this is not an unbounded deep-dive every time
@@ -24,12 +26,31 @@ materially new for most sources, and that's expected, not a failure.
 Doing a full re-check of all 89 sources with no prioritisation every
 single run would be slow, expensive, and mostly redundant. Instead:
 
-1. **Fast triage first (every run).** Read `data.json`'s `sources`
+0. **Check the two sibling oil & gas dashboards for fresh signal (every
+   run, added 2026-09-22).** Before the source triage below, fetch
+   `https://raw.githubusercontent.com/smitblade-dot/crude-flow-dashboard/main/dashboard_data.json`
+   and
+   `https://raw.githubusercontent.com/smitblade-dot/gas-lng-flow-dashboard/main/gas_dashboard_data.json`
+   (plain public reads, no auth needed) and skim their `disruptions` and
+   `change_log` arrays for anything dated since this repo's own
+   `meta.generated`. Where a disruption/change_log entry names a country
+   this repo covers — a new or escalated pipeline attack, kidnapping,
+   port closure, sanctions action, border closure, etc. — treat that
+   country's SECURITY sources as high-priority for step 1's triage below,
+   even if their own `reviewFrequency`/`dateChecked` wouldn't otherwise
+   flag them yet. This is a *signal to go re-check the real FCDO source*,
+   not a source in its own right: never write a record's `content` from
+   the dashboard data directly, and never cite a dashboard as a record's
+   `sourceId` — always verify against and cite the actual gov.uk FCDO (or
+   other official) page before writing anything. If a named disruption
+   doesn't show up on the FCDO page yet, don't invent a record for it;
+   FCDO pages lag real events by days and that's expected.
+1. **Fast triage next (every run).** Read `data.json`'s `sources`
    collection and rank sources by:
    - Any source whose `reviewFrequency` says "Monthly" or "Fast-changing"
      — check these every run. These are almost always `SECURITY` category
      sources (conflict, terrorism, civil unrest, border areas) where the
-     situation genuinely moves week to week.
+     situation genuinely moves day to day.
    - Any source whose `dateChecked` is now older than the interval implied
      by its own `reviewFrequency` (e.g. "Every 3-6 months" and it's been
      4+ months; "Every 12 months" and it's been 13+ months).
@@ -84,7 +105,7 @@ single run would be slow, expensive, and mostly redundant. Instead:
   a separate, deliberate exercise (only Iraq and Saudi Arabia have any at
   present).
 - **Never touch `oilGasSummary` yourself.** By the time you (Claude) run
-  each week, a separate, deterministic step
+  each day, a separate, deterministic step
   (`python3 scripts/refresh_oilgas.py`, no AI involved) has already run
   earlier in the same workflow and refreshed it in place from the sibling
   `crude-flow-dashboard` and `gas-lng-flow-dashboard` repos — see "Oil &
@@ -92,7 +113,7 @@ single run would be slow, expensive, and mostly redundant. Instead:
   be sitting in your working tree; just leave that key alone and commit
   normally (`git add data.json` picks up its changes along with yours,
   which is expected and correct). Don't re-derive it, don't "fix" it,
-  don't revert it if it looks different from last week — that's the
+  don't revert it if it looks different from yesterday — that's the
   refresh working as intended.
 - **Do not touch `assets/img/*.jpg`** (the subtle background photography)
   or the `<style>` block in a normal refresh — visual/branding changes are
@@ -113,8 +134,8 @@ depends on you noticing it's stale or on anyone pushing a manual update:
   `crude`/`gas` summary object, and writes the result into this repo's
   `data.json` under `oilGasSummary`. It's stdlib-only Python — no
   dependencies to install on the runner.
-- The GitHub Actions workflow (`.github/workflows/weekly-data-refresh.yml`)
-  runs this script as its own step, every week, before the Claude step —
+- The GitHub Actions workflow (`.github/workflows/daily-data-refresh.yml`)
+  runs this script as its own step, every day, before the Claude step —
   so it's on a schedule and requires nobody to run or push anything.
   It's deliberately defensive: if either dashboard is unreachable, or the
   data doesn't look sane (too few countries built), it logs a warning and
@@ -122,7 +143,7 @@ depends on you noticing it's stale or on anyone pushing a manual update:
   bad or empty overwrite. It never fails the job.
 - A workflow-level "safety-net commit" step runs after the Claude step and
   pushes anything still uncommitted — so even if the Claude step errors
-  out entirely, this week's oil & gas refresh (and anything else already
+  out entirely, today's oil & gas refresh (and anything else already
   staged) still reaches GitHub.
 - If a new country is added to this repo's `countries` collection (a
   separate, deliberate exercise per the conventions above) and it should
@@ -182,10 +203,10 @@ an earlier step in this same workflow run and updated `oilGasSummary` in
 `data.json` directly (see above) — that's already done and is not part
 of what follows.
 
-1. Read the current `data.json` in this repo (this already reflects this
-   week's oil & gas refresh — leave that part as-is).
-2. Run the fast triage (above) to build a prioritised list of sources to
-   re-check this run.
+1. Read the current `data.json` in this repo (this already reflects
+   today's oil & gas refresh — leave that part as-is).
+2. Do the dashboard signal check (step 0 above), then run the fast triage
+   to build a prioritised list of sources to re-check this run.
 3. For each prioritised source, WebFetch its `url` and compare against
    the records citing it.
 4. Edit `data.json` in place with any real changes, following the schema
