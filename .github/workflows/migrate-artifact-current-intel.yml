@@ -2,6 +2,7 @@
 name: Migrate Artifact Current Intelligence
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - ti-migration-2026-09
