@@ -2115,7 +2115,16 @@
     return res.json();
   }).then(function(data){
     var cMap = {};
-    Object.keys(data.countries || {}).forEach(function(k){ var d = data.countries[k]; d.iso2 = k; cMap[k] = d; });
+    Object.keys(data.countries || {}).forEach(function(k){
+      var d = data.countries[k];
+      // Live exports may serialise the countries collection as a numeric-keyed
+      // object. Country identity is the ISO2/id field, which must remain the
+      // join key for records, sources, locations and events.
+      var iso2 = d && (d.iso2 || d.id);
+      if(!iso2) iso2 = k;
+      d.iso2 = String(iso2).toLowerCase();
+      cMap[d.iso2] = d;
+    });
     countries = cMap;
     allRecords = Object.keys(data.records || {}).map(function(k){ var d = data.records[k]; d.id = k; return d; });
     allSources = data.sources || {};
