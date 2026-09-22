@@ -45,6 +45,14 @@ jobs:
           show_full_output: true
           prompt: >
             Run the normal Travel Intelligence daily refresh from CLAUDE.md.
+            Treat the country records as a live intelligence layer as well as
+            Current Intelligence events. Inspect all tracked countries for
+            material, currently verified changes to traveller-relevant
+            requirements, warnings, procedures and other country guidance.
+            Update existing records or create new records where the primary
+            source supports a real change, with the required
+            SourceObservation. Do not invent coverage or backfill empty
+            categories merely to make countries look populated.
             Phase 1 open-data signals are in data/phase1_signals.json, the
             deterministic review queue is in data/phase1_review_queue.json,
             infrastructure relationships are in
