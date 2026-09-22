@@ -60,6 +60,9 @@ jobs:
             --allowedTools "Bash,Read,Write,Edit,Glob,Grep,WebSearch,WebFetch"
             --max-turns 60
 
+      - name: Build traveller impact graph
+        run: python3 scripts/build_traveller_impact_graph.py
+
       - name: Validate TI data model
         run: python3 scripts/validate_ti_data.py
 
