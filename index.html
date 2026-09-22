@@ -251,11 +251,22 @@
 
   footer.statusbar{ font-family:var(--mono); font-size:10.5px; color:var(--text-faint); text-align:center; padding-block:14px calc(14px + env(safe-area-inset-bottom,0px)); border-top:1px solid var(--border); }
 
+  @media (max-width:700px){
+    .ci-filters{grid-template-columns:1fr;}
+    .ci-detail-grid{grid-template-columns:1fr;}
+  }
   @media (max-width:520px){
     .field-row{ grid-template-columns:1fr; }
     .search-wrap input{ width:150px; }
     .ch-top{ flex-wrap:wrap; }
     .ch-admin{ margin-inline-start:0; }
+    #app{padding-inline:12px;}
+    .topbar{gap:10px;}
+    .topbar-actions{width:100%;}
+    .search-wrap{width:100%;}
+    .search-wrap input{width:100%;max-width:none;}
+    .ci-grid{grid-template-columns:1fr;}
+    .category-grid{grid-template-columns:1fr 1fr;}
   }
 
   .hotspot-card,.continent-card,.country-card,.category-card,.cb-row,.record-card,.country-header,.source-card,.ov-card,.modal,.offline-note{box-shadow:inset 0 1px 0 rgba(255,255,255,.025);}
@@ -273,6 +284,20 @@
   .ci-caveat{margin-top:8px;font-family:var(--mono);font-size:10px;color:var(--warn);}
   .ci-empty{padding:18px 0;color:var(--text-faint);font-size:13px;}
   .legal-footer{font-family:var(--mono);font-size:9.5px;line-height:1.55;color:var(--text-faint);text-align:center;padding:16px 12px;border-top:1px solid var(--border);margin-top:18px;}
+  .category-group{margin-block-end:22px;}
+  .ci-home-action{margin-top:10px;display:flex;justify-content:flex-start;}
+  .ci-filters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-block:4px 18px;padding:12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);}
+  .ci-filters .field{margin:0;}
+  .ci-detail-modal{max-width:680px;}
+  .ci-detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-block-end:14px;}
+  .ci-detail-item{display:flex;flex-direction:column;gap:2px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);padding:9px 10px;}
+  .ci-detail-item label,.ci-detail-label{font-family:var(--mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-faint);}
+  .ci-detail-item span{font-size:12.5px;font-weight:600;}
+  .ci-detail-section{padding-top:11px;margin-top:11px;border-top:1px solid var(--border);}
+  .ci-detail-section p{font-size:13px;color:var(--text-dim);margin:5px 0 0;white-space:pre-wrap;}
+  .ci-detail-source-name{font-weight:700;font-size:13px;margin:4px 0;}
+  .ci-card{cursor:pointer;}
+
 
 </style>
 
@@ -844,8 +869,11 @@
   var allEvents = [];
   var allSourceObservations = [];
   var currentIso2 = null;
-  var currentView = 'HOME';             // 'HOME' | 'CATEGORY_BROWSE' | 'CONTINENT'
-  var currentCategoryBrowse = null;     // category key when currentView is CATEGORY_BROWSE
+  var currentView = 'HOME';             // 'HOME' | 'CATEGORY_BROWSE' | 'CONTINENT' | 'CURRENT_INTELLIGENCE'
+  var currentCategoryBrowse = null;
+  var currentIntelFilterType = '';
+  var currentIntelFilterCountry = '';
+  var currentIntelFilterStatus = '';     // category key when currentView is CATEGORY_BROWSE
   var currentContinent = null;          // region name when currentView is CONTINENT
   var currentCategory = 'OVERVIEW';
   var currentRecords = [];     // records for currentIso2, refreshed from allRecords
@@ -925,6 +953,8 @@
     main.innerHTML = '';
     if(currentIso2){
       main.appendChild(renderCountry());
+    } else if(currentView === 'CURRENT_INTELLIGENCE'){
+      main.appendChild(renderCurrentIntelligencePage());
     } else if(currentView === 'CATEGORY_BROWSE'){
       main.appendChild(renderCategoryBrowse(currentCategoryBrowse));
     } else if(currentView === 'CONTINENT'){
@@ -1012,32 +1042,110 @@
     for(var i=0;i<ids.length;i++){ if(allSources[ids[i]]) return allSources[ids[i]]; }
     return null;
   }
+  function ciIndependentGroups(event){
+    var independent=new Set();
+    (allSourceObservations||[]).forEach(function(o){
+      if(o.eventId===event.id && o.independenceGroupId) independent.add(o.independenceGroupId);
+    });
+    return independent;
+  }
+
+  function ciObservationsForEvent(event){
+    return (allSourceObservations||[]).filter(function(o){ return o.eventId===event.id; });
+  }
+
+  function ciSourceForEvent(event){
+    var obs=ciObservationsForEvent(event);
+    for(var i=0;i<obs.length;i++){
+      if(obs[i].sourceId && allSources[obs[i].sourceId]) return allSources[obs[i].sourceId];
+    }
+    return null;
+  }
+
+  function ciEventImpact(event){
+    var impact=event.impactType || event.operationalImpact || '';
+    return Array.isArray(impact) ? impact.join(' · ') : String(impact);
+  }
+
   function currentEventCard(event){
     var source=ciSourceForEvent(event);
-    var independent=new Set();
-    (allSourceObservations||[]).forEach(function(o){ if(o.eventId===event.id && o.independenceGroupId) independent.add(o.independenceGroupId); });
+    var independent=ciIndependentGroups(event);
     var c=event.countryId && countries[event.countryId] ? countries[event.countryId] : null;
     var title=event.title || event.name || 'Current intelligence event';
     var summary=event.summary || event.description || event.extractedClaim || '';
     var status=event.eventStatus || 'REPORTED';
-    var impact=event.impactType || event.operationalImpact || '';
+    var impact=ciEventImpact(event);
     var sourceName=source ? (source.sourceName || source.organisation || 'Source') : 'Source attribution pending';
     var meta=[];
     if(c) meta.push(c.name);
     if(event.eventDate) meta.push(fmtDate(event.eventDate));
-    if(event.updatedAt) meta.push('Updated '+fmtDate(event.updatedAt));
-    var card=el('article',{class:'ci-card',tabindex:'0','aria-label':title},[
+    if(event.lastUpdated) meta.push('Updated '+fmtDate(event.lastUpdated));
+    var card=el('article',{class:'ci-card',tabindex:'0',role:'button','aria-label':'Open '+title},[
       el('div',{class:'ci-top'},[
         el('span',{class:'ci-status'},[status.replace(/_/g,' ')]),
-        impact ? el('span',{class:'ci-impact'},[String(impact).replace(/_/g,' ')]) : null
+        impact ? el('span',{class:'ci-impact'},[impact.replace(/_/g,' ')]) : null
       ]),
       el('div',{class:'ci-title'},[title]),
       el('div',{class:'ci-summary'},[summary]),
       el('div',{class:'ci-meta'},[el('span',{class:'ci-source'},[sourceName])].concat(meta.map(function(x){return el('span',{},[x]);}))),
       independent.size <= 1 ? el('div',{class:'ci-caveat'},['Single source — TI has not independently confirmed this event.']) : null
     ]);
+    card.addEventListener('click',function(){ openCurrentEventModal(event); });
+    card.addEventListener('keydown',function(e){ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); openCurrentEventModal(event); } });
     return card;
   }
+
+  function openCurrentEventModal(event){
+    var root=document.getElementById('modalRoot');
+    var source=ciSourceForEvent(event);
+    var independent=ciIndependentGroups(event);
+    var obs=ciObservationsForEvent(event);
+    var c=event.countryId && countries[event.countryId] ? countries[event.countryId] : null;
+    var title=event.title || event.name || 'Current intelligence event';
+    var impact=ciEventImpact(event);
+    var backdrop=el('div',{class:'modal-backdrop',onclick:function(e){if(e.target===backdrop)closeModal();}});
+    var modal=el('div',{class:'modal ci-detail-modal','aria-labelledby':'ciDetailTitle'});
+    modal.appendChild(el('h2',{id:'ciDetailTitle'},[title]));
+    modal.appendChild(el('div',{class:'ci-detail-grid'},[
+      ciDetail('Status',String(event.eventStatus||'REPORTED').replace(/_/g,' ')),
+      ciDetail('Publication',String(event.publicationStatus||'').replace(/_/g,' ')),
+      c ? ciDetail('Country',c.name) : null,
+      event.eventDate ? ciDetail('Event date',fmtDate(event.eventDate)) : null,
+      event.lastUpdated ? ciDetail('Last updated',fmtDate(event.lastUpdated)) : null,
+      impact ? ciDetail('Impact',impact.replace(/_/g,' ')) : null,
+      ciDetail('Independent sources',String(independent.size)),
+      ciDetail('Observations',String(obs.length))
+    ]));
+    if(event.summary || event.description){
+      modal.appendChild(el('div',{class:'ci-detail-section'},[
+        el('div',{class:'ci-detail-label'},['SUMMARY']),
+        el('p',{},[event.summary || event.description])
+      ]));
+    }
+    if(event.uncertaintyNotes){
+      modal.appendChild(el('div',{class:'ci-detail-section'},[
+        el('div',{class:'ci-detail-label'},['UNCERTAINTY']),
+        el('p',{},[event.uncertaintyNotes])
+      ]));
+    }
+    var sourceBox=el('div',{class:'ci-detail-section'},[
+      el('div',{class:'ci-detail-label'},['SOURCE'])
+    ]);
+    if(source){
+      sourceBox.appendChild(el('div',{class:'ci-detail-source-name'},[source.sourceName || source.organisation || 'Source']));
+      if(source.url) sourceBox.appendChild(el('a',{href:source.url,target:'_blank',rel:'noopener'},['Open source']));
+    } else sourceBox.appendChild(el('p',{},['Source attribution is not available in the current dataset.']));
+    modal.appendChild(sourceBox);
+    if(independent.size<=1) modal.appendChild(el('div',{class:'ci-caveat'},['Single source — TI has not independently confirmed this event.']));
+    var actions=el('div',{class:'modal-actions'},[el('button',{class:'btn btn-accent',onclick:closeModal},['Close'])]);
+    modal.appendChild(actions);
+    backdrop.appendChild(modal); root.innerHTML=''; root.appendChild(backdrop);
+  }
+
+  function ciDetail(label,value){
+    return el('div',{class:'ci-detail-item'},[el('label',{},[label]),el('span',{},[value])]);
+  }
+
   function renderCurrentIntelligence(){
     var wrap=el('section',{class:'current-intelligence'});
     var events=publishedCurrentEvents();
@@ -1052,7 +1160,36 @@
     var grid=el('div',{class:'ci-grid'});
     events.slice(0,6).forEach(function(e){grid.appendChild(currentEventCard(e));});
     wrap.appendChild(grid);
+    var action=el('div',{class:'ci-home-action'});
+    action.appendChild(el('button',{class:'btn btn-sm',onclick:function(){currentView='CURRENT_INTELLIGENCE';render();}},['Open Current Intelligence']));
+    wrap.appendChild(action);
     return wrap;
+  }
+
+  function renderCurrentIntelligencePage(){
+    var wrap=el('section',{class:'category-browse current-intelligence-page'});
+    wrap.appendChild(el('button',{class:'back-btn',onclick:goHome},['← Home']));
+    var published=publishedCurrentEvents();
+    var types={}, countriesSeen={};
+    published.forEach(function(e){ if(e.eventType) types[e.eventType]=true; if(e.countryId && countries[e.countryId]) countriesSeen[e.countryId]=countries[e.countryId].name; });
+    var filtered=published.filter(function(e){
+      return (!currentIntelFilterType || e.eventType===currentIntelFilterType) &&
+             (!currentIntelFilterCountry || e.countryId===currentIntelFilterCountry) &&
+             (!currentIntelFilterStatus || e.eventStatus===currentIntelFilterStatus);
+    });
+    wrap.appendChild(el('div',{class:'cb-head'},[
+      el('h1',{},['Current Intelligence']),
+      el('p',{},['Published, time-sensitive developments. Select an event for full source and uncertainty detail.'])
+    ]));
+    var filters=el('div',{class:'ci-filters'});
+    filters.appendChild(field('Event type',select('ci_type',[{v:'',label:'All types'}].concat(Object.keys(types).sort().map(function(v){return {v:v,label:v.replace(/_/g,' ')};})),currentIntelFilterType)));
+    filters.appendChild(field('Country',select('ci_country',[{v:'',label:'All countries'}].concat(Object.keys(countriesSeen).sort(function(a,b){return countriesSeen[a].localeCompare(countriesSeen[b]);}).map(function(v){return {v:v,label:countriesSeen[v]};})),currentIntelFilterCountry)));
+    filters.appendChild(field('Status',select('ci_status',[{v:'',label:'All statuses'}].concat(Array.from(new Set(published.map(function(e){return e.eventStatus;}).filter(Boolean))).sort().map(function(v){return {v:v,label:v.replace(/_/g,' ')};})),currentIntelFilterStatus)));
+    ['ci_type','ci_country','ci_status'].forEach(function(id){document.getElementById(id).addEventListener('change',function(){currentIntelFilterType=document.getElementById('ci_type').value;currentIntelFilterCountry=document.getElementById('ci_country').value;currentIntelFilterStatus=document.getElementById('ci_status').value;render();});});
+    wrap.appendChild(filters);
+    wrap.appendChild(el('div',{class:'section-head'},[el('h2',{},[filtered.length+' event'+(filtered.length===1?'':'s')]),el('span',{class:'section-hint'},['Click an event for detail'])]));
+    if(!filtered.length){wrap.appendChild(el('div',{class:'ci-empty'},['No published events match the selected filters.']));return wrap;}
+    var grid=el('div',{class:'ci-grid'}); filtered.forEach(function(e){grid.appendChild(currentEventCard(e));}); wrap.appendChild(grid); return wrap;
   }
 
   function renderHome(){
@@ -1133,15 +1270,26 @@
       el('h2', {}, ['Browse by category']),
       el('span', {class:'section-hint'}, ['compare coverage across every country'])
     ]));
-    var catGrid = el('div', {class:'category-grid'});
-    CATEGORIES.forEach(function(cat){
-      var count = allRecords.filter(function(r){ return r.category === cat.key && r.status !== 'ARCHIVED'; }).length;
-      catGrid.appendChild(el('button', {class:'category-card', onclick:function(){ openCategoryBrowse(cat.key); }}, [
-        el('span', {class:'cc-label'}, [cat.label]),
-        el('span', {class:'cc-count'}, [count + ' record' + (count===1?'':'s')])
-      ]));
+    var categoryGroups = [
+      {label:'TRAVEL ESSENTIALS', keys:['ENTRY','SECURITY','HEALTH','TRANSPORT','ENVIRONMENT','EMERGENCY']},
+      {label:'TRAVEL PREPARATION', keys:['INSURANCE','ACCOMMODATION','LAWS_CULTURE','COMMUNICATIONS','FINANCE','LANGUAGE']},
+      {label:'OPERATIONAL PREPARATION', keys:['EQUIPMENT','TRAINING']}
+    ];
+    categoryGroups.forEach(function(group){
+      var block=el('div',{class:'category-group'});
+      block.appendChild(el('div',{class:'region-heading'},[el('h3',{},[group.label])]));
+      var grid=el('div',{class:'category-grid'});
+      group.keys.forEach(function(key){
+        var cat=CAT_MAP[key]; if(!cat) return;
+        var count=allRecords.filter(function(r){return r.category===cat.key && r.status!=='ARCHIVED';}).length;
+        grid.appendChild(el('button',{class:'category-card',onclick:function(){openCategoryBrowse(cat.key);}},[
+          el('span',{class:'cc-label'},[cat.label]),
+          el('span',{class:'cc-desc'},[cat.desc]),
+          el('span',{class:'cc-count'},[count+' record'+(count===1?'':'s')])
+        ]));
+      });
+      block.appendChild(grid); wrap.appendChild(block);
     });
-    wrap.appendChild(catGrid);
 
     return wrap;
   }
@@ -1265,7 +1413,11 @@
 
     // content
     var content = el('div', {class:'cat-content', id:'catContent'});
-    if(currentCategory === 'OVERVIEW') content.appendChild(renderOverview(c));
+    if(currentCategory === 'OVERVIEW'){
+      var countryEvents=(allEvents||[]).filter(function(e){return e.publicationStatus==='PUBLISHED' && e.countryId===currentIso2;});
+      if(countryEvents.length) content.appendChild(renderCountryCurrentIntelligence(countryEvents));
+      content.appendChild(renderOverview(c));
+    }
     else if(currentCategory === 'SOURCES') content.appendChild(renderSources(c));
     else content.appendChild(renderCategoryRecords(c, currentCategory));
     wrap.appendChild(content);
@@ -1283,6 +1435,13 @@
     var btn = el('button', {class: key === currentCategory ? 'active' : '', onclick:function(){ currentCategory = key; render(); }}, [label]);
     if(typeof count === 'number') btn.appendChild(el('span', {class:'cnt'}, ['(' + count + ')']));
     return btn;
+  }
+
+  function renderCountryCurrentIntelligence(events){
+    var wrap=el('div',{class:'country-ci'});
+    wrap.appendChild(el('div',{class:'section-head'},[el('h2',{},['Current Intelligence']),el('span',{class:'section-hint'},[events.length+' published event'+(events.length===1?'':'s')])]));
+    var grid=el('div',{class:'ci-grid'}); events.slice(0,6).forEach(function(e){grid.appendChild(currentEventCard(e));}); wrap.appendChild(grid);
+    return wrap;
   }
 
   function renderOverview(c){
@@ -1496,6 +1655,11 @@
   function openContinent(regionName){
     currentView = 'CONTINENT';
     currentContinent = regionName;
+    render();
+  }
+  function openCurrentIntelligence(){
+    currentView = 'CURRENT_INTELLIGENCE';
+    currentIso2 = null;
     render();
   }
   function openCategoryBrowse(catKey){
