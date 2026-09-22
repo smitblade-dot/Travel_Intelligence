@@ -1,10 +1,10 @@
-/* Forged Titanium — service worker
+/* Travel Intelligence — service worker
    Network-first for everything (index.html, data.json, the app shell),
    with a cache fallback so a previously-visited page still opens offline.
    A network-first strategy means a visitor with an existing service
    worker always sees the latest deployed content without needing a
    manual cache-version bump on every content change. */
-const CACHE_VERSION = 'ft-shell-v3';
+const CACHE_VERSION = 'ti-shell-v4';
 const SHELL_FILES = [
   './',
   './index.html',
