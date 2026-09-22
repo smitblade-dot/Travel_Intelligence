@@ -192,7 +192,7 @@ corroboration or confidence.
 
 ## Migration policy
 
-The current migration is deliberately additive:
+The TI architecture migration is deliberately additive:
 
 - existing countries, baseline records, sources, locations, change_log and
   oilGasSummary are preserved;
