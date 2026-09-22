@@ -278,6 +278,12 @@
   .ci-top{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:8px;}
   .ci-status,.ci-impact,.ci-source{font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;border:1px solid var(--border);padding:2px 6px;border-radius:3px;color:var(--text-dim);}
   .ci-status{color:var(--accent);border-color:var(--accent);}
+  .ci-card.ci-status-confirmed,.ci-card.ci-status-corroborated{border-left-color:var(--good);}
+  .ci-card.ci-status-reported,.ci-card.ci-status-local-report{border-left-color:var(--accent);}
+  .ci-card.ci-status-early-report,.ci-card.ci-status-unverified,.ci-card.ci-status-disputed,.ci-card.ci-status-corrected{border-left-color:var(--warn);}
+  .ci-card.ci-status-confirmed .ci-status,.ci-card.ci-status-corroborated .ci-status{color:var(--good);border-color:var(--good);background:var(--good-soft);}
+  .ci-card.ci-status-reported .ci-status,.ci-card.ci-status-local-report .ci-status{color:var(--accent);border-color:var(--accent);background:var(--accent-soft);}
+  .ci-card.ci-status-early-report .ci-status,.ci-card.ci-status-unverified .ci-status,.ci-card.ci-status-disputed .ci-status,.ci-card.ci-status-corrected .ci-status{color:var(--warn);border-color:var(--warn);background:var(--warn-soft);}
   .ci-title{font-family:var(--disp);font-size:15px;font-weight:700;line-height:1.3;margin-bottom:5px;}
   .ci-summary{font-size:12.5px;color:var(--text-dim);line-height:1.45;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
   .ci-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;padding-top:8px;border-top:1px solid var(--border);font-family:var(--mono);font-size:10px;color:var(--text-faint);}
@@ -1080,7 +1086,8 @@
     if(c) meta.push(c.name);
     if(event.eventDate) meta.push(fmtDate(event.eventDate));
     if(event.lastUpdated) meta.push('Updated '+fmtDate(event.lastUpdated));
-    var card=el('article',{class:'ci-card',tabindex:'0',role:'button','aria-label':'Open '+title},[
+    var statusClass='ci-status-'+String(status).toLowerCase().replace(/_/g,'-');
+    var card=el('article',{class:'ci-card '+statusClass,tabindex:'0',role:'button','aria-label':'Open '+title},[
       el('div',{class:'ci-top'},[
         el('span',{class:'ci-status'},[status.replace(/_/g,' ')]),
         impact ? el('span',{class:'ci-impact'},[impact.replace(/_/g,' ')]) : null
@@ -1088,7 +1095,7 @@
       el('div',{class:'ci-title'},[title]),
       el('div',{class:'ci-summary'},[summary]),
       el('div',{class:'ci-meta'},[el('span',{class:'ci-source'},[sourceName])].concat(meta.map(function(x){return el('span',{},[x]);}))),
-      independent.size <= 1 ? el('div',{class:'ci-caveat'},['Single source — TI has not independently confirmed this event.']) : null
+      independent.size <= 1 ? el('div',{class:'ci-caveat'},['Single reporting chain — TI has not independently corroborated this event through a second source.']) : null
     ]);
     card.addEventListener('click',function(){ openCurrentEventModal(event); });
     card.addEventListener('keydown',function(e){ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); openCurrentEventModal(event); } });
@@ -1136,7 +1143,7 @@
       if(source.url) sourceBox.appendChild(el('a',{href:source.url,target:'_blank',rel:'noopener'},['Open source']));
     } else sourceBox.appendChild(el('p',{},['Source attribution is not available in the current dataset.']));
     modal.appendChild(sourceBox);
-    if(independent.size<=1) modal.appendChild(el('div',{class:'ci-caveat'},['Single source — TI has not independently confirmed this event.']));
+    if(independent.size<=1) modal.appendChild(el('div',{class:'ci-caveat'},['Single reporting chain — TI has not independently corroborated this event through a second source.']));
     var actions=el('div',{class:'modal-actions'},[el('button',{class:'btn btn-accent',onclick:closeModal},['Close'])]);
     modal.appendChild(actions);
     backdrop.appendChild(modal); root.innerHTML=''; root.appendChild(backdrop);
@@ -1161,7 +1168,7 @@
     events.slice(0,6).forEach(function(e){grid.appendChild(currentEventCard(e));});
     wrap.appendChild(grid);
     var action=el('div',{class:'ci-home-action'});
-    action.appendChild(el('button',{class:'btn btn-sm',onclick:function(){currentView='CURRENT_INTELLIGENCE';render();}},['Open Current Intelligence']));
+    action.appendChild(el('button',{class:'btn btn-sm',onclick:function(){currentView='CURRENT_INTELLIGENCE';render();}},['View all Current Intelligence']));
     wrap.appendChild(action);
     return wrap;
   }
@@ -1179,7 +1186,7 @@
     });
     wrap.appendChild(el('div',{class:'cb-head'},[
       el('h1',{},['Current Intelligence']),
-      el('p',{},['Published, time-sensitive developments. Select an event for full source and uncertainty detail.'])
+      el('p',{},['Recent developments that may affect travel, movement or operations. Select an event for source, status and uncertainty detail.'])
     ]));
     var filters=el('div',{class:'ci-filters'});
     filters.appendChild(field('Event type',select('ci_type',[{v:'',label:'All types'}].concat(Object.keys(types).sort().map(function(v){return {v:v,label:v.replace(/_/g,' ')};})),currentIntelFilterType)));
