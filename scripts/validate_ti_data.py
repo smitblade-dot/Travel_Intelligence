@@ -46,6 +46,43 @@ def main():
     records = data["records"]
     sources = data["sources"]
 
+    # The public UI joins every collection through country.id / countryId.
+    # Countries may be serialised as an array, so numeric JSON keys are not
+    # valid country identifiers. Catch this class of UI-breaking export before
+    # deployment.
+    countries = data["countries"]
+    if not isinstance(countries, (list, dict)):
+        return fail("countries must be an array or object")
+    country_values = countries if isinstance(countries, list) else list(countries.values())
+    country_ids = set()
+    for country in country_values:
+        cid = str(country.get("id", "")).lower()
+        if not cid:
+            return fail("country is missing id")
+        if cid in country_ids:
+            return fail(f"duplicate country id: {cid}")
+        country_ids.add(cid)
+
+    for record in records:
+        cid = str(record.get("countryId", "")).lower()
+        if cid not in country_ids:
+            return fail(f"record {record.get('id')}: countryId does not reference an existing country: {cid!r}")
+
+    for source in sources:
+        cid = str(source.get("countryId", "")).lower()
+        if cid and cid not in country_ids:
+            return fail(f"source {source.get('id')}: countryId does not reference an existing country: {cid!r}")
+
+    for location in data["locations"]:
+        cid = str(location.get("countryId", "")).lower()
+        if cid and cid not in country_ids:
+            return fail(f"location {location.get('id')}: countryId does not reference an existing country: {cid!r}")
+
+    for event in events:
+        cid = str(event.get("countryId", "")).lower()
+        if cid and cid not in country_ids:
+            return fail(f"event {event.get('id')}: countryId does not reference an existing country: {cid!r}")
+
     if not isinstance(events, list) or not isinstance(observations, list):
         return fail("events and sourceObservations must be arrays")
 
