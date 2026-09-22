@@ -1,225 +1,216 @@
-# Forged Titanium — daily data refresh (this repo)
+# Travel Intelligence — repository operating rules
 
-This repository is a static website (GitHub Pages) — a country travel
-intelligence tool: entry requirements, security, health and emergency
-information for personnel travelling internationally, with an emphasis on
-oil & gas operating regions. `index.html` reads its data from `data.json`
-in this same repo at runtime — nothing else in this repo needs to change
-for a normal data update.
+This repository is the standalone Travel Intelligence (TI) product. It is a
+static GitHub Pages application backed by `data.json`.
 
-You are run here once a day (GitHub Actions cron, 21:00 Cyprus time —
-changed from weekly to daily as of 2026-09-22) to check for and apply
-real changes to `data.json`, then push the update straight to this repo.
-This is an unattended run — there is no one to ask questions; make
-reasonable judgment calls, and finish in one pass: check → (edit
-`data.json` only if something real changed) → commit → push.
+**Repository scope:** only `smitblade-dot/Travel_Intelligence` may be
+modified for TI work. The sibling Crude Flow Intelligence and Gas & LNG
+Intelligence repositories are read-only upstream signal sources.
 
-**No true real-time feed is connected here** (free/public sources only —
-mainly UK gov.uk FCDO travel advice and UK Home Office immigration
-guidance, plus the two sibling oil & gas dashboards — see the new step 0
-below) — daily polling is the closest practical approximation to "kept
-current" that's achievable this way. Most days will find nothing
-materially new for most sources, and that's expected, not a failure.
+## Canonical data model
 
-## Keep it fast and cheap — this is not an unbounded deep-dive every time
+`data.json` uses schema version 2.0 with these top-level collections:
 
-Doing a full re-check of all 89 sources with no prioritisation every
-single run would be slow, expensive, and mostly redundant. Instead:
+`meta`, `countries`, `records`, `sources`, `locations`,
+`events`, `sourceObservations`, `change_log`, `oilGasSummary`.
 
-0. **Check the two sibling oil & gas dashboards for fresh signal (every
-   run, added 2026-09-22).** Before the source triage below, fetch
-   `https://raw.githubusercontent.com/smitblade-dot/crude-flow-dashboard/main/dashboard_data.json`
-   and
-   `https://raw.githubusercontent.com/smitblade-dot/gas-lng-flow-dashboard/main/gas_dashboard_data.json`
-   (plain public reads, no auth needed) and skim their `disruptions` and
-   `change_log` arrays for anything dated since this repo's own
-   `meta.generated`. Where a disruption/change_log entry names a country
-   this repo covers — a new or escalated pipeline attack, kidnapping,
-   port closure, sanctions action, border closure, etc. — treat that
-   country's SECURITY sources as high-priority for step 1's triage below,
-   even if their own `reviewFrequency`/`dateChecked` wouldn't otherwise
-   flag them yet. This is a *signal to go re-check the real FCDO source*,
-   not a source in its own right: never write a record's `content` from
-   the dashboard data directly, and never cite a dashboard as a record's
-   `sourceId` — always verify against and cite the actual gov.uk FCDO (or
-   other official) page before writing anything. If a named disruption
-   doesn't show up on the FCDO page yet, don't invent a record for it;
-   FCDO pages lag real events by days and that's expected.
-1. **Fast triage next (every run).** Read `data.json`'s `sources`
-   collection and rank sources by:
-   - Any source whose `reviewFrequency` says "Monthly" or "Fast-changing"
-     — check these every run. These are almost always `SECURITY` category
-     sources (conflict, terrorism, civil unrest, border areas) where the
-     situation genuinely moves day to day.
-   - Any source whose `dateChecked` is now older than the interval implied
-     by its own `reviewFrequency` (e.g. "Every 3-6 months" and it's been
-     4+ months; "Every 12 months" and it's been 13+ months).
-   - Everything else (health, electrical standards, general reference
-     pages) can wait — check these opportunistically as time/turns allow,
-     lowest priority.
-2. **Re-fetch each prioritised source's `url`** (WebFetch) and compare
-   against the `records` that cite it (`records` where `sourceId` matches
-   that source's doc id in `data.json`).
-3. **If the guidance has materially changed** (a new visa fee, a changed
-   emergency number, an escalated/de-escalated security warning, a new
-   entry requirement, a resolved or worsened conflict situation, etc.),
-   update that record's `content` (and `dataType`/`confidence` if
-   warranted), set `dateChecked` to today and `reviewDate` to today plus
-   the interval implied by the source's `reviewFrequency`. Also update the
-   source's own `dateChecked` to today.
-4. **If nothing has changed** for a source you did check, just bump that
-   source's `dateChecked` (and the `dateChecked`/`reviewDate` of the
-   records citing it) so the data honestly reflects it was re-verified —
-   don't rewrite unchanged prose just to have something to show.
-5. **If a source's page is gone (404) or has clearly been superseded**,
-   don't delete anything — instead set that source's `notes` to flag it
-   (e.g. `"URL returned 404 as of 2026-09-30 — needs manual review"`) and
-   leave `active` as-is for a human to decide.
-6. **If the fast triage finds nothing needing a change at all:** don't
-   force an edit to any source/record. Just update `meta.generated` to
-   the current timestamp (see below), commit, and push, so the site's
-   "data as of …" indicator stays honest and current.
+### Baseline intelligence
 
-## Conventions — do not change without being told to
+`records` contains relatively stable travel intelligence. Existing records
+are **grandfathered** and retain their `sourceId`; do not mass-create
+historical observations merely to make the counts match another system.
 
-- **`meta.generated` is a full timestamp, not just a date** — set it to
-  the current time as ISO 8601 UTC, e.g. `2026-09-23T21:05:12Z`, every
-  single run (whether or not anything else changed). This is what the
-  site's "data as of …" indicator displays.
-- **Confidence tagging.** Every record carries a `confidence` of `HIGH`,
-  `MEDIUM`, or `LOW`. Never invent a precise detail you don't have a real
-  source for. Never collapse ENTRY, SECURITY, HEALTH and EMERGENCY
-  information into one vague record — keep them conceptually distinct
-  even within one country.
-- **`countryId` uses lowercase ISO-2** (e.g. `"sa"`, `"iq"`, `"gb"`) and
-  must match an existing key in `countries`. Don't invent new countries in
-  a normal refresh run — that's a separate, deliberate exercise.
-- **The United Kingdom (`gb`) has no FCDO self-advice page** (FCDO
-  publishes advice for other countries, not for the UK's own government)
-  — its sources are UK Home Office immigration guidance instead. Its
-  `gb-security-general` and `gb-health-nhs` records are Claude's own
-  contextual summary rather than a sourced FCDO record like every other
-  country, and are flagged as such in their `notes` field — preserve that
-  flag; don't remove it or make it look like an FCDO citation.
-- Do not touch `locations` in a normal refresh — location hierarchies are
-  a separate, deliberate exercise (only Iraq and Saudi Arabia have any at
-  present).
-- **Never touch `oilGasSummary` yourself.** By the time you (Claude) run
-  each day, a separate, deterministic step
-  (`python3 scripts/refresh_oilgas.py`, no AI involved) has already run
-  earlier in the same workflow and refreshed it in place from the sibling
-  `crude-flow-dashboard` and `gas-lng-flow-dashboard` repos — see "Oil &
-  gas summary — automated, not your job" below. Its changes will already
-  be sitting in your working tree; just leave that key alone and commit
-  normally (`git add data.json` picks up its changes along with yours,
-  which is expected and correct). Don't re-derive it, don't "fix" it,
-  don't revert it if it looks different from yesterday — that's the
-  refresh working as intended.
-- **Do not touch `assets/img/*.jpg`** (the subtle background photography)
-  or the `<style>` block in a normal refresh — visual/branding changes are
-  a separate, deliberate exercise.
+The underlying 14 category keys remain distinct:
 
-## Oil & gas summary — automated, not your job
+SECURITY, ENTRY, HEALTH, EMERGENCY, TRANSPORT, ENVIRONMENT, INSURANCE,
+LAWS_CULTURE, COMMUNICATIONS, FINANCE, LANGUAGE, ACCOMMODATION, EQUIPMENT,
+TRAINING.
 
-`oilGasSummary` (per-country crude + gas/LNG production, infrastructure
-and disruption data, surfaced on the site's "Oil & Gas" tab/section) is
-kept current fully automatically, without any AI step, so it never
-depends on you noticing it's stale or on anyone pushing a manual update:
+The UI may group these into fewer display groups, but the stored category
+keys must not be deleted or merged. Empty categories remain visible with a
+zero count.
 
-- `scripts/refresh_oilgas.py` fetches the current `data.json` straight
-  from the `crude-flow-dashboard` and `gas-lng-flow-dashboard` repos
-  (raw.githubusercontent.com — always their latest `main`), matches
-  countries via the hand-checked `oilgas-country-map.json` (iso2 ->
-  `{crude, gas}` name in each dashboard), rebuilds each country's
-  `crude`/`gas` summary object, and writes the result into this repo's
-  `data.json` under `oilGasSummary`. It's stdlib-only Python — no
-  dependencies to install on the runner.
-- The GitHub Actions workflow (`.github/workflows/daily-data-refresh.yml`)
-  runs this script as its own step, every day, before the Claude step —
-  so it's on a schedule and requires nobody to run or push anything.
-  It's deliberately defensive: if either dashboard is unreachable, or the
-  data doesn't look sane (too few countries built), it logs a warning and
-  leaves the existing `oilGasSummary` untouched rather than risking a
-  bad or empty overwrite. It never fails the job.
-- A workflow-level "safety-net commit" step runs after the Claude step and
-  pushes anything still uncommitted — so even if the Claude step errors
-  out entirely, today's oil & gas refresh (and anything else already
-  staged) still reaches GitHub.
-- If a new country is added to this repo's `countries` collection (a
-  separate, deliberate exercise per the conventions above) and it should
-  get oil & gas coverage too, add it to `oilgas-country-map.json` by hand
-  — check the exact spelling of its name in each dashboard's own
-  `data.json` `countries` list first; don't guess. Jordan (`jo`) has no
-  entry in that map on purpose — it isn't a producer/transit country in
-  either dashboard.
-- This mechanism is entirely separate from you and from the FCDO/Home
-  Office triage below. You never run `refresh_oilgas.py` yourself, never
-  edit `oilgas-country-map.json`, and never fetch the two dashboards —
-  just leave `oilGasSummary` exactly as you find it.
+### Current Intelligence
 
-## `data.json` structure
+Current Intelligence is event-based, not a collection of rewritten country
+records.
 
-Top-level keys: `meta`, `countries`, `sources`, `records`, `locations`,
-`change_log`, `oilGasSummary`. Read the current file first to see the
-exact shape of each row before editing — don't guess field names.
+`events` represents a discrete current event and may contain:
 
-- `countries`: keyed by lowercase ISO-2. Basic country facts (capital,
-  currency, driving side, plug type, region, `oilGas` flag, etc.) plus a
-  `notes` field. Not normally touched by a refresh run.
-- `sources`: keyed by an id like `"sa-fcdo-entry"`. Fields: `countryId`,
-  `organisation`, `sourceName`, `sourceType` (`GOVERNMENT` /
-  `INTERNATIONAL_ORGANISATION` / `SPECIALIST` / `COMMERCIAL` /
-  `GENERAL_WEB`), `confidence`, `url`, `dateChecked`, `reviewFrequency`,
-  `notes`, `active`.
-- `records`: keyed by an id like `"sa-entry-passport"`. Fields:
-  `countryId`, `locationId` (usually `null` — country-wide), `category`
-  (`ENTRY` / `SECURITY` / `HEALTH` / `EMERGENCY` / one of the other 9
-  categories the taxonomy defines but that aren't populated yet),
-  `subcategory`, `title`, `content`, `dataType` (`FACT` / `REQUIREMENT` /
-  `CONSIDERATION` / `WARNING` / `CONTACT` / `STATISTIC` / `PROCEDURE`),
-  `confidence`, `sourceId`, `status` (`ACTIVE`/`DRAFT`/`ARCHIVED`),
-  `dateChecked`, `reviewDate`, `notes`.
-- `locations`: keyed by an id like `"loc-iq-zubair"`. Nested hierarchy via
-  `parentLocationId`. Not touched by a normal refresh.
-- `oilGasSummary`: keyed by lowercase ISO-2. Each entry has an optional
-  `crude` and/or `gas` object (commodity, main export points, primary
-  route, production, infrastructure with a Red/Amber/Blue/Green
-  `worst_status`, active disruptions, and its own `source_generated`/
-  `source_title`). Refreshed automatically by `scripts/refresh_oilgas.py`
-  before you run — never touched by you (see above).
-- `change_log`: append one row for **every** substantive edit made this
-  run (a corrected figure, an escalated/de-escalated warning, a changed
-  requirement). Fields: `change_id` (increment from the highest existing,
-  start at 1 if empty), `timestamp` (full ISO 8601 UTC, same as this run's
-  `meta.generated`), `date`, `category` (e.g. `"Correction"`, `"Escalation"`,
-  `"De-escalation"`, `"Resolved"`), `countryId`, `summary`, `detail`,
-  `confidence`, `source`. If nothing changed this run, don't add a row
-  just to have one.
+- `id`, title/summary and event type
+- country/location/geographic scope
+- event date/time and update timestamps
+- `eventStatus`
+- `publicationStatus`
+- operational impact
+- uncertainty and relationships
+- legal/compliance review fields where required
 
-## What to do, step by step
+Allowed event statuses:
 
-By the time you run, `scripts/refresh_oilgas.py` has already executed as
-an earlier step in this same workflow run and updated `oilGasSummary` in
-`data.json` directly (see above) — that's already done and is not part
-of what follows.
+`EARLY_REPORT`, `REPORTED`, `LOCAL_REPORT`, `UNVERIFIED`,
+`CORROBORATED`, `CONFIRMED`, `DISPUTED`, `FALSE`, `CORRECTED`,
+`SUPERSEDED`, `RESOLVED`.
 
-1. Read the current `data.json` in this repo (this already reflects
-   today's oil & gas refresh — leave that part as-is).
-2. Do the dashboard signal check (step 0 above), then run the fast triage
-   to build a prioritised list of sources to re-check this run.
-3. For each prioritised source, WebFetch its `url` and compare against
-   the records citing it.
-4. Edit `data.json` in place with any real changes, following the schema
-   and conventions above (including `change_log` where applicable).
-   Keep the file valid JSON (check it parses) and keep `meta.counts` in
-   sync with the actual number of entries in each collection if you add
-   or remove anything.
-5. Always set `meta.generated` to the current ISO 8601 UTC timestamp,
-   then commit (message like `Data refresh — 2026-09-23T21:05Z` — or note
-   what changed if something did) and push, using git directly:
-   `git add data.json && git commit -m "..." && git push`. Do not touch
-   any other file in this repo during a normal refresh.
+Allowed publication statuses:
 
-Do not wait for approval or ask a question — this is a scheduled,
-unattended run. Do not touch anything outside this repository (no other
-repos, no external services) as part of this task.
+`DRAFT`, `INTERNAL_REVIEW`, `PUBLISHED`, `WITHDRAWN`.
+
+Only `PUBLISHED` events are shown publicly.
+
+Do not invent an event because another dashboard or social source mentions it.
+A specialist oil/gas dashboard is a signal for investigation, not an
+authoritative TI event source.
+
+## Source observations and provenance
+
+`sourceObservations` records what a particular source actually reported.
+
+Every new observation MUST:
+
+- reference exactly one primary target: `recordId` OR `eventId`
+- contain `sourceId`, `sourceUrl` and `extractedClaim`
+- have an `independenceGroupId`
+- preserve observation status and source provenance
+- preserve original language and translation method when translation is used
+
+Never set both `recordId` and `eventId`, and never leave both empty.
+
+Independence groups represent the underlying reporting chain. Syndicated or
+copied reporting should normally share a group; genuinely independent
+organisations may use separate groups. When uncertain, be conservative.
+
+Source quality is separate from event status:
+
+A = authoritative official/international/directly affected party within remit
+B = established professional media
+C = recognised specialist/trade/professional body
+D = identifiable local/professional OSINT with demonstrable local presence
+E = social/unverified
+F = unknown/anonymous
+
+Do not treat a high-quality source as proof that an event is confirmed.
+Likewise, an event can be confirmed while a secondary source remains lower
+quality.
+
+### Rights and access
+
+Where known, source/observation provenance may include:
+
+- `contentRights`
+- `accessMethod`
+- `automationPermission`
+- `originalLanguage`
+- `geographicScope`
+- `jurisdiction`
+
+Use conservative values when rights or automation permission are unknown.
+Do not assume that public web access grants a right to reproduce source text.
+
+AI translation must retain the original language/source and identify the
+translation method. Do not replace the original source with translated prose.
+
+## Evidence rules
+
+- Discovery and verification are separate steps.
+- Wikipedia is supplementary only.
+- Social/local OSINT can provide early warning but does not automatically
+  become authoritative fact.
+- Preserve uncertainty explicitly.
+- Do not silently turn an early report into a confirmed event.
+- If evidence is insufficient, keep the event in review/draft rather than
+  filling the gap with inference.
+- Corrections, withdrawals and supersession should preserve provenance rather
+  than silently overwriting history.
+
+## Public UI rules
+
+The public application is read-only. It consumes static `data.json`; it
+must not depend on `window.claude.use('db')` or an artifact-only runtime.
+
+Current Intelligence appears before Hotspots on the home view.
+
+Visible baseline groups:
+
+1. TRAVEL ESSENTIALS
+2. TRAVEL PREPARATION
+3. OPERATIONAL PREPARATION
+4. CURRENT INTELLIGENCE
+
+The underlying 14 category keys remain unchanged.
+
+Current Intelligence cards/details must provide source attribution. When an
+event has only one independent source, display a clear text caveat that TI
+has not independently confirmed the event.
+
+Do not expose internal independence groups, legal-review notes, internal
+uncertainty notes, internal feed IDs or other operational metadata on the
+public UI unless deliberately promoted to a public field.
+
+The public visual system is dark and belongs to TI itself. Do not add
+FORGEDTITANIUM LTD branding to headers, navigation, titles or descriptions.
+
+The exact legal footer text must remain:
+
+FORGEDTITANIUM LTD a Company Registered in the Republic of Cyprus,
+
+Reg No: HE 490451
+
+## Oil & gas integration
+
+`oilGasSummary` is an upstream specialist signal layer. It remains
+independent from TI's event/source-observation model.
+
+`scripts/refresh_oilgas.py` may read the sibling crude-flow-dashboard and
+gas-lng-flow-dashboard repositories. It must never modify those repositories.
+
+Do not manually rewrite `oilGasSummary` during normal TI intelligence
+triage. If the deterministic refresh fails or produces an implausibly small
+dataset, preserve the previous summary rather than partially overwriting it.
+
+## Automation
+
+Normal refreshes must:
+
+1. read the current `data.json`;
+2. check specialist oil/gas dashboards for signals;
+3. prioritise current/security sources for verification;
+4. verify claims against the actual source;
+5. update only substantiated changes;
+6. create a SourceObservation for every newly created/updated intelligence
+   item where the architecture requires one;
+7. preserve provenance and uncertainty;
+8. keep `meta.counts` accurate;
+9. update `meta.generated`;
+10. validate the JSON before commit.
+
+Run `python3 scripts/validate_ti_data.py` before committing data-model
+changes.
+
+Never fabricate source URLs, event IDs, publication dates, observations,
+corroboration or confidence.
+
+## Migration policy
+
+The TI architecture migration is deliberately additive:
+
+- existing countries, baseline records, sources, locations, change_log and
+  oilGasSummary are preserved;
+- `events` and `sourceObservations` are added without rewriting the
+  grandfathered baseline;
+- no historical observation backfill is required for all existing records;
+- future new records/events require real source observations;
+- event content from the Claude artifact must not be reconstructed from
+  memory or approximate values — use an exact export/snapshot when migrating
+  those objects.
+
+Do not replace `data.json` wholesale with an artifact export. Merge
+architectural improvements into the existing GitHub dataset.
+
+## Normal refresh discipline
+
+Do not make unrelated UI/branding changes during a data refresh.
+Do not modify sibling repositories.
+Do not delete historical data simply because a source is temporarily
+unavailable.
+Do not force changes when verification finds no material update.

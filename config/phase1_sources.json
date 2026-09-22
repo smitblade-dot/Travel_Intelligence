@@ -1,0 +1,84 @@
+{
+  "schemaVersion": "1.0",
+  "purpose": "Machine-readable Phase 1 source registry. Collection creates reviewable signals; it does not publish events automatically.",
+  "sources": [
+    {
+      "id": "ourairports-airports",
+      "category": "AIRPORTS",
+      "name": "OurAirports",
+      "kind": "reference",
+      "url": "https://ourairports.com/data/",
+      "endpoint": "https://ourairports.com/airports.csv",
+      "accessMethod": "csv",
+      "priority": "P0",
+      "rights": "public-domain",
+      "automationPermission": "yes",
+      "notes": "Canonical airport reference layer. Do not treat as live operational status."
+    },
+    {
+      "id": "gdelt-events",
+      "category": "NEWS_EVENTS",
+      "name": "GDELT",
+      "kind": "discovery",
+      "url": "https://gdeltproject.org/",
+      "endpoint": "https://api.gdeltproject.org/api/v2/doc/doc?query=airport%20closure&mode=artlist&format=json&maxrecords=20",
+      "accessMethod": "http-json",
+      "priority": "P0",
+      "rights": "source-specific",
+      "automationPermission": "yes",
+      "notes": "Discovery only. Follow the original source before creating a TI event."
+    },
+    {
+      "id": "gdacs-alerts",
+      "category": "DISASTERS",
+      "name": "GDACS",
+      "kind": "alert",
+      "url": "https://www.gdacs.org/",
+      "endpoint": "https://www.gdacs.org/gdacsapi/api/events/geteventlist/SEARCH",
+      "accessMethod": "http-json",
+      "priority": "P0",
+      "rights": "source-specific",
+      "automationPermission": "yes",
+      "notes": "Disaster signal source. Endpoint availability/schema should be validated at runtime."
+    },
+    {
+      "id": "nasa-firms",
+      "category": "FIRE",
+      "name": "NASA FIRMS",
+      "kind": "observation",
+      "url": "https://firms.modaps.eosdis.nasa.gov/",
+      "endpoint": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/",
+      "accessMethod": "api-key",
+      "priority": "P0",
+      "rights": "source-specific",
+      "automationPermission": "yes",
+      "notes": "Requires FIRMS MAP_KEY. Keep key in GitHub Actions secrets; never commit it."
+    },
+    {
+      "id": "adsblol-aircraft",
+      "category": "AVIATION",
+      "name": "ADSB.lol",
+      "kind": "live-signal",
+      "url": "https://www.adsb.lol/",
+      "endpoint": "https://api.adsb.lol/v2/all",
+      "accessMethod": "http-json",
+      "priority": "P0",
+      "rights": "odbl",
+      "automationPermission": "yes",
+      "notes": "Use as an aircraft signal, not as sole proof of airport/airspace status."
+    },
+    {
+      "id": "reliefweb-disasters",
+      "category": "HUMANITARIAN",
+      "name": "ReliefWeb",
+      "kind": "discovery",
+      "url": "https://reliefweb.int/",
+      "endpoint": "https://api.reliefweb.int/v1/reports?appname=travel-intelligence",
+      "accessMethod": "http-json",
+      "priority": "P0",
+      "rights": "source-specific",
+      "automationPermission": "yes",
+      "notes": "Discovery/corroboration. Original report rights remain with the publisher."
+    }
+  ]
+}

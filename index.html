@@ -1,5 +1,5 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>Forged Titanium — Country Travel Intelligence</title>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#23272c;color:#c9cfd5}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Travel Intelligence</title>
 <link rel="icon" href="./icons/icon-192.png">
 <link rel="apple-touch-icon" href="./icons/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -7,23 +7,23 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg-0:#faf9f5; --bg-1:#f3f1ea; --bg-2:#ece9e0;
-    --bg:#faf9f5; --surface:#ffffff; --surface-2:#f3f1ea; --border:#ddd9cd;
-    --text:#20201c; --text-dim:#5c5a52; --text-faint:#838075;
-    --accent:#1d6fd1; --accent-ink:#ffffff; --accent-soft:rgba(29,111,209,0.10);
-    --link:#1d6fd1;
-    --good:#1f8a4c; --good-soft:rgba(31,138,76,0.12);
-    --warn:#a86a00; --warn-soft:rgba(168,106,0,0.12);
-    --crit:#c22232; --crit-soft:rgba(194,34,50,0.10);
+    --bg-0:#23272c; --bg-1:#2f353b; --bg-2:#3a4148;
+    --bg:#23272c; --surface:linear-gradient(160deg,rgba(255,255,255,.035),rgba(255,255,255,0)); --surface-2:#2f353b; --border:rgba(255,255,255,.14);
+    --text:#c9cfd5; --text-dim:#9aa2a9; --text-faint:#969ea6;
+    --accent:#2b7cff; --accent-ink:#fff; --accent-soft:rgba(43,124,255,.12);
+    --link:#5b9aff;
+    --good:#58c98a; --good-soft:rgba(88,201,138,.12);
+    --warn:#e7b45c; --warn-soft:rgba(231,180,92,.12);
+    --crit:#ff2b3a; --crit-soft:rgba(255,43,58,.12);
     --mono: 'Space Grotesk', ui-monospace, SFMono-Regular, Menlo, monospace;
     --sans: 'Space Grotesk', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     --disp: 'Space Grotesk', var(--sans);
-    --radius: 4px;
+    --radius:6px;
   }
   *{box-sizing:border-box;}
   html,body{ height:100%; }
   body{
-    background:var(--bg);
+    background:linear-gradient(180deg,var(--bg-0),var(--bg-1) 55%,var(--bg-2));
     color:var(--text); font-family:var(--sans); font-size:15px; line-height:1.5;
     position:relative;
   }
@@ -39,7 +39,7 @@
   .data-asof b{ color:var(--text-dim); font-weight:600; letter-spacing:0.08em; }
 
   /* ---------- topbar ---------- */
-  .topbar{ position:sticky; top:env(safe-area-inset-top,0px); z-index:20; background:rgba(250,249,245,0.92); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:space-between; gap:16px; padding-block:16px 12px; flex-wrap:wrap; border-bottom:1px solid var(--border); }
+  .topbar{ position:sticky; top:env(safe-area-inset-top,0px); z-index:20; background:rgba(35,39,44,.92); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:space-between; gap:16px; padding-block:16px 12px; flex-wrap:wrap; border-bottom:1px solid var(--border); }
   .brand{ display:flex; align-items:center; gap:10px; }
   .brand-text{ display:flex; flex-direction:column; line-height:1.15; border-inline-start:3px solid var(--accent); padding-inline-start:10px; color:var(--text); }
   .brand-name{ font-family:var(--disp); font-weight:700; font-size:16px; letter-spacing:0.14em; color:var(--text); }
@@ -47,7 +47,7 @@
   .topbar-actions{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
   .search-wrap input{ width:220px; max-width:48vw; background:var(--surface); border:1px solid var(--border); color:var(--text); border-radius:var(--radius); padding:8px 10px; font-family:var(--sans); font-size:13.5px; }
   .search-wrap input:focus{ outline:2px solid var(--accent); outline-offset:1px; }
-  .admin-toggle{ display:flex; align-items:center; gap:7px; font-family:var(--mono); font-size:11px; letter-spacing:0.05em; text-transform:uppercase; color:var(--text-dim); cursor:pointer; user-select:none; }
+  .admin-toggle{ display:none; align-items:center; gap:7px; font-family:var(--mono); font-size:11px; letter-spacing:0.05em; text-transform:uppercase; color:var(--text-dim); cursor:pointer; user-select:none; }
   .admin-toggle input{ appearance:none; width:30px; height:17px; border-radius:20px; background:var(--surface-2); border:1px solid var(--border); position:relative; cursor:pointer; transition:background .15s; }
   .admin-toggle input::after{ content:""; position:absolute; top:1px; left:1px; width:13px; height:13px; border-radius:50%; background:var(--text-faint); transition:transform .15s; }
   .admin-toggle input:checked{ background:var(--accent-soft); border-color:var(--accent); }
@@ -141,7 +141,7 @@
 
   /* ---------- location tree / manager ---------- */
   .loc-tree{ display:flex; flex-direction:column; gap:4px; margin-block-end:14px; }
-  .loc-row{ display:flex; align-items:center; gap:8px; padding:7px 9px; background:var(--bg); border:1px solid var(--border); border-radius:var(--radius); }
+  .loc-row{ display:flex; align-items:center; gap:8px; padding:7px 9px; background:linear-gradient(180deg,var(--bg-0),var(--bg-1) 55%,var(--bg-2)); border:1px solid var(--border); border-radius:var(--radius); }
   .loc-row .loc-name{ font-weight:600; font-size:13px; }
   .loc-row .loc-type{ font-family:var(--mono); font-size:9.5px; color:var(--text-faint); border:1px solid var(--border); border-radius:3px; padding:1px 5px; }
   .loc-row .loc-actions{ margin-inline-start:auto; display:flex; gap:4px; }
@@ -242,7 +242,7 @@
   .field{ display:flex; flex-direction:column; gap:4px; margin-block-end:12px; }
   .field-row{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
   .field label{ font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--text-dim); }
-  .field input, .field select, .field textarea{ background:var(--bg); border:1px solid var(--border); color:var(--text); border-radius:var(--radius); padding:8px 9px; font-family:var(--sans); font-size:13.5px; width:100%; }
+  .field input, .field select, .field textarea{ background:linear-gradient(180deg,var(--bg-0),var(--bg-1) 55%,var(--bg-2)); border:1px solid var(--border); color:var(--text); border-radius:var(--radius); padding:8px 9px; font-family:var(--sans); font-size:13.5px; width:100%; }
   .field textarea{ min-height:70px; resize:vertical; font-family:var(--sans); }
   .field input:focus, .field select:focus, .field textarea:focus{ outline:2px solid var(--accent); outline-offset:1px; }
   .modal-actions{ display:flex; justify-content:flex-end; gap:8px; margin-block-start:16px; }
@@ -251,16 +251,58 @@
 
   footer.statusbar{ font-family:var(--mono); font-size:10.5px; color:var(--text-faint); text-align:center; padding-block:14px calc(14px + env(safe-area-inset-bottom,0px)); border-top:1px solid var(--border); }
 
+  @media (max-width:700px){
+    .ci-filters{grid-template-columns:1fr;}
+    .ci-detail-grid{grid-template-columns:1fr;}
+  }
   @media (max-width:520px){
     .field-row{ grid-template-columns:1fr; }
     .search-wrap input{ width:150px; }
     .ch-top{ flex-wrap:wrap; }
     .ch-admin{ margin-inline-start:0; }
+    #app{padding-inline:12px;}
+    .topbar{gap:10px;}
+    .topbar-actions{width:100%;}
+    .search-wrap{width:100%;}
+    .search-wrap input{width:100%;max-width:none;}
+    .ci-grid{grid-template-columns:1fr;}
+    .category-grid{grid-template-columns:1fr 1fr;}
   }
+
+  .hotspot-card,.continent-card,.country-card,.category-card,.cb-row,.record-card,.country-header,.source-card,.ov-card,.modal,.offline-note{box-shadow:inset 0 1px 0 rgba(255,255,255,.025);}
+  button:hover{box-shadow:0 0 0 1px rgba(43,124,255,.08),0 0 18px rgba(43,124,255,.06);}
+  :focus-visible{outline:2px solid var(--accent)!important;outline-offset:2px;}
+  .ci-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:10px;}
+  .ci-card{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--crit);border-radius:var(--radius);padding:14px 16px;cursor:pointer;text-align:left;color:var(--text);}
+  .ci-card:hover{border-color:var(--accent);transform:translateY(-1px);}
+  .ci-top{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:8px;}
+  .ci-status,.ci-impact,.ci-source{font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;border:1px solid var(--border);padding:2px 6px;border-radius:3px;color:var(--text-dim);}
+  .ci-status{color:var(--accent);border-color:var(--accent);}
+  .ci-title{font-family:var(--disp);font-size:15px;font-weight:700;line-height:1.3;margin-bottom:5px;}
+  .ci-summary{font-size:12.5px;color:var(--text-dim);line-height:1.45;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+  .ci-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;padding-top:8px;border-top:1px solid var(--border);font-family:var(--mono);font-size:10px;color:var(--text-faint);}
+  .ci-caveat{margin-top:8px;font-family:var(--mono);font-size:10px;color:var(--warn);}
+  .ci-empty{padding:18px 0;color:var(--text-faint);font-size:13px;}
+  .legal-footer{font-family:var(--mono);font-size:9.5px;line-height:1.55;color:var(--text-faint);text-align:center;padding:16px 12px;border-top:1px solid var(--border);margin-top:18px;}
+  .category-group{margin-block-end:22px;}
+  .ci-home-action{margin-top:10px;display:flex;justify-content:flex-start;}
+  .ci-filters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-block:4px 18px;padding:12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);}
+  .ci-filters .field{margin:0;}
+  .ci-detail-modal{max-width:680px;}
+  .ci-detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-block-end:14px;}
+  .ci-detail-item{display:flex;flex-direction:column;gap:2px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);padding:9px 10px;}
+  .ci-detail-item label,.ci-detail-label{font-family:var(--mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-faint);}
+  .ci-detail-item span{font-size:12.5px;font-weight:600;}
+  .ci-detail-section{padding-top:11px;margin-top:11px;border-top:1px solid var(--border);}
+  .ci-detail-section p{font-size:13px;color:var(--text-dim);margin:5px 0 0;white-space:pre-wrap;}
+  .ci-detail-source-name{font-weight:700;font-size:13px;margin:4px 0;}
+  .ci-card{cursor:pointer;}
+
+
 </style>
 
 <div id="app">
-  <div class="data-asof" id="dataAsOf"><span class="dot"></span> Connecting to database…</div>
+  <div class="data-asof" id="dataAsOf"><span class="dot"></span> Loading TI data…</div>
   <header class="topbar">
     <div class="brand">
       <button class="brand-text" id="brandHomeBtn" style="background:none;border:none;cursor:pointer;text-align:start;">
@@ -824,9 +866,14 @@
   var allRecords = seedRecordsArray();  // every record, every country; replaced wholesale once live
   var allSources = seedSourcesMap();    // id -> source, every country; replaced wholesale once live
   var allLocations = seedLocationsMap();// id -> location, every country; replaced wholesale once live
+  var allEvents = [];
+  var allSourceObservations = [];
   var currentIso2 = null;
-  var currentView = 'HOME';             // 'HOME' | 'CATEGORY_BROWSE' | 'CONTINENT'
-  var currentCategoryBrowse = null;     // category key when currentView is CATEGORY_BROWSE
+  var currentView = 'HOME';             // 'HOME' | 'CATEGORY_BROWSE' | 'CONTINENT' | 'CURRENT_INTELLIGENCE'
+  var currentCategoryBrowse = null;
+  var currentIntelFilterType = '';
+  var currentIntelFilterCountry = '';
+  var currentIntelFilterStatus = '';     // category key when currentView is CATEGORY_BROWSE
   var currentContinent = null;          // region name when currentView is CONTINENT
   var currentCategory = 'OVERVIEW';
   var currentRecords = [];     // records for currentIso2, refreshed from allRecords
@@ -906,6 +953,8 @@
     main.innerHTML = '';
     if(currentIso2){
       main.appendChild(renderCountry());
+    } else if(currentView === 'CURRENT_INTELLIGENCE'){
+      main.appendChild(renderCurrentIntelligencePage());
     } else if(currentView === 'CATEGORY_BROWSE'){
       main.appendChild(renderCategoryBrowse(currentCategoryBrowse));
     } else if(currentView === 'CONTINENT'){
@@ -982,6 +1031,167 @@
     ]);
   }
 
+
+  function publishedCurrentEvents(){
+    return (allEvents || []).filter(function(e){ return e && e.publicationStatus === 'PUBLISHED'; })
+      .sort(function(a,b){ return String(b.eventDate||b.updatedAt||'').localeCompare(String(a.eventDate||a.updatedAt||'')); });
+  }
+  function ciSourceForEvent(event){
+    var ids=[];
+    (allSourceObservations||[]).forEach(function(o){ if(o.eventId===event.id && o.sourceId) ids.push(o.sourceId); });
+    for(var i=0;i<ids.length;i++){ if(allSources[ids[i]]) return allSources[ids[i]]; }
+    return null;
+  }
+  function ciIndependentGroups(event){
+    var independent=new Set();
+    (allSourceObservations||[]).forEach(function(o){
+      if(o.eventId===event.id && o.independenceGroupId) independent.add(o.independenceGroupId);
+    });
+    return independent;
+  }
+
+  function ciObservationsForEvent(event){
+    return (allSourceObservations||[]).filter(function(o){ return o.eventId===event.id; });
+  }
+
+  function ciSourceForEvent(event){
+    var obs=ciObservationsForEvent(event);
+    for(var i=0;i<obs.length;i++){
+      if(obs[i].sourceId && allSources[obs[i].sourceId]) return allSources[obs[i].sourceId];
+    }
+    return null;
+  }
+
+  function ciEventImpact(event){
+    var impact=event.impactType || event.operationalImpact || '';
+    return Array.isArray(impact) ? impact.join(' · ') : String(impact);
+  }
+
+  function currentEventCard(event){
+    var source=ciSourceForEvent(event);
+    var independent=ciIndependentGroups(event);
+    var c=event.countryId && countries[event.countryId] ? countries[event.countryId] : null;
+    var title=event.title || event.name || 'Current intelligence event';
+    var summary=event.summary || event.description || event.extractedClaim || '';
+    var status=event.eventStatus || 'REPORTED';
+    var impact=ciEventImpact(event);
+    var sourceName=source ? (source.sourceName || source.organisation || 'Source') : 'Source attribution pending';
+    var meta=[];
+    if(c) meta.push(c.name);
+    if(event.eventDate) meta.push(fmtDate(event.eventDate));
+    if(event.lastUpdated) meta.push('Updated '+fmtDate(event.lastUpdated));
+    var card=el('article',{class:'ci-card',tabindex:'0',role:'button','aria-label':'Open '+title},[
+      el('div',{class:'ci-top'},[
+        el('span',{class:'ci-status'},[status.replace(/_/g,' ')]),
+        impact ? el('span',{class:'ci-impact'},[impact.replace(/_/g,' ')]) : null
+      ]),
+      el('div',{class:'ci-title'},[title]),
+      el('div',{class:'ci-summary'},[summary]),
+      el('div',{class:'ci-meta'},[el('span',{class:'ci-source'},[sourceName])].concat(meta.map(function(x){return el('span',{},[x]);}))),
+      independent.size <= 1 ? el('div',{class:'ci-caveat'},['Single source — TI has not independently confirmed this event.']) : null
+    ]);
+    card.addEventListener('click',function(){ openCurrentEventModal(event); });
+    card.addEventListener('keydown',function(e){ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); openCurrentEventModal(event); } });
+    return card;
+  }
+
+  function openCurrentEventModal(event){
+    var root=document.getElementById('modalRoot');
+    var source=ciSourceForEvent(event);
+    var independent=ciIndependentGroups(event);
+    var obs=ciObservationsForEvent(event);
+    var c=event.countryId && countries[event.countryId] ? countries[event.countryId] : null;
+    var title=event.title || event.name || 'Current intelligence event';
+    var impact=ciEventImpact(event);
+    var backdrop=el('div',{class:'modal-backdrop',onclick:function(e){if(e.target===backdrop)closeModal();}});
+    var modal=el('div',{class:'modal ci-detail-modal','aria-labelledby':'ciDetailTitle'});
+    modal.appendChild(el('h2',{id:'ciDetailTitle'},[title]));
+    modal.appendChild(el('div',{class:'ci-detail-grid'},[
+      ciDetail('Status',String(event.eventStatus||'REPORTED').replace(/_/g,' ')),
+      ciDetail('Publication',String(event.publicationStatus||'').replace(/_/g,' ')),
+      c ? ciDetail('Country',c.name) : null,
+      event.eventDate ? ciDetail('Event date',fmtDate(event.eventDate)) : null,
+      event.lastUpdated ? ciDetail('Last updated',fmtDate(event.lastUpdated)) : null,
+      impact ? ciDetail('Impact',impact.replace(/_/g,' ')) : null,
+      ciDetail('Independent sources',String(independent.size)),
+      ciDetail('Observations',String(obs.length))
+    ]));
+    if(event.summary || event.description){
+      modal.appendChild(el('div',{class:'ci-detail-section'},[
+        el('div',{class:'ci-detail-label'},['SUMMARY']),
+        el('p',{},[event.summary || event.description])
+      ]));
+    }
+    if(event.uncertaintyNotes){
+      modal.appendChild(el('div',{class:'ci-detail-section'},[
+        el('div',{class:'ci-detail-label'},['UNCERTAINTY']),
+        el('p',{},[event.uncertaintyNotes])
+      ]));
+    }
+    var sourceBox=el('div',{class:'ci-detail-section'},[
+      el('div',{class:'ci-detail-label'},['SOURCE'])
+    ]);
+    if(source){
+      sourceBox.appendChild(el('div',{class:'ci-detail-source-name'},[source.sourceName || source.organisation || 'Source']));
+      if(source.url) sourceBox.appendChild(el('a',{href:source.url,target:'_blank',rel:'noopener'},['Open source']));
+    } else sourceBox.appendChild(el('p',{},['Source attribution is not available in the current dataset.']));
+    modal.appendChild(sourceBox);
+    if(independent.size<=1) modal.appendChild(el('div',{class:'ci-caveat'},['Single source — TI has not independently confirmed this event.']));
+    var actions=el('div',{class:'modal-actions'},[el('button',{class:'btn btn-accent',onclick:closeModal},['Close'])]);
+    modal.appendChild(actions);
+    backdrop.appendChild(modal); root.innerHTML=''; root.appendChild(backdrop);
+  }
+
+  function ciDetail(label,value){
+    return el('div',{class:'ci-detail-item'},[el('label',{},[label]),el('span',{},[value])]);
+  }
+
+  function renderCurrentIntelligence(){
+    var wrap=el('section',{class:'current-intelligence'});
+    var events=publishedCurrentEvents();
+    wrap.appendChild(el('div',{class:'section-head'},[
+      el('h2',{},['Current Intelligence']),
+      el('span',{class:'section-hint'},[events.length+' published event'+(events.length===1?'':'s')])
+    ]));
+    if(!events.length){
+      wrap.appendChild(el('div',{class:'ci-empty'},['No published current intelligence events.']));
+      return wrap;
+    }
+    var grid=el('div',{class:'ci-grid'});
+    events.slice(0,6).forEach(function(e){grid.appendChild(currentEventCard(e));});
+    wrap.appendChild(grid);
+    var action=el('div',{class:'ci-home-action'});
+    action.appendChild(el('button',{class:'btn btn-sm',onclick:function(){currentView='CURRENT_INTELLIGENCE';render();}},['Open Current Intelligence']));
+    wrap.appendChild(action);
+    return wrap;
+  }
+
+  function renderCurrentIntelligencePage(){
+    var wrap=el('section',{class:'category-browse current-intelligence-page'});
+    wrap.appendChild(el('button',{class:'back-btn',onclick:goHome},['← Home']));
+    var published=publishedCurrentEvents();
+    var types={}, countriesSeen={};
+    published.forEach(function(e){ if(e.eventType) types[e.eventType]=true; if(e.countryId && countries[e.countryId]) countriesSeen[e.countryId]=countries[e.countryId].name; });
+    var filtered=published.filter(function(e){
+      return (!currentIntelFilterType || e.eventType===currentIntelFilterType) &&
+             (!currentIntelFilterCountry || e.countryId===currentIntelFilterCountry) &&
+             (!currentIntelFilterStatus || e.eventStatus===currentIntelFilterStatus);
+    });
+    wrap.appendChild(el('div',{class:'cb-head'},[
+      el('h1',{},['Current Intelligence']),
+      el('p',{},['Published, time-sensitive developments. Select an event for full source and uncertainty detail.'])
+    ]));
+    var filters=el('div',{class:'ci-filters'});
+    filters.appendChild(field('Event type',select('ci_type',[{v:'',label:'All types'}].concat(Object.keys(types).sort().map(function(v){return {v:v,label:v.replace(/_/g,' ')};})),currentIntelFilterType)));
+    filters.appendChild(field('Country',select('ci_country',[{v:'',label:'All countries'}].concat(Object.keys(countriesSeen).sort(function(a,b){return countriesSeen[a].localeCompare(countriesSeen[b]);}).map(function(v){return {v:v,label:countriesSeen[v]};})),currentIntelFilterCountry)));
+    filters.appendChild(field('Status',select('ci_status',[{v:'',label:'All statuses'}].concat(Array.from(new Set(published.map(function(e){return e.eventStatus;}).filter(Boolean))).sort().map(function(v){return {v:v,label:v.replace(/_/g,' ')};})),currentIntelFilterStatus)));
+    ['ci_type','ci_country','ci_status'].forEach(function(id){document.getElementById(id).addEventListener('change',function(){currentIntelFilterType=document.getElementById('ci_type').value;currentIntelFilterCountry=document.getElementById('ci_country').value;currentIntelFilterStatus=document.getElementById('ci_status').value;render();});});
+    wrap.appendChild(filters);
+    wrap.appendChild(el('div',{class:'section-head'},[el('h2',{},[filtered.length+' event'+(filtered.length===1?'':'s')]),el('span',{class:'section-hint'},['Click an event for detail'])]));
+    if(!filtered.length){wrap.appendChild(el('div',{class:'ci-empty'},['No published events match the selected filters.']));return wrap;}
+    var grid=el('div',{class:'ci-grid'}); filtered.forEach(function(e){grid.appendChild(currentEventCard(e));}); wrap.appendChild(grid); return wrap;
+  }
+
   function renderHome(){
     var wrap = el('section', {class:'home'});
 
@@ -990,6 +1200,8 @@
       el('p', {}, ['Open-source data — government, industry and public references, verified and kept current.']),
     ]));
     wrap.appendChild(banner);
+
+    wrap.appendChild(renderCurrentIntelligence());
 
     // Hotspots & hot topics — the most current thing on the site.
     var hotspots = computeHotspots(6);
@@ -1044,7 +1256,7 @@
     if(dbState !== 'connected'){
       wrap.appendChild(el('div', {class:'offline-note'}, [
         el('span', {class:'dot'}),
-        dbState === 'unavailable' ? 'Showing the last saved copy — live editing unavailable right now' : 'Connecting for live editing…'
+        dbState === 'unavailable' ? 'Showing the saved copy — latest data unavailable' : 'Loading…'
       ]));
     }
     var adminRow = el('div', {class:'admin-row'});
@@ -1058,15 +1270,26 @@
       el('h2', {}, ['Browse by category']),
       el('span', {class:'section-hint'}, ['compare coverage across every country'])
     ]));
-    var catGrid = el('div', {class:'category-grid'});
-    CATEGORIES.forEach(function(cat){
-      var count = allRecords.filter(function(r){ return r.category === cat.key && r.status !== 'ARCHIVED'; }).length;
-      catGrid.appendChild(el('button', {class:'category-card', onclick:function(){ openCategoryBrowse(cat.key); }}, [
-        el('span', {class:'cc-label'}, [cat.label]),
-        el('span', {class:'cc-count'}, [count + ' record' + (count===1?'':'s')])
-      ]));
+    var categoryGroups = [
+      {label:'TRAVEL ESSENTIALS', keys:['ENTRY','SECURITY','HEALTH','TRANSPORT','ENVIRONMENT','EMERGENCY']},
+      {label:'TRAVEL PREPARATION', keys:['INSURANCE','ACCOMMODATION','LAWS_CULTURE','COMMUNICATIONS','FINANCE','LANGUAGE']},
+      {label:'OPERATIONAL PREPARATION', keys:['EQUIPMENT','TRAINING']}
+    ];
+    categoryGroups.forEach(function(group){
+      var block=el('div',{class:'category-group'});
+      block.appendChild(el('div',{class:'region-heading'},[el('h3',{},[group.label])]));
+      var grid=el('div',{class:'category-grid'});
+      group.keys.forEach(function(key){
+        var cat=CAT_MAP[key]; if(!cat) return;
+        var count=allRecords.filter(function(r){return r.category===cat.key && r.status!=='ARCHIVED';}).length;
+        grid.appendChild(el('button',{class:'category-card',onclick:function(){openCategoryBrowse(cat.key);}},[
+          el('span',{class:'cc-label'},[cat.label]),
+          el('span',{class:'cc-desc'},[cat.desc]),
+          el('span',{class:'cc-count'},[count+' record'+(count===1?'':'s')])
+        ]));
+      });
+      block.appendChild(grid); wrap.appendChild(block);
     });
-    wrap.appendChild(catGrid);
 
     return wrap;
   }
@@ -1190,7 +1413,11 @@
 
     // content
     var content = el('div', {class:'cat-content', id:'catContent'});
-    if(currentCategory === 'OVERVIEW') content.appendChild(renderOverview(c));
+    if(currentCategory === 'OVERVIEW'){
+      var countryEvents=(allEvents||[]).filter(function(e){return e.publicationStatus==='PUBLISHED' && e.countryId===currentIso2;});
+      if(countryEvents.length) content.appendChild(renderCountryCurrentIntelligence(countryEvents));
+      content.appendChild(renderOverview(c));
+    }
     else if(currentCategory === 'SOURCES') content.appendChild(renderSources(c));
     else content.appendChild(renderCategoryRecords(c, currentCategory));
     wrap.appendChild(content);
@@ -1208,6 +1435,13 @@
     var btn = el('button', {class: key === currentCategory ? 'active' : '', onclick:function(){ currentCategory = key; render(); }}, [label]);
     if(typeof count === 'number') btn.appendChild(el('span', {class:'cnt'}, ['(' + count + ')']));
     return btn;
+  }
+
+  function renderCountryCurrentIntelligence(events){
+    var wrap=el('div',{class:'country-ci'});
+    wrap.appendChild(el('div',{class:'section-head'},[el('h2',{},['Current Intelligence']),el('span',{class:'section-hint'},[events.length+' published event'+(events.length===1?'':'s')])]));
+    var grid=el('div',{class:'ci-grid'}); events.slice(0,6).forEach(function(e){grid.appendChild(currentEventCard(e));}); wrap.appendChild(grid);
+    return wrap;
   }
 
   function renderOverview(c){
@@ -1421,6 +1655,11 @@
   function openContinent(regionName){
     currentView = 'CONTINENT';
     currentContinent = regionName;
+    render();
+  }
+  function openCurrentIntelligence(){
+    currentView = 'CURRENT_INTELLIGENCE';
+    currentIso2 = null;
     render();
   }
   function openCategoryBrowse(catKey){
@@ -1874,6 +2113,8 @@
     allRecords = Object.keys(data.records || {}).map(function(k){ var d = data.records[k]; d.id = k; return d; });
     allSources = data.sources || {};
     allLocations = data.locations || {};
+    allEvents = Array.isArray(data.events) ? data.events : [];
+    allSourceObservations = Array.isArray(data.sourceObservations) ? data.sourceObservations : [];
     usingLiveDb = true;
     dbState = 'connected';
     setStatus(Object.keys(countries).length + ' countries on file');
@@ -1890,4 +2131,4 @@
 })();
 </script>
 
-</body></html><!-- cache-refresh 2026-09-21T14:03:36Z -->
+<div class="legal-footer">FORGEDTITANIUM LTD a Company Registered in the Republic of Cyprus,<br>Reg No: HE 490451</div></body></html><!-- cache-refresh 2026-09-21T14:03:36Z -->
