@@ -131,6 +131,8 @@ def main():
     print(f"Tier 1-3 source connectivity: tested={len(results)} ok={sum(1 for x in results if x['status']=='OK')} failures={len(failures)}")
     for x in results:
         print(f"{x['tier']} {x['sourceId']}: {x['status']}")
+    if failures:
+        print("STRICT FAILURES:", ", ".join(failures))
     return 1 if failures else 0
 
 if __name__ == "__main__":
