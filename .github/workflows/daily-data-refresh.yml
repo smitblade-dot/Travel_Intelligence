@@ -4,6 +4,9 @@ on:
   schedule:
     - cron: "0 18 * * *"
   workflow_dispatch: {}
+  # Temporary self-test trigger; remove after the corrected run succeeds.
+  issues:
+    types: [opened]
 
 permissions:
   contents: write
@@ -99,7 +102,12 @@ jobs:
           if [ -n "$(git status --porcelain)" ]; then
             git add -A
             git commit -m "Automated data refresh (safety-net commit) — $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-            git push
+            # Claude Code may commit/push during the refresh. Rebase the
+            # safety-net commit onto the current remote main before pushing,
+            # so a concurrent Claude commit or another main commit cannot
+            # cause a non-fast-forward failure.
+            git pull --rebase origin main
+            git push origin HEAD:main
           else
             echo "Nothing outstanding — refresh step already committed."
           fi
