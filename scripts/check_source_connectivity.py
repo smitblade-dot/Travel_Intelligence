@@ -49,10 +49,10 @@ TEST_URLS = {
 # These are legitimate non-automated source classes. Their landing pages are
 # still checked where a canonical URL exists; they do not fail strict mode.
 NON_AUTOMATED = {
-    "new-zealand-safetravel", "who-disease-outbreak-news", "ecdc-threats",
+    "new-zealand-safetravel", "who-disease-outbreak-news", "ecdc-threats", "australia-smartraveller",
     "copernicus-ems", "ukmto", "imo-piracy", "faa-notam",
-    "airport-authorities", "port-authorities",
-    "local-media", "social-platforms", "telegram-public", "reddit", "gdelt-events", "nasa-firms",
+    "airport-authorities", "national-road-authorities", "port-authorities",
+    "local-media", "social-platforms", "telegram-public", "reddit", "gdelt-events", "nasa-firms", "noaa-weather",
 }
 
 def fetch(url: str):
