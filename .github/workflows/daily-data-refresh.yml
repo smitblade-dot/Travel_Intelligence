@@ -36,6 +36,12 @@ jobs:
       - name: Build transport reference network
         run: python3 scripts/build_transport_network.py
 
+      - name: Validate source registry
+        run: python3 scripts/validate_ti_sources.py
+
+      - name: Collect government advisory changes
+        run: python3 scripts/collect_government_advisories.py
+
       - name: Refresh oil & gas summary (deterministic)
         run: python3 scripts/refresh_oilgas.py
 
@@ -45,38 +51,37 @@ jobs:
           show_full_output: true
           prompt: >
             Run the normal Travel Intelligence daily refresh from CLAUDE.md.
-            Treat the country records as a live intelligence layer as well as
-            Current Intelligence events. Inspect all tracked countries for
-            material, currently verified changes to traveller-relevant
-            requirements, warnings, procedures and other country guidance.
-            Update existing records or create new records where the primary
-            source supports a real change, with the required
-            SourceObservation. Do not invent coverage or backfill empty
-            categories merely to make countries look populated.
             Phase 1 open-data signals are in data/phase1_signals.json, the
             deterministic review queue is in data/phase1_review_queue.json,
             infrastructure relationships are in
             data/infrastructure_graph.json, and the conservative transport
-            reference network is in data/transport_network.json. Use these as
+            reference network is in data/transport_network.json. Government
+            advisory changes are in data/government_change_queue.json and
+            source snapshots are in data/source_snapshots.json. Use these as
             discovery/reference material only. Verify important claims against
             the actual primary source before creating or updating any public
             TI event. Do not invent affected infrastructure or routes from a
             country-level association alone. Prefer explicit verified
             relationships; otherwise leave the relationship unresolved. Do
-            not invent events from signals alone. Preserve source provenance
+            not invent events from signals alone. Review government advisory
+            changes as candidates only: verify the original source, retain the
+            national perspective separately, and do not combine advisory
+            levels into a synthetic TI risk score. Preserve source provenance
             and uncertainty. The oilGasSummary section was refreshed
             separately; do not touch or re-derive it. Commit and push
             substantive TI changes yourself.
           claude_args: |
             --model claude-sonnet-5
             --allowedTools "Bash,Read,Write,Edit,Glob,Grep,WebSearch,WebFetch"
-            --max-turns 80
+            --max-turns 60
 
       - name: Build traveller impact graph
         run: python3 scripts/build_traveller_impact_graph.py
 
-      - name: Validate TI data model
-        run: python3 scripts/validate_ti_data.py
+      - name: Validate source registry and TI data model
+        run: |
+          python3 scripts/validate_ti_sources.py
+          python3 scripts/validate_ti_data.py
 
       - name: Ensure meta.generated reflects this run
         run: |
@@ -99,12 +104,7 @@ jobs:
           if [ -n "$(git status --porcelain)" ]; then
             git add -A
             git commit -m "Automated data refresh (safety-net commit) — $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-            # Claude Code may commit/push during the refresh. Rebase the
-            # safety-net commit onto the current remote main before pushing,
-            # so a concurrent Claude commit or another main commit cannot
-            # cause a non-fast-forward failure.
-            git pull --rebase origin main
-            git push origin HEAD:main
+            git push
           else
             echo "Nothing outstanding — refresh step already committed."
           fi
