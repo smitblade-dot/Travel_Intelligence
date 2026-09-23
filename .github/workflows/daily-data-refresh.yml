@@ -4,6 +4,12 @@ on:
   schedule:
     - cron: "0 18 * * *"
   workflow_dispatch: {}
+  # Temporary self-test trigger: execute once on this workflow change.
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/daily-data-refresh.yml"
 
 permissions:
   contents: write
@@ -70,7 +76,7 @@ jobs:
           claude_args: |
             --model claude-sonnet-5
             --allowedTools "Bash,Read,Write,Edit,Glob,Grep,WebSearch,WebFetch"
-            --max-turns 60
+            --max-turns 80
 
       - name: Build traveller impact graph
         run: python3 scripts/build_traveller_impact_graph.py
