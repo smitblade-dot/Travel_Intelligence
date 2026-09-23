@@ -1,141 +1,8 @@
 {
   "schemaVersion": "1.0",
-  "generated": "2026-09-23T05:44:44.900418+00:00",
+  "generated": "2026-09-23T05:53:57.426077+00:00",
   "purpose": "Review queue only; no item is a published TI event.",
   "items": [
-    {
-      "id": "sig-gdelt-0001",
-      "sourceId": "gdelt-events",
-      "sourceUrl": "https://www.thewestonmercury.co.uk/news/national/26568330.wedding-disneyland-trips-disrupted-air-traffic-control-issues/",
-      "discoveryType": "NEWS_EVENT",
-      "countryIds": [
-        "gb"
-      ],
-      "candidateCategories": [
-        "ROAD"
-      ],
-      "claim": "Wedding and Disneyland trips disrupted by air traffic control issues",
-      "observedAt": "20260921T151500Z",
-      "status": "NEEDS_PRIMARY_SOURCE_VERIFICATION",
-      "generatedAt": "2026-09-23T05:44:44.900418+00:00"
-    },
-    {
-      "id": "sig-gdelt-0002",
-      "sourceId": "gdelt-events",
-      "sourceUrl": "https://www.yourlocalguardian.co.uk/news/national/26568330.wedding-disneyland-trips-disrupted-air-traffic-control-issues/",
-      "discoveryType": "NEWS_EVENT",
-      "countryIds": [
-        "gb"
-      ],
-      "candidateCategories": [
-        "ROAD"
-      ],
-      "claim": "Wedding and Disneyland trips disrupted by air traffic control issues",
-      "observedAt": "20260921T151500Z",
-      "status": "NEEDS_PRIMARY_SOURCE_VERIFICATION",
-      "generatedAt": "2026-09-23T05:44:44.900418+00:00"
-    },
-    {
-      "id": "sig-gdelt-0003",
-      "sourceId": "gdelt-events",
-      "sourceUrl": "https://www.countytimes.co.uk/news/national/26568330.wedding-disneyland-trips-disrupted-air-traffic-control-issues/",
-      "discoveryType": "NEWS_EVENT",
-      "countryIds": [
-        "gb"
-      ],
-      "candidateCategories": [
-        "ROAD"
-      ],
-      "claim": "Wedding and Disneyland trips disrupted by air traffic control issues",
-      "observedAt": "20260921T151500Z",
-      "status": "NEEDS_PRIMARY_SOURCE_VERIFICATION",
-      "generatedAt": "2026-09-23T05:44:44.900418+00:00"
-    },
-    {
-      "id": "sig-gdelt-0004",
-      "sourceId": "gdelt-events",
-      "sourceUrl": "https://www.standard.co.uk/news/uk/glasgow-airport-disneyland-las-vegas-disneyland-paris-aberdeen-b1297795.html",
-      "discoveryType": "NEWS_EVENT",
-      "countryIds": [
-        "gb"
-      ],
-      "candidateCategories": [
-        "AIRPORT",
-        "ROAD",
-        "PORT"
-      ],
-      "claim": "Wedding and Disneyland trips disrupted by air traffic control issues",
-      "observedAt": "20260921T151500Z",
-      "status": "NEEDS_PRIMARY_SOURCE_VERIFICATION",
-      "generatedAt": "2026-09-23T05:44:44.900418+00:00"
-    },
-    {
-      "id": "sig-gdelt-0005",
-      "sourceId": "gdelt-events",
-      "sourceUrl": "https://www.express.co.uk/news/world/2250293/brussels-south-charleroi-airport-cancel-flights",
-      "discoveryType": "NEWS_EVENT",
-      "countryIds": [
-        "gb"
-      ],
-      "candidateCategories": [
-        "AIRPORT",
-        "PORT"
-      ],
-      "claim": "Charleroi Airport in Brussels forced to cancel more flights | World | News",
-      "observedAt": "20260921T110000Z",
-      "status": "NEEDS_PRIMARY_SOURCE_VERIFICATION",
-      "generatedAt": "2026-09-23T05:44:44.900418+00:00"
-    },
-    {
-      "id": "sig-gdelt-0006",
-      "sourceId": "gdelt-events",
-      "sourceUrl": "https://www.aol.co.uk/articles/monday-briefing-inside-trump-deportation-054431000.html",
-      "discoveryType": "NEWS_EVENT",
-      "countryIds": [
-        "gb"
-      ],
-      "candidateCategories": [
-        "PORT"
-      ],
-      "claim": "Monday briefing : Inside Trump deportation machine –  Your fate is out of your control  ",
-      "observedAt": "20260921T063000Z",
-      "status": "NEEDS_PRIMARY_SOURCE_VERIFICATION",
-      "generatedAt": "2026-09-23T05:44:44.900418+00:00"
-    },
-    {
-      "id": "sig-gdelt-0007",
-      "sourceId": "gdelt-events",
-      "sourceUrl": "https://www.dailymail.com/news/article-16145873/fires-rage-Moscow-Ukraine-strikes-Russia-oil-refinery-drone-attack-day-election.html",
-      "discoveryType": "NEWS_EVENT",
-      "countryIds": [
-        "gb"
-      ],
-      "candidateCategories": [
-        "DRONE",
-        "FIRE",
-        "SECURITY"
-      ],
-      "claim": "Huge fires rage in Moscow as Ukraine strikes Russian capital biggest oil refinery in massive drone attack on the last day of election",
-      "observedAt": "20260920T091500Z",
-      "status": "NEEDS_PRIMARY_SOURCE_VERIFICATION",
-      "generatedAt": "2026-09-23T05:44:44.900418+00:00"
-    },
-    {
-      "id": "sig-gdelt-0008",
-      "sourceId": "gdelt-events",
-      "sourceUrl": "https://www.express.co.uk/news/world/2250071/putin-election-moscow-ukraine-attacks",
-      "discoveryType": "NEWS_EVENT",
-      "countryIds": [
-        "gb"
-      ],
-      "candidateCategories": [
-        "SECURITY"
-      ],
-      "claim": "Putin humiliated on  sham  election day as Ukraine pummels Moscow with huge strikes | World | News",
-      "observedAt": "20260920T080000Z",
-      "status": "NEEDS_PRIMARY_SOURCE_VERIFICATION",
-      "generatedAt": "2026-09-23T05:44:44.900418+00:00"
-    },
     {
       "id": "sig-ourairports-airports",
       "sourceId": "ourairports-airports",
@@ -144,7 +11,7 @@
       "candidateCategories": [],
       "claim": "Usable source response collected; specialist geographic/event resolver required.",
       "status": "READY_FOR_RESOLUTION",
-      "generatedAt": "2026-09-23T05:44:44.900418+00:00"
+      "generatedAt": "2026-09-23T05:53:57.426077+00:00"
     },
     {
       "id": "sig-gdacs-alerts",
@@ -154,7 +21,7 @@
       "candidateCategories": [],
       "claim": "Usable source response collected; specialist geographic/event resolver required.",
       "status": "READY_FOR_RESOLUTION",
-      "generatedAt": "2026-09-23T05:44:44.900418+00:00"
+      "generatedAt": "2026-09-23T05:53:57.426077+00:00"
     }
   ]
 }
