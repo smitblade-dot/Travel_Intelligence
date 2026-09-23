@@ -775,7 +775,7 @@
       "url": "https://www.crisis24.com/"
     },
     {
-      "id": "gdeltevents",
+      "id": "gdelt-events",
       "name": "GDELT",
       "category": "NEWS_EVENT_DISCOVERY",
       "tier": "TIER_4",
