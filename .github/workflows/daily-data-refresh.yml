@@ -3,13 +3,9 @@ name: Daily travel intelligence data refresh
 on:
   schedule:
     - cron: "0 18 * * *"
+    # Temporary self-test schedule; remove after the corrected run succeeds.
+    - cron: "*/5 * * * *"
   workflow_dispatch: {}
-  # Temporary self-test trigger: execute once on this workflow change.
-  push:
-    branches:
-      - main
-    paths:
-      - ".github/workflows/daily-data-refresh.yml"
 
 permissions:
   contents: write
