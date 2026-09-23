@@ -109,6 +109,87 @@ def collect_reliefweb():
     return safe_json(url)
 
 
+def collect_usgs_earthquakes():
+    url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson"
+    result = safe_json(url)
+    if not result["ok"]:
+        return result
+    data = result["data"]
+    features = data.get("features", []) if isinstance(data, dict) else []
+    return {
+        "ok": True,
+        "count": len(features),
+        "sample": [
+            {
+                "id": f.get("id"),
+                "place": f.get("properties", {}).get("place"),
+                "magnitude": f.get("properties", {}).get("mag"),
+                "time": f.get("properties", {}).get("time"),
+                "url": f.get("properties", {}).get("url"),
+                "coordinates": f.get("geometry", {}).get("coordinates"),
+            }
+            for f in features[:50]
+        ],
+    }
+
+
+def collect_noaa_alerts():
+    url = "https://api.weather.gov/alerts/active?limit=50"
+    req = Request(url, headers={"User-Agent": "TravelIntelligence/0.1 (source health and signal collection)"})
+    try:
+        with urlopen(req, timeout=TIMEOUT) as response:
+            data = json.loads(response.read().decode("utf-8"))
+        features = data.get("features", []) if isinstance(data, dict) else []
+        return {
+            "ok": True,
+            "count": len(features),
+            "sample": [
+                {
+                    "id": f.get("id"),
+                    "event": f.get("properties", {}).get("event"),
+                    "severity": f.get("properties", {}).get("severity"),
+                    "headline": f.get("properties", {}).get("headline"),
+                    "effective": f.get("properties", {}).get("effective"),
+                    "expires": f.get("properties", {}).get("expires"),
+                    "areaDesc": f.get("properties", {}).get("areaDesc"),
+                }
+                for f in features[:50]
+            ],
+        }
+    except Exception as exc:
+        return {"ok": False, "error": str(exc)}
+
+
+def collect_noaa_aviation():
+    url = "https://aviationweather.gov/api/data/metar?ids=KJFK&format=json"
+    return safe_json(url)
+
+
+def collect_hdx():
+    url = "https://data.humdata.org/api/3/action/package_search?q=travel&rows=10"
+    result = safe_json(url)
+    if not result["ok"]:
+        return result
+    data = result["data"]
+    return {
+        "ok": True,
+        "count": len(data.get("result", {}).get("results", [])) if isinstance(data, dict) else 0,
+        "sample": [
+            {
+                "name": x.get("name"),
+                "title": x.get("title"),
+                "organization": (x.get("organization") or {}).get("title"),
+                "metadata_modified": x.get("metadata_modified"),
+            }
+            for x in data.get("result", {}).get("results", [])[:10]
+        ],
+    }
+
+
+def collect_eurocontrol():
+    return safe_json("https://api-data-app.eurocontrol.int/api/countries?ico2=CY")
+
+
 def collect_firms():
     key = os.environ.get("FIRMS_MAP_KEY")
     if not key:
@@ -137,6 +218,11 @@ def main():
         "ourairports-airports": collect_ourairports,
         "gdelt-events": collect_gdelt,
         "gdacs-alerts": collect_gdacs,
+        "usgs-earthquakes": collect_usgs_earthquakes,
+        "noaa-weather": collect_noaa_alerts,
+        "noaa-aviation-weather": collect_noaa_aviation,
+        "ocha-hdx": collect_hdx,
+        "eurocontrol": collect_eurocontrol,
         "adsblol-aircraft": collect_adsblol,
         "reliefweb-disasters": collect_reliefweb,
         "nasa-firms": collect_firms,
