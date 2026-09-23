@@ -51,6 +51,14 @@ jobs:
           show_full_output: true
           prompt: >
             Run the normal Travel Intelligence daily refresh from CLAUDE.md.
+            Treat the country records as a live intelligence layer as well as
+            Current Intelligence events. Inspect all tracked countries for
+            material, currently verified changes to traveller-relevant
+            requirements, warnings, procedures and other country guidance.
+            Update existing records or create new records where the primary
+            source supports a real change, with the required
+            SourceObservation. Do not invent coverage or backfill empty
+            categories merely to make countries look populated.
             Phase 1 open-data signals are in data/phase1_signals.json, the
             deterministic review queue is in data/phase1_review_queue.json,
             infrastructure relationships are in
@@ -73,7 +81,7 @@ jobs:
           claude_args: |
             --model claude-sonnet-5
             --allowedTools "Bash,Read,Write,Edit,Glob,Grep,WebSearch,WebFetch"
-            --max-turns 60
+            --max-turns 80
 
       - name: Build traveller impact graph
         run: python3 scripts/build_traveller_impact_graph.py
@@ -104,7 +112,12 @@ jobs:
           if [ -n "$(git status --porcelain)" ]; then
             git add -A
             git commit -m "Automated data refresh (safety-net commit) — $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-            git push
+            # Claude Code may commit/push during the refresh. Rebase the
+            # safety-net commit onto the current remote main before pushing,
+            # so a concurrent Claude commit or another main commit cannot
+            # cause a non-fast-forward failure.
+            git pull --rebase origin main
+            git push origin HEAD:main
           else
             echo "Nothing outstanding — refresh step already committed."
           fi
