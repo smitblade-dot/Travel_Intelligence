@@ -167,6 +167,12 @@ TI should not rely on FCDO alone. The source registry includes U.S. Department o
 
 For a material change: identify the exact destination/page and date, compare it with existing TI, create/update only the substantiated claim, preserve the government source as its own SourceObservation and independence group, and record corroboration rather than creating duplicate events.
 
+## Paid/commercial source rule
+
+Tier 4 is explicitly deferred until Travel Intelligence is generating income. Do not purchase subscriptions, paid APIs or commercial datasets during the current build phase. Build the core intelligence engine from Tier 1 and selectively integrated Tier 2 sources, with Tier 3 discovery/OSINT used only as an early-warning layer requiring verification/corroboration.
+
+When TI is generating income, Tier 4 may be assessed selectively where free/public sources cannot provide sufficient quality or coverage and the commercial source creates a material product advantage.
+
 ## Evidence rules
 
 - Discovery and verification are separate steps.
