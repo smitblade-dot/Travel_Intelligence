@@ -9,7 +9,6 @@ from __future__ import annotations
 import hashlib, json, re, sys
 from datetime import datetime, timezone
 from pathlib import Path
-from urllib.parse import urlparse
 from urllib.request import Request, urlopen
 import xml.etree.ElementTree as ET
 
@@ -55,8 +54,10 @@ def parse_xml(raw):
                     if k=="link":
                         href=child.attrib.get("href") or (child.text or "")
                         d[k]=href
-                    else: d[k]=clean(child.text)
-            if d.get("title") or d.get("link"): items.append(d)
+                    else:
+                        d[k]=clean(child.text)
+            if d.get("title") or d.get("link"):
+                items.append(d)
     return items
 
 def parse_json(raw):
@@ -67,27 +68,32 @@ def parse_json(raw):
             keys={str(k).lower() for k in x}
             if keys & {"destination","country","name"} and keys & {"updated","last_updated","overall_advice_level","advice_level","title"}:
                 items.append(x)
-            for v in x.values(): walk(v)
+            for v in x.values():
+                walk(v)
         elif isinstance(x,list):
-            for v in x: walk(v)
+            for v in x:
+                walk(v)
     walk(obj)
     return items
 
 def extract_level(d):
     for k in ("overall_advice_level","advice_level","level","risk_level"):
-        if d.get(k): return clean(d.get(k))
+        if d.get(k):
+            return clean(d.get(k))
     text=clean(" ".join(str(v) for v in d.values() if isinstance(v,(str,int))))
     m=re.search(r"(Do not travel|Reconsider travel|Exercise a high degree of caution|Exercise increased caution|Exercise normal safety precautions|Avoid all travel|Avoid non-essential travel|Take normal security precautions)", text, re.I)
     return m.group(1) if m else None
 
 def extract_name(d):
     for k in ("destination","country","name","title"):
-        if d.get(k): return clean(d.get(k))
+        if d.get(k):
+            return clean(d.get(k))
     return None
 
 def extract_url(d):
     for k in ("url","link","href","source_url"):
-        if d.get(k): return str(d[k])
+        if d.get(k):
+            return str(d[k])
     return None
 
 def normalize(source_id, item):
@@ -118,13 +124,17 @@ def main():
             try:
                 raw,ctype=fetch(url)
                 if "json" in ctype or raw.lstrip().startswith((b"{",b"[")):
-                    raw_items=parse_json(raw)
+                    parsed=parse_json(raw)
                 else:
-                    raw_items=parse_xml(raw)
-                if raw_items:
-                    used=url; break
+                    parsed=parse_xml(raw)
+                if parsed:
+                    raw_items=parsed
+                    used=url
+                    break
+                errors.append(f"{url}: feed returned no parseable advisory items")
             except Exception as exc:
                 errors.append(f"{url}: {exc}")
+
         normalized=[]
         for item in raw_items:
             try:
@@ -133,8 +143,28 @@ def main():
                     normalized.append(n)
             except Exception:
                 continue
+
         by_key={f'{x["destination"].lower()}|{x["url"] or x["title"]}':x for x in normalized}
-        if errors and not by_key and used is None:\n            # Preserve the last known snapshot when every fetch attempt failed.\n            # A temporary outage must not turn into false NEW alerts later.\n            previous=old.get("sources",{}).get(sid,{})\n            new["sources"][sid]={\n                "feedUrl":previous.get("feedUrl"),\n                "itemCount":len(previous.get("items",{})),\n                "items":previous.get("items",{}),\n                "errors":errors,\n            }\n        else:\n            new["sources"][sid]={"feedUrl":used,"itemCount":len(by_key),"items":by_key,"errors":errors}
+
+        if not by_key and used is None:
+            # Preserve the last known snapshot when every fetch/parse attempt
+            # failed or returned no usable items. A temporary outage or parser
+            # break must not create false NEW alerts or erase known state.
+            previous=old.get("sources",{}).get(sid,{})
+            new["sources"][sid]={
+                "feedUrl":previous.get("feedUrl"),
+                "itemCount":len(previous.get("items",{})),
+                "items":previous.get("items",{}),
+                "errors":errors,
+            }
+        else:
+            new["sources"][sid]={
+                "feedUrl":used,
+                "itemCount":len(by_key),
+                "items":by_key,
+                "errors":errors,
+            }
+
         old_items=old.get("sources",{}).get(sid,{}).get("items",{})
         for key,item in by_key.items():
             prev=old_items.get(key)
@@ -156,6 +186,7 @@ def main():
                 "status":"NEEDS_PRIMARY_SOURCE_VERIFICATION",
                 "generatedAt":now
             })
+
     new["generated"]=now
     SNAPSHOT.write_text(json.dumps(new,ensure_ascii=False,indent=2),encoding="utf-8")
     QUEUE.write_text(json.dumps({
