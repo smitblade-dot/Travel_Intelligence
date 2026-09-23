@@ -51,8 +51,8 @@ TEST_URLS = {
 NON_AUTOMATED = {
     "new-zealand-safetravel", "who-disease-outbreak-news", "ecdc-threats",
     "copernicus-ems", "ukmto", "imo-piracy", "faa-notam",
-    "airport-authorities", "national-road-authorities", "port-authorities",
-    "local-media", "social-platforms", "telegram-public", "reddit", "gdelt-events", "nasa-firms", "national-road-authorities",
+    "airport-authorities", "port-authorities",
+    "local-media", "social-platforms", "telegram-public", "reddit", "gdelt-events", "nasa-firms",
 }
 
 def fetch(url: str):
