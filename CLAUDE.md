@@ -121,7 +121,7 @@ Use the four source tiers as a development constraint:
 - TIER_1 — free/open government and international machine-readable sources; build first.
 - TIER_2 — operational sources such as airports, airspace, borders, roads, ports, rail and maritime; integrate selectively when access, reliability and reuse rights are clear.
 - TIER_3 — paid/commercial data; buy only when it creates a material product advantage that free/public sources cannot provide.
-- TIER_4 — discovery/OSINT; early-warning only, requiring verification/corroboration before publication.
+- TIER_4 — paid/commercial data; deferred until TI generates income, and then only where free/public sources cannot provide sufficient quality or coverage and the commercial data creates a material product advantage.
 
 Legal/access categories are explicit in the registry: OPEN, GOVERNMENT_OPEN, FREE_WITH_CONDITIONS, PUBLIC_WEB, HUMAN_REVIEW_REQUIRED, PAID_COMMERCIAL, DISCOVERY_ONLY, UNSUITABLE.
 
@@ -263,3 +263,10 @@ Do not modify sibling repositories.
 Do not delete historical data simply because a source is temporarily
 unavailable.
 Do not force changes when verification finds no material update.
+
+
+## Paid/commercial source rule
+
+Tier 4 is explicitly deferred until Travel Intelligence is generating income. Do not purchase subscriptions, paid APIs or commercial datasets during the current build phase. Build the core intelligence engine from Tier 1 and selectively integrated Tier 2 sources, with Tier 3 discovery/OSINT used only as an early-warning layer requiring verification/corroboration.
+
+When TI is generating income, Tier 4 may be assessed selectively where free/public sources cannot provide sufficient quality or coverage and the commercial source creates a material product advantage.
