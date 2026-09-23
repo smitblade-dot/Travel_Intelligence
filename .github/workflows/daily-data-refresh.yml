@@ -39,6 +39,11 @@ jobs:
       - name: Validate source registry
         run: python3 scripts/validate_ti_sources.py
 
+      - name: Check Tier 1-3 source connectivity
+        env:
+          FIRMS_MAP_KEY: ${{ secrets.FIRMS_MAP_KEY }}
+        run: python3 scripts/check_source_connectivity.py
+
       - name: Test government advisory collector
         run: python3 scripts/test_government_advisories.py
 
