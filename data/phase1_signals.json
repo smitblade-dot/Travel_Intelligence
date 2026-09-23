@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generated": "2026-09-22T18:07:02.434204+00:00",
+  "generated": "2026-09-23T05:44:26.573714+00:00",
   "purpose": "Reviewable Phase 1 signals; not published TI events.",
   "sources": {
     "ourairports-airports": {
@@ -120,8 +120,511 @@
       ]
     },
     "gdelt-events": {
-      "ok": false,
-      "error": "HTTP Error 429: Too Many Requests"
+      "ok": true,
+      "data": {
+        "articles": [
+          {
+            "url": "https://kurier.at/politik/ausland/berlin-deutschland-enteignungen-linke-vergesellschaftungen/403192740",
+            "url_mobile": "",
+            "title": "Wie realistisch ist Berlins Utopie vom billigen Wohnen ? ",
+            "seendate": "20260923T041500Z",
+            "socialimage": "https://image.kurier.at/images/facebook/9346533/46-198203902.jpg?versionId=c8a93dee88b8",
+            "domain": "kurier.at",
+            "language": "German",
+            "sourcecountry": "Austria"
+          },
+          {
+            "url": "https://www.hespress.com/%D8%B9%D9%88%D8%A7%D8%B5%D9%81-%D8%A7%D9%84%D8%AA%D8%AD%D9%88%D9%84%D8%A7%D8%AA-%D8%A7%D9%84%D8%B9%D8%A7%D9%84%D9%85%D9%8A%D8%A9-1811595.html",
+            "url_mobile": "",
+            "title": "المغرب والتحولات العالمية",
+            "seendate": "20260923T031500Z",
+            "socialimage": "https://i1.hespress.com/wp-content/overlay/2026/04/El-Kerri-Driss.jpg",
+            "domain": "hespress.com",
+            "language": "Arabic",
+            "sourcecountry": "Morocco"
+          },
+          {
+            "url": "https://www.postindependent.com/news/email-threats-close-aspen-airport-tuesday-prompting-evacuations/",
+            "url_mobile": "",
+            "title": "Email threats close Aspen Airport Tuesday , prompting evacuations",
+            "seendate": "20260923T024500Z",
+            "socialimage": "https://swiftmedia.s3.amazonaws.com/mountain.swiftcom.com/images/sites/6/2026/09/22194016/airportaspen-atd-071526-02-scaled-1-1-1024x768.jpg",
+            "domain": "postindependent.com",
+            "language": "English",
+            "sourcecountry": "United States"
+          },
+          {
+            "url": "https://www.cope.es/programas/la-linterna/el-tema-del-dia/audios/elecciones-marruecos-funcionan-forma-candidatos-pactan-votos-entidades-tribales-grupos-familias-negociar-paquete-grande-20260922_3441715.html",
+            "url_mobile": "https://www.cope.es/programas/la-linterna/el-tema-del-dia/audios/elecciones-marruecos-funcionan-forma-candidatos-pactan-votos-entidades-tribales-grupos-familias-negociar-paquete-grande-20260922_3441715.amp.html",
+            "title": "  Las elecciones en Marruecos funcionan de forma que los candidatos pactan los votos con entidades tribales , con grupos de familias , y el que va a negociar con un paquete más grande tiene más poder  ",
+            "seendate": "20260922T233000Z",
+            "socialimage": "https://www.cope.es/files/og_thumbnail/uploads/2026/09/22/6ab2dd241e5ea.jpg",
+            "domain": "cope.es",
+            "language": "Spanish",
+            "sourcecountry": "Spain"
+          },
+          {
+            "url": "https://www.aol.com/articles/dot-rule-may-harder-receive-205157000.html",
+            "url_mobile": "",
+            "title": "New DOT rule may make it harder to receive compensation for flight delays",
+            "seendate": "20260922T224500Z",
+            "socialimage": "https://hermes.media.static.aol.com/media/2026/09/22/06488205-70af-31e4-adcb-e5005a888a31/d6618f73-ac34-4b7b-8090-8d02e451f87d.jpg",
+            "domain": "aol.com",
+            "language": "English",
+            "sourcecountry": "United States"
+          },
+          {
+            "url": "https://y94.com/2026/09/22/hector-intl-airport-devils-lake-regional-airport-set-new-august-passenger-records/",
+            "url_mobile": "",
+            "title": "Hector Intl Airport & Devils Lake Regional Airport set new August passenger records",
+            "seendate": "20260922T194500Z",
+            "socialimage": "https://media-cdn.socastsrm.com/wordpress/wp-content/blogs.dir/2431/files/2024/01/airplane.jpg",
+            "domain": "y94.com",
+            "language": "English",
+            "sourcecountry": "United States"
+          },
+          {
+            "url": "https://nversia.ru/news/na-novyy-aeroport-v-saratovskoy-oblasti-potratyat-esche-4-3-milliarda-rubley-chto-budut-delat/",
+            "url_mobile": "https://nversia.ru/amp/view/id/261385/",
+            "title": "На новый аэропорт в Саратовской области потратят еще 4 , 3 миллиарда рублей : что будут делать",
+            "seendate": "20260922T193000Z",
+            "socialimage": "",
+            "domain": "nversia.ru",
+            "language": "Russian",
+            "sourcecountry": "Russia"
+          },
+          {
+            "url": "https://www.newsweek.com/how-putins-invasion-of-nato-could-unfold-as-estonia-border-closed-12471982",
+            "url_mobile": "",
+            "title": "How Putin invasion of NATO could unfold as Estonia border closed",
+            "seendate": "20260922T180000Z",
+            "socialimage": "https://assets.newsweek.com/wp-content/uploads/2026/09/GettyImages-2259538055.jpg?&crop=1",
+            "domain": "newsweek.com",
+            "language": "English",
+            "sourcecountry": "United States"
+          },
+          {
+            "url": "http://gazetaby.com/post/mid-litvy-na-territorii-es-ne-mozhet-byt-udobrenij-iz-belarusi/216537/",
+            "url_mobile": "http://gazetaby.com/post/mid-litvy-na-territorii-es-ne-mozhet-byt-udobrenij-iz-belarusi/216537/amp/",
+            "title": "МИД Литвы : На территории ЕС не может быть удобрений из Беларуси",
+            "seendate": "20260922T110000Z",
+            "socialimage": "http://gazetaby.com/uploads/2026/09/bud2209.jpg",
+            "domain": "gazetaby.com",
+            "language": "Russian",
+            "sourcecountry": "Belarus"
+          },
+          {
+            "url": "https://www.nzherald.co.nz/world/homes-nsw-booked-homeless-new-zealand-man-flight-to-auckland-instead-of-accommodation/P3HYMJJLOFHFHI2V3YJNRRMOMU/",
+            "url_mobile": "",
+            "title": "Homes NSW booked homeless New Zealand man flight to Auckland instead of accommodation",
+            "seendate": "20260922T074500Z",
+            "socialimage": "https://www.nzherald.co.nz/resizer/v2/QPNGBEUMFVCEZHR2BN6WAL4FLY.jpg?auth=cbd2f078d6d811ec68fc811d7f32a3a5f45cdc89e3d407130d228800cd58f27a&quality=70&smart=true",
+            "domain": "nzherald.co.nz",
+            "language": "English",
+            "sourcecountry": "New Zealand"
+          },
+          {
+            "url": "https://www.bankingnews.gr/to-paraskinio-tis-agoras/articles/900699/xrimatistirio-ti-edeikse-i-proti-synedriasi-os-aneptygmeni-agora-poies-metoxes-patisan-dynata%20title=",
+            "url_mobile": "",
+            "title": "Χρηματιστήριο : Σφαγή » στο άνοιγμα και μετά … πάρτι – Τι έδειξε η πρώτη συνεδρίαση ως ανεπτυγμένη αγορά , σάρωσαν Viohalco , Metlen και Cenergy",
+            "seendate": "20260922T054500Z",
+            "socialimage": "https://www.bankingnews.gr/media/k2/items/cache/7c556d15dce6615144cef14ea43cd83f_XL.jpg",
+            "domain": "bankingnews.gr",
+            "language": "Greek",
+            "sourcecountry": "Greece"
+          },
+          {
+            "url": "https://nversia.ru/news/nochyu-v-saratove-vklyuchali-sireny-iz-za-ugrozy-ataki-bpla-aeroport-zakryt-dlya-poletov/",
+            "url_mobile": "https://nversia.ru/amp/view/id/261352/",
+            "title": "Ночью в Саратове включали сирены из - за угрозы атаки БПЛА , аэропорт закрыт для полетов",
+            "seendate": "20260922T043000Z",
+            "socialimage": "",
+            "domain": "nversia.ru",
+            "language": "Russian",
+            "sourcecountry": "Russia"
+          },
+          {
+            "url": "https://news.knn.co.kr/news/article_sns/1790",
+            "url_mobile": "",
+            "title": "트럼프  머지않아 매우 큰 일 … 이란 대통령 만날 가능성 열어둬",
+            "seendate": "20260922T021500Z",
+            "socialimage": "https://v.knn.co.kr/news/2026/09/21/c17c0d04-fcf9-4e1c-a66f-f3724e20d7a1.jpg",
+            "domain": "news.knn.co.kr",
+            "language": "Korean",
+            "sourcecountry": "South Korea"
+          },
+          {
+            "url": "https://www.ettoday.net/news/20260922/3241700.htm",
+            "url_mobile": "https://www.ettoday.net/amp/3241700",
+            "title": "電纜被挖斷 ！ 美東7000航班大亂 各國政要行程全泡湯 | ETtoday國際新聞",
+            "seendate": "20260922T021500Z",
+            "socialimage": "https://cdn2.ettoday.net/images/8934/e8934148.jpg",
+            "domain": "ettoday.net",
+            "language": "Chinese",
+            "sourcecountry": "Taiwan"
+          },
+          {
+            "url": "https://www.leparisien.fr/international/objet-non-identifie-aeroport-ferme-chasseurs-de-lotan-deployes-plusieurs-alertes-simultanees-en-pologne-lettonie-et-lituanie-21-09-2026-5TV22LFEUJHSVF6QRT2UH7PNGE.php",
+            "url_mobile": "",
+            "title": "Objets non identifiés , aéroport fermé , chasseurs de lOtan déployés … Plusieurs alertes simultanées en Pologne , Lettonie et Lituanie",
+            "seendate": "20260921T223000Z",
+            "socialimage": "https://www.leparisien.fr/resizer/sbxJbXXTNSNIxO0WHUjSF3IfaNs=/1600x900/cloudfront-eu-central-1.images.arcpublishing.com/leparisien/TCXUDOZS5FHJVCYBJT5H4C4FMQ.jpg",
+            "domain": "leparisien.fr",
+            "language": "French",
+            "sourcecountry": "France"
+          },
+          {
+            "url": "https://www.bfm.ru/news/618612",
+            "url_mobile": "https://www.bfm.ru/amp/news/618612",
+            "title": "Finnair запустит рейсы из Хельсинки в Мельбурн продолжительностью почти сутки",
+            "seendate": "20260921T223000Z",
+            "socialimage": "",
+            "domain": "bfm.ru",
+            "language": "Russian",
+            "sourcecountry": "Russia"
+          },
+          {
+            "url": "https://www.birminghammail.co.uk/news/uk-news/bride-stressed-las-vegas-wedding-34651815",
+            "url_mobile": "https://www.birminghammail.co.uk/news/uk-news/bride-stressed-las-vegas-wedding-34651815.amp",
+            "title": "Bride - to - be  stressed  as Las Vegas wedding  at risk  after BA flight cancelled",
+            "seendate": "20260921T220000Z",
+            "socialimage": "https://i2-prod.birminghammail.co.uk/article34651811.ece/ALTERNATES/s1200d/0_Passengers-Barbara-Ann-Stoddart-and-Andrew-Lithgow-who-were-due-to-fly-to-London-Heathrow-and-on-to-Las-Vegas-to-be.jpg",
+            "domain": "birminghammail.co.uk",
+            "language": "English",
+            "sourcecountry": "United Kingdom"
+          },
+          {
+            "url": "https://www.aftonbladet.se/nyheter/a/Rr77qd/aftonbladet-direkt?pinnedEntry=1496424",
+            "url_mobile": "",
+            "title": "SAS - toppen varnar för höjda priser",
+            "seendate": "20260921T211500Z",
+            "socialimage": "https://images.aftonbladet-cdn.se/v2/images/156fc268-adec-4fec-ac17-baa7f1dbdb35?fit=crop&format=auto&q=50&s=7076b53826b77139557aa7b78a798b03f7bc7a83",
+            "domain": "aftonbladet.se",
+            "language": "Swedish",
+            "sourcecountry": "Sweden"
+          },
+          {
+            "url": "https://avweb.com/aviation-news/air-lingus-reports-drone-20m-from-aircraft/",
+            "url_mobile": "",
+            "title": "Aer Lingus Pilot Reports Drone 20 Meters Off Aircraft",
+            "seendate": "20260921T181500Z",
+            "socialimage": "https://avweb.com/wp-content/uploads/2026/09/shutterstock_2761005507.jpg",
+            "domain": "avweb.com",
+            "language": "English",
+            "sourcecountry": "United States"
+          },
+          {
+            "url": "https://www.noticiasrcn.com/colombia/estudiantes-arriesgan-su-vida-intentando-cruzar-una-via-en-barranquilla-1063021",
+            "url_mobile": "https://amp.noticiasrcn.com/colombia/estudiantes-arriesgan-su-vida-intentando-cruzar-una-via-en-barranquilla-1063021",
+            "title": "Más de 10 mil estudiantes arriesgan su vida intentando cruzar una vía en Barranquilla : los padres la bloquearon",
+            "seendate": "20260921T163000Z",
+            "socialimage": "https://imagenes.noticiasrcn.com/cms/2026/09/21075838/Cruce-peatonal.jpg?&r=1_1",
+            "domain": "noticiasrcn.com",
+            "language": "Spanish",
+            "sourcecountry": "Colombia"
+          },
+          {
+            "url": "https://www.thewestonmercury.co.uk/news/national/26568330.wedding-disneyland-trips-disrupted-air-traffic-control-issues/",
+            "url_mobile": "",
+            "title": "Wedding and Disneyland trips disrupted by air traffic control issues",
+            "seendate": "20260921T151500Z",
+            "socialimage": "https://www.thewestonmercury.co.uk/resources/images/21481807.jpg?type=og-image",
+            "domain": "thewestonmercury.co.uk",
+            "language": "English",
+            "sourcecountry": "United Kingdom"
+          },
+          {
+            "url": "https://www.yourlocalguardian.co.uk/news/national/26568330.wedding-disneyland-trips-disrupted-air-traffic-control-issues/",
+            "url_mobile": "",
+            "title": "Wedding and Disneyland trips disrupted by air traffic control issues",
+            "seendate": "20260921T151500Z",
+            "socialimage": "https://www.yourlocalguardian.co.uk/resources/images/21481807.jpg?type=og-image",
+            "domain": "yourlocalguardian.co.uk",
+            "language": "English",
+            "sourcecountry": "United Kingdom"
+          },
+          {
+            "url": "https://www.countytimes.co.uk/news/national/26568330.wedding-disneyland-trips-disrupted-air-traffic-control-issues/",
+            "url_mobile": "",
+            "title": "Wedding and Disneyland trips disrupted by air traffic control issues",
+            "seendate": "20260921T151500Z",
+            "socialimage": "https://www.countytimes.co.uk/resources/images/21481807.jpg?type=og-image",
+            "domain": "countytimes.co.uk",
+            "language": "English",
+            "sourcecountry": "United Kingdom"
+          },
+          {
+            "url": "https://www.standard.co.uk/news/uk/glasgow-airport-disneyland-las-vegas-disneyland-paris-aberdeen-b1297795.html",
+            "url_mobile": "",
+            "title": "Wedding and Disneyland trips disrupted by air traffic control issues",
+            "seendate": "20260921T151500Z",
+            "socialimage": "https://static.standard.co.uk/2026/09/21/14/21134425-33e957d2-b80d-41f5-8c4c-95397906e1ae.jpg?&auto=webp&quality=75",
+            "domain": "standard.co.uk",
+            "language": "English",
+            "sourcecountry": "United Kingdom"
+          },
+          {
+            "url": "http://gold.cnfol.com/guojiyuanyousc/20260921/32376664.shtml",
+            "url_mobile": "",
+            "title": "美伊狠话互怼 ， 油价回落暗藏反弹风险 _ 国际原油市场 _ 黄金网 _ 中金在线",
+            "seendate": "20260921T130000Z",
+            "socialimage": "",
+            "domain": "gold.cnfol.com",
+            "language": "Chinese",
+            "sourcecountry": "China"
+          },
+          {
+            "url": "https://www.express.co.uk/news/world/2250293/brussels-south-charleroi-airport-cancel-flights",
+            "url_mobile": "https://www.express.co.uk/news/world/2250293/brussels-south-charleroi-airport-cancel-flights/amp",
+            "title": "Charleroi Airport in Brussels forced to cancel more flights | World | News",
+            "seendate": "20260921T110000Z",
+            "socialimage": "https://cdn.images.express.co.uk/img/dynamic/78/1200x630/7151509.jpg",
+            "domain": "express.co.uk",
+            "language": "English",
+            "sourcecountry": "United Kingdom"
+          },
+          {
+            "url": "https://baijiahao.baidu.com/s?id=1876930748429841354",
+            "url_mobile": "",
+            "title": "美使馆敦促立即撤离 ！ 特朗普再威胁  夷平伊朗 ， 曾38次称战争即将结束",
+            "seendate": "20260921T093000Z",
+            "socialimage": "",
+            "domain": "baijiahao.baidu.com",
+            "language": "Chinese",
+            "sourcecountry": "China"
+          },
+          {
+            "url": "https://zerkalo.az/armyanskij-paradoks-konflikt-s-moskvoj-na-slovah-i-torgovye-potoki-na-praktike/",
+            "url_mobile": "",
+            "title": "Армянский парадокс : конфликт с Москвой на словах и торговые потоки на практике",
+            "seendate": "20260921T093000Z",
+            "socialimage": "https://cdn.zerkalo.az/2026/09/rossiya-armeniya-torgovlya.jpeg",
+            "domain": "zerkalo.az",
+            "language": "Russian",
+            "sourcecountry": "Azerbaijan"
+          },
+          {
+            "url": "https://finance.sina.com.cn/tech/roll/2026-09-21/doc-inisqriz7739372.shtml",
+            "url_mobile": "",
+            "title": "马斯克再兑现科幻构想 ： 特斯拉新一代Roadster或能飞",
+            "seendate": "20260921T091500Z",
+            "socialimage": "https://n.sinaimg.cn/spider20260921/113/w600h313/20260921/8cd4-426f1ac8072f6476d55a1408c455fc52.png",
+            "domain": "finance.sina.com.cn",
+            "language": "Chinese",
+            "sourcecountry": "China"
+          },
+          {
+            "url": "https://www.theguardian.com/world/2026/sep/21/monday-briefing-inside-trumps-deportation-machine-your-fate-is-out-of-your-control",
+            "url_mobile": "",
+            "title": "Monday briefing : Inside Trump deportation machine –  Your fate is out of your control  | Trump administration",
+            "seendate": "20260921T091500Z",
+            "socialimage": "https://i.guim.co.uk/img/media/2760ea5047a0b469586457db3a283de572e3b331/250_0_2500_2001/master/2500.jpg?&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=4ae6561547c3085928ac2e2f5598a17a",
+            "domain": "theguardian.com",
+            "language": "English",
+            "sourcecountry": "United Kingdom"
+          },
+          {
+            "url": "https://www.hkcna.hk/docDetail.jsp?id=101428103&channel=2803",
+            "url_mobile": "",
+            "title": "美伊突傳重磅消息 ！ 全球資產定價或迎來新變量 | 頭條",
+            "seendate": "20260921T091500Z",
+            "socialimage": "",
+            "domain": "hkcna.hk",
+            "language": "Chinese",
+            "sourcecountry": "Hong Kong"
+          },
+          {
+            "url": "https://www.kmib.co.kr/article/view.asp?arcid=9000013943&code=61131411&sid1=int",
+            "url_mobile": "https://www.kmib.co.kr/article/view_amp.asp?arcid=9000013943",
+            "title": "  이란 내 미국인 , 즉시 떠나라 … 美 가상대사관 출국 권고 - 국민일보",
+            "seendate": "20260921T083000Z",
+            "socialimage": "https://image.kmib.co.kr/online_image/2026/0921/01100201.20260921500055.jpg",
+            "domain": "kmib.co.kr",
+            "language": "Korean",
+            "sourcecountry": "South Korea"
+          },
+          {
+            "url": "http://allkharkov.ua/news/state/y-nato-zapevnili-sho-gotov-do-eskalac-z-boky-ros-na-shdnomy-flanz-vropi.html",
+            "url_mobile": "",
+            "title": "У НАТО запевнили , що готові до ескалації з боку Росії на східному фланзі Європи | Новости державы в Харькове , Украине . Весь Харьков",
+            "seendate": "20260921T071500Z",
+            "socialimage": "http://allkharkov.ua/img/news_cont/news10/2026-09-21_47_dragone.jpg",
+            "domain": "allkharkov.ua",
+            "language": "Russian",
+            "sourcecountry": "Ukraine"
+          },
+          {
+            "url": "https://www.aol.co.uk/articles/monday-briefing-inside-trump-deportation-054431000.html",
+            "url_mobile": "",
+            "title": "Monday briefing : Inside Trump deportation machine –  Your fate is out of your control  ",
+            "seendate": "20260921T063000Z",
+            "socialimage": "https://hermes.media.static.aol.com/media/2026/09/21/9aae98c1-ca51-3400-8434-a26587f81fff/a706c866-15ac-4184-929e-895ff08e8afa.jpg",
+            "domain": "aol.co.uk",
+            "language": "English",
+            "sourcecountry": "United Kingdom"
+          },
+          {
+            "url": "https://nversia.ru/news/ugroza-ataki-bpla-v-saratovskom-aeroportu-zaderzhivayutsya-moskovskie-reysy-odin-otmenen/",
+            "url_mobile": "https://nversia.ru/amp/view/id/261317/",
+            "title": "Угроза атаки БПЛА . В саратовском аэропорту задерживаются московские рейсы , один отменён",
+            "seendate": "20260921T050000Z",
+            "socialimage": "",
+            "domain": "nversia.ru",
+            "language": "Russian",
+            "sourcecountry": "Russia"
+          },
+          {
+            "url": "https://www.chinatimes.com/realtimenews/20260921001887-260408",
+            "url_mobile": "",
+            "title": "戰火恐急速升級 ！ 美促公民 「 立即離開伊朗 」 限制赴沙國2城 - 政治圈",
+            "seendate": "20260921T040000Z",
+            "socialimage": "https://images.chinatimes.com/newsphoto/2026-09-21/656/20260921001891.jpg",
+            "domain": "chinatimes.com",
+            "language": "Chinese",
+            "sourcecountry": "Taiwan"
+          },
+          {
+            "url": "https://news.pts.org.tw/article/827915",
+            "url_mobile": "",
+            "title": "烏克蘭發動最大規模無人機攻擊 莫斯科煉油廠大火 、 2機場關閉 ｜ 公視新聞網 PNN",
+            "seendate": "20260921T003000Z",
+            "socialimage": "https://news-data.pts.org.tw/media/295704/conversions/01M30MV1EP4BGZMWB765HV4R42-cover_lg.webp",
+            "domain": "news.pts.org.tw",
+            "language": "Chinese",
+            "sourcecountry": "Taiwan"
+          },
+          {
+            "url": "https://ichannela.com/news/detail/000000551488.do",
+            "url_mobile": "https://ichannela.com/news/detail/amp/000000551488.do",
+            "title": "트럼프  이란 대응  결정 단계 … 곧 아주 큰 일 일어날 것  ",
+            "seendate": "20260920T221500Z",
+            "socialimage": "https://image.ichannela.com/images/channela/2026/09/21/000003139557/00000313955720260921065716821.webp",
+            "domain": "ichannela.com",
+            "language": "Korean",
+            "sourcecountry": "South Korea"
+          },
+          {
+            "url": "https://ichannela.com/news/detail/000000551489.do",
+            "url_mobile": "https://ichannela.com/news/detail/amp/000000551489.do",
+            "title": "이란군  美 , 이란 공격 재개 결정 정보 입수 … 공격 시 보복  ",
+            "seendate": "20260920T221500Z",
+            "socialimage": "https://image.ichannela.com/images/channela/2026/09/21/000003139559/00000313955920260921065827792.webp",
+            "domain": "ichannela.com",
+            "language": "Korean",
+            "sourcecountry": "South Korea"
+          },
+          {
+            "url": "https://metrohk.com.hk/%E5%9C%8B%E9%9A%9B/%E7%BE%8E%E4%BC%8A%E4%BA%92%E5%A8%81%E8%84%85-%E7%89%B9%E6%9C%97%E6%99%AE%E7%A8%B1%E4%B8%8D%E8%AB%87%E5%88%A4%E4%BC%8A%E6%9C%97%E7%B6%93%E6%BF%9F%E5%B4%A9%E6%BD%B0-fd63b2",
+            "url_mobile": "",
+            "title": "美伊互威脅 特朗普稱不談判伊朗經濟崩潰｜METROHK . com . hk",
+            "seendate": "20260920T193000Z",
+            "socialimage": "",
+            "domain": "metrohk.com.hk",
+            "language": "Chinese",
+            "sourcecountry": "Hong Kong"
+          },
+          {
+            "url": "https://www.ntdtv.com/b5/2026/09/20/a104134594.html",
+            "url_mobile": "https://www.ntdtv.com/b5/2026/09/20/a104134594.html/amp",
+            "title": "川普提前結束戴維營行程 急返白宮 | 中東局勢 | 胡塞武裝",
+            "seendate": "20260920T191500Z",
+            "socialimage": "https://i.ntdtv.com/assets/uploads/2026/09/id104134609-GettyImages-2295584017-1200x630.jpg",
+            "domain": "ntdtv.com",
+            "language": "Chinese",
+            "sourcecountry": "China"
+          },
+          {
+            "url": "https://www.1in.am/3760768.html",
+            "url_mobile": "",
+            "title": "Իր իսկ ճանապարհից դուրս մնալու վտանգը",
+            "seendate": "20260920T151500Z",
+            "socialimage": "https://www.1in.am/assets/uploads/2026/09/5000-1084-540x360.jpg",
+            "domain": "1in.am",
+            "language": "Armenian",
+            "sourcecountry": "Armenia"
+          },
+          {
+            "url": "https://eldeber.com.bo/opinion/kast-bolivia-dos-noches-tres-dias_1789859080",
+            "url_mobile": "https://eldeber.com.bo/opinion/kast-bolivia-dos-noches-tres-dias_1789859080/?amp",
+            "title": "Kast en Bolivia : dos noches y tres días",
+            "seendate": "20260920T143000Z",
+            "socialimage": "https://pxcdn.eldeber.com.bo/eldeber/062026/1781005304306.jpeg?&cw=1200&ch=630",
+            "domain": "eldeber.com.bo",
+            "language": "Spanish",
+            "sourcecountry": "Bolivia"
+          },
+          {
+            "url": "https://www.kommersant.ru/doc/8970825",
+            "url_mobile": "",
+            "title": "Атака БПЛА на Москву : задержано 400 рейсов , поврежден НПЗ в Капотне",
+            "seendate": "20260920T141500Z",
+            "socialimage": "https://im2.kommersant.ru/SocialPics/8970825_49_3210227_182811823",
+            "domain": "kommersant.ru",
+            "language": "Russian",
+            "sourcecountry": "Russia"
+          },
+          {
+            "url": "https://www.9tv.co.il/item/265482",
+            "url_mobile": "",
+            "title": "Йом - Кипур 2026 : 9 канал переходит на особый режим работы . Всё , что важно знать",
+            "seendate": "20260920T134500Z",
+            "socialimage": "https://www.9tv.co.il/download/pictures/img_id=20503.jpg",
+            "domain": "9tv.co.il",
+            "language": "Russian",
+            "sourcecountry": "Israel"
+          },
+          {
+            "url": "https://www.kreiszeitung.de/lokales/bremen/schiffs-crash-bei-lichterfahrt-polizei-kassiert-verbotene-drohne-94500878.html",
+            "url_mobile": "",
+            "title": "Schiffs - Crash bei Lichterfahrt – Polizei kassiert verbotene Drohne",
+            "seendate": "20260920T104500Z",
+            "socialimage": "",
+            "domain": "kreiszeitung.de",
+            "language": "German",
+            "sourcecountry": "Germany"
+          },
+          {
+            "url": "https://www.dailymail.com/news/article-16145873/fires-rage-Moscow-Ukraine-strikes-Russia-oil-refinery-drone-attack-day-election.html",
+            "url_mobile": "https://www.dailymail.com/news/article-16145873/amp/fires-rage-Moscow-Ukraine-strikes-Russia-oil-refinery-drone-attack-day-election.html",
+            "title": "Huge fires rage in Moscow as Ukraine strikes Russian capital biggest oil refinery in massive drone attack on the last day of election",
+            "seendate": "20260920T091500Z",
+            "socialimage": "https://i.dailymail.com/1s/2026/09/20/09/111356493-0-image-m-25_1789893893403.jpg",
+            "domain": "dailymail.com",
+            "language": "English",
+            "sourcecountry": "United States"
+          },
+          {
+            "url": "https://musavat.com/news/moskvada-cehennem-gecesi-anbarlar-neft-emali-zavodu-yanir-aeroportlar-dayanib-tv-musavat_1290290.html",
+            "url_mobile": "",
+            "title": "Moskvada CƏHƏNNƏM GECƏSİ ! Anbarlar , Neft Emalı Zavodu yanır , aeroportlar dayanıb - TV Musavat",
+            "seendate": "20260920T090000Z",
+            "socialimage": "https://cdn.musavat.com/news/thumbnails/00e3400eab2c8560680ea76b63981d82.jpeg",
+            "domain": "musavat.com",
+            "language": "Azerbaijani",
+            "sourcecountry": "Azerbaijan"
+          },
+          {
+            "url": "https://www.express.co.uk/news/world/2250071/putin-election-moscow-ukraine-attacks",
+            "url_mobile": "https://www.express.co.uk/news/world/2250071/putin-election-moscow-ukraine-attacks/amp",
+            "title": "Putin humiliated on  sham  election day as Ukraine pummels Moscow with huge strikes | World | News",
+            "seendate": "20260920T080000Z",
+            "socialimage": "https://cdn.images.express.co.uk/img/dynamic/78/1200x630/7150429.jpg",
+            "domain": "express.co.uk",
+            "language": "English",
+            "sourcecountry": "United Kingdom"
+          },
+          {
+            "url": "https://www.chinatimes.com/realtimenews/20260920001709-260408",
+            "url_mobile": "",
+            "title": "美伊戰爭最新消息 》 重大升級 ！ 葉門叛軍首炸沙國首都 美發中東安全警示 - 國際",
+            "seendate": "20260920T073000Z",
+            "socialimage": "https://images.chinatimes.com/newsphoto/2026-09-20/656/20260920001714.jpg",
+            "domain": "chinatimes.com",
+            "language": "Chinese",
+            "sourcecountry": "Taiwan"
+          }
+        ]
+      }
     },
     "gdacs-alerts": {
       "ok": true,
@@ -271,7 +774,7 @@
               "glide": "DR-2026-000143-COD",
               "name": "Drought in Democratic Republic of Congo, Kenya, Tanzania, Uganda",
               "description": "Drought in Democratic Republic of Congo, Kenya, Tanzania, Uganda",
-              "htmldescription": "Orange Drought in Democratic Republic of Congo, Kenya, Tanzania, Uganda from: 21 May 2026  to: 20 Sep 2026 .",
+              "htmldescription": "Orange Drought in Democratic Republic of Congo, Kenya, Tanzania, Uganda from: 21 May 2026  to: 21 Sep 2026 .",
               "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "url": {
@@ -287,8 +790,8 @@
               "iscurrent": "false",
               "country": "Democratic Republic of Congo, Kenya, Tanzania, Uganda",
               "fromdate": "2026-05-21T00:00:00",
-              "todate": "2026-09-20T00:00:00",
-              "datemodified": "2026-09-22T05:57:30",
+              "todate": "2026-09-21T00:00:00",
+              "datemodified": "2026-09-23T05:37:20",
               "iso3": "COD",
               "source": "GDO",
               "sourceid": "",
@@ -326,6 +829,266 @@
           {
             "type": "Feature",
             "bbox": [
+              38.087,
+              8.868,
+              38.087,
+              8.868
+            ],
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                38.087,
+                8.868
+              ]
+            },
+            "properties": {
+              "eventtype": "DR",
+              "eventid": 1027450,
+              "episodeid": 9,
+              "eventname": "East Africa-2026",
+              "glide": "DR-2026-000117-ETH",
+              "name": "Drought in Djibouti, Eritrea, Ethiopia, Kenya, Sudan, Somalia, South Sudan, Uganda",
+              "description": "Drought in Djibouti, Eritrea, Ethiopia, Kenya, Sudan, Somalia, South Sudan, Uganda",
+              "htmldescription": "Orange Drought in Djibouti, Eritrea, Ethiopia, Kenya, Sudan, Somalia, South Sudan, Uganda from: 21 Apr 2026  to: 21 Sep 2026 .",
+              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
+              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
+              "url": {
+                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=DR&eventid=1027450&episodeid=9",
+                "report": "https://www.gdacs.org/report.aspx?eventid=1027450&episodeid=9&eventtype=DR",
+                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=DR&eventid=1027450"
+              },
+              "alertlevel": "Orange",
+              "alertscore": 2,
+              "episodealertlevel": "Orange",
+              "episodealertscore": 1.25,
+              "istemporary": "false",
+              "iscurrent": "false",
+              "country": "Djibouti, Eritrea, Ethiopia, Kenya, Sudan, Somalia, South Sudan, Uganda",
+              "fromdate": "2026-04-21T00:00:00",
+              "todate": "2026-09-21T00:00:00",
+              "datemodified": "2026-09-23T05:37:25",
+              "iso3": "DJI",
+              "source": "GDO",
+              "sourceid": "",
+              "polygonlabel": "Centroid",
+              "Class": "Point_Centroid",
+              "affectedcountries": [
+                {
+                  "iso2": "DJ",
+                  "iso3": "DJI",
+                  "countryname": "Djibouti"
+                },
+                {
+                  "iso2": "ER",
+                  "iso3": "ERI",
+                  "countryname": "Eritrea"
+                },
+                {
+                  "iso2": "ET",
+                  "iso3": "ETH",
+                  "countryname": "Ethiopia"
+                },
+                {
+                  "iso2": "KE",
+                  "iso3": "KEN",
+                  "countryname": "Kenya"
+                },
+                {
+                  "iso2": "SD",
+                  "iso3": "SDN",
+                  "countryname": "Sudan"
+                },
+                {
+                  "iso2": "SO",
+                  "iso3": "SOM",
+                  "countryname": "Somalia"
+                },
+                {
+                  "iso2": "SS",
+                  "iso3": "SSD",
+                  "countryname": "South Sudan"
+                },
+                {
+                  "iso2": "UG",
+                  "iso3": "UGA",
+                  "countryname": "Uganda"
+                }
+              ],
+              "severitydata": {
+                "severity": 752713.0,
+                "severitytext": "Medium impact for agricultural drought in 752713 km2",
+                "severityunit": "km2"
+              }
+            }
+          },
+          {
+            "type": "Feature",
+            "bbox": [
+              -93.751,
+              16.611,
+              -93.751,
+              16.611
+            ],
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -93.751,
+                16.611
+              ]
+            },
+            "properties": {
+              "eventtype": "DR",
+              "eventid": 1027449,
+              "episodeid": 9,
+              "eventname": "Central America-2026",
+              "glide": "DR-2026-000153-BLZ",
+              "name": "Drought in The Bahamas, Belize, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador",
+              "description": "Drought in The Bahamas, Belize, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador",
+              "htmldescription": "Orange Drought in The Bahamas, Belize, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador from: 21 Apr 2026  to: 21 Sep 2026 .",
+              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
+              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
+              "url": {
+                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=DR&eventid=1027449&episodeid=9",
+                "report": "https://www.gdacs.org/report.aspx?eventid=1027449&episodeid=9&eventtype=DR",
+                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=DR&eventid=1027449"
+              },
+              "alertlevel": "Orange",
+              "alertscore": 2,
+              "episodealertlevel": "Orange",
+              "episodealertscore": 1.25,
+              "istemporary": "false",
+              "iscurrent": "false",
+              "country": "The Bahamas, Belize, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador",
+              "fromdate": "2026-04-21T00:00:00",
+              "todate": "2026-09-21T00:00:00",
+              "datemodified": "2026-09-23T05:37:31",
+              "iso3": "BHS",
+              "source": "GDO",
+              "sourceid": "",
+              "polygonlabel": "Centroid",
+              "Class": "Point_Centroid",
+              "affectedcountries": [
+                {
+                  "iso2": "BS",
+                  "iso3": "BHS",
+                  "countryname": "The Bahamas"
+                },
+                {
+                  "iso2": "BZ",
+                  "iso3": "BLZ",
+                  "countryname": "Belize"
+                },
+                {
+                  "iso2": "CU",
+                  "iso3": "CUB",
+                  "countryname": "Cuba"
+                },
+                {
+                  "iso2": "DO",
+                  "iso3": "DOM",
+                  "countryname": "Dominican Republic"
+                },
+                {
+                  "iso2": "GT",
+                  "iso3": "GTM",
+                  "countryname": "Guatemala"
+                },
+                {
+                  "iso2": "HN",
+                  "iso3": "HND",
+                  "countryname": "Honduras"
+                },
+                {
+                  "iso2": "HT",
+                  "iso3": "HTI",
+                  "countryname": "Haiti"
+                },
+                {
+                  "iso2": "MX",
+                  "iso3": "MEX",
+                  "countryname": "Mexico"
+                },
+                {
+                  "iso2": "NI",
+                  "iso3": "NIC",
+                  "countryname": "Nicaragua"
+                },
+                {
+                  "iso2": "SV",
+                  "iso3": "SLV",
+                  "countryname": "El Salvador"
+                }
+              ],
+              "severitydata": {
+                "severity": 677277.0,
+                "severitytext": "Medium impact for agricultural drought in 677277 km2",
+                "severityunit": "km2"
+              }
+            }
+          },
+          {
+            "type": "Feature",
+            "bbox": [
+              48.741,
+              -16.837,
+              48.741,
+              -16.837
+            ],
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                48.741,
+                -16.837
+              ]
+            },
+            "properties": {
+              "eventtype": "DR",
+              "eventid": 1018431,
+              "episodeid": 15,
+              "eventname": "Madagascar-2026",
+              "glide": "DR-2025-000238-MDG",
+              "name": "Drought in Madagascar",
+              "description": "Drought in Madagascar",
+              "htmldescription": "Orange Drought in Madagascar from: 21 Nov 2025  to: 21 Sep 2026 .",
+              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
+              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
+              "url": {
+                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=DR&eventid=1018431&episodeid=15",
+                "report": "https://www.gdacs.org/report.aspx?eventid=1018431&episodeid=15&eventtype=DR",
+                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=DR&eventid=1018431"
+              },
+              "alertlevel": "Orange",
+              "alertscore": 2,
+              "episodealertlevel": "Orange",
+              "episodealertscore": 1.0,
+              "istemporary": "false",
+              "iscurrent": "false",
+              "country": "Madagascar",
+              "fromdate": "2025-11-21T00:00:00",
+              "todate": "2026-09-21T00:00:00",
+              "datemodified": "2026-09-23T05:37:28",
+              "iso3": "MDG",
+              "source": "GDO",
+              "sourceid": "",
+              "polygonlabel": "Centroid",
+              "Class": "Point_Centroid",
+              "affectedcountries": [
+                {
+                  "iso2": "MG",
+                  "iso3": "MDG",
+                  "countryname": "Madagascar"
+                }
+              ],
+              "severitydata": {
+                "severity": 97655.0,
+                "severitytext": "Medium impact for agricultural drought in 97655 km2",
+                "severityunit": "km2"
+              }
+            }
+          },
+          {
+            "type": "Feature",
+            "bbox": [
               11.164,
               48.063,
               11.164,
@@ -346,7 +1109,7 @@
               "glide": "DR-2025-000239-ALB",
               "name": "Drought in Austria, Bosnia  and  Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Netherlands, Poland, Romania, Serbia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, ",
               "description": "Drought in Austria, Bosnia  and  Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Netherlands, Poland, Romania, Serbia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, ",
-              "htmldescription": "Orange Drought in Austria, Bosnia  and  Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Netherlands, Poland, Romania, Serbia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, from: 21 Dec 2025  to: 20 Sep 2026 .",
+              "htmldescription": "Orange Drought in Austria, Bosnia  and  Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Netherlands, Poland, Romania, Serbia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, from: 21 Dec 2025  to: 21 Sep 2026 .",
               "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "url": {
@@ -362,8 +1125,8 @@
               "iscurrent": "false",
               "country": "Austria, Bosnia & Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Netherlands, Poland, Romania, Serbia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, ",
               "fromdate": "2025-12-21T00:00:00",
-              "todate": "2026-09-20T00:00:00",
-              "datemodified": "2026-09-22T18:05:14",
+              "todate": "2026-09-21T00:00:00",
+              "datemodified": "2026-09-23T05:40:21",
               "iso3": "AUT",
               "source": "GDO",
               "sourceid": "",
@@ -506,266 +1269,6 @@
           {
             "type": "Feature",
             "bbox": [
-              48.741,
-              -16.837,
-              48.741,
-              -16.837
-            ],
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                48.741,
-                -16.837
-              ]
-            },
-            "properties": {
-              "eventtype": "DR",
-              "eventid": 1018431,
-              "episodeid": 15,
-              "eventname": "Madagascar-2026",
-              "glide": "DR-2025-000238-MDG",
-              "name": "Drought in Madagascar",
-              "description": "Drought in Madagascar",
-              "htmldescription": "Orange Drought in Madagascar from: 21 Nov 2025  to: 20 Sep 2026 .",
-              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
-              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
-              "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=DR&eventid=1018431&episodeid=15",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1018431&episodeid=15&eventtype=DR",
-                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=DR&eventid=1018431"
-              },
-              "alertlevel": "Orange",
-              "alertscore": 2,
-              "episodealertlevel": "Orange",
-              "episodealertscore": 1.0,
-              "istemporary": "false",
-              "iscurrent": "false",
-              "country": "Madagascar",
-              "fromdate": "2025-11-21T00:00:00",
-              "todate": "2026-09-20T00:00:00",
-              "datemodified": "2026-09-22T05:57:10",
-              "iso3": "MDG",
-              "source": "GDO",
-              "sourceid": "",
-              "polygonlabel": "Centroid",
-              "Class": "Point_Centroid",
-              "affectedcountries": [
-                {
-                  "iso2": "MG",
-                  "iso3": "MDG",
-                  "countryname": "Madagascar"
-                }
-              ],
-              "severitydata": {
-                "severity": 97655.0,
-                "severitytext": "Medium impact for agricultural drought in 97655 km2",
-                "severityunit": "km2"
-              }
-            }
-          },
-          {
-            "type": "Feature",
-            "bbox": [
-              -93.751,
-              16.611,
-              -93.751,
-              16.611
-            ],
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                -93.751,
-                16.611
-              ]
-            },
-            "properties": {
-              "eventtype": "DR",
-              "eventid": 1027449,
-              "episodeid": 9,
-              "eventname": "Central America-2026",
-              "glide": "DR-2026-000153-BLZ",
-              "name": "Drought in The Bahamas, Belize, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador",
-              "description": "Drought in The Bahamas, Belize, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador",
-              "htmldescription": "Orange Drought in The Bahamas, Belize, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador from: 21 Apr 2026  to: 20 Sep 2026 .",
-              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
-              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
-              "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=DR&eventid=1027449&episodeid=9",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1027449&episodeid=9&eventtype=DR",
-                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=DR&eventid=1027449"
-              },
-              "alertlevel": "Orange",
-              "alertscore": 2,
-              "episodealertlevel": "Orange",
-              "episodealertscore": 1.25,
-              "istemporary": "false",
-              "iscurrent": "false",
-              "country": "The Bahamas, Belize, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador",
-              "fromdate": "2026-04-21T00:00:00",
-              "todate": "2026-09-20T00:00:00",
-              "datemodified": "2026-09-22T05:57:23",
-              "iso3": "BHS",
-              "source": "GDO",
-              "sourceid": "",
-              "polygonlabel": "Centroid",
-              "Class": "Point_Centroid",
-              "affectedcountries": [
-                {
-                  "iso2": "BS",
-                  "iso3": "BHS",
-                  "countryname": "The Bahamas"
-                },
-                {
-                  "iso2": "BZ",
-                  "iso3": "BLZ",
-                  "countryname": "Belize"
-                },
-                {
-                  "iso2": "CU",
-                  "iso3": "CUB",
-                  "countryname": "Cuba"
-                },
-                {
-                  "iso2": "DO",
-                  "iso3": "DOM",
-                  "countryname": "Dominican Republic"
-                },
-                {
-                  "iso2": "GT",
-                  "iso3": "GTM",
-                  "countryname": "Guatemala"
-                },
-                {
-                  "iso2": "HN",
-                  "iso3": "HND",
-                  "countryname": "Honduras"
-                },
-                {
-                  "iso2": "HT",
-                  "iso3": "HTI",
-                  "countryname": "Haiti"
-                },
-                {
-                  "iso2": "MX",
-                  "iso3": "MEX",
-                  "countryname": "Mexico"
-                },
-                {
-                  "iso2": "NI",
-                  "iso3": "NIC",
-                  "countryname": "Nicaragua"
-                },
-                {
-                  "iso2": "SV",
-                  "iso3": "SLV",
-                  "countryname": "El Salvador"
-                }
-              ],
-              "severitydata": {
-                "severity": 677277.0,
-                "severitytext": "Medium impact for agricultural drought in 677277 km2",
-                "severityunit": "km2"
-              }
-            }
-          },
-          {
-            "type": "Feature",
-            "bbox": [
-              38.087,
-              8.868,
-              38.087,
-              8.868
-            ],
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                38.087,
-                8.868
-              ]
-            },
-            "properties": {
-              "eventtype": "DR",
-              "eventid": 1027450,
-              "episodeid": 9,
-              "eventname": "East Africa-2026",
-              "glide": "DR-2026-000117-ETH",
-              "name": "Drought in Djibouti, Eritrea, Ethiopia, Kenya, Sudan, Somalia, South Sudan, Uganda",
-              "description": "Drought in Djibouti, Eritrea, Ethiopia, Kenya, Sudan, Somalia, South Sudan, Uganda",
-              "htmldescription": "Orange Drought in Djibouti, Eritrea, Ethiopia, Kenya, Sudan, Somalia, South Sudan, Uganda from: 21 Apr 2026  to: 20 Sep 2026 .",
-              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
-              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
-              "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=DR&eventid=1027450&episodeid=9",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1027450&episodeid=9&eventtype=DR",
-                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=DR&eventid=1027450"
-              },
-              "alertlevel": "Orange",
-              "alertscore": 2,
-              "episodealertlevel": "Orange",
-              "episodealertscore": 1.25,
-              "istemporary": "false",
-              "iscurrent": "false",
-              "country": "Djibouti, Eritrea, Ethiopia, Kenya, Sudan, Somalia, South Sudan, Uganda",
-              "fromdate": "2026-04-21T00:00:00",
-              "todate": "2026-09-20T00:00:00",
-              "datemodified": "2026-09-22T05:57:26",
-              "iso3": "DJI",
-              "source": "GDO",
-              "sourceid": "",
-              "polygonlabel": "Centroid",
-              "Class": "Point_Centroid",
-              "affectedcountries": [
-                {
-                  "iso2": "DJ",
-                  "iso3": "DJI",
-                  "countryname": "Djibouti"
-                },
-                {
-                  "iso2": "ER",
-                  "iso3": "ERI",
-                  "countryname": "Eritrea"
-                },
-                {
-                  "iso2": "ET",
-                  "iso3": "ETH",
-                  "countryname": "Ethiopia"
-                },
-                {
-                  "iso2": "KE",
-                  "iso3": "KEN",
-                  "countryname": "Kenya"
-                },
-                {
-                  "iso2": "SD",
-                  "iso3": "SDN",
-                  "countryname": "Sudan"
-                },
-                {
-                  "iso2": "SO",
-                  "iso3": "SOM",
-                  "countryname": "Somalia"
-                },
-                {
-                  "iso2": "SS",
-                  "iso3": "SSD",
-                  "countryname": "South Sudan"
-                },
-                {
-                  "iso2": "UG",
-                  "iso3": "UGA",
-                  "countryname": "Uganda"
-                }
-              ],
-              "severitydata": {
-                "severity": 752713.0,
-                "severitytext": "Medium impact for agricultural drought in 752713 km2",
-                "severityunit": "km2"
-              }
-            }
-          },
-          {
-            "type": "Feature",
-            "bbox": [
               105.4233,
               -6.1009,
               105.4233,
@@ -803,7 +1306,7 @@
               "country": "Indonesia",
               "fromdate": "2026-09-04T21:00:00",
               "todate": "2026-09-04T21:00:00",
-              "datemodified": "2026-09-22T18:05:13",
+              "datemodified": "2026-09-23T05:40:21",
               "iso3": "IDN",
               "source": "DARWIN",
               "sourceid": "",
@@ -929,7 +1432,7 @@
               "country": "Nepal",
               "fromdate": "2026-08-26T01:00:00",
               "todate": "2026-09-01T14:00:00",
-              "datemodified": "2026-09-22T18:05:14",
+              "datemodified": "2026-09-23T05:40:21",
               "iso3": "NPL",
               "source": "GLOFAS",
               "sourceid": "",
@@ -1109,7 +1612,7 @@
               "country": "Serbia",
               "fromdate": "2026-08-05T00:00:00",
               "todate": "2026-08-25T00:00:00",
-              "datemodified": "2026-09-22T18:05:15",
+              "datemodified": "2026-09-23T05:40:21",
               "iso3": "SRB",
               "source": "GWIS",
               "sourceid": "",
@@ -1125,6 +1628,66 @@
               "severitydata": {
                 "severity": 18310.0,
                 "severitytext": "Orange impact for forestfire in 18310 ha",
+                "severityunit": "ha"
+              }
+            }
+          },
+          {
+            "type": "Feature",
+            "bbox": [
+              6.0772,
+              50.5262,
+              6.0772,
+              50.5262
+            ],
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                6.0772,
+                50.5262
+              ]
+            },
+            "properties": {
+              "eventtype": "WF",
+              "eventid": 1030534,
+              "episodeid": 5,
+              "eventname": "",
+              "glide": "WF-2026-000155-BEL",
+              "name": "Forest fires in Belgium",
+              "description": "Forest fires in Belgium",
+              "htmldescription": "Orange Forest fires in Belgium from: 14 Aug 2026 to: 17 Aug 2026.",
+              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/WF.png",
+              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/WF.png",
+              "url": {
+                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=WF&eventid=1030534&episodeid=5",
+                "report": "https://www.gdacs.org/report.aspx?eventid=1030534&episodeid=5&eventtype=WF",
+                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=WF&eventid=1030534"
+              },
+              "alertlevel": "Orange",
+              "alertscore": 2,
+              "episodealertlevel": "Orange",
+              "episodealertscore": 1.5,
+              "istemporary": "false",
+              "iscurrent": "false",
+              "country": "Belgium",
+              "fromdate": "2026-08-14T00:00:00",
+              "todate": "2026-08-17T00:00:00",
+              "datemodified": "2026-09-23T05:40:21",
+              "iso3": "BEL",
+              "source": "GWIS",
+              "sourceid": "",
+              "polygonlabel": "Centroid",
+              "Class": "Point_Centroid",
+              "affectedcountries": [
+                {
+                  "iso2": "BE",
+                  "iso3": "BEL",
+                  "countryname": "Belgium"
+                }
+              ],
+              "severitydata": {
+                "severity": 6356.0,
+                "severitytext": "Orange impact for forestfire in 6356 ha",
                 "severityunit": "ha"
               }
             }
@@ -1192,66 +1755,6 @@
           {
             "type": "Feature",
             "bbox": [
-              6.0772,
-              50.5262,
-              6.0772,
-              50.5262
-            ],
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                6.0772,
-                50.5262
-              ]
-            },
-            "properties": {
-              "eventtype": "WF",
-              "eventid": 1030534,
-              "episodeid": 5,
-              "eventname": "",
-              "glide": "WF-2026-000155-BEL",
-              "name": "Forest fires in Belgium",
-              "description": "Forest fires in Belgium",
-              "htmldescription": "Orange Forest fires in Belgium from: 14 Aug 2026 to: 17 Aug 2026.",
-              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/WF.png",
-              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/WF.png",
-              "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=WF&eventid=1030534&episodeid=5",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1030534&episodeid=5&eventtype=WF",
-                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=WF&eventid=1030534"
-              },
-              "alertlevel": "Orange",
-              "alertscore": 2,
-              "episodealertlevel": "Orange",
-              "episodealertscore": 1.5,
-              "istemporary": "false",
-              "iscurrent": "false",
-              "country": "Belgium",
-              "fromdate": "2026-08-14T00:00:00",
-              "todate": "2026-08-17T00:00:00",
-              "datemodified": "2026-09-22T18:05:15",
-              "iso3": "BEL",
-              "source": "GWIS",
-              "sourceid": "",
-              "polygonlabel": "Centroid",
-              "Class": "Point_Centroid",
-              "affectedcountries": [
-                {
-                  "iso2": "BE",
-                  "iso3": "BEL",
-                  "countryname": "Belgium"
-                }
-              ],
-              "severitydata": {
-                "severity": 6356.0,
-                "severitytext": "Orange impact for forestfire in 6356 ha",
-                "severityunit": "ha"
-              }
-            }
-          },
-          {
-            "type": "Feature",
-            "bbox": [
               121.3517,
               -8.3101,
               121.3517,
@@ -1289,7 +1792,7 @@
               "country": "Indonesia",
               "fromdate": "2026-08-14T21:58:21",
               "todate": "2026-08-14T21:58:21",
-              "datemodified": "2026-09-22T18:05:15",
+              "datemodified": "2026-09-23T05:40:21",
               "iso3": "IDN",
               "source": "NEIC",
               "sourceid": "",
@@ -1349,7 +1852,7 @@
               "country": "Colombia",
               "fromdate": "2026-08-10T12:34:28",
               "todate": "2026-08-10T12:34:28",
-              "datemodified": "2026-09-22T18:05:16",
+              "datemodified": "2026-09-23T05:40:21",
               "iso3": "COL",
               "source": "NEIC",
               "sourceid": "",
@@ -1409,7 +1912,7 @@
               "country": "Marshall Islands, Japan, China",
               "fromdate": "2026-07-27T00:00:00",
               "todate": "2026-08-09T12:00:00",
-              "datemodified": "2026-09-22T18:05:23",
+              "datemodified": "2026-09-23T05:35:45",
               "iso3": "MHL",
               "source": "JTWC",
               "sourceid": "",
@@ -1595,7 +2098,7 @@
               "country": "Greece",
               "fromdate": "2026-07-30T00:00:00",
               "todate": "2026-08-01T00:00:00",
-              "datemodified": "2026-09-22T18:05:17",
+              "datemodified": "2026-09-23T05:40:21",
               "iso3": "GRC",
               "source": "GWIS",
               "sourceid": "",
@@ -1655,7 +2158,7 @@
               "country": "France",
               "fromdate": "2026-07-22T00:00:00",
               "todate": "2026-08-01T00:00:00",
-              "datemodified": "2026-09-22T18:05:18",
+              "datemodified": "2026-09-23T05:40:22",
               "iso3": "FRA",
               "source": "GWIS",
               "sourceid": "",
@@ -1775,7 +2278,7 @@
               "country": "Spain",
               "fromdate": "2026-07-25T00:00:00",
               "todate": "2026-07-30T00:00:00",
-              "datemodified": "2026-09-22T18:05:18",
+              "datemodified": "2026-09-23T05:40:22",
               "iso3": "ESP",
               "source": "GWIS",
               "sourceid": "",
@@ -1835,7 +2338,7 @@
               "country": "Spain",
               "fromdate": "2026-07-22T00:00:00",
               "todate": "2026-07-30T00:00:00",
-              "datemodified": "2026-09-22T18:05:18",
+              "datemodified": "2026-09-23T05:40:22",
               "iso3": "ESP",
               "source": "GWIS",
               "sourceid": "",
@@ -1895,7 +2398,7 @@
               "country": "Tunisia",
               "fromdate": "2026-07-21T00:00:00",
               "todate": "2026-07-29T00:00:00",
-              "datemodified": "2026-09-22T18:05:18",
+              "datemodified": "2026-09-23T05:40:22",
               "iso3": "TUN",
               "source": "GWIS",
               "sourceid": "",
@@ -1955,7 +2458,7 @@
               "country": "Japan",
               "fromdate": "2026-07-28T07:27:15",
               "todate": "2026-07-28T07:27:15",
-              "datemodified": "2026-09-22T18:05:17",
+              "datemodified": "2026-09-23T05:40:21",
               "iso3": "JPN",
               "source": "NEIC",
               "sourceid": "",
@@ -2141,7 +2644,7 @@
               "country": "Spain",
               "fromdate": "2026-07-18T00:00:00",
               "todate": "2026-07-25T00:00:00",
-              "datemodified": "2026-09-22T18:05:18",
+              "datemodified": "2026-09-23T05:40:22",
               "iso3": "ESP",
               "source": "GWIS",
               "sourceid": "",
@@ -2441,7 +2944,7 @@
               "country": "Guam, Northern Mariana Islands, Japan, Taiwan, China",
               "fromdate": "2026-07-01T00:00:00",
               "todate": "2026-07-11T18:00:00",
-              "datemodified": "2026-09-22T18:05:18",
+              "datemodified": "2026-09-23T05:40:24",
               "iso3": "CHN",
               "source": "JTWC",
               "sourceid": "",
@@ -2577,7 +3080,7 @@
               "country": "France",
               "fromdate": "2026-07-04T00:00:00",
               "todate": "2026-07-08T00:00:00",
-              "datemodified": "2026-09-22T18:05:18",
+              "datemodified": "2026-09-23T05:40:25",
               "iso3": "FRA",
               "source": "GWIS",
               "sourceid": "",
@@ -2637,7 +3140,7 @@
               "country": "Portugal",
               "fromdate": "2026-07-02T00:00:00",
               "todate": "2026-07-08T00:00:00",
-              "datemodified": "2026-09-22T18:05:18",
+              "datemodified": "2026-09-23T05:40:25",
               "iso3": "PRT",
               "source": "GWIS",
               "sourceid": "",
@@ -2823,7 +3326,7 @@
               "country": "Venezuela",
               "fromdate": "2026-06-24T22:05:12",
               "todate": "2026-06-24T22:05:12",
-              "datemodified": "2026-09-22T18:05:19",
+              "datemodified": "2026-09-23T05:40:25",
               "iso3": "VEN",
               "source": "NEIC",
               "sourceid": "",
@@ -2883,7 +3386,7 @@
               "country": "Venezuela",
               "fromdate": "2026-06-24T22:04:32",
               "todate": "2026-06-24T22:04:32",
-              "datemodified": "2026-09-22T18:05:19",
+              "datemodified": "2026-09-23T05:40:25",
               "iso3": "VEN",
               "source": "NEIC",
               "sourceid": "",
@@ -3003,7 +3506,7 @@
               "country": "Indonesia",
               "fromdate": "2026-06-16T03:27:44",
               "todate": "2026-06-16T03:27:44",
-              "datemodified": "2026-09-22T18:05:19",
+              "datemodified": "2026-09-23T05:40:25",
               "iso3": "IDN",
               "source": "NEIC",
               "sourceid": "",
@@ -3063,7 +3566,7 @@
               "country": "Philippines",
               "fromdate": "2026-06-07T23:37:40",
               "todate": "2026-06-07T23:37:40",
-              "datemodified": "2026-09-22T18:05:19",
+              "datemodified": "2026-09-23T05:35:20",
               "iso3": "PHL",
               "source": "NEIC",
               "sourceid": "",
@@ -3549,7 +4052,7 @@
               "country": "Kenya, Somalia",
               "fromdate": "2025-05-21T00:00:00",
               "todate": "2026-03-30T00:00:00",
-              "datemodified": "2026-09-22T18:05:19",
+              "datemodified": "2026-09-23T05:35:20",
               "iso3": "KEN",
               "source": "GDO",
               "sourceid": "",
