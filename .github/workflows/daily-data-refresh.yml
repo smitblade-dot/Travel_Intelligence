@@ -6,6 +6,9 @@ on:
     # Temporary self-test schedule; remove after the corrected run succeeds.
     - cron: "*/5 * * * *"
   workflow_dispatch: {}
+  # Temporary self-test trigger; remove after the corrected run succeeds.
+  issues:
+    types: [opened]
 
 permissions:
   contents: write
