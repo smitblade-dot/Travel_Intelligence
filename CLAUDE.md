@@ -142,6 +142,51 @@ Do not assume that public web access grants a right to reproduce source text.
 AI translation must retain the original language/source and identify the
 translation method. Do not replace the original source with translated prose.
 
+## Source tiers and acquisition register
+
+`config/source_registry.json` is the canonical TI source due-diligence register. It records candidate sources, source tier, access method, legal/access category, automation permission and implementation status.
+
+Use the four source tiers as a development constraint:
+
+- TIER_1 — free/open government and international machine-readable sources; build first.
+- TIER_2 — operational sources such as airports, airspace, borders, roads, ports, rail and maritime; integrate selectively when access, reliability and reuse rights are clear.
+- TIER_3 — discovery / OSINT sources such as local, specialist and social sources; use for early warning and investigation only, then verify before publication.
+- TIER_4 — paid/commercial data; deferred until TI generates income, and then only where free/public sources cannot provide sufficient quality or coverage and the commercial data creates a material product advantage.
+
+Legal/access categories are explicit in the registry: OPEN, GOVERNMENT_OPEN, FREE_WITH_CONDITIONS, PUBLIC_WEB, HUMAN_REVIEW_REQUIRED, PAID_COMMERCIAL, DISCOVERY_ONLY, UNSUITABLE.
+
+Do not infer reuse rights from public accessibility. Source terms, API terms, attribution and commercial-use conditions must be checked before production use.
+
+## Government advisory change detection
+
+`scripts/collect_government_advisories.py` is a deterministic discovery/change-detection layer for the U.S., Canada and Australia government advisory sources. It writes:
+
+- `data/source_snapshots.json` — normalized metadata/hash snapshots only;
+- `data/government_change_queue.json` — new/changed advisory candidates for review.
+
+The collector MUST NOT create or publish TI events or rewrite baseline records. The Claude refresh step must verify the original government source, compare the substantiated change with existing TI data, and then create/update the appropriate record/event and SourceObservation where warranted.
+
+Keep U.S., Canadian and Australian national perspectives separately attributed. Never combine their advisory levels into a synthetic TI risk score. New Zealand SafeTravel remains human-review until a suitable structured production feed is verified.
+
+## Independent government source strategy
+
+TI should not rely on FCDO alone. The source registry includes independent official travel-advisory perspectives from:
+
+- U.S. Department of State — Travel Advisories
+- Global Affairs Canada — Travel Advice and Advisories
+- Australian DFAT — Smartraveller
+- New Zealand MFAT — SafeTravel
+
+Use these sources primarily for current/security intelligence and for corroboration of material changes to baseline travel guidance. Their national perspectives are not interchangeable and must remain separately attributed. Do not combine their advisory levels into a synthetic TI risk score.
+
+For any material change found in an independent government source:
+1. identify the exact destination/page and publication/update date;
+2. compare it with the existing TI record/event;
+3. create or update only the substantiated claim;
+4. preserve the government source as its own SourceObservation and independence group;
+5. if the source corroborates an existing event, record the corroboration rather than creating a duplicate event;
+6. retain the original national perspective in the extracted claim.
+
 ## Evidence rules
 
 - Discovery and verification are separate steps.
@@ -246,3 +291,10 @@ Do not modify sibling repositories.
 Do not delete historical data simply because a source is temporarily
 unavailable.
 Do not force changes when verification finds no material update.
+
+
+## Paid/commercial source rule
+
+Tier 4 is explicitly deferred until Travel Intelligence is generating income. Do not purchase subscriptions, paid APIs or commercial datasets during the current build phase. Build the core intelligence engine from Tier 1 and selectively integrated Tier 2 sources, with Tier 3 discovery/OSINT used only as an early-warning layer requiring verification/corroboration.
+
+When TI is generating income, Tier 4 may be assessed selectively where free/public sources cannot provide sufficient quality or coverage and the commercial source creates a material product advantage.
