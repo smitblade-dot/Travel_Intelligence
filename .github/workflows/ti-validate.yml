@@ -1,0 +1,25 @@
+name: TI Validation
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'data.json'
+      - 'config/**'
+      - 'scripts/**'
+      - '.github/workflows/**'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Validate source registry
+        run: python3 scripts/validate_ti_sources.py
+
+      - name: Validate TI data model
+        run: python3 scripts/validate_ti_data.py
