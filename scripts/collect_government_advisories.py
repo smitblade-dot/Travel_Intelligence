@@ -134,7 +134,7 @@ def main():
             except Exception:
                 continue
         by_key={f'{x["destination"].lower()}|{x["url"] or x["title"]}':x for x in normalized}
-        new["sources"][sid]={"feedUrl":used,"itemCount":len(by_key),"items":by_key,"errors":errors}
+        if errors and not by_key and used is None:\n            # Preserve the last known snapshot when every fetch attempt failed.\n            # A temporary outage must not turn into false NEW alerts later.\n            previous=old.get("sources",{}).get(sid,{})\n            new["sources"][sid]={\n                "feedUrl":previous.get("feedUrl"),\n                "itemCount":len(previous.get("items",{})),\n                "items":previous.get("items",{}),\n                "errors":errors,\n            }\n        else:\n            new["sources"][sid]={"feedUrl":used,"itemCount":len(by_key),"items":by_key,"errors":errors}
         old_items=old.get("sources",{}).get(sid,{}).get("items",{})
         for key,item in by_key.items():
             prev=old_items.get(key)
