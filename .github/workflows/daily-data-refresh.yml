@@ -39,6 +39,9 @@ jobs:
       - name: Validate source registry
         run: python3 scripts/validate_ti_sources.py
 
+      - name: Test government advisory collector
+        run: python3 scripts/test_government_advisories.py
+
       - name: Collect government advisory changes
         run: python3 scripts/collect_government_advisories.py
 
