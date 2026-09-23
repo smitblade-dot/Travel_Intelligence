@@ -110,6 +110,34 @@ Do not assume that public web access grants a right to reproduce source text.
 AI translation must retain the original language/source and identify the
 translation method. Do not replace the original source with translated prose.
 
+
+
+## Source tiers and acquisition register
+
+config/source_registry.json is the canonical TI source due-diligence register. It records candidate sources, source tier, access method, legal/access category, automation permission and implementation status.
+
+Use the four source tiers as a development constraint:
+
+- TIER_1 — free/open government and international machine-readable sources; build first.
+- TIER_2 — operational sources such as airports, airspace, borders, roads, ports, rail and maritime; integrate selectively when access, reliability and reuse rights are clear.
+- TIER_3 — paid/commercial data; buy only when it creates a material product advantage that free/public sources cannot provide.
+- TIER_4 — discovery/OSINT; early-warning only, requiring verification/corroboration before publication.
+
+Legal/access categories are explicit in the registry: OPEN, GOVERNMENT_OPEN, FREE_WITH_CONDITIONS, PUBLIC_WEB, HUMAN_REVIEW_REQUIRED, PAID_COMMERCIAL, DISCOVERY_ONLY, UNSUITABLE.
+
+Do not infer reuse rights from public accessibility. Source terms, API terms, attribution and commercial-use conditions must be checked before production use.
+
+## Government advisory change detection
+
+scripts/collect_government_advisories.py is a deterministic discovery/change-detection layer for the U.S., Canada and Australia government advisory sources. It writes:
+
+- data/source_snapshots.json — normalized metadata/hash snapshots only;
+- data/government_change_queue.json — new/changed advisory candidates for review.
+
+The collector MUST NOT create or publish TI events or rewrite baseline records. The Claude refresh step must verify the original government source, compare the substantiated change with existing TI data, and then create/update the appropriate record/event and SourceObservation where warranted.
+
+Keep U.S., Canadian and Australian national perspectives separately attributed. Never combine their advisory levels into a synthetic TI risk score. New Zealand SafeTravel remains human-review until a suitable structured production feed is verified.
+
 ## Independent government source strategy
 
 TI should not rely on FCDO alone. The source registry includes independent official travel-advisory perspectives from:
