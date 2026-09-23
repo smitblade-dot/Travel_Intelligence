@@ -30,6 +30,38 @@ The UI may group these into fewer display groups, but the stored category
 keys must not be deleted or merged. Empty categories remain visible with a
 zero count.
 
+### Current country intelligence must also refresh
+
+The country pages are a live operational layer, not a static archive. The
+daily refresh must inspect the existing country records for all tracked
+countries and update them when a current, verified source shows a material
+change to traveller-relevant entry, security, health, emergency, transport,
+environment, insurance, laws/culture, communications, finance, language,
+accommodation, equipment or training information.
+
+For country records:
+
+- update an existing record when the underlying rule, warning, requirement,
+  procedure, contact or other traveller-relevant fact has materially changed;
+- create a new record when a verified current source establishes a material
+  traveller-relevant item that is not already represented;
+- use the correct existing 14-category key and appropriate dataType;
+- attach the real source and create the required SourceObservation for every
+  new or updated intelligence item;
+- preserve uncertainty and source provenance;
+- do not create records merely because a signal exists or because a country
+  has no records;
+- do not perform a historical backfill simply to increase country coverage;
+- do not manufacture content to fill empty categories;
+- prioritise official government, border, CAA/AIS/NOTAM, airport, transport,
+  health and other authoritative sources relevant to the country's current
+  travel conditions.
+
+An empty category is not a defect if no verified traveller-relevant
+information exists. The objective is for verified current changes to reach
+the country page automatically on subsequent refreshes, without inventing
+coverage.
+
 ### Current Intelligence
 
 Current Intelligence is event-based, not a collection of rewritten country
