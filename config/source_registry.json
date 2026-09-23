@@ -797,7 +797,7 @@
       "sourceQualityGrade": "TO_ASSESS",
       "independenceGroupId": "gdeltevents",
       "operationalUsefulness": "TO_ASSESS",
-      "cost": "PAID",
+      "cost": "TO_ASSESS",
       "url": "https://www.gdeltproject.org/"
     },
     {
@@ -823,7 +823,7 @@
       "sourceQualityGrade": "TO_ASSESS",
       "independenceGroupId": "local-media",
       "operationalUsefulness": "TO_ASSESS",
-      "cost": "PAID"
+      "cost": "TO_ASSESS"
     },
     {
       "id": "social-platforms",
@@ -848,7 +848,7 @@
       "sourceQualityGrade": "TO_ASSESS",
       "independenceGroupId": "social-platforms",
       "operationalUsefulness": "TO_ASSESS",
-      "cost": "PAID"
+      "cost": "TO_ASSESS"
     },
     {
       "id": "telegram-public",
@@ -873,7 +873,7 @@
       "sourceQualityGrade": "TO_ASSESS",
       "independenceGroupId": "telegram-public",
       "operationalUsefulness": "TO_ASSESS",
-      "cost": "PAID",
+      "cost": "TO_ASSESS",
       "url": "https://telegram.org/"
     },
     {
@@ -899,7 +899,7 @@
       "sourceQualityGrade": "TO_ASSESS",
       "independenceGroupId": "reddit",
       "operationalUsefulness": "TO_ASSESS",
-      "cost": "PAID",
+      "cost": "TO_ASSESS",
       "url": "https://www.reddit.com/"
     }
   ]
