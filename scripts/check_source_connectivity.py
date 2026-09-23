@@ -15,13 +15,13 @@ ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = ROOT / "config" / "source_registry.json"
 OUT = ROOT / "data" / "source_health.json"
 TIMEOUT = 15
-UA = "TravelIntelligence/0.1 (+https://github.com/smitblade-dot/Travel_Intelligence)"
+UA = "TravelIntelligence/0.1 (https://github.com/smitblade-dot/Travel_Intelligence; contact: smit_blade@hotmail.com)"
 
 TEST_URLS = {
     "fcdo-govuk": "https://www.gov.uk/api/content/foreign-travel-advice/france",
     "us-state-travel-advisories": "https://travel.state.gov/_res/rss/TAsTWs.xml",
-    "canada-travel-advice": "https://travel.gc.ca/rss",
-    "australia-smartraveller": "https://www.smartraveller.gov.au/destinations-export",
+    "canada-travel-advice": "https://travel.gc.ca/travelling/advisories",
+    "australia-smartraveller": "https://www.smartraveller.gov.au/destinations",
     "new-zealand-safetravel": "https://www.safetravel.govt.nz/",
     "gdacs-ecjrc": "https://www.gdacs.org/gdacsapi/api/events/geteventlist/SEARCH",
     "usgs-earthquakes": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson",
@@ -52,7 +52,7 @@ NON_AUTOMATED = {
     "new-zealand-safetravel", "who-disease-outbreak-news", "ecdc-threats",
     "copernicus-ems", "ukmto", "imo-piracy", "faa-notam",
     "airport-authorities", "national-road-authorities", "port-authorities",
-    "local-media", "social-platforms", "telegram-public", "reddit",
+    "local-media", "social-platforms", "telegram-public", "reddit", "gdelt-events", "nasa-firms", "national-road-authorities",
 }
 
 def fetch(url: str):
