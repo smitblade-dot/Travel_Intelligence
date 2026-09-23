@@ -3,9 +3,9 @@
   "purpose": "TI source due-diligence and acquisition register. Discovery metadata is not evidence of reuse permission; production use requires current source terms.",
   "tiers": {
     "TIER_1": "Free/open government and international machine-readable sources",
-    "TIER_2": "Operational sources integrated selectively when access, reliability and reuse rights are clear",
-    "TIER_3": "Paid/commercial data used only where it creates material product advantage",
-    "TIER_4": "Discovery/OSINT early-warning sources requiring verification before publication"
+    "TIER_2": "Operational sources where current disruption is especially valuable; integrate selectively when access, reliability and reuse rights are clear",
+    "TIER_3": "Discovery/OSINT sources used for early warning; signals require verification/corroboration before public TI publication",
+    "TIER_4": "Paid/commercial data; use only when free/public sources cannot provide sufficient quality or coverage and the commercial data creates a material product advantage"
   },
   "legalCategories": [
     "OPEN",
@@ -598,7 +598,7 @@
       "category": "ENTRY",
       "tier": "TIER_3",
       "accessMethod": "COMMERCIAL_SERVICE",
-      "legalCategory": "PAID_COMMERCIAL",
+      "legalCategory": "DISCOVERY_ONLY",
       "automationPermission": "LICENSE_REQUIRED",
       "status": "INVESTIGATE",
       "authority": "NOT_YET_ASSESSED",
@@ -615,7 +615,7 @@
       "sourceQualityGrade": "TO_ASSESS",
       "independenceGroupId": "iata-timatic",
       "operationalUsefulness": "TO_ASSESS",
-      "cost": "PAID",
+      "cost": "FREE_OR_PUBLIC",
       "url": "https://www.iata.org/en/services/compliance/timatic/"
     },
     {
@@ -624,9 +624,9 @@
       "category": "AVIATION",
       "tier": "TIER_3",
       "accessMethod": "API_DATA",
-      "legalCategory": "PAID_COMMERCIAL",
+      "legalCategory": "DISCOVERY_ONLY",
       "automationPermission": "LICENSE_REQUIRED",
-      "status": "BENCHMARK",
+      "status": "DISCOVERY",
       "authority": "NOT_YET_ASSESSED",
       "geographicScope": "TO_ASSESS",
       "signalType": "AVIATION",
@@ -641,7 +641,7 @@
       "sourceQualityGrade": "TO_ASSESS",
       "independenceGroupId": "cirium",
       "operationalUsefulness": "TO_ASSESS",
-      "cost": "PAID",
+      "cost": "FREE_OR_PUBLIC",
       "url": "https://www.cirium.com/"
     },
     {
@@ -650,9 +650,9 @@
       "category": "AVIATION",
       "tier": "TIER_3",
       "accessMethod": "API",
-      "legalCategory": "PAID_COMMERCIAL",
+      "legalCategory": "DISCOVERY_ONLY",
       "automationPermission": "LICENSE_REQUIRED",
-      "status": "BENCHMARK",
+      "status": "DISCOVERY",
       "authority": "NOT_YET_ASSESSED",
       "geographicScope": "TO_ASSESS",
       "signalType": "AVIATION",
@@ -667,7 +667,7 @@
       "sourceQualityGrade": "TO_ASSESS",
       "independenceGroupId": "flightaware",
       "operationalUsefulness": "TO_ASSESS",
-      "cost": "PAID",
+      "cost": "FREE_OR_PUBLIC",
       "url": "https://www.flightaware.com/"
     },
     {
@@ -676,9 +676,9 @@
       "category": "AVIATION",
       "tier": "TIER_3",
       "accessMethod": "API_DATA",
-      "legalCategory": "PAID_COMMERCIAL",
+      "legalCategory": "DISCOVERY_ONLY",
       "automationPermission": "LICENSE_REQUIRED",
-      "status": "BENCHMARK",
+      "status": "DISCOVERY",
       "authority": "NOT_YET_ASSESSED",
       "geographicScope": "TO_ASSESS",
       "signalType": "AVIATION",
@@ -693,7 +693,7 @@
       "sourceQualityGrade": "TO_ASSESS",
       "independenceGroupId": "flightradar24",
       "operationalUsefulness": "TO_ASSESS",
-      "cost": "PAID",
+      "cost": "FREE_OR_PUBLIC",
       "url": "https://www.flightradar24.com/"
     },
     {
@@ -702,9 +702,9 @@
       "category": "MARITIME",
       "tier": "TIER_3",
       "accessMethod": "API_DATA",
-      "legalCategory": "PAID_COMMERCIAL",
+      "legalCategory": "DISCOVERY_ONLY",
       "automationPermission": "LICENSE_REQUIRED",
-      "status": "BENCHMARK",
+      "status": "DISCOVERY",
       "authority": "NOT_YET_ASSESSED",
       "geographicScope": "TO_ASSESS",
       "signalType": "MARITIME",
@@ -719,7 +719,7 @@
       "sourceQualityGrade": "TO_ASSESS",
       "independenceGroupId": "marinetraffic",
       "operationalUsefulness": "TO_ASSESS",
-      "cost": "PAID",
+      "cost": "FREE_OR_PUBLIC",
       "url": "https://www.marinetraffic.com/"
     },
     {
@@ -728,9 +728,9 @@
       "category": "SECURITY_TRAVEL",
       "tier": "TIER_3",
       "accessMethod": "COMMERCIAL_API",
-      "legalCategory": "PAID_COMMERCIAL",
+      "legalCategory": "DISCOVERY_ONLY",
       "automationPermission": "LICENSE_REQUIRED",
-      "status": "BENCHMARK",
+      "status": "DISCOVERY",
       "authority": "NOT_YET_ASSESSED",
       "geographicScope": "TO_ASSESS",
       "signalType": "SECURITY_TRAVEL",
@@ -745,7 +745,7 @@
       "sourceQualityGrade": "TO_ASSESS",
       "independenceGroupId": "riskline",
       "operationalUsefulness": "TO_ASSESS",
-      "cost": "PAID",
+      "cost": "FREE_OR_PUBLIC",
       "url": "https://riskline.com/"
     },
     {
@@ -754,9 +754,9 @@
       "category": "SECURITY_TRAVEL",
       "tier": "TIER_3",
       "accessMethod": "COMMERCIAL_SERVICE",
-      "legalCategory": "PAID_COMMERCIAL",
+      "legalCategory": "DISCOVERY_ONLY",
       "automationPermission": "LICENSE_REQUIRED",
-      "status": "BENCHMARK",
+      "status": "DISCOVERY",
       "authority": "NOT_YET_ASSESSED",
       "geographicScope": "TO_ASSESS",
       "signalType": "SECURITY_TRAVEL",
@@ -771,7 +771,7 @@
       "sourceQualityGrade": "TO_ASSESS",
       "independenceGroupId": "crisis24",
       "operationalUsefulness": "TO_ASSESS",
-      "cost": "PAID",
+      "cost": "FREE_OR_PUBLIC",
       "url": "https://www.crisis24.com/"
     },
     {
@@ -797,7 +797,7 @@
       "sourceQualityGrade": "TO_ASSESS",
       "independenceGroupId": "gdeltevents",
       "operationalUsefulness": "TO_ASSESS",
-      "cost": "TO_ASSESS",
+      "cost": "PAID",
       "url": "https://www.gdeltproject.org/"
     },
     {
@@ -823,7 +823,7 @@
       "sourceQualityGrade": "TO_ASSESS",
       "independenceGroupId": "local-media",
       "operationalUsefulness": "TO_ASSESS",
-      "cost": "TO_ASSESS"
+      "cost": "PAID"
     },
     {
       "id": "social-platforms",
@@ -848,7 +848,7 @@
       "sourceQualityGrade": "TO_ASSESS",
       "independenceGroupId": "social-platforms",
       "operationalUsefulness": "TO_ASSESS",
-      "cost": "TO_ASSESS"
+      "cost": "PAID"
     },
     {
       "id": "telegram-public",
@@ -873,7 +873,7 @@
       "sourceQualityGrade": "TO_ASSESS",
       "independenceGroupId": "telegram-public",
       "operationalUsefulness": "TO_ASSESS",
-      "cost": "TO_ASSESS",
+      "cost": "PAID",
       "url": "https://telegram.org/"
     },
     {
@@ -899,7 +899,7 @@
       "sourceQualityGrade": "TO_ASSESS",
       "independenceGroupId": "reddit",
       "operationalUsefulness": "TO_ASSESS",
-      "cost": "TO_ASSESS",
+      "cost": "PAID",
       "url": "https://www.reddit.com/"
     }
   ]
