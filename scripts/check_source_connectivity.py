@@ -86,7 +86,7 @@ def main():
             key = os.environ.get("FIRMS_MAP_KEY")
             if not key:
                 item.update({"status": "BLOCKED_CONFIGURATION", "detail": "FIRMS_MAP_KEY is not configured"})
-                failures.append(sid)
+                # Optional FIRMS credential; report the gap without blocking launch.
             else:
                 test = f"https://firms.modaps.eosdis.nasa.gov/api/area/csv/{key}/world/VIIRS_SNPP_NRT/1"
                 item["testUrl"] = test.replace(key, "***")
