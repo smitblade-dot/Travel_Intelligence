@@ -55,13 +55,18 @@ jobs:
             deterministic review queue is in data/phase1_review_queue.json,
             infrastructure relationships are in
             data/infrastructure_graph.json, and the conservative transport
-            reference network is in data/transport_network.json. Use these as
+            reference network is in data/transport_network.json. Government
+            advisory changes are in data/government_change_queue.json and
+            source snapshots are in data/source_snapshots.json. Use these as
             discovery/reference material only. Verify important claims against
             the actual primary source before creating or updating any public
             TI event. Do not invent affected infrastructure or routes from a
             country-level association alone. Prefer explicit verified
             relationships; otherwise leave the relationship unresolved. Do
-            not invent events from signals alone. Preserve source provenance
+            not invent events from signals alone. Review government advisory
+            changes as candidates only: verify the original source, retain the
+            national perspective separately, and do not combine advisory
+            levels into a synthetic TI risk score. Preserve source provenance
             and uncertainty. The oilGasSummary section was refreshed
             separately; do not touch or re-derive it. Commit and push
             substantive TI changes yourself.
