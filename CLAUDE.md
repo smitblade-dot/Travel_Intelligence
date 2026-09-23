@@ -110,6 +110,27 @@ Do not assume that public web access grants a right to reproduce source text.
 AI translation must retain the original language/source and identify the
 translation method. Do not replace the original source with translated prose.
 
+## Independent government source strategy
+
+TI should not rely on FCDO alone. The source registry includes independent official travel-advisory perspectives from:
+
+- U.S. Department of State — Travel Advisories
+- Global Affairs Canada — Travel Advice and Advisories
+- Australian DFAT — Smartraveller
+- New Zealand MFAT — SafeTravel
+
+Use these sources primarily for current/security intelligence and for corroboration of material changes to baseline travel guidance. Their national perspectives are not interchangeable and must remain separately attributed. Do not combine their advisory levels into a synthetic TI risk score.
+
+Verified machine-readable/public access currently includes the U.S. Department of State RSS feed, the Australian Smartraveller public destinations-export API/RSS feeds, and Travel.gc.ca RSS/update feeds. SafeTravel is registered as an official source but its structured automation path remains HUMAN_REVIEW_REQUIRED until a public API/feed suitable for production use is independently verified.
+
+For any material change found in an independent government source:
+1. identify the exact destination/page and publication/update date;
+2. compare it with the existing TI record/event;
+3. create or update only the substantiated claim;
+4. preserve the government source as its own SourceObservation and independence group;
+5. if the source corroborates an existing event, record the corroboration rather than creating a duplicate event;
+6. retain the original national perspective in the extracted claim.
+
 ## Evidence rules
 
 - Discovery and verification are separate steps.
