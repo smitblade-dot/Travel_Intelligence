@@ -2136,6 +2136,68 @@
     dbState = 'connected';
     setStatus(Object.keys(countries).length + ' countries on file');
     setDataAsOf('<span class="dot"></span> <b>Data as of ' + fmtGenerated(data.meta && data.meta.generated) + '</b>');
+    // Global nuclear data is deliberately additive: it can expand TI beyond
+    // the original country set without replacing the core live database.
+    Promise.all([
+      fetch('./data/nuclear_global.json', {cache:'no-store'}).then(function(res){
+        if(!res.ok) throw new Error('Nuclear inventory HTTP ' + res.status);
+        return res.json();
+      }),
+      fetch('./data/nuclear_country_profiles.json', {cache:'no-store'}).then(function(res){
+        if(!res.ok) throw new Error('Nuclear profiles HTTP ' + res.status);
+        return res.json();
+      })
+    ]).then(function(extra){
+      var nuclear = extra[0] || {};
+      var profiles = extra[1] || {};
+      (profiles.profiles || []).forEach(function(p){
+        var iso2 = String(p.iso2 || '').toLowerCase();
+        if(!iso2) return;
+        if(!countries[iso2]){
+          countries[iso2] = {
+            iso2: iso2,
+            iso3: p.iso3 || '',
+            name: p.name || iso2.toUpperCase(),
+            officialName: p.name || iso2.toUpperCase(),
+            status: 'ACTIVE',
+            region: p.region || 'Other',
+            subregion: p.subregion || '',
+            notes: 'Nuclear/radiological country profile generated from the global TI nuclear infrastructure inventory.',
+            nuclearFootprint: true,
+            lastReviewed: p.lastRefreshed || null
+          };
+        } else {
+          countries[iso2].nuclearFootprint = true;
+          countries[iso2].nuclearProfile = p;
+        }
+      });
+      (nuclear.countries || []).forEach(function(p){
+        var iso2 = String(p.iso2 || '').toLowerCase();
+        if(!iso2) return;
+        if(!countries[iso2]){
+          countries[iso2] = {
+            iso2: iso2,
+            iso3: p.iso3 || '',
+            name: p.name || iso2.toUpperCase(),
+            officialName: p.name || iso2.toUpperCase(),
+            status: 'ACTIVE',
+            region: p.region || 'Other',
+            subregion: p.subregion || '',
+            notes: 'Nuclear/radiological country profile generated from the global TI nuclear infrastructure inventory.',
+            nuclearFootprint: true,
+            lastReviewed: nuclear.generatedAt || null
+          };
+        } else {
+          countries[iso2].nuclearFootprint = true;
+        }
+      });
+      window.TI_NUCLEAR_GLOBAL = nuclear;
+      setStatus(Object.keys(countries).length + ' countries on file');
+      render();
+    }).catch(function(err){
+      console.warn('Global nuclear layer unavailable:', err);
+      render();
+    });
     refreshCurrentCountryData();
     render();
   }).catch(function(err){
