@@ -1,0 +1,7 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": null,
+  "status": "SOURCE_DRIVEN",
+  "profiles": [],
+  "note": "Profiles are generated from data/nuclear_global.json. Countries are not restricted to the original TI country set."
+}
