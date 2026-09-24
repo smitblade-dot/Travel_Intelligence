@@ -2128,8 +2128,23 @@
     });
     countries = cMap;
     allRecords = Object.keys(data.records || {}).map(function(k){ var d = data.records[k]; d.id = k; return d; });
-    allSources = data.sources || {};
-    allLocations = data.locations || {};
+    // Normalise exported collections to the ID-keyed maps used by the UI.
+    // data.json may serialise these collections as numeric-keyed objects while
+    // each object retains its canonical id field.
+    allSources = {};
+    Object.keys(data.sources || {}).forEach(function(k){
+      var src = data.sources[k];
+      if(!src) return;
+      var sourceId = src.id || k;
+      allSources[sourceId] = src;
+    });
+    allLocations = {};
+    Object.keys(data.locations || {}).forEach(function(k){
+      var loc = data.locations[k];
+      if(!loc) return;
+      var locationId = loc.id || k;
+      allLocations[locationId] = loc;
+    });
     allEvents = Array.isArray(data.events) ? data.events : [];
     allSourceObservations = Array.isArray(data.sourceObservations) ? data.sourceObservations : [];
     usingLiveDb = true;
