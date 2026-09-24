@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "1.0",
+  "purpose": "Initial high-interest nuclear/radiological watchpoints. Coordinates are reference locations; a reading near a watchpoint is a signal for investigation, not evidence of an incident.",
+  "watchpoints": [
+    {
+      "id": "zaporizhzhia-npp",
+      "name": "Zaporizhzhia NPP",
+      "country": "Ukraine",
+      "iso3": "UKR",
+      "latitude": 47.5069,
+      "longitude": 34.5853,
+      "radius_km": 100
+    },
+    {
+      "id": "chernobyl-exclusion-zone",
+      "name": "Chornobyl Exclusion Zone",
+      "country": "Ukraine",
+      "iso3": "UKR",
+      "latitude": 51.389,
+      "longitude": 30.0994,
+      "radius_km": 100
+    },
+    {
+      "id": "bushehr-npp",
+      "name": "Bushehr NPP",
+      "country": "Iran",
+      "iso3": "IRN",
+      "latitude": 28.8297,
+      "longitude": 50.886,
+      "radius_km": 100
+    },
+    {
+      "id": "yongbyon",
+      "name": "Yongbyon Nuclear Scientific Research Center",
+      "country": "North Korea",
+      "iso3": "PRK",
+      "latitude": 39.8,
+      "longitude": 125.755,
+      "radius_km": 100
+    },
+    {
+      "id": "fukushima-daiichi",
+      "name": "Fukushima Daiichi",
+      "country": "Japan",
+      "iso3": "JPN",
+      "latitude": 37.4211,
+      "longitude": 141.032,
+      "radius_km": 100
+    },
+    {
+      "id": "dimona",
+      "name": "Dimona Nuclear Research Center",
+      "country": "Israel",
+      "iso3": "ISR",
+      "latitude": 31,
+      "longitude": 35.145,
+      "radius_km": 100
+    }
+  ]
+}
