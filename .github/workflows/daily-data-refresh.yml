@@ -2,7 +2,11 @@ name: Daily travel intelligence data refresh
 
 on:
   schedule:
+    # GitHub Actions uses UTC. Run at both candidate UTC hours and let the
+    # guard below select the 21:00 Europe/Nicosia execution. This keeps the
+    # refresh at 21:00 Cyprus time across daylight-saving changes.
     - cron: "0 18 * * *"
+    - cron: "0 19 * * *"
   workflow_dispatch: {}
 
 permissions:
@@ -13,6 +17,16 @@ jobs:
   refresh:
     runs-on: ubuntu-latest
     steps:
+      - name: Enforce 21:00 Cyprus daily run
+        if: github.event_name == 'schedule'
+        run: |
+          local_hour=$(TZ=Europe/Nicosia date +%H)
+          if [ "$local_hour" != "21" ]; then
+            echo "Candidate UTC schedule is not 21:00 in Cyprus; exiting."
+            exit 78
+          fi
+          echo "Running TI daily refresh at 21:00 Europe/Nicosia."
+
       - uses: actions/checkout@v6
         with:
           fetch-depth: 1
