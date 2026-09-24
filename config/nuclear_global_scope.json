@@ -1,0 +1,95 @@
+{
+  "schemaVersion": "1.0",
+  "scope": "GLOBAL",
+  "category": "RADIOLOGICAL_NUCLEAR",
+  "purpose": "Global nuclear and radiological infrastructure layer independent of the core TI country set.",
+  "principles": [
+    "Do not limit nuclear coverage to the original 52 TI countries.",
+    "Separate global nuclear infrastructure from country-level traveller intelligence.",
+    "Use authoritative source data for discovery; preserve source provenance and status.",
+    "A facility record is not an incident. Live signals require corroboration before publication.",
+    "Country profiles are created for countries represented by the nuclear infrastructure inventory."
+  ],
+  "facilityClasses": [
+    "NUCLEAR_POWER",
+    "RESEARCH_TEST_REACTOR",
+    "FUEL_CYCLE",
+    "URANIUM_MINING_PROCESSING",
+    "ENRICHMENT_CONVERSION",
+    "FUEL_FABRICATION",
+    "SPENT_FUEL_STORAGE",
+    "REPROCESSING",
+    "RADIOACTIVE_WASTE",
+    "POST_IRRADIATION",
+    "NUCLEAR_RESEARCH",
+    "RADIOISOTOPE_PRODUCTION",
+    "OTHER_SIGNIFICANT_NUCLEAR"
+  ],
+  "sources": [
+    {
+      "id": "wna-reactor-database",
+      "name": "World Nuclear Association Reactor Database",
+      "priority": "P0",
+      "role": "power-reactor inventory",
+      "url": "https://world-nuclear.org/nuclear-reactor-database"
+    },
+    {
+      "id": "iaea-pris",
+      "name": "IAEA Power Reactor Information System",
+      "priority": "P0",
+      "role": "power-reactor verification",
+      "url": "https://pris.iaea.org/"
+    },
+    {
+      "id": "iaea-rrdb",
+      "name": "IAEA Research Reactor Database",
+      "priority": "P0",
+      "role": "research/test reactor inventory",
+      "url": "https://nucleus.iaea.org/sites/connect/RRIHpublic/Pages/rrdatabase.aspx"
+    },
+    {
+      "id": "iaea-nfcis",
+      "name": "IAEA Nuclear Fuel Cycle Information System",
+      "priority": "P0",
+      "role": "global civilian fuel-cycle facilities",
+      "url": "https://infcis.iaea.org/NFCFDB"
+    },
+    {
+      "id": "iaea-piedb",
+      "name": "IAEA Post-Irradiation Examination Facilities Database",
+      "priority": "P1",
+      "role": "PIE/hot-cell facilities",
+      "url": "https://infcis.iaea.org/piedb/facilities"
+    },
+    {
+      "id": "iaea-country-information",
+      "name": "IAEA GNSSN Country Information",
+      "priority": "P1",
+      "role": "country nuclear institutions and official links",
+      "url": "https://gnssn.iaea.org/main/Pages/CountryInformation.aspx"
+    }
+  ],
+  "currentReferenceCounts": {
+    "wnaPowerReactorDatabaseResults": 744,
+    "wnaOperablePowerReactors": 441,
+    "iaeaPrisinOperation": 417,
+    "iaeaResearchReactorsOperational": 228,
+    "iaeaResearchReactorCountriesOperational": 54,
+    "iaeaNfcisFacilityCountReference": 640,
+    "iaeaPiedbFacilityCount": 53
+  },
+  "buildTargets": {
+    "globalPowerReactors": "all available WNA/IAEA records",
+    "globalResearchReactors": "all available IAEA RRDB records",
+    "globalFuelCycleFacilities": "all available IAEA NFCIS records",
+    "globalPIEFacilities": "all available IAEA PIEDB records",
+    "countryProfiles": "every country represented by one or more included nuclear facilities",
+    "locations": "site-level locations wherever source data provides location information"
+  },
+  "notes": [
+    "IAEA NFCIS states that coverage is global but records may be incomplete where countries have not reported data.",
+    "WNA Reactor Database is used as the practical current power-reactor inventory and is based on IAEA PRIS augmented by WNA.",
+    "Historical/decommissioned records are retained with lifecycle status where available because they remain relevant to nuclear/radiological intelligence.",
+    "The first live build should report source coverage and unresolved records rather than silently claiming completeness."
+  ]
+}
