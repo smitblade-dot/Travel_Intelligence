@@ -1,11 +1,11 @@
 {
   "schemaVersion": "1.0",
-  "generated": "2026-09-23T06:14:14.238841+00:00",
+  "generated": "2026-09-24T18:06:33.186369+00:00",
   "purpose": "Reviewable Phase 1 signals; not published TI events.",
   "sources": {
     "ourairports-airports": {
       "ok": true,
-      "count": 86118,
+      "count": 86130,
       "sample": [
         {
           "ident": "EGLL",
@@ -131,6 +131,128 @@
           {
             "type": "Feature",
             "bbox": [
+              -104.4,
+              16.8,
+              -104.4,
+              16.8
+            ],
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -104.4,
+                16.8
+              ]
+            },
+            "properties": {
+              "eventtype": "TC",
+              "eventid": 1001325,
+              "episodeid": 16,
+              "eventname": "POLO-26",
+              "glide": "",
+              "name": "Tropical Cyclone POLO-26",
+              "description": "Tropical Cyclone POLO-26",
+              "htmldescription": "Orange Tropical Cyclone POLO-26 in Mexico from: 21 Sep 2026  to: 24 Sep 2026 .",
+              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/TC.png",
+              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/TC.png",
+              "url": {
+                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=TC&eventid=1001325&episodeid=16",
+                "report": "https://www.gdacs.org/report.aspx?eventid=1001325&episodeid=16&eventtype=TC",
+                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=TC&eventid=1001325"
+              },
+              "alertlevel": "Orange",
+              "alertscore": 2,
+              "episodealertlevel": "Orange",
+              "episodealertscore": 2.0,
+              "istemporary": "false",
+              "iscurrent": "true",
+              "country": "Mexico",
+              "fromdate": "2026-09-21T03:00:00",
+              "todate": "2026-09-24T15:00:00",
+              "datemodified": "2026-09-24T17:21:41",
+              "iso3": "MEX",
+              "source": "NOAA",
+              "sourceid": "",
+              "polygonlabel": "Centroid",
+              "Class": "Point_Centroid",
+              "countryonland": "",
+              "affectedcountries": [
+                {
+                  "iso2": "MX",
+                  "iso3": "MEX",
+                  "countryname": "Mexico"
+                }
+              ],
+              "severitydata": {
+                "severity": 287.0352,
+                "severitytext": "Hurricane/Typhoon > 74 mph (maximum wind speed of 287 km/h)",
+                "severityunit": "km/h"
+              }
+            }
+          },
+          {
+            "type": "Feature",
+            "bbox": [
+              83.7,
+              18.1,
+              83.7,
+              18.1
+            ],
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                83.7,
+                18.1
+              ]
+            },
+            "properties": {
+              "eventtype": "TC",
+              "eventid": 1001326,
+              "episodeid": 6,
+              "eventname": "ONE-26",
+              "glide": "",
+              "name": "Tropical Cyclone ONE-26",
+              "description": "Tropical Cyclone ONE-26",
+              "htmldescription": "Orange Tropical Cyclone ONE-26 in India from: 22 Sep 2026  to: 24 Sep 2026 .",
+              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/TC.png",
+              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/TC.png",
+              "url": {
+                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=TC&eventid=1001326&episodeid=6",
+                "report": "https://www.gdacs.org/report.aspx?eventid=1001326&episodeid=6&eventtype=TC",
+                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=TC&eventid=1001326"
+              },
+              "alertlevel": "Orange",
+              "alertscore": 2,
+              "episodealertlevel": "Orange",
+              "episodealertscore": 2.0,
+              "istemporary": "false",
+              "iscurrent": "true",
+              "country": "India",
+              "fromdate": "2026-09-22T18:00:00",
+              "todate": "2026-09-24T00:00:00",
+              "datemodified": "2026-09-24T18:05:12",
+              "iso3": "IND",
+              "source": "JTWC",
+              "sourceid": "",
+              "polygonlabel": "Centroid",
+              "Class": "Point_Centroid",
+              "countryonland": "",
+              "affectedcountries": [
+                {
+                  "iso2": "IN",
+                  "iso3": "IND",
+                  "countryname": "India"
+                }
+              ],
+              "severitydata": {
+                "severity": 83.3328,
+                "severitytext": "Tropical Storm (maximum wind speed of 83 km/h)",
+                "severityunit": "km/h"
+              }
+            }
+          },
+          {
+            "type": "Feature",
+            "bbox": [
               76.6455,
               9.6287,
               76.6455,
@@ -191,66 +313,6 @@
           {
             "type": "Feature",
             "bbox": [
-              102.5,
-              30.5,
-              102.5,
-              30.5
-            ],
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                102.5,
-                30.5
-              ]
-            },
-            "properties": {
-              "eventtype": "FL",
-              "eventid": 1104081,
-              "episodeid": 19,
-              "eventname": "",
-              "glide": "FL-2026-000148-CHN",
-              "name": "Flood in China",
-              "description": "Flood in China",
-              "htmldescription": "Orange Flood in China from: 31 Jul 2026 01 to: 21 Sep 2026 01.",
-              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Green/FL.png",
-              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/FL.png",
-              "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=FL&eventid=1104081&episodeid=19",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1104081&episodeid=19&eventtype=FL",
-                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=FL&eventid=1104081"
-              },
-              "alertlevel": "Orange",
-              "alertscore": 2,
-              "episodealertlevel": "Green",
-              "episodealertscore": 0.5,
-              "istemporary": "false",
-              "iscurrent": "true",
-              "country": "China",
-              "fromdate": "2026-07-31T01:00:00",
-              "todate": "2026-09-21T01:00:00",
-              "datemodified": "2026-09-21T06:38:17",
-              "iso3": "CHN",
-              "source": "GLOFAS",
-              "sourceid": "",
-              "polygonlabel": "Centroid",
-              "Class": "Point_Centroid",
-              "affectedcountries": [
-                {
-                  "iso2": "CN",
-                  "iso3": "CHN",
-                  "countryname": "China"
-                }
-              ],
-              "severitydata": {
-                "severity": 0.0,
-                "severitytext": "Magnitude 0 ",
-                "severityunit": ""
-              }
-            }
-          },
-          {
-            "type": "Feature",
-            "bbox": [
               33.813,
               0.938,
               33.813,
@@ -271,7 +333,7 @@
               "glide": "DR-2026-000143-COD",
               "name": "Drought in Democratic Republic of Congo, Kenya, Tanzania, Uganda",
               "description": "Drought in Democratic Republic of Congo, Kenya, Tanzania, Uganda",
-              "htmldescription": "Orange Drought in Democratic Republic of Congo, Kenya, Tanzania, Uganda from: 21 May 2026  to: 21 Sep 2026 .",
+              "htmldescription": "Orange Drought in Democratic Republic of Congo, Kenya, Tanzania, Uganda from: 21 May 2026  to: 22 Sep 2026 .",
               "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "url": {
@@ -287,8 +349,8 @@
               "iscurrent": "false",
               "country": "Democratic Republic of Congo, Kenya, Tanzania, Uganda",
               "fromdate": "2026-05-21T00:00:00",
-              "todate": "2026-09-21T00:00:00",
-              "datemodified": "2026-09-23T05:57:17",
+              "todate": "2026-09-22T00:00:00",
+              "datemodified": "2026-09-24T05:57:16",
               "iso3": "COD",
               "source": "GDO",
               "sourceid": "",
@@ -326,266 +388,6 @@
           {
             "type": "Feature",
             "bbox": [
-              38.087,
-              8.868,
-              38.087,
-              8.868
-            ],
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                38.087,
-                8.868
-              ]
-            },
-            "properties": {
-              "eventtype": "DR",
-              "eventid": 1027450,
-              "episodeid": 9,
-              "eventname": "East Africa-2026",
-              "glide": "DR-2026-000117-ETH",
-              "name": "Drought in Djibouti, Eritrea, Ethiopia, Kenya, Sudan, Somalia, South Sudan, Uganda",
-              "description": "Drought in Djibouti, Eritrea, Ethiopia, Kenya, Sudan, Somalia, South Sudan, Uganda",
-              "htmldescription": "Orange Drought in Djibouti, Eritrea, Ethiopia, Kenya, Sudan, Somalia, South Sudan, Uganda from: 21 Apr 2026  to: 21 Sep 2026 .",
-              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
-              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
-              "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=DR&eventid=1027450&episodeid=9",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1027450&episodeid=9&eventtype=DR",
-                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=DR&eventid=1027450"
-              },
-              "alertlevel": "Orange",
-              "alertscore": 2,
-              "episodealertlevel": "Orange",
-              "episodealertscore": 1.25,
-              "istemporary": "false",
-              "iscurrent": "false",
-              "country": "Djibouti, Eritrea, Ethiopia, Kenya, Sudan, Somalia, South Sudan, Uganda",
-              "fromdate": "2026-04-21T00:00:00",
-              "todate": "2026-09-21T00:00:00",
-              "datemodified": "2026-09-23T05:57:21",
-              "iso3": "DJI",
-              "source": "GDO",
-              "sourceid": "",
-              "polygonlabel": "Centroid",
-              "Class": "Point_Centroid",
-              "affectedcountries": [
-                {
-                  "iso2": "DJ",
-                  "iso3": "DJI",
-                  "countryname": "Djibouti"
-                },
-                {
-                  "iso2": "ER",
-                  "iso3": "ERI",
-                  "countryname": "Eritrea"
-                },
-                {
-                  "iso2": "ET",
-                  "iso3": "ETH",
-                  "countryname": "Ethiopia"
-                },
-                {
-                  "iso2": "KE",
-                  "iso3": "KEN",
-                  "countryname": "Kenya"
-                },
-                {
-                  "iso2": "SD",
-                  "iso3": "SDN",
-                  "countryname": "Sudan"
-                },
-                {
-                  "iso2": "SO",
-                  "iso3": "SOM",
-                  "countryname": "Somalia"
-                },
-                {
-                  "iso2": "SS",
-                  "iso3": "SSD",
-                  "countryname": "South Sudan"
-                },
-                {
-                  "iso2": "UG",
-                  "iso3": "UGA",
-                  "countryname": "Uganda"
-                }
-              ],
-              "severitydata": {
-                "severity": 752713.0,
-                "severitytext": "Medium impact for agricultural drought in 752713 km2",
-                "severityunit": "km2"
-              }
-            }
-          },
-          {
-            "type": "Feature",
-            "bbox": [
-              -93.751,
-              16.611,
-              -93.751,
-              16.611
-            ],
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                -93.751,
-                16.611
-              ]
-            },
-            "properties": {
-              "eventtype": "DR",
-              "eventid": 1027449,
-              "episodeid": 9,
-              "eventname": "Central America-2026",
-              "glide": "DR-2026-000153-BLZ",
-              "name": "Drought in The Bahamas, Belize, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador",
-              "description": "Drought in The Bahamas, Belize, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador",
-              "htmldescription": "Orange Drought in The Bahamas, Belize, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador from: 21 Apr 2026  to: 21 Sep 2026 .",
-              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
-              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
-              "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=DR&eventid=1027449&episodeid=9",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1027449&episodeid=9&eventtype=DR",
-                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=DR&eventid=1027449"
-              },
-              "alertlevel": "Orange",
-              "alertscore": 2,
-              "episodealertlevel": "Orange",
-              "episodealertscore": 1.25,
-              "istemporary": "false",
-              "iscurrent": "false",
-              "country": "The Bahamas, Belize, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador",
-              "fromdate": "2026-04-21T00:00:00",
-              "todate": "2026-09-21T00:00:00",
-              "datemodified": "2026-09-23T05:57:27",
-              "iso3": "BHS",
-              "source": "GDO",
-              "sourceid": "",
-              "polygonlabel": "Centroid",
-              "Class": "Point_Centroid",
-              "affectedcountries": [
-                {
-                  "iso2": "BS",
-                  "iso3": "BHS",
-                  "countryname": "The Bahamas"
-                },
-                {
-                  "iso2": "BZ",
-                  "iso3": "BLZ",
-                  "countryname": "Belize"
-                },
-                {
-                  "iso2": "CU",
-                  "iso3": "CUB",
-                  "countryname": "Cuba"
-                },
-                {
-                  "iso2": "DO",
-                  "iso3": "DOM",
-                  "countryname": "Dominican Republic"
-                },
-                {
-                  "iso2": "GT",
-                  "iso3": "GTM",
-                  "countryname": "Guatemala"
-                },
-                {
-                  "iso2": "HN",
-                  "iso3": "HND",
-                  "countryname": "Honduras"
-                },
-                {
-                  "iso2": "HT",
-                  "iso3": "HTI",
-                  "countryname": "Haiti"
-                },
-                {
-                  "iso2": "MX",
-                  "iso3": "MEX",
-                  "countryname": "Mexico"
-                },
-                {
-                  "iso2": "NI",
-                  "iso3": "NIC",
-                  "countryname": "Nicaragua"
-                },
-                {
-                  "iso2": "SV",
-                  "iso3": "SLV",
-                  "countryname": "El Salvador"
-                }
-              ],
-              "severitydata": {
-                "severity": 677277.0,
-                "severitytext": "Medium impact for agricultural drought in 677277 km2",
-                "severityunit": "km2"
-              }
-            }
-          },
-          {
-            "type": "Feature",
-            "bbox": [
-              48.741,
-              -16.837,
-              48.741,
-              -16.837
-            ],
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                48.741,
-                -16.837
-              ]
-            },
-            "properties": {
-              "eventtype": "DR",
-              "eventid": 1018431,
-              "episodeid": 15,
-              "eventname": "Madagascar-2026",
-              "glide": "DR-2025-000238-MDG",
-              "name": "Drought in Madagascar",
-              "description": "Drought in Madagascar",
-              "htmldescription": "Orange Drought in Madagascar from: 21 Nov 2025  to: 21 Sep 2026 .",
-              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
-              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
-              "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=DR&eventid=1018431&episodeid=15",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1018431&episodeid=15&eventtype=DR",
-                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=DR&eventid=1018431"
-              },
-              "alertlevel": "Orange",
-              "alertscore": 2,
-              "episodealertlevel": "Orange",
-              "episodealertscore": 1.0,
-              "istemporary": "false",
-              "iscurrent": "false",
-              "country": "Madagascar",
-              "fromdate": "2025-11-21T00:00:00",
-              "todate": "2026-09-21T00:00:00",
-              "datemodified": "2026-09-23T05:57:24",
-              "iso3": "MDG",
-              "source": "GDO",
-              "sourceid": "",
-              "polygonlabel": "Centroid",
-              "Class": "Point_Centroid",
-              "affectedcountries": [
-                {
-                  "iso2": "MG",
-                  "iso3": "MDG",
-                  "countryname": "Madagascar"
-                }
-              ],
-              "severitydata": {
-                "severity": 97655.0,
-                "severitytext": "Medium impact for agricultural drought in 97655 km2",
-                "severityunit": "km2"
-              }
-            }
-          },
-          {
-            "type": "Feature",
-            "bbox": [
               11.164,
               48.063,
               11.164,
@@ -606,7 +408,7 @@
               "glide": "DR-2025-000239-ALB",
               "name": "Drought in Austria, Bosnia  and  Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Netherlands, Poland, Romania, Serbia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, ",
               "description": "Drought in Austria, Bosnia  and  Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Netherlands, Poland, Romania, Serbia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, ",
-              "htmldescription": "Orange Drought in Austria, Bosnia  and  Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Netherlands, Poland, Romania, Serbia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, from: 21 Dec 2025  to: 21 Sep 2026 .",
+              "htmldescription": "Orange Drought in Austria, Bosnia  and  Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Netherlands, Poland, Romania, Serbia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, from: 21 Dec 2025  to: 22 Sep 2026 .",
               "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "url": {
@@ -622,8 +424,8 @@
               "iscurrent": "false",
               "country": "Austria, Bosnia & Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Netherlands, Poland, Romania, Serbia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, ",
               "fromdate": "2025-12-21T00:00:00",
-              "todate": "2026-09-21T00:00:00",
-              "datemodified": "2026-09-23T06:10:20",
+              "todate": "2026-09-22T00:00:00",
+              "datemodified": "2026-09-24T18:05:13",
               "iso3": "AUT",
               "source": "GDO",
               "sourceid": "",
@@ -766,6 +568,326 @@
           {
             "type": "Feature",
             "bbox": [
+              48.741,
+              -16.837,
+              48.741,
+              -16.837
+            ],
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                48.741,
+                -16.837
+              ]
+            },
+            "properties": {
+              "eventtype": "DR",
+              "eventid": 1018431,
+              "episodeid": 15,
+              "eventname": "Madagascar-2026",
+              "glide": "DR-2025-000238-MDG",
+              "name": "Drought in Madagascar",
+              "description": "Drought in Madagascar",
+              "htmldescription": "Orange Drought in Madagascar from: 21 Nov 2025  to: 22 Sep 2026 .",
+              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
+              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
+              "url": {
+                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=DR&eventid=1018431&episodeid=15",
+                "report": "https://www.gdacs.org/report.aspx?eventid=1018431&episodeid=15&eventtype=DR",
+                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=DR&eventid=1018431"
+              },
+              "alertlevel": "Orange",
+              "alertscore": 2,
+              "episodealertlevel": "Orange",
+              "episodealertscore": 1.0,
+              "istemporary": "false",
+              "iscurrent": "false",
+              "country": "Madagascar",
+              "fromdate": "2025-11-21T00:00:00",
+              "todate": "2026-09-22T00:00:00",
+              "datemodified": "2026-09-24T05:57:24",
+              "iso3": "MDG",
+              "source": "GDO",
+              "sourceid": "",
+              "polygonlabel": "Centroid",
+              "Class": "Point_Centroid",
+              "affectedcountries": [
+                {
+                  "iso2": "MG",
+                  "iso3": "MDG",
+                  "countryname": "Madagascar"
+                }
+              ],
+              "severitydata": {
+                "severity": 97655.0,
+                "severitytext": "Medium impact for agricultural drought in 97655 km2",
+                "severityunit": "km2"
+              }
+            }
+          },
+          {
+            "type": "Feature",
+            "bbox": [
+              -93.751,
+              16.611,
+              -93.751,
+              16.611
+            ],
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -93.751,
+                16.611
+              ]
+            },
+            "properties": {
+              "eventtype": "DR",
+              "eventid": 1027449,
+              "episodeid": 9,
+              "eventname": "Central America-2026",
+              "glide": "DR-2026-000153-BLZ",
+              "name": "Drought in The Bahamas, Belize, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador",
+              "description": "Drought in The Bahamas, Belize, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador",
+              "htmldescription": "Orange Drought in The Bahamas, Belize, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador from: 21 Apr 2026  to: 22 Sep 2026 .",
+              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
+              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
+              "url": {
+                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=DR&eventid=1027449&episodeid=9",
+                "report": "https://www.gdacs.org/report.aspx?eventid=1027449&episodeid=9&eventtype=DR",
+                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=DR&eventid=1027449"
+              },
+              "alertlevel": "Orange",
+              "alertscore": 2,
+              "episodealertlevel": "Orange",
+              "episodealertscore": 1.25,
+              "istemporary": "false",
+              "iscurrent": "false",
+              "country": "The Bahamas, Belize, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador",
+              "fromdate": "2026-04-21T00:00:00",
+              "todate": "2026-09-22T00:00:00",
+              "datemodified": "2026-09-24T05:57:26",
+              "iso3": "BHS",
+              "source": "GDO",
+              "sourceid": "",
+              "polygonlabel": "Centroid",
+              "Class": "Point_Centroid",
+              "affectedcountries": [
+                {
+                  "iso2": "BS",
+                  "iso3": "BHS",
+                  "countryname": "The Bahamas"
+                },
+                {
+                  "iso2": "BZ",
+                  "iso3": "BLZ",
+                  "countryname": "Belize"
+                },
+                {
+                  "iso2": "CU",
+                  "iso3": "CUB",
+                  "countryname": "Cuba"
+                },
+                {
+                  "iso2": "DO",
+                  "iso3": "DOM",
+                  "countryname": "Dominican Republic"
+                },
+                {
+                  "iso2": "GT",
+                  "iso3": "GTM",
+                  "countryname": "Guatemala"
+                },
+                {
+                  "iso2": "HN",
+                  "iso3": "HND",
+                  "countryname": "Honduras"
+                },
+                {
+                  "iso2": "HT",
+                  "iso3": "HTI",
+                  "countryname": "Haiti"
+                },
+                {
+                  "iso2": "MX",
+                  "iso3": "MEX",
+                  "countryname": "Mexico"
+                },
+                {
+                  "iso2": "NI",
+                  "iso3": "NIC",
+                  "countryname": "Nicaragua"
+                },
+                {
+                  "iso2": "SV",
+                  "iso3": "SLV",
+                  "countryname": "El Salvador"
+                }
+              ],
+              "severitydata": {
+                "severity": 677277.0,
+                "severitytext": "Medium impact for agricultural drought in 677277 km2",
+                "severityunit": "km2"
+              }
+            }
+          },
+          {
+            "type": "Feature",
+            "bbox": [
+              38.087,
+              8.868,
+              38.087,
+              8.868
+            ],
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                38.087,
+                8.868
+              ]
+            },
+            "properties": {
+              "eventtype": "DR",
+              "eventid": 1027450,
+              "episodeid": 9,
+              "eventname": "East Africa-2026",
+              "glide": "DR-2026-000117-ETH",
+              "name": "Drought in Djibouti, Eritrea, Ethiopia, Kenya, Sudan, Somalia, South Sudan, Uganda",
+              "description": "Drought in Djibouti, Eritrea, Ethiopia, Kenya, Sudan, Somalia, South Sudan, Uganda",
+              "htmldescription": "Orange Drought in Djibouti, Eritrea, Ethiopia, Kenya, Sudan, Somalia, South Sudan, Uganda from: 21 Apr 2026  to: 22 Sep 2026 .",
+              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
+              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
+              "url": {
+                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=DR&eventid=1027450&episodeid=9",
+                "report": "https://www.gdacs.org/report.aspx?eventid=1027450&episodeid=9&eventtype=DR",
+                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=DR&eventid=1027450"
+              },
+              "alertlevel": "Orange",
+              "alertscore": 2,
+              "episodealertlevel": "Orange",
+              "episodealertscore": 1.25,
+              "istemporary": "false",
+              "iscurrent": "false",
+              "country": "Djibouti, Eritrea, Ethiopia, Kenya, Sudan, Somalia, South Sudan, Uganda",
+              "fromdate": "2026-04-21T00:00:00",
+              "todate": "2026-09-22T00:00:00",
+              "datemodified": "2026-09-24T05:57:20",
+              "iso3": "DJI",
+              "source": "GDO",
+              "sourceid": "",
+              "polygonlabel": "Centroid",
+              "Class": "Point_Centroid",
+              "affectedcountries": [
+                {
+                  "iso2": "DJ",
+                  "iso3": "DJI",
+                  "countryname": "Djibouti"
+                },
+                {
+                  "iso2": "ER",
+                  "iso3": "ERI",
+                  "countryname": "Eritrea"
+                },
+                {
+                  "iso2": "ET",
+                  "iso3": "ETH",
+                  "countryname": "Ethiopia"
+                },
+                {
+                  "iso2": "KE",
+                  "iso3": "KEN",
+                  "countryname": "Kenya"
+                },
+                {
+                  "iso2": "SD",
+                  "iso3": "SDN",
+                  "countryname": "Sudan"
+                },
+                {
+                  "iso2": "SO",
+                  "iso3": "SOM",
+                  "countryname": "Somalia"
+                },
+                {
+                  "iso2": "SS",
+                  "iso3": "SSD",
+                  "countryname": "South Sudan"
+                },
+                {
+                  "iso2": "UG",
+                  "iso3": "UGA",
+                  "countryname": "Uganda"
+                }
+              ],
+              "severitydata": {
+                "severity": 752713.0,
+                "severitytext": "Medium impact for agricultural drought in 752713 km2",
+                "severityunit": "km2"
+              }
+            }
+          },
+          {
+            "type": "Feature",
+            "bbox": [
+              102.5,
+              30.5,
+              102.5,
+              30.5
+            ],
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                102.5,
+                30.5
+              ]
+            },
+            "properties": {
+              "eventtype": "FL",
+              "eventid": 1104081,
+              "episodeid": 19,
+              "eventname": "",
+              "glide": "FL-2026-000148-CHN",
+              "name": "Flood in China",
+              "description": "Flood in China",
+              "htmldescription": "Orange Flood in China from: 31 Jul 2026 01 to: 21 Sep 2026 01.",
+              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Green/FL.png",
+              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/FL.png",
+              "url": {
+                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=FL&eventid=1104081&episodeid=19",
+                "report": "https://www.gdacs.org/report.aspx?eventid=1104081&episodeid=19&eventtype=FL",
+                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=FL&eventid=1104081"
+              },
+              "alertlevel": "Orange",
+              "alertscore": 2,
+              "episodealertlevel": "Green",
+              "episodealertscore": 0.5,
+              "istemporary": "false",
+              "iscurrent": "true",
+              "country": "China",
+              "fromdate": "2026-07-31T01:00:00",
+              "todate": "2026-09-21T01:00:00",
+              "datemodified": "2026-09-21T06:38:17",
+              "iso3": "CHN",
+              "source": "GLOFAS",
+              "sourceid": "",
+              "polygonlabel": "Centroid",
+              "Class": "Point_Centroid",
+              "affectedcountries": [
+                {
+                  "iso2": "CN",
+                  "iso3": "CHN",
+                  "countryname": "China"
+                }
+              ],
+              "severitydata": {
+                "severity": 0.0,
+                "severitytext": "Magnitude 0 ",
+                "severityunit": ""
+              }
+            }
+          },
+          {
+            "type": "Feature",
+            "bbox": [
               105.4233,
               -6.1009,
               105.4233,
@@ -803,7 +925,7 @@
               "country": "Indonesia",
               "fromdate": "2026-09-04T21:00:00",
               "todate": "2026-09-04T21:00:00",
-              "datemodified": "2026-09-23T06:10:19",
+              "datemodified": "2026-09-24T18:05:12",
               "iso3": "IDN",
               "source": "DARWIN",
               "sourceid": "",
@@ -843,7 +965,7 @@
               "eventid": 1001305,
               "episodeid": 47,
               "eventname": "SAUDEL-26",
-              "glide": "TC-2026-000161-CHN",
+              "glide": "",
               "name": "Tropical Cyclone SAUDEL-26",
               "description": "Tropical Cyclone SAUDEL-26",
               "htmldescription": "Orange Tropical Cyclone SAUDEL-26 in Japan, China, Northern Mariana Islands from: 18 Aug 2026  to: 03 Sep 2026 .",
@@ -863,7 +985,7 @@
               "country": "Japan, China, Northern Mariana Islands",
               "fromdate": "2026-08-18T12:00:00",
               "todate": "2026-09-03T00:00:00",
-              "datemodified": "2026-09-04T10:04:35",
+              "datemodified": "2026-09-23T13:50:51",
               "iso3": "CHN",
               "source": "JTWC",
               "sourceid": "",
@@ -929,7 +1051,7 @@
               "country": "Nepal",
               "fromdate": "2026-08-26T01:00:00",
               "todate": "2026-09-01T14:00:00",
-              "datemodified": "2026-09-23T06:10:20",
+              "datemodified": "2026-09-24T18:05:13",
               "iso3": "NPL",
               "source": "GLOFAS",
               "sourceid": "",
@@ -1109,7 +1231,7 @@
               "country": "Serbia",
               "fromdate": "2026-08-05T00:00:00",
               "todate": "2026-08-25T00:00:00",
-              "datemodified": "2026-09-23T06:10:20",
+              "datemodified": "2026-09-24T18:05:13",
               "iso3": "SRB",
               "source": "GWIS",
               "sourceid": "",
@@ -1125,66 +1247,6 @@
               "severitydata": {
                 "severity": 18310.0,
                 "severitytext": "Orange impact for forestfire in 18310 ha",
-                "severityunit": "ha"
-              }
-            }
-          },
-          {
-            "type": "Feature",
-            "bbox": [
-              6.0772,
-              50.5262,
-              6.0772,
-              50.5262
-            ],
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                6.0772,
-                50.5262
-              ]
-            },
-            "properties": {
-              "eventtype": "WF",
-              "eventid": 1030534,
-              "episodeid": 5,
-              "eventname": "",
-              "glide": "WF-2026-000155-BEL",
-              "name": "Forest fires in Belgium",
-              "description": "Forest fires in Belgium",
-              "htmldescription": "Orange Forest fires in Belgium from: 14 Aug 2026 to: 17 Aug 2026.",
-              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/WF.png",
-              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/WF.png",
-              "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=WF&eventid=1030534&episodeid=5",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1030534&episodeid=5&eventtype=WF",
-                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=WF&eventid=1030534"
-              },
-              "alertlevel": "Orange",
-              "alertscore": 2,
-              "episodealertlevel": "Orange",
-              "episodealertscore": 1.5,
-              "istemporary": "false",
-              "iscurrent": "false",
-              "country": "Belgium",
-              "fromdate": "2026-08-14T00:00:00",
-              "todate": "2026-08-17T00:00:00",
-              "datemodified": "2026-09-23T06:10:21",
-              "iso3": "BEL",
-              "source": "GWIS",
-              "sourceid": "",
-              "polygonlabel": "Centroid",
-              "Class": "Point_Centroid",
-              "affectedcountries": [
-                {
-                  "iso2": "BE",
-                  "iso3": "BEL",
-                  "countryname": "Belgium"
-                }
-              ],
-              "severitydata": {
-                "severity": 6356.0,
-                "severitytext": "Orange impact for forestfire in 6356 ha",
                 "severityunit": "ha"
               }
             }
@@ -1252,6 +1314,66 @@
           {
             "type": "Feature",
             "bbox": [
+              6.0772,
+              50.5262,
+              6.0772,
+              50.5262
+            ],
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                6.0772,
+                50.5262
+              ]
+            },
+            "properties": {
+              "eventtype": "WF",
+              "eventid": 1030534,
+              "episodeid": 5,
+              "eventname": "",
+              "glide": "WF-2026-000155-BEL",
+              "name": "Forest fires in Belgium",
+              "description": "Forest fires in Belgium",
+              "htmldescription": "Orange Forest fires in Belgium from: 14 Aug 2026 to: 17 Aug 2026.",
+              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/WF.png",
+              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/WF.png",
+              "url": {
+                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=WF&eventid=1030534&episodeid=5",
+                "report": "https://www.gdacs.org/report.aspx?eventid=1030534&episodeid=5&eventtype=WF",
+                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=WF&eventid=1030534"
+              },
+              "alertlevel": "Orange",
+              "alertscore": 2,
+              "episodealertlevel": "Orange",
+              "episodealertscore": 1.5,
+              "istemporary": "false",
+              "iscurrent": "false",
+              "country": "Belgium",
+              "fromdate": "2026-08-14T00:00:00",
+              "todate": "2026-08-17T00:00:00",
+              "datemodified": "2026-09-24T18:05:13",
+              "iso3": "BEL",
+              "source": "GWIS",
+              "sourceid": "",
+              "polygonlabel": "Centroid",
+              "Class": "Point_Centroid",
+              "affectedcountries": [
+                {
+                  "iso2": "BE",
+                  "iso3": "BEL",
+                  "countryname": "Belgium"
+                }
+              ],
+              "severitydata": {
+                "severity": 6356.0,
+                "severitytext": "Orange impact for forestfire in 6356 ha",
+                "severityunit": "ha"
+              }
+            }
+          },
+          {
+            "type": "Feature",
+            "bbox": [
               121.3517,
               -8.3101,
               121.3517,
@@ -1289,7 +1411,7 @@
               "country": "Indonesia",
               "fromdate": "2026-08-14T21:58:21",
               "todate": "2026-08-14T21:58:21",
-              "datemodified": "2026-09-23T06:10:21",
+              "datemodified": "2026-09-24T18:05:13",
               "iso3": "IDN",
               "source": "NEIC",
               "sourceid": "",
@@ -1349,7 +1471,7 @@
               "country": "Colombia",
               "fromdate": "2026-08-10T12:34:28",
               "todate": "2026-08-10T12:34:28",
-              "datemodified": "2026-09-23T06:10:21",
+              "datemodified": "2026-09-24T18:05:13",
               "iso3": "COL",
               "source": "NEIC",
               "sourceid": "",
@@ -1409,7 +1531,7 @@
               "country": "Marshall Islands, Japan, China",
               "fromdate": "2026-07-27T00:00:00",
               "todate": "2026-08-09T12:00:00",
-              "datemodified": "2026-09-23T06:05:41",
+              "datemodified": "2026-09-23T12:50:40",
               "iso3": "MHL",
               "source": "JTWC",
               "sourceid": "",
@@ -1595,7 +1717,7 @@
               "country": "Greece",
               "fromdate": "2026-07-30T00:00:00",
               "todate": "2026-08-01T00:00:00",
-              "datemodified": "2026-09-23T06:10:21",
+              "datemodified": "2026-09-24T18:05:13",
               "iso3": "GRC",
               "source": "GWIS",
               "sourceid": "",
@@ -1655,7 +1777,7 @@
               "country": "France",
               "fromdate": "2026-07-22T00:00:00",
               "todate": "2026-08-01T00:00:00",
-              "datemodified": "2026-09-23T06:10:22",
+              "datemodified": "2026-09-24T18:05:14",
               "iso3": "FRA",
               "source": "GWIS",
               "sourceid": "",
@@ -1775,7 +1897,7 @@
               "country": "Spain",
               "fromdate": "2026-07-25T00:00:00",
               "todate": "2026-07-30T00:00:00",
-              "datemodified": "2026-09-23T06:10:22",
+              "datemodified": "2026-09-24T18:05:14",
               "iso3": "ESP",
               "source": "GWIS",
               "sourceid": "",
@@ -1835,7 +1957,7 @@
               "country": "Spain",
               "fromdate": "2026-07-22T00:00:00",
               "todate": "2026-07-30T00:00:00",
-              "datemodified": "2026-09-23T06:10:22",
+              "datemodified": "2026-09-24T18:05:14",
               "iso3": "ESP",
               "source": "GWIS",
               "sourceid": "",
@@ -1895,7 +2017,7 @@
               "country": "Tunisia",
               "fromdate": "2026-07-21T00:00:00",
               "todate": "2026-07-29T00:00:00",
-              "datemodified": "2026-09-23T06:10:22",
+              "datemodified": "2026-09-24T18:05:14",
               "iso3": "TUN",
               "source": "GWIS",
               "sourceid": "",
@@ -1955,7 +2077,7 @@
               "country": "Japan",
               "fromdate": "2026-07-28T07:27:15",
               "todate": "2026-07-28T07:27:15",
-              "datemodified": "2026-09-23T06:10:21",
+              "datemodified": "2026-09-24T18:05:14",
               "iso3": "JPN",
               "source": "NEIC",
               "sourceid": "",
@@ -2141,7 +2263,7 @@
               "country": "Spain",
               "fromdate": "2026-07-18T00:00:00",
               "todate": "2026-07-25T00:00:00",
-              "datemodified": "2026-09-23T06:10:22",
+              "datemodified": "2026-09-24T18:05:14",
               "iso3": "ESP",
               "source": "GWIS",
               "sourceid": "",
@@ -2441,7 +2563,7 @@
               "country": "Guam, Northern Mariana Islands, Japan, Taiwan, China",
               "fromdate": "2026-07-01T00:00:00",
               "todate": "2026-07-11T18:00:00",
-              "datemodified": "2026-09-23T06:10:23",
+              "datemodified": "2026-09-24T18:05:14",
               "iso3": "CHN",
               "source": "JTWC",
               "sourceid": "",
@@ -2540,66 +2662,6 @@
           {
             "type": "Feature",
             "bbox": [
-              2.5677,
-              42.6724,
-              2.5677,
-              42.6724
-            ],
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                2.5677,
-                42.6724
-              ]
-            },
-            "properties": {
-              "eventtype": "WF",
-              "eventid": 1029331,
-              "episodeid": 7,
-              "eventname": "",
-              "glide": "WF-2026-000102-FRA",
-              "name": "Forest fires in France",
-              "description": "Forest fires in France",
-              "htmldescription": "Orange Forest fires in France from: 04 Jul 2026 to: 08 Jul 2026.",
-              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/WF.png",
-              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/WF.png",
-              "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=WF&eventid=1029331&episodeid=7",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1029331&episodeid=7&eventtype=WF",
-                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=WF&eventid=1029331"
-              },
-              "alertlevel": "Orange",
-              "alertscore": 2,
-              "episodealertlevel": "Orange",
-              "episodealertscore": 1.5,
-              "istemporary": "false",
-              "iscurrent": "false",
-              "country": "France",
-              "fromdate": "2026-07-04T00:00:00",
-              "todate": "2026-07-08T00:00:00",
-              "datemodified": "2026-09-23T06:10:23",
-              "iso3": "FRA",
-              "source": "GWIS",
-              "sourceid": "",
-              "polygonlabel": "Centroid",
-              "Class": "Point_Centroid",
-              "affectedcountries": [
-                {
-                  "iso2": "FR",
-                  "iso3": "FRA",
-                  "countryname": "France"
-                }
-              ],
-              "severitydata": {
-                "severity": 6576.0,
-                "severitytext": "Orange impact for forestfire in 6576 ha",
-                "severityunit": "ha"
-              }
-            }
-          },
-          {
-            "type": "Feature",
-            "bbox": [
               -8.2824,
               40.6204,
               -8.2824,
@@ -2637,7 +2699,7 @@
               "country": "Portugal",
               "fromdate": "2026-07-02T00:00:00",
               "todate": "2026-07-08T00:00:00",
-              "datemodified": "2026-09-23T06:10:23",
+              "datemodified": "2026-09-24T18:05:14",
               "iso3": "PRT",
               "source": "GWIS",
               "sourceid": "",
@@ -2653,6 +2715,66 @@
               "severitydata": {
                 "severity": 19670.0,
                 "severitytext": "Orange impact for forestfire in 19670 ha",
+                "severityunit": "ha"
+              }
+            }
+          },
+          {
+            "type": "Feature",
+            "bbox": [
+              2.5677,
+              42.6724,
+              2.5677,
+              42.6724
+            ],
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                2.5677,
+                42.6724
+              ]
+            },
+            "properties": {
+              "eventtype": "WF",
+              "eventid": 1029331,
+              "episodeid": 7,
+              "eventname": "",
+              "glide": "WF-2026-000102-FRA",
+              "name": "Forest fires in France",
+              "description": "Forest fires in France",
+              "htmldescription": "Orange Forest fires in France from: 04 Jul 2026 to: 08 Jul 2026.",
+              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/WF.png",
+              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/WF.png",
+              "url": {
+                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=WF&eventid=1029331&episodeid=7",
+                "report": "https://www.gdacs.org/report.aspx?eventid=1029331&episodeid=7&eventtype=WF",
+                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=WF&eventid=1029331"
+              },
+              "alertlevel": "Orange",
+              "alertscore": 2,
+              "episodealertlevel": "Orange",
+              "episodealertscore": 1.5,
+              "istemporary": "false",
+              "iscurrent": "false",
+              "country": "France",
+              "fromdate": "2026-07-04T00:00:00",
+              "todate": "2026-07-08T00:00:00",
+              "datemodified": "2026-09-24T18:05:15",
+              "iso3": "FRA",
+              "source": "GWIS",
+              "sourceid": "",
+              "polygonlabel": "Centroid",
+              "Class": "Point_Centroid",
+              "affectedcountries": [
+                {
+                  "iso2": "FR",
+                  "iso3": "FRA",
+                  "countryname": "France"
+                }
+              ],
+              "severitydata": {
+                "severity": 6576.0,
+                "severitytext": "Orange impact for forestfire in 6576 ha",
                 "severityunit": "ha"
               }
             }
@@ -2823,7 +2945,7 @@
               "country": "Venezuela",
               "fromdate": "2026-06-24T22:05:12",
               "todate": "2026-06-24T22:05:12",
-              "datemodified": "2026-09-23T06:10:23",
+              "datemodified": "2026-09-24T18:05:15",
               "iso3": "VEN",
               "source": "NEIC",
               "sourceid": "",
@@ -2883,7 +3005,7 @@
               "country": "Venezuela",
               "fromdate": "2026-06-24T22:04:32",
               "todate": "2026-06-24T22:04:32",
-              "datemodified": "2026-09-23T06:10:23",
+              "datemodified": "2026-09-24T18:05:15",
               "iso3": "VEN",
               "source": "NEIC",
               "sourceid": "",
@@ -3003,7 +3125,7 @@
               "country": "Indonesia",
               "fromdate": "2026-06-16T03:27:44",
               "todate": "2026-06-16T03:27:44",
-              "datemodified": "2026-09-23T06:10:23",
+              "datemodified": "2026-09-24T18:05:15",
               "iso3": "IDN",
               "source": "NEIC",
               "sourceid": "",
@@ -3063,7 +3185,7 @@
               "country": "Philippines",
               "fromdate": "2026-06-07T23:37:40",
               "todate": "2026-06-07T23:37:40",
-              "datemodified": "2026-09-23T06:10:23",
+              "datemodified": "2026-09-24T18:05:15",
               "iso3": "PHL",
               "source": "NEIC",
               "sourceid": "",
@@ -3549,7 +3671,7 @@
               "country": "Kenya, Somalia",
               "fromdate": "2025-05-21T00:00:00",
               "todate": "2026-03-30T00:00:00",
-              "datemodified": "2026-09-23T06:10:24",
+              "datemodified": "2026-09-24T18:00:17",
               "iso3": "KEN",
               "source": "GDO",
               "sourceid": "",
@@ -6147,72 +6269,6 @@
                 "severity": 6.2,
                 "severitytext": "Magnitude 6.2M, Depth:7.815km",
                 "severityunit": "M"
-              }
-            }
-          },
-          {
-            "type": "Feature",
-            "bbox": [
-              111.1,
-              21.8,
-              111.1,
-              21.8
-            ],
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                111.1,
-                21.8
-              ]
-            },
-            "properties": {
-              "eventtype": "TC",
-              "eventid": 1001211,
-              "episodeid": 25,
-              "eventname": "RAGASA-25",
-              "glide": "TC-2025-000170-PHL",
-              "name": "Tropical Cyclone RAGASA-25",
-              "description": "Tropical Cyclone RAGASA-25",
-              "htmldescription": "Red Tropical Cyclone RAGASA-25 in Philippines, China from: 18 Sep 2025  to: 24 Sep 2025 .",
-              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/TC.png",
-              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Red/TC.png",
-              "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=TC&eventid=1001211&episodeid=25",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1001211&episodeid=25&eventtype=TC",
-                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=TC&eventid=1001211"
-              },
-              "alertlevel": "Red",
-              "alertscore": 3,
-              "episodealertlevel": "Orange",
-              "episodealertscore": 2.0,
-              "istemporary": "false",
-              "iscurrent": "false",
-              "country": "Philippines, China",
-              "fromdate": "2025-09-18T12:00:00",
-              "todate": "2025-09-24T12:00:00",
-              "datemodified": "2026-02-11T15:18:59.037",
-              "iso3": "CHN",
-              "source": "JTWC",
-              "sourceid": "",
-              "polygonlabel": "Centroid",
-              "Class": "Point_Centroid",
-              "countryonland": "",
-              "affectedcountries": [
-                {
-                  "iso2": "PH",
-                  "iso3": "PHL",
-                  "countryname": "Philippines"
-                },
-                {
-                  "iso2": "CN",
-                  "iso3": "CHN",
-                  "countryname": "China"
-                }
-              ],
-              "severitydata": {
-                "severity": 268.5168,
-                "severitytext": "Hurricane/Typhoon > 74 mph (maximum wind speed of 269 km/h)",
-                "severityunit": "km/h"
               }
             }
           }
