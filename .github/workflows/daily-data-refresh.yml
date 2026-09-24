@@ -19,7 +19,7 @@ jobs:
 
       - name: Configure git identity
         run: |
-          git config --global user.name "Forged Titanium Bot"
+          git config --global user.name "Travel Intelligence Bot"
           git config --global user.email "actions@users.noreply.github.com"
 
       - name: Collect Phase 1 open-data signals
@@ -77,6 +77,9 @@ jobs:
 
       - name: Validate TI data model
         run: python3 scripts/validate_ti_data.py
+
+      - name: Audit Phase 1 foundation
+        run: python3 scripts/audit_phase1_foundation.py
 
       - name: Ensure meta.generated reflects this run
         run: |
