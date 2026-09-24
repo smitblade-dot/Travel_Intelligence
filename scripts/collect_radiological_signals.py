@@ -23,6 +23,7 @@ HISTORY = ROOT / "data" / "radiological_history.json"
 
 TIMEOUT = 30
 LOOKBACK_HOURS = 48
+CURRENT_WINDOW_HOURS = 6
 HISTORY_RETENTION = 500
 MIN_RECENT_READINGS = 3
 MIN_BASELINE_READINGS = 20
@@ -176,33 +177,46 @@ def main():
             output["watchpoints"].append(result)
             continue
 
-        # Only compare like-for-like units. Preserve the history per watchpoint/unit.
+        # Only compare like-for-like units. Deduplicate observations because the
+        # hourly collector repeatedly queries an overlapping 48-hour window.
         grouped = {}
         for row in recent:
-            grouped.setdefault(row["unit"], []).append(row["value"])
+            grouped.setdefault(row["unit"], []).append(row)
 
         wp_history = history.setdefault(wp["id"], {})
         best = None
-        for unit, values in grouped.items():
+        current_cutoff = now - timedelta(hours=CURRENT_WINDOW_HOURS)
+        for unit, rows in grouped.items():
             series = wp_history.setdefault(unit, [])
-            series.extend([
-                {"ts": row["captured_at"], "value": row["value"]}
-                for row in recent
-            ])
+            existing = {(p.get("ts"), p.get("device_id"), p.get("value")) for p in series}
+            for row in rows:
+                key = (row["captured_at"], row.get("device_id"), row["value"])
+                if key not in existing:
+                    series.append({
+                        "ts": row["captured_at"],
+                        "value": row["value"],
+                        "device_id": row.get("device_id"),
+                    })
+                    existing.add(key)
             # Keep a bounded history and discard malformed/very old records.
             cleaned = []
             for point in series:
                 try:
                     ts = datetime.fromisoformat(point["ts"].replace("Z", "+00:00"))
                     if ts >= now - timedelta(days=90):
-                        cleaned.append({"ts": ts.isoformat(), "value": float(point["value"])})
+                        cleaned.append({
+                            "ts": ts.isoformat(),
+                            "value": float(point["value"]),
+                            "device_id": point.get("device_id"),
+                        })
                 except Exception:
                     continue
+            cleaned.sort(key=lambda p: p["ts"])
             cleaned = cleaned[-HISTORY_RETENTION:]
             wp_history[unit] = cleaned
 
-            baseline_values = [p["value"] for p in cleaned[:-len(values)]]
-            current_values = values[:]
+            current_values = [p["value"] for p in cleaned if datetime.fromisoformat(p["ts"].replace("Z", "+00:00")) >= current_cutoff]
+            baseline_values = [p["value"] for p in cleaned if datetime.fromisoformat(p["ts"].replace("Z", "+00:00")) < current_cutoff]
             if len(baseline_values) < MIN_BASELINE_READINGS:
                 state = "building_baseline"
                 score = None
