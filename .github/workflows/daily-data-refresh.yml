@@ -70,7 +70,7 @@ jobs:
           claude_args: |
             --model claude-sonnet-5
             --allowedTools "Bash,Read,Write,Edit,Glob,Grep,WebSearch,WebFetch"
-            --max-turns 80
+            --max-turns 120
 
       - name: Build traveller impact graph
         run: python3 scripts/build_traveller_impact_graph.py
