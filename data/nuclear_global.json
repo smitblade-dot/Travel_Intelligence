@@ -1,13 +1,15 @@
 {
-  "schemaVersion": "1.0",
-  "generatedAt": null,
-  "status": "INITIAL_GLOBAL_SCOPE",
+  "schemaVersion": "1.1",
+  "generatedAt": "2026-09-24T16:55:00Z",
+  "status": "SOURCE_DRIVEN",
   "category": "RADIOLOGICAL_NUCLEAR",
   "coverage": {
+    "scope": "GLOBAL",
     "countries": 31,
     "locations": 0,
     "facilities": 0,
-    "note": "Global source-driven inventory is enabled. Facility records are populated by the nuclear refresh workflow; this file deliberately does not invent site records before authoritative source ingestion."
+    "facilityInventoryStatus": "COUNTRY_AGGREGATES_ONLY",
+    "note": "Country-level operating power-reactor aggregates are sourced from IAEA PRIS. Facility/site records are only populated when authoritative reactor-level or facility-level records are ingested."
   },
   "sources": [
     "wna-reactor-database",
@@ -17,8 +19,645 @@
     "iaea-piedb",
     "iaea-country-information"
   ],
-  "countries": [],
+  "countries": [
+    {
+      "iso2": "ar",
+      "iso3": "ARG",
+      "name": "Argentina",
+      "nuclearFootprint": true,
+      "facilityCount": 3,
+      "facilityClasses": [
+        "POWER_REACTOR"
+      ],
+      "powerReactors": 3,
+      "operatingPowerCapacityMWe": 1631,
+      "researchReactors": 0,
+      "fuelCycleFacilities": 0,
+      "otherNuclearFacilities": 0,
+      "sourceIds": [
+        "iaea-pris"
+      ],
+      "sourceStatus": "COUNTRY_AGGREGATE_ONLY",
+      "lastRefreshed": "2026-09-24T16:55:00Z"
+    },
+    {
+      "iso2": "am",
+      "iso3": "ARM",
+      "name": "Armenia",
+      "nuclearFootprint": true,
+      "facilityCount": 1,
+      "facilityClasses": [
+        "POWER_REACTOR"
+      ],
+      "powerReactors": 1,
+      "operatingPowerCapacityMWe": 416,
+      "researchReactors": 0,
+      "fuelCycleFacilities": 0,
+      "otherNuclearFacilities": 0,
+      "sourceIds": [
+        "iaea-pris"
+      ],
+      "sourceStatus": "COUNTRY_AGGREGATE_ONLY",
+      "lastRefreshed": "2026-09-24T16:55:00Z"
+    },
+    {
+      "iso2": "by",
+      "iso3": "BLR",
+      "name": "Belarus",
+      "nuclearFootprint": true,
+      "facilityCount": 2,
+      "facilityClasses": [
+        "POWER_REACTOR"
+      ],
+      "powerReactors": 2,
+      "operatingPowerCapacityMWe": 2220,
+      "researchReactors": 0,
+      "fuelCycleFacilities": 0,
+      "otherNuclearFacilities": 0,
+      "sourceIds": [
+        "iaea-pris"
+      ],
+      "sourceStatus": "COUNTRY_AGGREGATE_ONLY",
+      "lastRefreshed": "2026-09-24T16:55:00Z"
+    },
+    {
+      "iso2": "be",
+      "iso3": "BEL",
+      "name": "Belgium",
+      "nuclearFootprint": true,
+      "facilityCount": 2,
+      "facilityClasses": [
+        "POWER_REACTOR"
+      ],
+      "powerReactors": 2,
+      "operatingPowerCapacityMWe": 2056,
+      "researchReactors": 0,
+      "fuelCycleFacilities": 0,
+      "otherNuclearFacilities": 0,
+      "sourceIds": [
+        "iaea-pris"
+      ],
+      "sourceStatus": "COUNTRY_AGGREGATE_ONLY",
+      "lastRefreshed": "2026-09-24T16:55:00Z"
+    },
+    {
+      "iso2": "br",
+      "iso3": "BRA",
+      "name": "Brazil",
+      "nuclearFootprint": true,
+      "facilityCount": 2,
+      "facilityClasses": [
+        "POWER_REACTOR"
+      ],
+      "powerReactors": 2,
+      "operatingPowerCapacityMWe": 1884,
+      "researchReactors": 0,
+      "fuelCycleFacilities": 0,
+      "otherNuclearFacilities": 0,
+      "sourceIds": [
+        "iaea-pris"
+      ],
+      "sourceStatus": "COUNTRY_AGGREGATE_ONLY",
+      "lastRefreshed": "2026-09-24T16:55:00Z"
+    },
+    {
+      "iso2": "bg",
+      "iso3": "BGR",
+      "name": "Bulgaria",
+      "nuclearFootprint": true,
+      "facilityCount": 2,
+      "facilityClasses": [
+        "POWER_REACTOR"
+      ],
+      "powerReactors": 2,
+      "operatingPowerCapacityMWe": 2006,
+      "researchReactors": 0,
+      "fuelCycleFacilities": 0,
+      "otherNuclearFacilities": 0,
+      "sourceIds": [
+        "iaea-pris"
+      ],
+      "sourceStatus": "COUNTRY_AGGREGATE_ONLY",
+      "lastRefreshed": "2026-09-24T16:55:00Z"
+    },
+    {
+      "iso2": "ca",
+      "iso3": "CAN",
+      "name": "Canada",
+      "nuclearFootprint": true,
+      "facilityCount": 17,
+      "facilityClasses": [
+        "POWER_REACTOR"
+      ],
+      "powerReactors": 17,
+      "operatingPowerCapacityMWe": 12714,
+      "researchReactors": 0,
+      "fuelCycleFacilities": 0,
+      "otherNuclearFacilities": 0,
+      "sourceIds": [
+        "iaea-pris"
+      ],
+      "sourceStatus": "COUNTRY_AGGREGATE_ONLY",
+      "lastRefreshed": "2026-09-24T16:55:00Z"
+    },
+    {
+      "iso2": "cn",
+      "iso3": "CHN",
+      "name": "China",
+      "nuclearFootprint": true,
+      "facilityCount": 60,
+      "facilityClasses": [
+        "POWER_REACTOR"
+      ],
+      "powerReactors": 60,
+      "operatingPowerCapacityMWe": 58812,
+      "researchReactors": 0,
+      "fuelCycleFacilities": 0,
+      "otherNuclearFacilities": 0,
+      "sourceIds": [
+        "iaea-pris"
+      ],
+      "sourceStatus": "COUNTRY_AGGREGATE_ONLY",
+      "lastRefreshed": "2026-09-24T16:55:00Z"
+    },
+    {
+      "iso2": "cz",
+      "iso3": "CZE",
+      "name": "Czech Republic",
+      "nuclearFootprint": true,
+      "facilityCount": 6,
+      "facilityClasses": [
+        "POWER_REACTOR"
+      ],
+      "powerReactors": 6,
+      "operatingPowerCapacityMWe": 3972,
+      "researchReactors": 0,
+      "fuelCycleFacilities": 0,
+      "otherNuclearFacilities": 0,
+      "sourceIds": [
+        "iaea-pris"
+      ],
+      "sourceStatus": "COUNTRY_AGGREGATE_ONLY",
+      "lastRefreshed": "2026-09-24T16:55:00Z"
+    },
+    {
+      "iso2": "fi",
+      "iso3": "FIN",
+      "name": "Finland",
+      "nuclearFootprint": true,
+      "facilityCount": 5,
+      "facilityClasses": [
+        "POWER_REACTOR"
+      ],
+      "powerReactors": 5,
+      "operatingPowerCapacityMWe": 4369,
+      "researchReactors": 0,
+      "fuelCycleFacilities": 0,
+      "otherNuclearFacilities": 0,
+      "sourceIds": [
+        "iaea-pris"
+      ],
+      "sourceStatus": "COUNTRY_AGGREGATE_ONLY",
+      "lastRefreshed": "2026-09-24T16:55:00Z"
+    },
+    {
+      "iso2": "fr",
+      "iso3": "FRA",
+      "name": "France",
+      "nuclearFootprint": true,
+      "facilityCount": 57,
+      "facilityClasses": [
+        "POWER_REACTOR"
+      ],
+      "powerReactors": 57,
+      "operatingPowerCapacityMWe": 63000,
+      "researchReactors": 0,
+      "fuelCycleFacilities": 0,
+      "otherNuclearFacilities": 0,
+      "sourceIds": [
+        "iaea-pris"
+      ],
+      "sourceStatus": "COUNTRY_AGGREGATE_ONLY",
+      "lastRefreshed": "2026-09-24T16:55:00Z"
+    },
+    {
+      "iso2": "hu",
+      "iso3": "HUN",
+      "name": "Hungary",
+      "nuclearFootprint": true,
+      "facilityCount": 4,
+      "facilityClasses": [
+        "POWER_REACTOR"
+      ],
+      "powerReactors": 4,
+      "operatingPowerCapacityMWe": 1916,
+      "researchReactors": 0,
+      "fuelCycleFacilities": 0,
+      "otherNuclearFacilities": 0,
+      "sourceIds": [
+        "iaea-pris"
+      ],
+      "sourceStatus": "COUNTRY_AGGREGATE_ONLY",
+      "lastRefreshed": "2026-09-24T16:55:00Z"
+    },
+    {
+      "iso2": "in",
+      "iso3": "IND",
+      "name": "India",
+      "nuclearFootprint": true,
+      "facilityCount": 23,
+      "facilityClasses": [
+        "POWER_REACTOR"
+      ],
+      "powerReactors": 23,
+      "operatingPowerCapacityMWe": 7730,
+      "researchReactors": 0,
+      "fuelCycleFacilities": 0,
+      "otherNuclearFacilities": 0,
+      "sourceIds": [
+        "iaea-pris"
+      ],
+      "sourceStatus": "COUNTRY_AGGREGATE_ONLY",
+      "lastRefreshed": "2026-09-24T16:55:00Z"
+    },
+    {
+      "iso2": "ir",
+      "iso3": "IRN",
+      "name": "Iran",
+      "nuclearFootprint": true,
+      "facilityCount": 1,
+      "facilityClasses": [
+        "POWER_REACTOR"
+      ],
+      "powerReactors": 1,
+      "operatingPowerCapacityMWe": 915,
+      "researchReactors": 0,
+      "fuelCycleFacilities": 0,
+      "otherNuclearFacilities": 0,
+      "sourceIds": [
+        "iaea-pris"
+      ],
+      "sourceStatus": "COUNTRY_AGGREGATE_ONLY",
+      "lastRefreshed": "2026-09-24T16:55:00Z"
+    },
+    {
+      "iso2": "jp",
+      "iso3": "JPN",
+      "name": "Japan",
+      "nuclearFootprint": true,
+      "facilityCount": 14,
+      "facilityClasses": [
+        "POWER_REACTOR"
+      ],
+      "powerReactors": 14,
+      "operatingPowerCapacityMWe": 12631,
+      "researchReactors": 0,
+      "fuelCycleFacilities": 0,
+      "otherNuclearFacilities": 0,
+      "sourceIds": [
+        "iaea-pris"
+      ],
+      "sourceStatus": "COUNTRY_AGGREGATE_ONLY",
+      "lastRefreshed": "2026-09-24T16:55:00Z"
+    },
+    {
+      "iso2": "kr",
+      "iso3": "KOR",
+      "name": "South Korea",
+      "nuclearFootprint": true,
+      "facilityCount": 26,
+      "facilityClasses": [
+        "POWER_REACTOR"
+      ],
+      "powerReactors": 26,
+      "operatingPowerCapacityMWe": 25609,
+      "researchReactors": 0,
+      "fuelCycleFacilities": 0,
+      "otherNuclearFacilities": 0,
+      "sourceIds": [
+        "iaea-pris"
+      ],
+      "sourceStatus": "COUNTRY_AGGREGATE_ONLY",
+      "lastRefreshed": "2026-09-24T16:55:00Z"
+    },
+    {
+      "iso2": "mx",
+      "iso3": "MEX",
+      "name": "Mexico",
+      "nuclearFootprint": true,
+      "facilityCount": 2,
+      "facilityClasses": [
+        "POWER_REACTOR"
+      ],
+      "powerReactors": 2,
+      "operatingPowerCapacityMWe": 1552,
+      "researchReactors": 0,
+      "fuelCycleFacilities": 0,
+      "otherNuclearFacilities": 0,
+      "sourceIds": [
+        "iaea-pris"
+      ],
+      "sourceStatus": "COUNTRY_AGGREGATE_ONLY",
+      "lastRefreshed": "2026-09-24T16:55:00Z"
+    },
+    {
+      "iso2": "nl",
+      "iso3": "NLD",
+      "name": "Netherlands",
+      "nuclearFootprint": true,
+      "facilityCount": 1,
+      "facilityClasses": [
+        "POWER_REACTOR"
+      ],
+      "powerReactors": 1,
+      "operatingPowerCapacityMWe": 482,
+      "researchReactors": 0,
+      "fuelCycleFacilities": 0,
+      "otherNuclearFacilities": 0,
+      "sourceIds": [
+        "iaea-pris"
+      ],
+      "sourceStatus": "COUNTRY_AGGREGATE_ONLY",
+      "lastRefreshed": "2026-09-24T16:55:00Z"
+    },
+    {
+      "iso2": "pk",
+      "iso3": "PAK",
+      "name": "Pakistan",
+      "nuclearFootprint": true,
+      "facilityCount": 6,
+      "facilityClasses": [
+        "POWER_REACTOR"
+      ],
+      "powerReactors": 6,
+      "operatingPowerCapacityMWe": 3262,
+      "researchReactors": 0,
+      "fuelCycleFacilities": 0,
+      "otherNuclearFacilities": 0,
+      "sourceIds": [
+        "iaea-pris"
+      ],
+      "sourceStatus": "COUNTRY_AGGREGATE_ONLY",
+      "lastRefreshed": "2026-09-24T16:55:00Z"
+    },
+    {
+      "iso2": "ro",
+      "iso3": "ROU",
+      "name": "Romania",
+      "nuclearFootprint": true,
+      "facilityCount": 2,
+      "facilityClasses": [
+        "POWER_REACTOR"
+      ],
+      "powerReactors": 2,
+      "operatingPowerCapacityMWe": 1300,
+      "researchReactors": 0,
+      "fuelCycleFacilities": 0,
+      "otherNuclearFacilities": 0,
+      "sourceIds": [
+        "iaea-pris"
+      ],
+      "sourceStatus": "COUNTRY_AGGREGATE_ONLY",
+      "lastRefreshed": "2026-09-24T16:55:00Z"
+    },
+    {
+      "iso2": "ru",
+      "iso3": "RUS",
+      "name": "Russia",
+      "nuclearFootprint": true,
+      "facilityCount": 34,
+      "facilityClasses": [
+        "POWER_REACTOR"
+      ],
+      "powerReactors": 34,
+      "operatingPowerCapacityMWe": 27969,
+      "researchReactors": 0,
+      "fuelCycleFacilities": 0,
+      "otherNuclearFacilities": 0,
+      "sourceIds": [
+        "iaea-pris"
+      ],
+      "sourceStatus": "COUNTRY_AGGREGATE_ONLY",
+      "lastRefreshed": "2026-09-24T16:55:00Z"
+    },
+    {
+      "iso2": "sk",
+      "iso3": "SVK",
+      "name": "Slovakia",
+      "nuclearFootprint": true,
+      "facilityCount": 5,
+      "facilityClasses": [
+        "POWER_REACTOR"
+      ],
+      "powerReactors": 5,
+      "operatingPowerCapacityMWe": 2306,
+      "researchReactors": 0,
+      "fuelCycleFacilities": 0,
+      "otherNuclearFacilities": 0,
+      "sourceIds": [
+        "iaea-pris"
+      ],
+      "sourceStatus": "COUNTRY_AGGREGATE_ONLY",
+      "lastRefreshed": "2026-09-24T16:55:00Z"
+    },
+    {
+      "iso2": "si",
+      "iso3": "SVN",
+      "name": "Slovenia",
+      "nuclearFootprint": true,
+      "facilityCount": 1,
+      "facilityClasses": [
+        "POWER_REACTOR"
+      ],
+      "powerReactors": 1,
+      "operatingPowerCapacityMWe": 696,
+      "researchReactors": 0,
+      "fuelCycleFacilities": 0,
+      "otherNuclearFacilities": 0,
+      "sourceIds": [
+        "iaea-pris"
+      ],
+      "sourceStatus": "COUNTRY_AGGREGATE_ONLY",
+      "lastRefreshed": "2026-09-24T16:55:00Z"
+    },
+    {
+      "iso2": "za",
+      "iso3": "ZAF",
+      "name": "South Africa",
+      "nuclearFootprint": true,
+      "facilityCount": 2,
+      "facilityClasses": [
+        "POWER_REACTOR"
+      ],
+      "powerReactors": 2,
+      "operatingPowerCapacityMWe": 1854,
+      "researchReactors": 0,
+      "fuelCycleFacilities": 0,
+      "otherNuclearFacilities": 0,
+      "sourceIds": [
+        "iaea-pris"
+      ],
+      "sourceStatus": "COUNTRY_AGGREGATE_ONLY",
+      "lastRefreshed": "2026-09-24T16:55:00Z"
+    },
+    {
+      "iso2": "es",
+      "iso3": "ESP",
+      "name": "Spain",
+      "nuclearFootprint": true,
+      "facilityCount": 7,
+      "facilityClasses": [
+        "POWER_REACTOR"
+      ],
+      "powerReactors": 7,
+      "operatingPowerCapacityMWe": 7123,
+      "researchReactors": 0,
+      "fuelCycleFacilities": 0,
+      "otherNuclearFacilities": 0,
+      "sourceIds": [
+        "iaea-pris"
+      ],
+      "sourceStatus": "COUNTRY_AGGREGATE_ONLY",
+      "lastRefreshed": "2026-09-24T16:55:00Z"
+    },
+    {
+      "iso2": "se",
+      "iso3": "SWE",
+      "name": "Sweden",
+      "nuclearFootprint": true,
+      "facilityCount": 6,
+      "facilityClasses": [
+        "POWER_REACTOR"
+      ],
+      "powerReactors": 6,
+      "operatingPowerCapacityMWe": 7012,
+      "researchReactors": 0,
+      "fuelCycleFacilities": 0,
+      "otherNuclearFacilities": 0,
+      "sourceIds": [
+        "iaea-pris"
+      ],
+      "sourceStatus": "COUNTRY_AGGREGATE_ONLY",
+      "lastRefreshed": "2026-09-24T16:55:00Z"
+    },
+    {
+      "iso2": "ch",
+      "iso3": "CHE",
+      "name": "Switzerland",
+      "nuclearFootprint": true,
+      "facilityCount": 4,
+      "facilityClasses": [
+        "POWER_REACTOR"
+      ],
+      "powerReactors": 4,
+      "operatingPowerCapacityMWe": 2973,
+      "researchReactors": 0,
+      "fuelCycleFacilities": 0,
+      "otherNuclearFacilities": 0,
+      "sourceIds": [
+        "iaea-pris"
+      ],
+      "sourceStatus": "COUNTRY_AGGREGATE_ONLY",
+      "lastRefreshed": "2026-09-24T16:55:00Z"
+    },
+    {
+      "iso2": "ua",
+      "iso3": "UKR",
+      "name": "Ukraine",
+      "nuclearFootprint": true,
+      "facilityCount": 15,
+      "facilityClasses": [
+        "POWER_REACTOR"
+      ],
+      "powerReactors": 15,
+      "operatingPowerCapacityMWe": 13107,
+      "researchReactors": 0,
+      "fuelCycleFacilities": 0,
+      "otherNuclearFacilities": 0,
+      "sourceIds": [
+        "iaea-pris"
+      ],
+      "sourceStatus": "COUNTRY_AGGREGATE_ONLY",
+      "lastRefreshed": "2026-09-24T16:55:00Z"
+    },
+    {
+      "iso2": "ae",
+      "iso3": "ARE",
+      "name": "United Arab Emirates",
+      "nuclearFootprint": true,
+      "facilityCount": 4,
+      "facilityClasses": [
+        "POWER_REACTOR"
+      ],
+      "powerReactors": 4,
+      "operatingPowerCapacityMWe": 5348,
+      "researchReactors": 0,
+      "fuelCycleFacilities": 0,
+      "otherNuclearFacilities": 0,
+      "sourceIds": [
+        "iaea-pris"
+      ],
+      "sourceStatus": "COUNTRY_AGGREGATE_ONLY",
+      "lastRefreshed": "2026-09-24T16:55:00Z"
+    },
+    {
+      "iso2": "gb",
+      "iso3": "GBR",
+      "name": "United Kingdom",
+      "nuclearFootprint": true,
+      "facilityCount": 9,
+      "facilityClasses": [
+        "POWER_REACTOR"
+      ],
+      "powerReactors": 9,
+      "operatingPowerCapacityMWe": 5883,
+      "researchReactors": 0,
+      "fuelCycleFacilities": 0,
+      "otherNuclearFacilities": 0,
+      "sourceIds": [
+        "iaea-pris"
+      ],
+      "sourceStatus": "COUNTRY_AGGREGATE_ONLY",
+      "lastRefreshed": "2026-09-24T16:55:00Z"
+    },
+    {
+      "iso2": "us",
+      "iso3": "USA",
+      "name": "United States",
+      "nuclearFootprint": true,
+      "facilityCount": 94,
+      "facilityClasses": [
+        "POWER_REACTOR"
+      ],
+      "powerReactors": 94,
+      "operatingPowerCapacityMWe": 96952,
+      "researchReactors": 0,
+      "fuelCycleFacilities": 0,
+      "otherNuclearFacilities": 0,
+      "sourceIds": [
+        "iaea-pris"
+      ],
+      "sourceStatus": "COUNTRY_AGGREGATE_ONLY",
+      "lastRefreshed": "2026-09-24T16:55:00Z"
+    }
+  ],
   "facilities": [],
   "locations": [],
-  "unresolved": []
+  "unresolved": [
+    {
+      "sourceId": "iaea-rrdb",
+      "reason": "Public RRDB is authoritative but reactor-level extraction is not yet connected.",
+      "action": "Add controlled reactor-level collector."
+    },
+    {
+      "sourceId": "iaea-nfcis",
+      "reason": "Public NFCIS interface is authoritative but facility-level extraction is not yet connected.",
+      "action": "Add controlled facility-level collector."
+    },
+    {
+      "sourceId": "iaea-piedb",
+      "reason": "Public PIEDB is authoritative but facility-level extraction is not yet connected.",
+      "action": "Add controlled facility-level collector."
+    }
+  ]
 }
