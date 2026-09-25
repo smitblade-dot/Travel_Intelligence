@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generated": "2026-09-23T06:18:35.838621+00:00",
+  "generated": "2026-09-25T18:12:25.321481+00:00",
   "purpose": "Safe first-stage traveller-impact graph; explicit relationships only.",
   "rules": {
     "locationContainment": "A verified event at a child location may be inherited by its parent locations for discovery.",
@@ -62,6 +62,22 @@
       ],
       "impactType": [
         "AVIATION"
+      ],
+      "relationshipPrecision": "COUNTRY",
+      "travellerImpactStatus": "COUNTRY_LEVEL_ONLY"
+    },
+    {
+      "eventId": "nhc-hurricane-polo-mx-2026-09-21",
+      "countryId": "mx",
+      "locationId": null,
+      "locationChain": [],
+      "affectedInfrastructure": [
+        "MARITIME"
+      ],
+      "impactType": [
+        "EVACUATION",
+        "FLOODING",
+        "MARITIME"
       ],
       "relationshipPrecision": "COUNTRY",
       "travellerImpactStatus": "COUNTRY_LEVEL_ONLY"

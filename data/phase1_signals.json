@@ -1,11 +1,11 @@
 {
   "schemaVersion": "1.0",
-  "generated": "2026-09-24T18:06:33.186369+00:00",
+  "generated": "2026-09-25T18:06:01.858439+00:00",
   "purpose": "Reviewable Phase 1 signals; not published TI events.",
   "sources": {
     "ourairports-airports": {
       "ok": true,
-      "count": 86130,
+      "count": 86134,
       "sample": [
         {
           "ident": "EGLL",
@@ -30,17 +30,6 @@
           "scheduled_service": "1"
         },
         {
-          "ident": "KJFK",
-          "type": "large_airport",
-          "name": "John F. Kennedy International Airport",
-          "latitude": "40.639447",
-          "longitude": "-73.779317",
-          "iso_country": "US",
-          "iata_code": "JFK",
-          "icao_code": "KJFK",
-          "scheduled_service": "1"
-        },
-        {
           "ident": "KORD",
           "type": "large_airport",
           "name": "Chicago O'Hare International Airport",
@@ -49,6 +38,17 @@
           "iso_country": "US",
           "iata_code": "ORD",
           "icao_code": "KORD",
+          "scheduled_service": "1"
+        },
+        {
+          "ident": "KJFK",
+          "type": "large_airport",
+          "name": "John F. Kennedy International Airport",
+          "latitude": "40.639447",
+          "longitude": "-73.779317",
+          "iso_country": "US",
+          "iata_code": "JFK",
+          "icao_code": "KJFK",
           "scheduled_service": "1"
         },
         {
@@ -131,32 +131,32 @@
           {
             "type": "Feature",
             "bbox": [
-              -104.4,
-              16.8,
-              -104.4,
-              16.8
+              -108.5,
+              17.1,
+              -108.5,
+              17.1
             ],
             "geometry": {
               "type": "Point",
               "coordinates": [
-                -104.4,
-                16.8
+                -108.5,
+                17.1
               ]
             },
             "properties": {
               "eventtype": "TC",
               "eventid": 1001325,
-              "episodeid": 16,
+              "episodeid": 20,
               "eventname": "POLO-26",
               "glide": "",
               "name": "Tropical Cyclone POLO-26",
               "description": "Tropical Cyclone POLO-26",
-              "htmldescription": "Orange Tropical Cyclone POLO-26 in Mexico from: 21 Sep 2026  to: 24 Sep 2026 .",
+              "htmldescription": "Orange Tropical Cyclone POLO-26 in Mexico from: 21 Sep 2026  to: 25 Sep 2026 .",
               "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/TC.png",
               "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/TC.png",
               "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=TC&eventid=1001325&episodeid=16",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1001325&episodeid=16&eventtype=TC",
+                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=TC&eventid=1001325&episodeid=20",
+                "report": "https://www.gdacs.org/report.aspx?eventid=1001325&episodeid=20&eventtype=TC",
                 "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=TC&eventid=1001325"
               },
               "alertlevel": "Orange",
@@ -167,8 +167,8 @@
               "iscurrent": "true",
               "country": "Mexico",
               "fromdate": "2026-09-21T03:00:00",
-              "todate": "2026-09-24T15:00:00",
-              "datemodified": "2026-09-24T17:21:41",
+              "todate": "2026-09-25T15:00:00",
+              "datemodified": "2026-09-25T17:52:34",
               "iso3": "MEX",
               "source": "NOAA",
               "sourceid": "",
@@ -229,7 +229,7 @@
               "country": "India",
               "fromdate": "2026-09-22T18:00:00",
               "todate": "2026-09-24T00:00:00",
-              "datemodified": "2026-09-24T18:05:12",
+              "datemodified": "2026-09-25T18:05:12",
               "iso3": "IND",
               "source": "JTWC",
               "sourceid": "",
@@ -247,66 +247,6 @@
                 "severity": 83.3328,
                 "severitytext": "Tropical Storm (maximum wind speed of 83 km/h)",
                 "severityunit": "km/h"
-              }
-            }
-          },
-          {
-            "type": "Feature",
-            "bbox": [
-              76.6455,
-              9.6287,
-              76.6455,
-              9.6287
-            ],
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                76.6455,
-                9.6287
-              ]
-            },
-            "properties": {
-              "eventtype": "FL",
-              "eventid": 1104121,
-              "episodeid": 16,
-              "eventname": "",
-              "glide": "FL-2026-000165-IND",
-              "name": "Flood in India",
-              "description": "Flood in India",
-              "htmldescription": "Orange Flood in India from: 09 Aug 2026 01 to: 22 Sep 2026 01.",
-              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Green/FL.png",
-              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/FL.png",
-              "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=FL&eventid=1104121&episodeid=16",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1104121&episodeid=16&eventtype=FL",
-                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=FL&eventid=1104121"
-              },
-              "alertlevel": "Orange",
-              "alertscore": 2,
-              "episodealertlevel": "Green",
-              "episodealertscore": 0.5,
-              "istemporary": "false",
-              "iscurrent": "true",
-              "country": "India",
-              "fromdate": "2026-08-09T01:00:00",
-              "todate": "2026-09-22T01:00:00",
-              "datemodified": "2026-09-22T06:28:10",
-              "iso3": "IND",
-              "source": "GLOFAS",
-              "sourceid": "",
-              "polygonlabel": "Centroid",
-              "Class": "Point_Centroid",
-              "affectedcountries": [
-                {
-                  "iso2": "IN",
-                  "iso3": "IND",
-                  "countryname": "India"
-                }
-              ],
-              "severitydata": {
-                "severity": 0.0,
-                "severitytext": "Magnitude 0 ",
-                "severityunit": ""
               }
             }
           },
@@ -333,7 +273,7 @@
               "glide": "DR-2026-000143-COD",
               "name": "Drought in Democratic Republic of Congo, Kenya, Tanzania, Uganda",
               "description": "Drought in Democratic Republic of Congo, Kenya, Tanzania, Uganda",
-              "htmldescription": "Orange Drought in Democratic Republic of Congo, Kenya, Tanzania, Uganda from: 21 May 2026  to: 22 Sep 2026 .",
+              "htmldescription": "Orange Drought in Democratic Republic of Congo, Kenya, Tanzania, Uganda from: 21 May 2026  to: 23 Sep 2026 .",
               "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "url": {
@@ -349,8 +289,8 @@
               "iscurrent": "false",
               "country": "Democratic Republic of Congo, Kenya, Tanzania, Uganda",
               "fromdate": "2026-05-21T00:00:00",
-              "todate": "2026-09-22T00:00:00",
-              "datemodified": "2026-09-24T05:57:16",
+              "todate": "2026-09-23T00:00:00",
+              "datemodified": "2026-09-25T05:57:21",
               "iso3": "COD",
               "source": "GDO",
               "sourceid": "",
@@ -408,7 +348,7 @@
               "glide": "DR-2025-000239-ALB",
               "name": "Drought in Austria, Bosnia  and  Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Netherlands, Poland, Romania, Serbia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, ",
               "description": "Drought in Austria, Bosnia  and  Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Netherlands, Poland, Romania, Serbia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, ",
-              "htmldescription": "Orange Drought in Austria, Bosnia  and  Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Netherlands, Poland, Romania, Serbia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, from: 21 Dec 2025  to: 22 Sep 2026 .",
+              "htmldescription": "Orange Drought in Austria, Bosnia  and  Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Netherlands, Poland, Romania, Serbia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, from: 21 Dec 2025  to: 23 Sep 2026 .",
               "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "url": {
@@ -424,8 +364,8 @@
               "iscurrent": "false",
               "country": "Austria, Bosnia & Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Netherlands, Poland, Romania, Serbia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, ",
               "fromdate": "2025-12-21T00:00:00",
-              "todate": "2026-09-22T00:00:00",
-              "datemodified": "2026-09-24T18:05:13",
+              "todate": "2026-09-23T00:00:00",
+              "datemodified": "2026-09-25T18:05:17",
               "iso3": "AUT",
               "source": "GDO",
               "sourceid": "",
@@ -588,7 +528,7 @@
               "glide": "DR-2025-000238-MDG",
               "name": "Drought in Madagascar",
               "description": "Drought in Madagascar",
-              "htmldescription": "Orange Drought in Madagascar from: 21 Nov 2025  to: 22 Sep 2026 .",
+              "htmldescription": "Orange Drought in Madagascar from: 21 Nov 2025  to: 23 Sep 2026 .",
               "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "url": {
@@ -604,8 +544,8 @@
               "iscurrent": "false",
               "country": "Madagascar",
               "fromdate": "2025-11-21T00:00:00",
-              "todate": "2026-09-22T00:00:00",
-              "datemodified": "2026-09-24T05:57:24",
+              "todate": "2026-09-23T00:00:00",
+              "datemodified": "2026-09-25T05:57:29",
               "iso3": "MDG",
               "source": "GDO",
               "sourceid": "",
@@ -648,7 +588,7 @@
               "glide": "DR-2026-000153-BLZ",
               "name": "Drought in The Bahamas, Belize, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador",
               "description": "Drought in The Bahamas, Belize, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador",
-              "htmldescription": "Orange Drought in The Bahamas, Belize, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador from: 21 Apr 2026  to: 22 Sep 2026 .",
+              "htmldescription": "Orange Drought in The Bahamas, Belize, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador from: 21 Apr 2026  to: 23 Sep 2026 .",
               "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "url": {
@@ -664,8 +604,8 @@
               "iscurrent": "false",
               "country": "The Bahamas, Belize, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador",
               "fromdate": "2026-04-21T00:00:00",
-              "todate": "2026-09-22T00:00:00",
-              "datemodified": "2026-09-24T05:57:26",
+              "todate": "2026-09-23T00:00:00",
+              "datemodified": "2026-09-25T05:57:33",
               "iso3": "BHS",
               "source": "GDO",
               "sourceid": "",
@@ -753,7 +693,7 @@
               "glide": "DR-2026-000117-ETH",
               "name": "Drought in Djibouti, Eritrea, Ethiopia, Kenya, Sudan, Somalia, South Sudan, Uganda",
               "description": "Drought in Djibouti, Eritrea, Ethiopia, Kenya, Sudan, Somalia, South Sudan, Uganda",
-              "htmldescription": "Orange Drought in Djibouti, Eritrea, Ethiopia, Kenya, Sudan, Somalia, South Sudan, Uganda from: 21 Apr 2026  to: 22 Sep 2026 .",
+              "htmldescription": "Orange Drought in Djibouti, Eritrea, Ethiopia, Kenya, Sudan, Somalia, South Sudan, Uganda from: 21 Apr 2026  to: 23 Sep 2026 .",
               "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "url": {
@@ -769,8 +709,8 @@
               "iscurrent": "false",
               "country": "Djibouti, Eritrea, Ethiopia, Kenya, Sudan, Somalia, South Sudan, Uganda",
               "fromdate": "2026-04-21T00:00:00",
-              "todate": "2026-09-22T00:00:00",
-              "datemodified": "2026-09-24T05:57:20",
+              "todate": "2026-09-23T00:00:00",
+              "datemodified": "2026-09-25T05:57:24",
               "iso3": "DJI",
               "source": "GDO",
               "sourceid": "",
@@ -828,6 +768,66 @@
           {
             "type": "Feature",
             "bbox": [
+              76.6455,
+              9.6287,
+              76.6455,
+              9.6287
+            ],
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                76.6455,
+                9.6287
+              ]
+            },
+            "properties": {
+              "eventtype": "FL",
+              "eventid": 1104121,
+              "episodeid": 16,
+              "eventname": "",
+              "glide": "FL-2026-000165-IND",
+              "name": "Flood in India",
+              "description": "Flood in India",
+              "htmldescription": "Orange Flood in India from: 09 Aug 2026 01 to: 22 Sep 2026 01.",
+              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Green/FL.png",
+              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/FL.png",
+              "url": {
+                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=FL&eventid=1104121&episodeid=16",
+                "report": "https://www.gdacs.org/report.aspx?eventid=1104121&episodeid=16&eventtype=FL",
+                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=FL&eventid=1104121"
+              },
+              "alertlevel": "Orange",
+              "alertscore": 2,
+              "episodealertlevel": "Green",
+              "episodealertscore": 0.5,
+              "istemporary": "false",
+              "iscurrent": "true",
+              "country": "India",
+              "fromdate": "2026-08-09T01:00:00",
+              "todate": "2026-09-22T01:00:00",
+              "datemodified": "2026-09-22T06:28:10",
+              "iso3": "IND",
+              "source": "GLOFAS",
+              "sourceid": "",
+              "polygonlabel": "Centroid",
+              "Class": "Point_Centroid",
+              "affectedcountries": [
+                {
+                  "iso2": "IN",
+                  "iso3": "IND",
+                  "countryname": "India"
+                }
+              ],
+              "severitydata": {
+                "severity": 0.0,
+                "severitytext": "Magnitude 0 ",
+                "severityunit": ""
+              }
+            }
+          },
+          {
+            "type": "Feature",
+            "bbox": [
               102.5,
               30.5,
               102.5,
@@ -861,7 +861,7 @@
               "episodealertlevel": "Green",
               "episodealertscore": 0.5,
               "istemporary": "false",
-              "iscurrent": "true",
+              "iscurrent": "false",
               "country": "China",
               "fromdate": "2026-07-31T01:00:00",
               "todate": "2026-09-21T01:00:00",
@@ -925,7 +925,7 @@
               "country": "Indonesia",
               "fromdate": "2026-09-04T21:00:00",
               "todate": "2026-09-04T21:00:00",
-              "datemodified": "2026-09-24T18:05:12",
+              "datemodified": "2026-09-25T18:05:15",
               "iso3": "IDN",
               "source": "DARWIN",
               "sourceid": "",
@@ -1051,7 +1051,7 @@
               "country": "Nepal",
               "fromdate": "2026-08-26T01:00:00",
               "todate": "2026-09-01T14:00:00",
-              "datemodified": "2026-09-24T18:05:13",
+              "datemodified": "2026-09-25T18:05:16",
               "iso3": "NPL",
               "source": "GLOFAS",
               "sourceid": "",
@@ -1231,7 +1231,7 @@
               "country": "Serbia",
               "fromdate": "2026-08-05T00:00:00",
               "todate": "2026-08-25T00:00:00",
-              "datemodified": "2026-09-24T18:05:13",
+              "datemodified": "2026-09-25T18:05:18",
               "iso3": "SRB",
               "source": "GWIS",
               "sourceid": "",
@@ -1351,7 +1351,7 @@
               "country": "Belgium",
               "fromdate": "2026-08-14T00:00:00",
               "todate": "2026-08-17T00:00:00",
-              "datemodified": "2026-09-24T18:05:13",
+              "datemodified": "2026-09-25T18:05:19",
               "iso3": "BEL",
               "source": "GWIS",
               "sourceid": "",
@@ -1411,7 +1411,7 @@
               "country": "Indonesia",
               "fromdate": "2026-08-14T21:58:21",
               "todate": "2026-08-14T21:58:21",
-              "datemodified": "2026-09-24T18:05:13",
+              "datemodified": "2026-09-25T18:05:19",
               "iso3": "IDN",
               "source": "NEIC",
               "sourceid": "",
@@ -1471,7 +1471,7 @@
               "country": "Colombia",
               "fromdate": "2026-08-10T12:34:28",
               "todate": "2026-08-10T12:34:28",
-              "datemodified": "2026-09-24T18:05:13",
+              "datemodified": "2026-09-25T18:05:22",
               "iso3": "COL",
               "source": "NEIC",
               "sourceid": "",
@@ -1717,7 +1717,7 @@
               "country": "Greece",
               "fromdate": "2026-07-30T00:00:00",
               "todate": "2026-08-01T00:00:00",
-              "datemodified": "2026-09-24T18:05:13",
+              "datemodified": "2026-09-25T18:05:24",
               "iso3": "GRC",
               "source": "GWIS",
               "sourceid": "",
@@ -1777,7 +1777,7 @@
               "country": "France",
               "fromdate": "2026-07-22T00:00:00",
               "todate": "2026-08-01T00:00:00",
-              "datemodified": "2026-09-24T18:05:14",
+              "datemodified": "2026-09-25T18:05:25",
               "iso3": "FRA",
               "source": "GWIS",
               "sourceid": "",
@@ -1897,7 +1897,7 @@
               "country": "Spain",
               "fromdate": "2026-07-25T00:00:00",
               "todate": "2026-07-30T00:00:00",
-              "datemodified": "2026-09-24T18:05:14",
+              "datemodified": "2026-09-25T18:05:28",
               "iso3": "ESP",
               "source": "GWIS",
               "sourceid": "",
@@ -1957,7 +1957,7 @@
               "country": "Spain",
               "fromdate": "2026-07-22T00:00:00",
               "todate": "2026-07-30T00:00:00",
-              "datemodified": "2026-09-24T18:05:14",
+              "datemodified": "2026-09-25T18:05:26",
               "iso3": "ESP",
               "source": "GWIS",
               "sourceid": "",
@@ -2017,7 +2017,7 @@
               "country": "Tunisia",
               "fromdate": "2026-07-21T00:00:00",
               "todate": "2026-07-29T00:00:00",
-              "datemodified": "2026-09-24T18:05:14",
+              "datemodified": "2026-09-25T18:05:27",
               "iso3": "TUN",
               "source": "GWIS",
               "sourceid": "",
@@ -2077,7 +2077,7 @@
               "country": "Japan",
               "fromdate": "2026-07-28T07:27:15",
               "todate": "2026-07-28T07:27:15",
-              "datemodified": "2026-09-24T18:05:14",
+              "datemodified": "2026-09-25T18:05:25",
               "iso3": "JPN",
               "source": "NEIC",
               "sourceid": "",
@@ -2263,7 +2263,7 @@
               "country": "Spain",
               "fromdate": "2026-07-18T00:00:00",
               "todate": "2026-07-25T00:00:00",
-              "datemodified": "2026-09-24T18:05:14",
+              "datemodified": "2026-09-25T18:05:25",
               "iso3": "ESP",
               "source": "GWIS",
               "sourceid": "",
@@ -2563,7 +2563,7 @@
               "country": "Guam, Northern Mariana Islands, Japan, Taiwan, China",
               "fromdate": "2026-07-01T00:00:00",
               "todate": "2026-07-11T18:00:00",
-              "datemodified": "2026-09-24T18:05:14",
+              "datemodified": "2026-09-25T18:05:29",
               "iso3": "CHN",
               "source": "JTWC",
               "sourceid": "",
@@ -2662,66 +2662,6 @@
           {
             "type": "Feature",
             "bbox": [
-              -8.2824,
-              40.6204,
-              -8.2824,
-              40.6204
-            ],
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                -8.2824,
-                40.6204
-              ]
-            },
-            "properties": {
-              "eventtype": "WF",
-              "eventid": 1029260,
-              "episodeid": 11,
-              "eventname": "",
-              "glide": "WF-2026-000101-PRT",
-              "name": "Forest fires in Portugal",
-              "description": "Forest fires in Portugal",
-              "htmldescription": "Orange Forest fires in Portugal from: 02 Jul 2026 to: 08 Jul 2026.",
-              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/WF.png",
-              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/WF.png",
-              "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=WF&eventid=1029260&episodeid=11",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1029260&episodeid=11&eventtype=WF",
-                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=WF&eventid=1029260"
-              },
-              "alertlevel": "Orange",
-              "alertscore": 2,
-              "episodealertlevel": "Orange",
-              "episodealertscore": 1.5,
-              "istemporary": "false",
-              "iscurrent": "false",
-              "country": "Portugal",
-              "fromdate": "2026-07-02T00:00:00",
-              "todate": "2026-07-08T00:00:00",
-              "datemodified": "2026-09-24T18:05:14",
-              "iso3": "PRT",
-              "source": "GWIS",
-              "sourceid": "",
-              "polygonlabel": "Centroid",
-              "Class": "Point_Centroid",
-              "affectedcountries": [
-                {
-                  "iso2": "PT",
-                  "iso3": "PRT",
-                  "countryname": "Portugal"
-                }
-              ],
-              "severitydata": {
-                "severity": 19670.0,
-                "severitytext": "Orange impact for forestfire in 19670 ha",
-                "severityunit": "ha"
-              }
-            }
-          },
-          {
-            "type": "Feature",
-            "bbox": [
               2.5677,
               42.6724,
               2.5677,
@@ -2759,7 +2699,7 @@
               "country": "France",
               "fromdate": "2026-07-04T00:00:00",
               "todate": "2026-07-08T00:00:00",
-              "datemodified": "2026-09-24T18:05:15",
+              "datemodified": "2026-09-25T18:05:29",
               "iso3": "FRA",
               "source": "GWIS",
               "sourceid": "",
@@ -2775,6 +2715,66 @@
               "severitydata": {
                 "severity": 6576.0,
                 "severitytext": "Orange impact for forestfire in 6576 ha",
+                "severityunit": "ha"
+              }
+            }
+          },
+          {
+            "type": "Feature",
+            "bbox": [
+              -8.2824,
+              40.6204,
+              -8.2824,
+              40.6204
+            ],
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -8.2824,
+                40.6204
+              ]
+            },
+            "properties": {
+              "eventtype": "WF",
+              "eventid": 1029260,
+              "episodeid": 11,
+              "eventname": "",
+              "glide": "WF-2026-000101-PRT",
+              "name": "Forest fires in Portugal",
+              "description": "Forest fires in Portugal",
+              "htmldescription": "Orange Forest fires in Portugal from: 02 Jul 2026 to: 08 Jul 2026.",
+              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/WF.png",
+              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/WF.png",
+              "url": {
+                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=WF&eventid=1029260&episodeid=11",
+                "report": "https://www.gdacs.org/report.aspx?eventid=1029260&episodeid=11&eventtype=WF",
+                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=WF&eventid=1029260"
+              },
+              "alertlevel": "Orange",
+              "alertscore": 2,
+              "episodealertlevel": "Orange",
+              "episodealertscore": 1.5,
+              "istemporary": "false",
+              "iscurrent": "false",
+              "country": "Portugal",
+              "fromdate": "2026-07-02T00:00:00",
+              "todate": "2026-07-08T00:00:00",
+              "datemodified": "2026-09-25T18:05:29",
+              "iso3": "PRT",
+              "source": "GWIS",
+              "sourceid": "",
+              "polygonlabel": "Centroid",
+              "Class": "Point_Centroid",
+              "affectedcountries": [
+                {
+                  "iso2": "PT",
+                  "iso3": "PRT",
+                  "countryname": "Portugal"
+                }
+              ],
+              "severitydata": {
+                "severity": 19670.0,
+                "severitytext": "Orange impact for forestfire in 19670 ha",
                 "severityunit": "ha"
               }
             }
@@ -2945,7 +2945,7 @@
               "country": "Venezuela",
               "fromdate": "2026-06-24T22:05:12",
               "todate": "2026-06-24T22:05:12",
-              "datemodified": "2026-09-24T18:05:15",
+              "datemodified": "2026-09-25T18:05:30",
               "iso3": "VEN",
               "source": "NEIC",
               "sourceid": "",
@@ -3005,7 +3005,7 @@
               "country": "Venezuela",
               "fromdate": "2026-06-24T22:04:32",
               "todate": "2026-06-24T22:04:32",
-              "datemodified": "2026-09-24T18:05:15",
+              "datemodified": "2026-09-25T18:05:29",
               "iso3": "VEN",
               "source": "NEIC",
               "sourceid": "",
@@ -3125,7 +3125,7 @@
               "country": "Indonesia",
               "fromdate": "2026-06-16T03:27:44",
               "todate": "2026-06-16T03:27:44",
-              "datemodified": "2026-09-24T18:05:15",
+              "datemodified": "2026-09-25T18:05:30",
               "iso3": "IDN",
               "source": "NEIC",
               "sourceid": "",
@@ -3185,7 +3185,7 @@
               "country": "Philippines",
               "fromdate": "2026-06-07T23:37:40",
               "todate": "2026-06-07T23:37:40",
-              "datemodified": "2026-09-24T18:05:15",
+              "datemodified": "2026-09-25T18:05:30",
               "iso3": "PHL",
               "source": "NEIC",
               "sourceid": "",
@@ -3671,7 +3671,7 @@
               "country": "Kenya, Somalia",
               "fromdate": "2025-05-21T00:00:00",
               "todate": "2026-03-30T00:00:00",
-              "datemodified": "2026-09-24T18:00:17",
+              "datemodified": "2026-09-25T18:05:30",
               "iso3": "KEN",
               "source": "GDO",
               "sourceid": "",
@@ -6029,246 +6029,6 @@
                 "severity": 148.1472,
                 "severitytext": "Hurricane/Typhoon > 74 mph (maximum wind speed of 148 km/h)",
                 "severityunit": "km/h"
-              }
-            }
-          },
-          {
-            "type": "Feature",
-            "bbox": [
-              44.9167,
-              12.8333,
-              44.9167,
-              12.8333
-            ],
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                44.9167,
-                12.8333
-              ]
-            },
-            "properties": {
-              "eventtype": "FL",
-              "eventid": 1103504,
-              "episodeid": 2,
-              "eventname": "",
-              "glide": "FL-2025-000177-YEM",
-              "name": "Flood in Yemen",
-              "description": "Flood in Yemen",
-              "htmldescription": "Orange Flood in Yemen from: 16 Sep 2025 01 to: 25 Sep 2025 14.",
-              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/FL.png",
-              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/FL.png",
-              "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=FL&eventid=1103504&episodeid=2",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1103504&episodeid=2&eventtype=FL",
-                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=FL&eventid=1103504"
-              },
-              "alertlevel": "Orange",
-              "alertscore": 2,
-              "episodealertlevel": "Orange",
-              "episodealertscore": 1.5,
-              "istemporary": "false",
-              "iscurrent": "false",
-              "country": "Yemen",
-              "fromdate": "2025-09-16T01:00:00",
-              "todate": "2025-09-25T14:00:00",
-              "datemodified": "2025-09-25T11:03:04",
-              "iso3": "YEM",
-              "source": "GLOFAS",
-              "sourceid": "",
-              "polygonlabel": "Centroid",
-              "Class": "Point_Centroid",
-              "affectedcountries": [
-                {
-                  "iso2": "YE",
-                  "iso3": "YEM",
-                  "countryname": "Yemen"
-                }
-              ],
-              "severitydata": {
-                "severity": 0.0,
-                "severitytext": "Magnitude 0 ",
-                "severityunit": ""
-              }
-            }
-          },
-          {
-            "type": "Feature",
-            "bbox": [
-              -70.6916,
-              9.9272,
-              -70.6916,
-              9.9272
-            ],
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                -70.6916,
-                9.9272
-              ]
-            },
-            "properties": {
-              "eventtype": "EQ",
-              "eventid": 1501948,
-              "episodeid": 1662434,
-              "eventname": "",
-              "glide": "EQ-2025-000175-VEN",
-              "name": "Earthquake in Venezuela",
-              "description": "Earthquake in Venezuela",
-              "htmldescription": "Orange M 6.3 Earthquake in Venezuela at: 25 Sep 2025 03:51:39.",
-              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/EQ.png",
-              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/EQ.png",
-              "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=EQ&eventid=1501948&episodeid=1662434",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1501948&episodeid=1662434&eventtype=EQ",
-                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=EQ&eventid=1501948"
-              },
-              "alertlevel": "Orange",
-              "alertscore": 2,
-              "episodealertlevel": "Orange",
-              "episodealertscore": 1.11596182069929,
-              "istemporary": "false",
-              "iscurrent": "false",
-              "country": "Venezuela",
-              "fromdate": "2025-09-25T03:51:39",
-              "todate": "2025-09-25T03:51:39",
-              "datemodified": "2025-09-25T07:02:32",
-              "iso3": "VEN",
-              "source": "NEIC",
-              "sourceid": "",
-              "polygonlabel": "Centroid",
-              "Class": "Point_Centroid",
-              "affectedcountries": [
-                {
-                  "iso2": "VE",
-                  "iso3": "VEN",
-                  "countryname": "Venezuela"
-                }
-              ],
-              "severitydata": {
-                "severity": 6.3,
-                "severitytext": "Magnitude 6.3M, Depth:14km",
-                "severityunit": "M"
-              }
-            }
-          },
-          {
-            "type": "Feature",
-            "bbox": [
-              114.1849,
-              22.3506,
-              114.1849,
-              22.3506
-            ],
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                114.1849,
-                22.3506
-              ]
-            },
-            "properties": {
-              "eventtype": "FL",
-              "eventid": 1103514,
-              "episodeid": 2,
-              "eventname": "",
-              "glide": "FL-2025-000178-CHN",
-              "name": "Flood in China",
-              "description": "Flood in China",
-              "htmldescription": "Red Flood in China from: 23 Sep 2025 01 to: 25 Sep 2025 01.",
-              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Red/FL.png",
-              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Red/FL.png",
-              "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=FL&eventid=1103514&episodeid=2",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1103514&episodeid=2&eventtype=FL",
-                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=FL&eventid=1103514"
-              },
-              "alertlevel": "Red",
-              "alertscore": 3,
-              "episodealertlevel": "Red",
-              "episodealertscore": 2.5,
-              "istemporary": "false",
-              "iscurrent": "false",
-              "country": "China",
-              "fromdate": "2025-09-23T01:00:00",
-              "todate": "2025-09-25T01:00:00",
-              "datemodified": "2025-09-26T13:02:48",
-              "iso3": "CHN",
-              "source": "GLOFAS",
-              "sourceid": "",
-              "polygonlabel": "Centroid",
-              "Class": "Point_Centroid",
-              "affectedcountries": [
-                {
-                  "iso2": "CN",
-                  "iso3": "CHN",
-                  "countryname": "China"
-                }
-              ],
-              "severitydata": {
-                "severity": 0.0,
-                "severitytext": "Magnitude 0 ",
-                "severityunit": ""
-              }
-            }
-          },
-          {
-            "type": "Feature",
-            "bbox": [
-              -70.7174,
-              9.9222,
-              -70.7174,
-              9.9222
-            ],
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                -70.7174,
-                9.9222
-              ]
-            },
-            "properties": {
-              "eventtype": "EQ",
-              "eventid": 1501915,
-              "episodeid": 1662390,
-              "eventname": "",
-              "glide": "EQ-2025-000173-VEN",
-              "name": "Earthquake in Venezuela",
-              "description": "Earthquake in Venezuela",
-              "htmldescription": "Orange M 6.2 Earthquake in Venezuela at: 24 Sep 2025 22:21:55.",
-              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/EQ.png",
-              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/EQ.png",
-              "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=EQ&eventid=1501915&episodeid=1662390",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1501915&episodeid=1662390&eventtype=EQ",
-                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=EQ&eventid=1501915"
-              },
-              "alertlevel": "Orange",
-              "alertscore": 2,
-              "episodealertlevel": "Orange",
-              "episodealertscore": 1.01005791328465,
-              "istemporary": "false",
-              "iscurrent": "false",
-              "country": "Venezuela",
-              "fromdate": "2025-09-24T22:21:55",
-              "todate": "2025-09-24T22:21:55",
-              "datemodified": "2025-09-25T01:02:45",
-              "iso3": "VEN",
-              "source": "NEIC",
-              "sourceid": "",
-              "polygonlabel": "Centroid",
-              "Class": "Point_Centroid",
-              "affectedcountries": [
-                {
-                  "iso2": "VE",
-                  "iso3": "VEN",
-                  "countryname": "Venezuela"
-                }
-              ],
-              "severitydata": {
-                "severity": 6.2,
-                "severitytext": "Magnitude 6.2M, Depth:7.815km",
-                "severityunit": "M"
               }
             }
           }
