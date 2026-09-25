@@ -32,7 +32,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
-          ref: ti-baseline-live-build
+          ref: main
           fetch-depth: 1
 
       - uses: anthropics/claude-code-action@v1
@@ -105,4 +105,4 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add data.json config/baseline_requirements.json scripts/
           git commit -m "Build sourced country baseline intelligence" || echo "No changes"
-          git push origin HEAD:ti-baseline-live-build
+          git push origin HEAD:main
