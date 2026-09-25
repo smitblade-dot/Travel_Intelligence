@@ -57,10 +57,7 @@ For country records:
   health and other authoritative sources relevant to the country's current
   travel conditions.
 
-An empty category is not a defect if no verified traveller-relevant
-information exists. The objective is for verified current changes to reach
-the country page automatically on subsequent refreshes, without inventing
-coverage.
+Every tracked country must have a sourced baseline record for every one of the 14 canonical categories. Empty country/category combinations are a build defect, not an acceptable steady state. Baseline records are persistent country intelligence, not current-event records. They must contain real, traveller-relevant information from actual sources; concise but useful coverage is acceptable. Where a category has no special country-specific restriction, the record should still provide the relevant baseline operational information and explain that position using an appropriate authoritative source. Never invent facts merely to fill a field. Baselines may include seasonal/monthly context where conditions materially affect travel, packing, health, transport or operations. Current events and alerts are layered on top of the baseline and must never replace it. The build acceptance target is 100% country/category coverage with source provenance.
 
 ### Current Intelligence
 
