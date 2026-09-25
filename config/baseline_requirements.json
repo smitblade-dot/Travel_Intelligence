@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "1.0",
+  "purpose": "Canonical requirements for persistent, sourced country baseline intelligence.",
+  "coverage": {
+    "countries": "all active countries in data.json",
+    "categories": [
+      "SECURITY",
+      "ENTRY",
+      "HEALTH",
+      "EMERGENCY",
+      "TRANSPORT",
+      "ENVIRONMENT",
+      "INSURANCE",
+      "LAWS_CULTURE",
+      "COMMUNICATIONS",
+      "FINANCE",
+      "LANGUAGE",
+      "ACCOMMODATION",
+      "EQUIPMENT",
+      "TRAINING"
+    ],
+    "target": "100%"
+  },
+  "rules": [
+    "Every country/category combination requires at least one active baseline record.",
+    "Every new baseline record requires a real source and SourceObservation.",
+    "Baseline content must describe persistent or regularly recurring traveller-relevant conditions; current incidents belong in events.",
+    "Seasonal or month-specific information must be included where it materially affects travel, health, packing, transport or operations.",
+    "Use multiple independent sources when a single source is insufficient or the subject is consequential.",
+    "Do not use AI general knowledge as the source of record; verify claims against the actual source.",
+    "Do not use a current event as a substitute for baseline coverage."
+  ],
+  "minimumContent": {
+    "SECURITY": "Baseline security environment, regional variation, principal threats and practical precautions.",
+    "ENTRY": "Passport/visa/permit requirements, entry restrictions, customs or other material entry considerations.",
+    "HEALTH": "Healthcare access, endemic/vector-borne disease considerations, vaccination/medical considerations and practical precautions.",
+    "EMERGENCY": "Emergency numbers and key emergency-service/access considerations.",
+    "TRANSPORT": "Principal international gateways, road/ground transport conditions, internal movement and material seasonal/access constraints.",
+    "ENVIRONMENT": "Climate and seasons, regional variation, natural hazards and operational implications. Include month/season context where useful.",
+    "INSURANCE": "Country-specific insurance/medical/travel requirements, restrictions and practical coverage considerations.",
+    "LAWS_CULTURE": "Material laws, customs, behaviour restrictions and cultural considerations affecting personnel.",
+    "COMMUNICATIONS": "Mobile/internet availability, connectivity restrictions, telecom considerations and backup communications relevance.",
+    "FINANCE": "Currency, cash/card/ATM availability, banking/payment constraints and practical financial considerations.",
+    "LANGUAGE": "Official and widely used languages plus operationally useful language considerations.",
+    "ACCOMMODATION": "Operational accommodation considerations including security, location, utilities, backup power/water and standards relevant to personnel.",
+    "EQUIPMENT": "Country/environment-specific personal and operational equipment considerations, including seasonal needs.",
+    "TRAINING": "Relevant pre-deployment or recurrent training considerations such as first aid, defensive driving, HEAT, 4x4 or environmental training where justified."
+  },
+  "sourcePriority": [
+    "national government and competent authorities",
+    "UK/US/Canada/Australia/NZ government travel and health sources",
+    "WHO/CDC/IAEA/ICAO/IATA and equivalent international bodies",
+    "national meteorological, health, aviation, transport and emergency authorities",
+    "recognised specialist/professional sources"
+  ],
+  "seasonalRule": "Do not provide a generic climate sentence where seasonal conditions materially change what a traveller should expect or pack."
+}
