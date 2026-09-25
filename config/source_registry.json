@@ -1,0 +1,218 @@
+{
+  "schemaVersion": "1.0",
+  "purpose": "Canonical TI source due-diligence and acquisition register. This registry describes source families and access posture; data.json source records remain the operational provenance layer.",
+  "rules": {
+    "publicWebDoesNotImplyReuseRights": true,
+    "discoveryDoesNotEqualVerification": true,
+    "paidCommercialDeferredUntilRevenue": true,
+    "sourceFailureMustPreserveLastKnownGoodData": true
+  },
+  "tiers": {
+    "TIER_1": "Authoritative government/international open sources",
+    "TIER_2": "Operational infrastructure and specialist open sources",
+    "TIER_3": "Discovery/OSINT sources requiring verification",
+    "TIER_4": "Paid/commercial sources deferred until revenue justifies acquisition"
+  },
+  "sources": [
+    {
+      "id": "fcdos",
+      "name": "UK FCDO travel advice",
+      "tier": "TIER_1",
+      "access": "PUBLIC_WEB",
+      "automation": "REVIEWED",
+      "role": "Country entry/security/health/emergency baseline and change detection",
+      "rights": "SOURCE_SPECIFIC",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "us-state",
+      "name": "U.S. Department of State",
+      "tier": "TIER_1",
+      "access": "GOVERNMENT_OPEN",
+      "automation": "REVIEWED",
+      "role": "Independent government travel/security perspective",
+      "rights": "SOURCE_SPECIFIC",
+      "status": "INTEGRATION_READY"
+    },
+    {
+      "id": "canada-gac",
+      "name": "Global Affairs Canada",
+      "tier": "TIER_1",
+      "access": "GOVERNMENT_OPEN",
+      "automation": "REVIEWED",
+      "role": "Independent government travel/security perspective",
+      "rights": "SOURCE_SPECIFIC",
+      "status": "INTEGRATION_READY"
+    },
+    {
+      "id": "australia-dfat",
+      "name": "Australian DFAT / Smartraveller",
+      "tier": "TIER_1",
+      "access": "GOVERNMENT_OPEN",
+      "automation": "REVIEWED",
+      "role": "Independent government travel/security perspective",
+      "rights": "SOURCE_SPECIFIC",
+      "status": "INTEGRATION_READY"
+    },
+    {
+      "id": "nz-mfat",
+      "name": "New Zealand MFAT / SafeTravel",
+      "tier": "TIER_1",
+      "access": "GOVERNMENT_OPEN",
+      "automation": "REVIEWED",
+      "role": "Independent government travel/security perspective",
+      "rights": "SOURCE_SPECIFIC",
+      "status": "INTEGRATION_READY"
+    },
+    {
+      "id": "iaea-pris",
+      "name": "IAEA PRIS",
+      "tier": "TIER_1",
+      "access": "GOVERNMENT_OPEN",
+      "automation": "CONTROLLED",
+      "role": "Nuclear power reactor country/site intelligence",
+      "rights": "SOURCE_SPECIFIC",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "iaea-rrdb",
+      "name": "IAEA Research Reactor Database",
+      "tier": "TIER_1",
+      "access": "GOVERNMENT_OPEN",
+      "automation": "CONTROLLED",
+      "role": "Research reactor inventory",
+      "rights": "SOURCE_SPECIFIC",
+      "status": "PLANNED"
+    },
+    {
+      "id": "iaea-nfcis",
+      "name": "IAEA Nuclear Fuel Cycle Information System",
+      "tier": "TIER_1",
+      "access": "GOVERNMENT_OPEN",
+      "automation": "CONTROLLED",
+      "role": "Fuel-cycle facility inventory",
+      "rights": "SOURCE_SPECIFIC",
+      "status": "PLANNED"
+    },
+    {
+      "id": "iaea-piedb",
+      "name": "IAEA Post-Irradiation Examination Facilities Database",
+      "tier": "TIER_1",
+      "access": "GOVERNMENT_OPEN",
+      "automation": "CONTROLLED",
+      "role": "Post-irradiation facility inventory",
+      "rights": "SOURCE_SPECIFIC",
+      "status": "PLANNED"
+    },
+    {
+      "id": "ourairports-airports",
+      "name": "OurAirports",
+      "tier": "TIER_2",
+      "access": "OPEN",
+      "automation": "YES",
+      "role": "Global airport reference layer",
+      "rights": "PUBLIC_DOMAIN",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "gdacs-alerts",
+      "name": "GDACS",
+      "tier": "TIER_2",
+      "access": "OPEN",
+      "automation": "YES",
+      "role": "Disaster alert signal layer",
+      "rights": "SOURCE_SPECIFIC",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "adsblol-aircraft",
+      "name": "ADSB.lol",
+      "tier": "TIER_2",
+      "access": "OPEN",
+      "automation": "YES",
+      "role": "Aircraft activity signal",
+      "rights": "ODbL",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "nasa-firms",
+      "name": "NASA FIRMS",
+      "tier": "TIER_2",
+      "access": "FREE_WITH_CONDITIONS",
+      "automation": "YES",
+      "role": "Fire/hotspot observation signal",
+      "rights": "SOURCE_SPECIFIC",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "reliefweb-disasters",
+      "name": "ReliefWeb",
+      "tier": "TIER_2",
+      "access": "OPEN",
+      "automation": "YES",
+      "role": "Humanitarian discovery/corroboration",
+      "rights": "SOURCE_SPECIFIC",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "gdelt-events",
+      "name": "GDELT",
+      "tier": "TIER_3",
+      "access": "OPEN",
+      "automation": "YES",
+      "role": "Global event discovery only",
+      "rights": "SOURCE_SPECIFIC",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "crude-flow-dashboard",
+      "name": "Crude Flow Intelligence",
+      "tier": "TIER_2",
+      "access": "OPEN",
+      "automation": "YES",
+      "role": "Oil-flow specialist signal layer",
+      "rights": "SOURCE_SPECIFIC",
+      "status": "UPSTREAM_SIGNAL"
+    },
+    {
+      "id": "gas-lng-flow-dashboard",
+      "name": "Gas & LNG Intelligence",
+      "tier": "TIER_2",
+      "access": "OPEN",
+      "automation": "YES",
+      "role": "Gas/LNG specialist signal layer",
+      "rights": "SOURCE_SPECIFIC",
+      "status": "UPSTREAM_SIGNAL"
+    },
+    {
+      "id": "fr24",
+      "name": "Flightradar24",
+      "tier": "TIER_2",
+      "access": "PAID_COMMERCIAL",
+      "automation": "DEFERRED",
+      "role": "Future aviation operational feed",
+      "rights": "LICENCE_REQUIRED",
+      "status": "DEFERRED"
+    },
+    {
+      "id": "kpler",
+      "name": "Kpler",
+      "tier": "TIER_4",
+      "access": "PAID_COMMERCIAL",
+      "automation": "DEFERRED",
+      "role": "Future maritime/commodity intelligence",
+      "rights": "LICENCE_REQUIRED",
+      "status": "DEFERRED"
+    },
+    {
+      "id": "gardaworld-crisis24",
+      "name": "GardaWorld Crisis24",
+      "tier": "TIER_4",
+      "access": "PAID_COMMERCIAL",
+      "automation": "DEFERRED",
+      "role": "Future security intelligence",
+      "rights": "LICENCE_REQUIRED",
+      "status": "DEFERRED"
+    }
+  ]
+}
