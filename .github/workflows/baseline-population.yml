@@ -1,0 +1,108 @@
+name: TI baseline intelligence build
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: "30 20 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    strategy:
+      fail-fast: false
+      matrix:
+        category:
+          - SECURITY
+          - ENTRY
+          - HEALTH
+          - EMERGENCY
+          - TRANSPORT
+          - ENVIRONMENT
+          - INSURANCE
+          - LAWS_CULTURE
+          - COMMUNICATIONS
+          - FINANCE
+          - LANGUAGE
+          - ACCOMMODATION
+          - EQUIPMENT
+          - TRAINING
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ti-baseline-live-build
+          fetch-depth: 1
+
+      - uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          show_full_output: true
+          prompt: >
+            Build the persistent Travel Intelligence baseline for the
+            category ${{ matrix.category }} across ALL active countries in
+            data.json. Read CLAUDE.md and config/baseline_requirements.json
+            first. This is baseline country intelligence, not current-event
+            monitoring. For every active country, create one or more useful
+            traveller-relevant baseline records for this category using
+            actual, retrievable sources. Include seasonal/month-specific
+            information where it materially affects travel, health, packing,
+            transport or operations. Keep current incidents out of the
+            baseline unless they establish a persistent condition. Prefer
+            authoritative government, international, meteorological, health,
+            aviation, transport and specialist sources. Use WebSearch and
+            WebFetch to verify the actual source. Do not rely on model
+            memory. Do not invent facts or source URLs. Every generated
+            record must include a real sourceId and every source must have
+            a corresponding sourceObservation with sourceUrl and
+            extractedClaim. Existing records for this category may be
+            updated only when the new sourced baseline is materially better
+            or more current. Preserve useful existing information. Write
+            ONLY the batch file
+            data/baseline_batches/${{ matrix.category }}.json with top-level
+            arrays records, sources and sourceObservations. Do not modify
+            data.json, CLAUDE.md or other files. Do not commit or push.
+            Ensure every active country has coverage for this category.
+          claude_args: |
+            --model claude-sonnet-5
+            --allowedTools "Bash,Read,Write,Edit,Glob,Grep,WebSearch,WebFetch"
+            --max-turns 160
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: baseline-${{ matrix.category }}
+          path: data/baseline_batches/${{ matrix.category }}.json
+          if-no-files-found: error
+
+  merge:
+    needs: generate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ti-baseline-live-build
+          fetch-depth: 1
+
+      - uses: actions/download-artifact@v5
+        with:
+          pattern: baseline-*
+          path: data/baseline_batches
+          merge-multiple: true
+
+      - name: Merge baseline batches
+        run: python3 scripts/merge_baseline_batches.py
+
+      - name: Validate data model
+        run: python3 scripts/validate_ti_data.py
+
+      - name: Audit baseline coverage
+        run: python3 scripts/audit_baseline_coverage.py --strict
+
+      - name: Commit baseline
+        run: |
+          git config user.name "Travel Intelligence Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data.json config/baseline_requirements.json scripts/
+          git commit -m "Build sourced country baseline intelligence" || echo "No changes"
+          git push origin HEAD:ti-baseline-live-build
