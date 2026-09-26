@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generated": "2026-09-25T18:06:30.701951+00:00",
+  "generated": "2026-09-26T18:07:29.934556+00:00",
   "purpose": "Deterministic relationship graph for travel-impact resolution; not a source of truth.",
   "nodes": [
     {
@@ -546,6 +546,14 @@
       "infrastructure": "ENERGY",
       "locationId": null,
       "countryId": "ru",
+      "status": "EXPLICIT_EVENT_RELATIONSHIP",
+      "resolvedLocation": false
+    },
+    {
+      "eventId": "nhc-hurricane-polo-mx-2026-09-21",
+      "infrastructure": "MARITIME",
+      "locationId": null,
+      "countryId": "mx",
       "status": "EXPLICIT_EVENT_RELATIONSHIP",
       "resolvedLocation": false
     }
