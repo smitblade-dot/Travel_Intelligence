@@ -2,9 +2,7 @@ name: Daily travel intelligence data refresh
 
 on:
   schedule:
-    # GitHub Actions uses UTC. Run at both candidate UTC hours and let the
-    # guard below select the 21:00 Europe/Nicosia execution. This keeps the
-    # refresh at 21:00 Cyprus time across daylight-saving changes.
+    # Candidate UTC hours covering 21:00 Europe/Nicosia in both DST states.
     - cron: "0 18 * * *"
     - cron: "0 19 * * *"
   workflow_dispatch: {}
@@ -14,19 +12,33 @@ permissions:
   id-token: write
 
 jobs:
+  schedule_gate:
+    runs-on: ubuntu-latest
+    outputs:
+      run_refresh: ${{ steps.gate.outputs.run_refresh }}
+    steps:
+      - id: gate
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "run_refresh=true" >> "$GITHUB_OUTPUT"
+            echo "Manual run requested."
+            exit 0
+          fi
+
+          local_hour=$(TZ=Europe/Nicosia date +%H)
+          if [ "$local_hour" = "21" ]; then
+            echo "run_refresh=true" >> "$GITHUB_OUTPUT"
+            echo "Running TI daily refresh at 21:00 Europe/Nicosia."
+          else
+            echo "run_refresh=false" >> "$GITHUB_OUTPUT"
+            echo "Candidate schedule is not 21:00 Europe/Nicosia; cleanly skipping."
+          fi
+
   refresh:
+    needs: schedule_gate
+    if: needs.schedule_gate.outputs.run_refresh == 'true'
     runs-on: ubuntu-latest
     steps:
-      - name: Enforce 21:00 Cyprus daily run
-        if: github.event_name == 'schedule'
-        run: |
-          local_hour=$(TZ=Europe/Nicosia date +%H)
-          if [ "$local_hour" != "21" ]; then
-            echo "Candidate UTC schedule is not 21:00 in Cyprus; exiting."
-            exit 78
-          fi
-          echo "Running TI daily refresh at 21:00 Europe/Nicosia."
-
       - uses: actions/checkout@v6
         with:
           fetch-depth: 1
@@ -116,10 +128,6 @@ jobs:
           if [ -n "$(git status --porcelain)" ]; then
             git add -A
             git commit -m "Automated data refresh (safety-net commit) — $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-            # Claude Code may commit/push during the refresh. Rebase the
-            # safety-net commit onto the current remote main before pushing,
-            # so a concurrent Claude commit or another main commit cannot
-            # cause a non-fast-forward failure.
             git pull --rebase origin main
             git push origin HEAD:main
           else
