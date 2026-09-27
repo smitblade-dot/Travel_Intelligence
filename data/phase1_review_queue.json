@@ -1,8 +1,59 @@
 {
   "schemaVersion": "1.0",
-  "generated": "2026-09-26T18:07:29.884032+00:00",
+  "generated": "2026-09-27T18:06:38.778970+00:00",
   "purpose": "Review queue only; no item is a published TI event.",
   "items": [
+    {
+      "id": "sig-gdelt-0001",
+      "sourceId": "gdelt-events",
+      "sourceUrl": "https://www.presstv.co.uk/Detail/2026/09/27/777112/Iraqis-take-to-streets-to-protest-against-",
+      "discoveryType": "NEWS_EVENT",
+      "countryIds": [
+        "iq",
+        "ir",
+        "gb"
+      ],
+      "candidateCategories": [
+        "SECURITY"
+      ],
+      "claim": "Iraqis take to streets to protest against  unjust  blockade against Iran",
+      "observedAt": "20260927T151500Z",
+      "status": "NEEDS_PRIMARY_SOURCE_VERIFICATION",
+      "generatedAt": "2026-09-27T18:06:38.778970+00:00"
+    },
+    {
+      "id": "sig-gdelt-0002",
+      "sourceId": "gdelt-events",
+      "sourceUrl": "https://www.manchestereveningnews.co.uk/news/greater-manchester-news/manchester-airport-flight-cancelled-mount-34678721",
+      "discoveryType": "NEWS_EVENT",
+      "countryIds": [
+        "gb"
+      ],
+      "candidateCategories": [
+        "AIRPORT",
+        "PORT"
+      ],
+      "claim": "Manchester Airport flight cancelled as Mount Etna ash disrupts flights",
+      "observedAt": "20260927T140000Z",
+      "status": "NEEDS_PRIMARY_SOURCE_VERIFICATION",
+      "generatedAt": "2026-09-27T18:06:38.778970+00:00"
+    },
+    {
+      "id": "sig-gdelt-0003",
+      "sourceId": "gdelt-events",
+      "sourceUrl": "https://focus.ua/uk/world/768815-nevidomiy-bezpilotnik-sprichiniv-perepoloh-v-aeroportu-berlina-shcho-vidomo",
+      "discoveryType": "NEWS_EVENT",
+      "countryIds": [
+        "gb"
+      ],
+      "candidateCategories": [
+        "PORT"
+      ],
+      "claim": "Невідомий безпілотник спричинив переполох в аеропорту Берліна : що відомо",
+      "observedAt": "20260924T051500Z",
+      "status": "NEEDS_PRIMARY_SOURCE_VERIFICATION",
+      "generatedAt": "2026-09-27T18:06:38.778970+00:00"
+    },
     {
       "id": "sig-ourairports-airports",
       "sourceId": "ourairports-airports",
@@ -11,7 +62,7 @@
       "candidateCategories": [],
       "claim": "Usable source response collected; specialist geographic/event resolver required.",
       "status": "READY_FOR_RESOLUTION",
-      "generatedAt": "2026-09-26T18:07:29.884032+00:00"
+      "generatedAt": "2026-09-27T18:06:38.778970+00:00"
     },
     {
       "id": "sig-gdacs-alerts",
@@ -21,7 +72,7 @@
       "candidateCategories": [],
       "claim": "Usable source response collected; specialist geographic/event resolver required.",
       "status": "READY_FOR_RESOLUTION",
-      "generatedAt": "2026-09-26T18:07:29.884032+00:00"
+      "generatedAt": "2026-09-27T18:06:38.778970+00:00"
     }
   ]
 }
