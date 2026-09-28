@@ -22,8 +22,8 @@ jobs:
         run: |
           local_hour=$(TZ=Europe/Nicosia date +%H)
           if [ "$local_hour" != "21" ]; then
-            echo "Candidate UTC schedule is not 21:00 in Cyprus; exiting."
-            exit 78
+            echo "Candidate UTC schedule is not 21:00 in Cyprus; intentional no-op."
+            exit 0
           fi
           echo "Running TI daily refresh at 21:00 Europe/Nicosia."
 
