@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generated": "2026-09-27T18:06:38.816110+00:00",
+  "generated": "2026-09-28T18:07:18.044102+00:00",
   "purpose": "Deterministic relationship graph for travel-impact resolution; not a source of truth.",
   "nodes": [
     {
@@ -554,6 +554,38 @@
       "infrastructure": "MARITIME",
       "locationId": null,
       "countryId": "mx",
+      "status": "EXPLICIT_EVENT_RELATIONSHIP",
+      "resolvedLocation": false
+    },
+    {
+      "eventId": "iq-ir-flightsuspension-2026-09-23",
+      "infrastructure": "AVIATION",
+      "locationId": null,
+      "countryId": "iq",
+      "status": "EXPLICIT_EVENT_RELATIONSHIP",
+      "resolvedLocation": false
+    },
+    {
+      "eventId": "ir-aviation-sanctions-2026-09-08",
+      "infrastructure": "AVIATION",
+      "locationId": null,
+      "countryId": "ir",
+      "status": "EXPLICIT_EVENT_RELATIONSHIP",
+      "resolvedLocation": false
+    },
+    {
+      "eventId": "ru-multiregion-drone-2026-09-25",
+      "infrastructure": "ENERGY",
+      "locationId": null,
+      "countryId": "ru",
+      "status": "EXPLICIT_EVENT_RELATIONSHIP",
+      "resolvedLocation": false
+    },
+    {
+      "eventId": "ru-multiregion-drone-2026-09-25",
+      "infrastructure": "RAIL",
+      "locationId": null,
+      "countryId": "ru",
       "status": "EXPLICIT_EVENT_RELATIONSHIP",
       "resolvedLocation": false
     }
