@@ -45,3 +45,37 @@ page=context.renderNuclearInventory({iso2:'ae'});
 assert.equal(page.children.find(n=>n.attrs.class==='nuclear-list').children.length,51);
 assert.notEqual(page.children.at(-1).tag,'button');
 console.log('PASS: script syntax; global/record/profile publication gates; country isolation; source-date display; safe source links; legacy aggregate compatibility');
+
+// Exercise the real navigation/render functions with unrelated data services stubbed.
+function installFunction(name){
+  const start=inline.indexOf('  function '+name+'(');
+  const end=inline.indexOf('\n  function ',start+1);
+  assert.ok(start>=0 && end>start);
+  vm.runInContext(inline.slice(start,end),context);
+}
+Object.assign(context,{currentView:'HOME',currentIso2:null,searchTerm:'',countries:{ae:{iso2:'ae',name:'United Arab Emirates'}},
+  currentRecords:[],currentSources:{},allEvents:[],allRecords:[],CATEGORIES:[],CAT_MAP:{},isAdmin:false,dbState:'connected',
+  renderCurrentIntelligence:()=>context.el('section',{}),computeHotspots:()=>[],visibleCountryList:()=>[],
+  flagEmoji:()=>'',refreshCurrentCountryData:()=>{},renderOverview:()=>context.el('section',{})});
+for(const name of ['renderHome','renderCountry','factBlock','navBtn','openCountry','closeCountry','goHome'])installFunction(name);
+function allNodes(node){return typeof node==='object'?[node,...(node.children||[]).flatMap(allNodes)]:[];}
+context.window.TI_NUCLEAR_GLOBAL=inventory;
+let home=context.renderHome();
+let entry=allNodes(home).find(n=>n.attrs['aria-label']==='Global nuclear infrastructure');
+assert.ok(entry,'Published inventory has a labelled home section');
+assert.ok(allNodes(entry).some(n=>n.tag==='h2' && n.children.includes('Global nuclear infrastructure')));
+allNodes(entry).find(n=>n.tag==='button').attrs.onclick();
+assert.equal(context.currentView,'NUCLEAR');
+context.openCountry('ae','RADIOLOGICAL_NUCLEAR');
+let country=context.renderCountry();
+assert.equal(country.children[0].children[0],'← Nuclear directory');
+country.children[0].attrs.onclick();
+assert.equal(context.currentIso2,null);
+assert.equal(context.currentView,'NUCLEAR');
+context.goHome();context.openCountry('ae');
+country=context.renderCountry();
+assert.equal(country.children[0].children[0],'← All countries');
+country.children[0].attrs.onclick();assert.equal(context.currentIso2,null);assert.equal(context.currentView,'HOME');
+context.window.TI_NUCLEAR_GLOBAL={...inventory,releaseReady:false};
+assert.ok(!allNodes(context.renderHome()).some(n=>n.attrs['aria-label']==='Global nuclear infrastructure'));
+console.log('PASS: gated labelled home entry; nuclear and generic country return labels and destinations');

@@ -2265,12 +2265,10 @@
             subregion: p.subregion || '',
             notes: 'Nuclear/radiological country profile generated from the global TI nuclear infrastructure inventory.',
             nuclearFootprint: true,
-            nuclearProfile: p,
             lastReviewed: p.lastRefreshed || null
           };
         } else {
           countries[iso2].nuclearFootprint = true;
-          countries[iso2].nuclearProfile = p;
         }
       });
       (nuclear.countries || []).forEach(function(p){
