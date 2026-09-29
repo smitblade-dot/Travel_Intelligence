@@ -1,0 +1,146 @@
+[
+  {
+    "countryId": "sd",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/sudan",
+    "retrievedAt": "2026-09-29T10:28:41.660446+00:00",
+    "responseSha256": "0dbbefcf2375a6bcc8238f5de3fa5081d1a2320575f6028ca92ec32a9eef05ae",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_06.json record sd-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "sd",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/sudan/health",
+    "retrievedAt": "2026-09-29T10:28:41.543033+00:00",
+    "responseSha256": "e8a4c7b191ab1c3c8b16cf22d38f6d7a857aebfaa5d34cffac2cad592918fe89",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_06.json record sd-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "sn",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/senegal",
+    "retrievedAt": "2026-09-29T10:28:41.430257+00:00",
+    "responseSha256": "e584d77f4513b43b0ee7ffb665b70c7efa24c1f700c760a2162bcb2f53687d69",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_06.json record sn-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "sn",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/senegal/health",
+    "retrievedAt": "2026-09-29T10:28:41.548038+00:00",
+    "responseSha256": "5ca6c4404c391b683943c202db22fd2da66d3362fe5e60de4dd5f2f915243e51",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_06.json record sn-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "sr",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/suriname",
+    "retrievedAt": "2026-09-29T10:28:42.052936+00:00",
+    "responseSha256": "02d588912c085f19709449da34b555fc7f48b28f126af343ca51296fbbffc5c4",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_06.json record sr-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "sr",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/suriname/health",
+    "retrievedAt": "2026-09-29T10:28:41.964819+00:00",
+    "responseSha256": "5d8462991b1a13243001d8760d6841c0eb4fe671e60365937e0602bb0c4e3efe",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_06.json record sr-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "ss",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/south-sudan",
+    "retrievedAt": "2026-09-29T10:28:41.994016+00:00",
+    "responseSha256": "2df0fbb794d56a8da75873b3686ee11599b57054b8583f05115fc23dee31f347",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_06.json record ss-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "ss",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/south-sudan/health",
+    "retrievedAt": "2026-09-29T10:28:42.021271+00:00",
+    "responseSha256": "29c179cd3d8dbd7ad54fa22a58af663ddf472424c4a72fba3040921f1ba5fd2d",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_06.json record ss-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "sy",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/syria",
+    "retrievedAt": "2026-09-29T10:28:42.405265+00:00",
+    "responseSha256": "98bbdc874109409bf937a8fff6f97ba8f1d28399fd76124e604abdee8878a47c",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_06.json record sy-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "sy",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/syria/health",
+    "retrievedAt": "2026-09-29T10:28:42.421288+00:00",
+    "responseSha256": "4a2d72cc9a935ee8d9f834d678859e654349dfc42764f5928f97d08a1a41207c",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_06.json record sy-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "td",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/chad",
+    "retrievedAt": "2026-09-29T10:28:42.488052+00:00",
+    "responseSha256": "93a409c9ee8354794075b36802299e308247ae0ddb4d6c2cb7738ce991326a8f",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_06.json record td-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "td",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/chad/health",
+    "retrievedAt": "2026-09-29T10:28:42.457908+00:00",
+    "responseSha256": "5fb6ca39a0acccfba4cc3a20561b142cb4236323e67794502f90daee355709e2",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_06.json record td-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "tm",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/turkmenistan",
+    "retrievedAt": "2026-09-29T10:28:42.947043+00:00",
+    "responseSha256": "81e242b0b2a10ccf015e0953bfe2b2b9067992f75986f2994fcb5a20d0a54d1a",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_06.json record tm-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "tm",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/turkmenistan/health",
+    "retrievedAt": "2026-09-29T10:28:42.921176+00:00",
+    "responseSha256": "5db5cf7c2d7b68991d9beec383c6914b99ba957cceeec4cc3094d421c704a4d1",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_06.json record tm-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "tn",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/tunisia",
+    "retrievedAt": "2026-09-29T10:28:43.097179+00:00",
+    "responseSha256": "59a40cdb40fdab53f2afa14cd2b7a13e7b2c6efe3b7ab44b1d8fdda0fde1c871",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_06.json record tn-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "tn",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/tunisia/health",
+    "retrievedAt": "2026-09-29T10:28:43.125831+00:00",
+    "responseSha256": "29c16fd88fb52ecfdc2bc559bcb31c2b25480b8d56a60b1804d99b4efc293e16",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_06.json record tn-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  }
+]

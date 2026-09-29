@@ -1,0 +1,146 @@
+[
+  {
+    "countryId": "cg",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/congo",
+    "retrievedAt": "2026-09-29T10:28:33.576076+00:00",
+    "responseSha256": "7b8bc36b7916ce44e5d0b936f55feba36a73a90a265ef7cf5ac2fccc32598ddf",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_02.json record cg-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "cg",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/congo/health",
+    "retrievedAt": "2026-09-29T10:28:33.602878+00:00",
+    "responseSha256": "884282774e655af965837a2b1d00136d23e858c9875e322f8b1ed863e5dd7e53",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_02.json record cg-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "ci",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/cote-d-ivoire",
+    "retrievedAt": "2026-09-29T10:28:33.796943+00:00",
+    "responseSha256": "4047940e8a53f31c3d20a803f2358dc75565983ce3063eb9032e78ebda9f47db",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_02.json record ci-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "ci",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/cote-d-ivoire/health",
+    "retrievedAt": "2026-09-29T10:28:33.849863+00:00",
+    "responseSha256": "b3757b91a9839e0044216bd1e5ae33847bd1c02b93e67ef87f95027c0a92df96",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_02.json record ci-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "cm",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/cameroon",
+    "retrievedAt": "2026-09-29T10:28:34.361788+00:00",
+    "responseSha256": "8364c4c0153e1047c45ec8c0fe62f9cf5100cca73ad87bf4c376e6abc95f4445",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_02.json record cm-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "cm",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/cameroon/health",
+    "retrievedAt": "2026-09-29T10:28:34.009407+00:00",
+    "responseSha256": "8fa8d578b1258007c5cc2ad0e957f0eb9eac5b5ce31ac0ca7823771ed81a5da3",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_02.json record cm-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "cn",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/china",
+    "retrievedAt": "2026-09-29T10:28:34.325714+00:00",
+    "responseSha256": "f7c42505a7913d3648b972a84127f2ff60baf10f5ce29b0d8eb2a87b07da1a4f",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_02.json record cn-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "cn",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/china/health",
+    "retrievedAt": "2026-09-29T10:28:34.386871+00:00",
+    "responseSha256": "36afc139b5190c6e5df772f9f044bab01bb291e80083f8ab7259078d24d972fa",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_02.json record cn-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "co",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/colombia",
+    "retrievedAt": "2026-09-29T10:28:34.626247+00:00",
+    "responseSha256": "e859ac5b9386fdfe420ac749af78bbb94897cc55ab2599aeba7770fe6dc301aa",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_02.json record co-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "co",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/colombia/health",
+    "retrievedAt": "2026-09-29T10:28:34.660174+00:00",
+    "responseSha256": "f1510da7a417871c25cb66ba130804e80465b274246c8e563e4fdf3cc012e216",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_02.json record co-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "dz",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/algeria",
+    "retrievedAt": "2026-09-29T10:28:34.706618+00:00",
+    "responseSha256": "0440e3f6134eee038c732b3994c82061a6444a2d45cb7d1ad60f934582e61691",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_02.json record dz-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "dz",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/algeria/health",
+    "retrievedAt": "2026-09-29T10:28:34.992999+00:00",
+    "responseSha256": "c4bc3aabf1d473df5eb3560472a2fbca5ea8c389818ae0e4e298ae65a0541000",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_02.json record dz-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "ec",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/ecuador",
+    "retrievedAt": "2026-09-29T10:28:35.021937+00:00",
+    "responseSha256": "ffc233b7f5b6ff1ac94f9cd962f510e79bb30d949af93049bf0d0a4b9f94e0dd",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_02.json record ec-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "ec",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/ecuador/health",
+    "retrievedAt": "2026-09-29T10:28:35.063896+00:00",
+    "responseSha256": "2c60ec14ed3a4a6c44f78bca5803e322c7591d5d661651bb06585e24959a7c6c",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_02.json record ec-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "eg",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/egypt",
+    "retrievedAt": "2026-09-29T10:28:35.136451+00:00",
+    "responseSha256": "e2b2e76eb7f328750ae0ebf48a1d2436d60d0bcbc8208ca283f5d3dae7ca417b",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_02.json record eg-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "eg",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/egypt/health",
+    "retrievedAt": "2026-09-29T10:28:35.421259+00:00",
+    "responseSha256": "5f3953970422725f3b4ebf314bb3b7e121063050725316584d6ca73502110438",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_02.json record eg-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  }
+]

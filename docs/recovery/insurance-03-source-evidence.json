@@ -1,0 +1,137 @@
+[
+  {
+    "countryId": "es",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/spain",
+    "retrievedAt": "2026-09-29T10:28:35.532144+00:00",
+    "responseSha256": "a0f28dffe38114b6c05b127eaf02a5a961f7653e8ccb209f2a28b710592d2401",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_03.json record es-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "es",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/spain/health",
+    "retrievedAt": "2026-09-29T10:28:35.606828+00:00",
+    "responseSha256": "67d176b9e13141408c33608964f7e8cb5b70b796d660e6a4b4048d292e085cd0",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_03.json record es-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "ga",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/gabon",
+    "retrievedAt": "2026-09-29T10:28:35.654408+00:00",
+    "responseSha256": "edcfa36112c9228c2be1017bb2387eceb0226437fe85aa7f9924bbcefa22af2e",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_03.json record ga-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "ga",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/gabon/health",
+    "retrievedAt": "2026-09-29T10:28:35.770420+00:00",
+    "responseSha256": "f0dbedc672ad7f655e7900cd5a207a66caaf7b56b916cce0cb9014a2b2175895",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_03.json record ga-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "gb",
+    "sourceUrl": "https://www.smartraveller.gov.au/destinations/europe/united-kingdom",
+    "retrievedAt": "2026-09-29T10:30:40.085001+00:00",
+    "responseSha256": "0030c82ad01b0d9cd843d90a7d5e1eca2f57d11c6b2f981763e4e7177839264c",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_03.json record gb-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "gh",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/ghana",
+    "retrievedAt": "2026-09-29T10:28:35.963583+00:00",
+    "responseSha256": "0a8f34ca2237dcdd923d64df55ffe5c5fe321ae94b0d21917aa277fc1c782c7f",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_03.json record gh-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "gh",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/ghana/health",
+    "retrievedAt": "2026-09-29T10:28:35.954911+00:00",
+    "responseSha256": "3fd19da53e5d0f7b856c3f4f0222de8af0f9027b602050230d39ac641946f51b",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_03.json record gh-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "gq",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/equatorial-guinea",
+    "retrievedAt": "2026-09-29T10:28:36.187309+00:00",
+    "responseSha256": "86ea47062bbcb1f4800503d8a5fc8af70a100ab85da9b3739d15f2ca9ef0b416",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_03.json record gq-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "gq",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/equatorial-guinea/health",
+    "retrievedAt": "2026-09-29T10:28:36.415050+00:00",
+    "responseSha256": "acf8df12f287c8eefd725abd8838403d02ffb49787c576f8e812d2a0f4e0237e",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_03.json record gq-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "gy",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/guyana",
+    "retrievedAt": "2026-09-29T10:28:36.481999+00:00",
+    "responseSha256": "de686a387f6c883dbc2a98147f7554e024ae65e114a9ab65d2b1ac2a4d7dbb53",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_03.json record gy-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "gy",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/guyana/health",
+    "retrievedAt": "2026-09-29T10:28:36.485847+00:00",
+    "responseSha256": "9a900fee819beeb43e5d93f2941ff4477d3d13d4d391525a40d87ac94a1b9f98",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_03.json record gy-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "id",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/indonesia",
+    "retrievedAt": "2026-09-29T10:28:36.804813+00:00",
+    "responseSha256": "223e683ab619f704e58a4bd165fe0c2c9693cdb2aa52bd26eace27e442c7773c",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_03.json record id-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "id",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/indonesia/health",
+    "retrievedAt": "2026-09-29T10:28:36.945031+00:00",
+    "responseSha256": "2214c260ef59543b712000ac58c0b396efcf2a2a69fcbf68ebe5bc30a4454c44",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_03.json record id-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "il",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/israel",
+    "retrievedAt": "2026-09-29T10:28:37.035028+00:00",
+    "responseSha256": "78adfdeb532dc84f95d363332d6d3b805aee232edef8b55b3aba7242c85f2106",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_03.json record il-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "il",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/israel/health",
+    "retrievedAt": "2026-09-29T10:28:37.004147+00:00",
+    "responseSha256": "491b88c055321fcfbea859c030e968b7f15282a255231e00c63fcbe8d4242002",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_03.json record il-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  }
+]
