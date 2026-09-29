@@ -1,4 +1,11 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#23272c;color:#c9cfd5}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#23272c;color:#c9cfd5}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+  .nuclear-list{display:grid;gap:10px;}
+  .nuclear-record{background:var(--bg-1);border:1px solid var(--border);border-radius:var(--radius);padding:14px;overflow-wrap:anywhere;}
+  .nuclear-record h3{margin:0 0 8px;font-size:15px;}
+  .nuclear-record p{margin:6px 0;color:var(--text);font-size:13px;line-height:1.5;}
+  .nuclear-record a{color:#89b8ff;text-decoration:underline;}
+  .nuclear-note{color:var(--text);line-height:1.6;margin:12px 0;}
+</style></head><body>
 <title>Travel Intelligence</title>
 <link rel="icon" href="./icons/icon-192.png">
 <link rel="apple-touch-icon" href="./icons/icon-192.png">
@@ -965,6 +972,8 @@
       main.appendChild(renderCountry());
     } else if(currentView === 'CURRENT_INTELLIGENCE'){
       main.appendChild(renderCurrentIntelligencePage());
+    } else if(currentView === 'NUCLEAR'){
+      main.appendChild(renderNuclearDirectory());
     } else if(currentView === 'CATEGORY_BROWSE'){
       main.appendChild(renderCategoryBrowse(currentCategoryBrowse));
     } else if(currentView === 'CONTINENT'){
@@ -1213,6 +1222,7 @@
     wrap.appendChild(banner);
 
     wrap.appendChild(renderCurrentIntelligence());
+    if(publishedNuclearRecords().length) wrap.appendChild(el('button', {class:'btn',onclick:function(){currentView = 'NUCLEAR'; currentIso2 = null; render();}}, ['Browse global nuclear infrastructure']));
 
     // Hotspots & hot topics — the most current thing on the site.
     var hotspots = computeHotspots(6);
@@ -1353,6 +1363,68 @@
     return wrap;
   }
 
+
+  var nuclearDisplayLimits = {};
+  function renderNuclearDirectory(){
+    var section = el('section', {class:'category-browse'});
+    section.appendChild(el('button', {class:'back-btn',onclick:goHome}, ['← Home']));
+    section.appendChild(el('h1', {}, ['Global nuclear infrastructure']));
+    section.appendChild(el('p', {class:'nuclear-note'}, ['Browse reviewed source records by country. Counts include historical entries and multiple records for some sites.']));
+    var counts = {};
+    publishedNuclearRecords().forEach(function(f){counts[f.countryId] = (counts[f.countryId] || 0) + 1;});
+    var grid = el('div', {class:'country-grid'});
+    visibleCountryList().filter(function(c){return counts[c.iso2];}).forEach(function(c){
+      grid.appendChild(el('button', {class:'country-card',onclick:function(){openCountry(c.iso2, 'RADIOLOGICAL_NUCLEAR');}}, [c.name + ' · ' + counts[c.iso2] + ' source records']));
+    });
+    if(!grid.children.length) section.appendChild(el('p', {class:'nuclear-note'}, ['No reviewed source records match the country search.']));
+    section.appendChild(grid);
+    return section;
+  }
+  function publishedNuclearRecords(iso2){
+    var inventory = window.TI_NUCLEAR_GLOBAL || {};
+    if(inventory.status !== 'PUBLISHED' || inventory.releaseReady !== true) return [];
+    return (Array.isArray(inventory.facilities) ? inventory.facilities : []).filter(function(f){
+      return f.publicationStatus === 'PUBLISHED' && (!iso2 || f.countryId === iso2);
+    });
+  }
+  function nuclearProfileVisible(profile, inventory){
+    // Preserve separately retained legacy aggregate profiles.
+    if(profile.sourceStatus === 'COUNTRY_AGGREGATE_ONLY' && profile.publicationStatus === undefined) return true;
+    // New inventory requires explicit publication.
+    return inventory.status === 'PUBLISHED' && inventory.releaseReady === true && profile.publicationStatus === 'PUBLISHED';
+  }
+  function nuclearSourceUrl(value){
+    try{var url = new URL(value); return /^https?:$/.test(url.protocol) ? url.href : null;}catch(e){return null;}
+  }
+  function renderNuclearInventory(c){
+    var records = publishedNuclearRecords(c.iso2);
+    var section = el('section', {class:'nuclear-inventory','aria-label':'Nuclear infrastructure'});
+    section.appendChild(el('h2', {}, ['Nuclear infrastructure']));
+    if(!records.length){
+      section.appendChild(el('p', {class:'nuclear-note'}, ['No reviewed facility inventory is currently available for this country.']));
+      return section;
+    }
+    section.appendChild(el('p', {class:'nuclear-note'}, [records.length + ' source record' + (records.length === 1 ? '' : 's') + '. Multiple records may describe the same site. Operating status is shown as reported by the source, with its available update date.']));
+    var names = {'iaea-pris':'IAEA PRIS','iaea-rrdb':'IAEA Research Reactor Database','iaea-piedb':'IAEA Post-Irradiation Examination Database','iaea-nfcis':'IAEA Nuclear Fuel Cycle Information System'};
+    var list = el('div', {class:'nuclear-list'});
+    var limit = nuclearDisplayLimits[c.iso2] || 50;
+    records.slice(0, limit).forEach(function(f){
+      var card = el('article', {class:'nuclear-record'});
+      card.appendChild(el('h3', {}, [f.name || 'Unnamed source record']));
+      card.appendChild(el('p', {}, [String(f.facilityClass || 'Nuclear infrastructure').replace(/_/g, ' ')]));
+      if(f.siteName) card.appendChild(el('p', {}, ['Site: ' + f.siteName]));
+      var reported = f.sourceReportedStatus || {};
+      card.appendChild(el('p', {}, ['Source-reported status: ' + (reported.value || 'Not supplied')]));
+      card.appendChild(el('p', {}, ['Source update: ' + (reported.sourceUpdatedAtText || 'Date not supplied') + ' · Retrieved: ' + fmtDate(f.observedAt)]));
+      var url = nuclearSourceUrl(f.sourceUrl);
+      if(url) card.appendChild(el('a', {href:url,target:'_blank',rel:'noopener noreferrer'}, [names[f.sourceId] || 'View source record']));
+      list.appendChild(card);
+    });
+    section.appendChild(list);
+    if(records.length > limit) section.appendChild(el('button', {class:'btn',onclick:function(){nuclearDisplayLimits[c.iso2] = limit + 50; render();}}, ['Show more source records (' + limit + ' of ' + records.length + ' shown)']));
+    return section;
+  }
+
   function renderCountry(){
     var c = countries[currentIso2];
     var wrap = el('section', {class:'country-view'});
@@ -1417,6 +1489,7 @@
     nav.appendChild(navBtn('OVERVIEW', 'Overview'));
     CATEGORIES.forEach(function(cat){
       var count = currentRecords.filter(function(r){ return r.category === cat.key && (isAdmin || r.status !== 'ARCHIVED'); }).length;
+      if(cat.key === 'RADIOLOGICAL_NUCLEAR') count += publishedNuclearRecords(c.iso2).length;
       nav.appendChild(navBtn(cat.key, cat.label, count));
     });
     nav.appendChild(navBtn('SOURCES', 'Sources', Object.keys(currentSources).length));
@@ -1428,6 +1501,10 @@
       var countryEvents=(allEvents||[]).filter(function(e){return e.publicationStatus==='PUBLISHED' && e.countryId===currentIso2;});
       if(countryEvents.length) content.appendChild(renderCountryCurrentIntelligence(countryEvents));
       content.appendChild(renderOverview(c));
+    }
+    else if(currentCategory === 'RADIOLOGICAL_NUCLEAR'){
+      content.appendChild(renderNuclearInventory(c));
+      if(currentRecords.some(function(r){return r.category === currentCategory && (isAdmin || r.status !== 'ARCHIVED');})) content.appendChild(renderCategoryRecords(c, currentCategory));
     }
     else if(currentCategory === 'SOURCES') content.appendChild(renderSources(c));
     else content.appendChild(renderCategoryRecords(c, currentCategory));
@@ -2168,7 +2245,8 @@
     ]).then(function(extra){
       var nuclear = extra[0] || {};
       var profiles = extra[1] || {};
-      (profiles.profiles || []).forEach(function(p){
+      (nuclear.countryAggregates || []).concat(profiles.profiles || []).forEach(function(p){
+        if(!nuclearProfileVisible(p, nuclear)) return;
         var iso2 = String(p.iso2 || '').toLowerCase();
         if(!iso2) return;
         if(!countries[iso2]){
@@ -2182,6 +2260,7 @@
             subregion: p.subregion || '',
             notes: 'Nuclear/radiological country profile generated from the global TI nuclear infrastructure inventory.',
             nuclearFootprint: true,
+            nuclearProfile: p,
             lastReviewed: p.lastRefreshed || null
           };
         } else {
@@ -2190,6 +2269,7 @@
         }
       });
       (nuclear.countries || []).forEach(function(p){
+        if(!nuclearProfileVisible(p, nuclear)) return;
         var iso2 = String(p.iso2 || '').toLowerCase();
         if(!iso2) return;
         if(!countries[iso2]){
