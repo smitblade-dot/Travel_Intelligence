@@ -1,0 +1,58 @@
+[
+  {
+    "countryId": "ao",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/angola/safety-and-security",
+    "section": "Laws and culture; driving where relevant",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_05.json record ao-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "dz",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/algeria/safety-and-security",
+    "section": "Laws and culture; driving where relevant",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_05.json record dz-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "cm",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/cameroon/safety-and-security",
+    "section": "Laws and culture; driving where relevant",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_05.json record cm-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "gh",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
+    "section": "Laws and culture; driving where relevant",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_05.json record gh-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "ng",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/nigeria/safety-and-security",
+    "section": "Laws and culture; driving where relevant",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_05.json record ng-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "sn",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/senegal/safety-and-security",
+    "section": "Laws and culture; driving where relevant",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_05.json record sn-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "ug",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/uganda/safety-and-security",
+    "section": "Laws and culture; driving where relevant",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_05.json record ug-laws-culture-baseline-20260929"
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "countryId": "sd",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/sudan/safety-and-security",
+    "section": "Gateway identity and full transport/weather chapters as indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_10.json record sd-transport-baseline-20260929"
+  },
+  {
+    "countryId": "td",
+    "sourceUrl": "https://aim.asecna.aero/html/eAIP/FR-_14AD-1.3-01-fr-FR.html",
+    "section": "Gateway identity and full transport/weather chapters as indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_10.json record td-transport-baseline-20260929"
+  },
+  {
+    "countryId": "td",
+    "sourceUrl": "https://www.smartraveller.gov.au/destinations/africa/chad",
+    "section": "Gateway identity and full transport/weather chapters as indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_10.json record td-transport-baseline-20260929"
+  },
+  {
+    "countryId": "td",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/chad/safety-and-security",
+    "section": "Gateway identity and full transport/weather chapters as indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_10.json record td-transport-baseline-20260929"
+  },
+  {
+    "countryId": "cg",
+    "sourceUrl": "https://aim.asecna.aero/html/eAIP/FR-_05AD-1.5-01-fr-FR.html",
+    "section": "Gateway identity and full transport/weather chapters as indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_10.json record cg-transport-baseline-20260929"
+  },
+  {
+    "countryId": "cg",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/congo/safety-and-security",
+    "section": "Gateway identity and full transport/weather chapters as indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_10.json record cg-transport-baseline-20260929"
+  }
+]

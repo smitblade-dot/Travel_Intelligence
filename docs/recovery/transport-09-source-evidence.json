@@ -1,0 +1,34 @@
+[
+  {
+    "countryId": "ug",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/uganda/safety-and-security",
+    "section": "Transport, driving restriction and weather sections as indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_09.json record ug-transport-baseline-20260929"
+  },
+  {
+    "countryId": "ug",
+    "sourceUrl": "https://www.smartraveller.gov.au/destinations/africa/uganda",
+    "section": "Transport, driving restriction and weather sections as indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_09.json record ug-transport-baseline-20260929"
+  },
+  {
+    "countryId": "mr",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/mauritania/safety-and-security",
+    "section": "Transport, driving restriction and weather sections as indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_09.json record mr-transport-baseline-20260929"
+  },
+  {
+    "countryId": "mr",
+    "sourceUrl": "https://travel.gc.ca/destinations/mauritania",
+    "section": "Transport, driving restriction and weather sections as indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_09.json record mr-transport-baseline-20260929"
+  }
+]

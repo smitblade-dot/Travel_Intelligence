@@ -1,0 +1,50 @@
+[
+  {
+    "countryId": "ir",
+    "sourceUrl": "https://www.smartraveller.gov.au/destinations/middle-east/iran",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_03.json record ir-transport-baseline-20260929"
+  },
+  {
+    "countryId": "ir",
+    "sourceUrl": "https://www.qatarairways.com/en-qa/destinations/flights-to-doha/from-tehran.html",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_03.json record ir-transport-baseline-20260929"
+  },
+  {
+    "countryId": "iq",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/iraq/safety-and-security",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_03.json record iq-transport-baseline-20260929"
+  },
+  {
+    "countryId": "iq",
+    "sourceUrl": "https://travel.gc.ca/destinations/iraq",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_03.json record iq-transport-baseline-20260929"
+  },
+  {
+    "countryId": "ye",
+    "sourceUrl": "https://www.smartraveller.gov.au/destinations/middle-east/yemen",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_03.json record ye-transport-baseline-20260929"
+  },
+  {
+    "countryId": "ye",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/yemen/safety-and-security",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_03.json record ye-transport-baseline-20260929"
+  }
+]

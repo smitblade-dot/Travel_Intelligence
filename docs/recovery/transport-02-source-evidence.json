@@ -1,0 +1,66 @@
+[
+  {
+    "countryId": "bh",
+    "sourceUrl": "https://journey.bahrainbus.bh/timings/table/A1/en",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_02.json record bh-transport-baseline-20260929"
+  },
+  {
+    "countryId": "bh",
+    "sourceUrl": "https://travel.gc.ca/destinations/bahrain",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_02.json record bh-transport-baseline-20260929"
+  },
+  {
+    "countryId": "qa",
+    "sourceUrl": "https://visitqatar.com/intl-en/plan-your-trip/getting-around/doha-metro",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_02.json record qa-transport-baseline-20260929"
+  },
+  {
+    "countryId": "qa",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/qatar/safety-and-security",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_02.json record qa-transport-baseline-20260929"
+  },
+  {
+    "countryId": "qa",
+    "sourceUrl": "https://travel.gc.ca/destinations/qatar",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_02.json record qa-transport-baseline-20260929"
+  },
+  {
+    "countryId": "kw",
+    "sourceUrl": "https://www.kuwaitairport.gov.kw/en/from-and-to-the-airport/transport/airport-taxies-and-buses/",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_02.json record kw-transport-baseline-20260929"
+  },
+  {
+    "countryId": "kw",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/kuwait/safety-and-security",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_02.json record kw-transport-baseline-20260929"
+  },
+  {
+    "countryId": "kw",
+    "sourceUrl": "https://travel.gc.ca/destinations/kuwait",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_02.json record kw-transport-baseline-20260929"
+  }
+]

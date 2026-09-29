@@ -1,0 +1,42 @@
+[
+  {
+    "countryId": "jp",
+    "sourceUrl": "https://www.japan.travel/en/plan/airport-access/",
+    "section": "Gateway, internal transport or complete road/weather sections as indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_11.json record jp-transport-baseline-20260929"
+  },
+  {
+    "countryId": "jp",
+    "sourceUrl": "https://www.japan.travel/en/plan/getting-around/",
+    "section": "Gateway, internal transport or complete road/weather sections as indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_11.json record jp-transport-baseline-20260929"
+  },
+  {
+    "countryId": "jp",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/japan/safety-and-security",
+    "section": "Gateway, internal transport or complete road/weather sections as indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_11.json record jp-transport-baseline-20260929"
+  },
+  {
+    "countryId": "id",
+    "sourceUrl": "https://www.indonesia.travel/gb/en/general-information/getting-to-indonesia",
+    "section": "Gateway, internal transport or complete road/weather sections as indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_11.json record id-transport-baseline-20260929"
+  },
+  {
+    "countryId": "id",
+    "sourceUrl": "https://www.smartraveller.gov.au/destinations/asia/indonesia",
+    "section": "Gateway, internal transport or complete road/weather sections as indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_11.json record id-transport-baseline-20260929"
+  }
+]

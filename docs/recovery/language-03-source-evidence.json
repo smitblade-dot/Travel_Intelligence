@@ -1,0 +1,50 @@
+[
+  {
+    "countryId": "ng",
+    "sourceUrl": "https://www.trade.gov/knowledge-product/nigeria-business-travel",
+    "section": "Languages / practical communication",
+    "retrievalDate": "2026-09-29",
+    "claimLocation": "LANGUAGE_03.json record ng-language-baseline-20260929",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash"
+  },
+  {
+    "countryId": "ci",
+    "sourceUrl": "https://www.trade.gov/country-commercial-guides/cote-divoire-business-travel",
+    "section": "Languages / practical communication",
+    "retrievalDate": "2026-09-29",
+    "claimLocation": "LANGUAGE_03.json record ci-language-baseline-20260929",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash"
+  },
+  {
+    "countryId": "ar",
+    "sourceUrl": "https://www.trade.gov/country-commercial-guides/argentina-business-travel",
+    "section": "Languages / practical communication",
+    "retrievalDate": "2026-09-29",
+    "claimLocation": "LANGUAGE_03.json record ar-language-baseline-20260929",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash"
+  },
+  {
+    "countryId": "co",
+    "sourceUrl": "https://www.trade.gov/country-commercial-guides/colombia-business-travel",
+    "section": "Languages / practical communication",
+    "retrievalDate": "2026-09-29",
+    "claimLocation": "LANGUAGE_03.json record co-language-baseline-20260929",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash"
+  },
+  {
+    "countryId": "ec",
+    "sourceUrl": "https://www.trade.gov/country-commercial-guides/ecuador-business-travel",
+    "section": "Languages / practical communication",
+    "retrievalDate": "2026-09-29",
+    "claimLocation": "LANGUAGE_03.json record ec-language-baseline-20260929",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash"
+  },
+  {
+    "countryId": "pe",
+    "sourceUrl": "https://www.trade.gov/country-commercial-guides/peru-business-travel",
+    "section": "Languages / practical communication",
+    "retrievalDate": "2026-09-29",
+    "claimLocation": "LANGUAGE_03.json record pe-language-baseline-20260929",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash"
+  }
+]

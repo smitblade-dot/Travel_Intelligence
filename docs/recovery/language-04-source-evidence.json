@@ -1,0 +1,42 @@
+[
+  {
+    "countryId": "ao",
+    "sourceUrl": "https://www.trade.gov/country-commercial-guides/angola-market-challenges",
+    "section": "Languages / practical communication",
+    "retrievalDate": "2026-09-29",
+    "claimLocation": "LANGUAGE_04.json record ao-language-baseline-20260929",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash"
+  },
+  {
+    "countryId": "br",
+    "sourceUrl": "https://visitbrasil.com/en/info/language/",
+    "section": "Languages / practical communication",
+    "retrievalDate": "2026-09-29",
+    "claimLocation": "LANGUAGE_04.json record br-language-baseline-20260929",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash"
+  },
+  {
+    "countryId": "gy",
+    "sourceUrl": "https://education.gov.gy/en/index.php/media2/news-events/5950-preserve-our-languages-strengthen-our-cultural-identity",
+    "section": "Languages / practical communication",
+    "retrievalDate": "2026-09-29",
+    "claimLocation": "LANGUAGE_04.json record gy-language-baseline-20260929",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash"
+  },
+  {
+    "countryId": "sr",
+    "sourceUrl": "https://www.un.int/suriname/suriname/country-facts",
+    "section": "Languages / practical communication",
+    "retrievalDate": "2026-09-29",
+    "claimLocation": "LANGUAGE_04.json record sr-language-baseline-20260929",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash"
+  },
+  {
+    "countryId": "mx",
+    "sourceUrl": "https://site.inali.gob.mx/congreso_internacional_lenguas_en_riesgo/diversidad_linguistica_mexico.html",
+    "section": "Languages / practical communication",
+    "retrievalDate": "2026-09-29",
+    "claimLocation": "LANGUAGE_04.json record mx-language-baseline-20260929",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash"
+  }
+]

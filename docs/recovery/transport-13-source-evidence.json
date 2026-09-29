@@ -1,0 +1,26 @@
+[
+  {
+    "countryId": "sa",
+    "sourceUrl": "https://www.kkia.sa/en",
+    "section": "Airport identity; Hajj access; full road/transport/weather sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_13.json record sa-transport-baseline-20260929"
+  },
+  {
+    "countryId": "sa",
+    "sourceUrl": "https://www.smartraveller.gov.au/destinations/middle-east/saudi-arabia",
+    "section": "Airport identity; Hajj access; full road/transport/weather sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_13.json record sa-transport-baseline-20260929"
+  },
+  {
+    "countryId": "sa",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/saudi-arabia/safety-and-security",
+    "section": "Airport identity; Hajj access; full road/transport/weather sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_13.json record sa-transport-baseline-20260929"
+  }
+]

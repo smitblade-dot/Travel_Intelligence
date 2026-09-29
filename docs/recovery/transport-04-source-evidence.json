@@ -1,0 +1,58 @@
+[
+  {
+    "countryId": "ao",
+    "sourceUrl": "https://flytaag.com/en/Info/Transfer-of-international-flights-to-AIAAN",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_04.json record ao-transport-baseline-20260929"
+  },
+  {
+    "countryId": "ao",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/angola/safety-and-security",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_04.json record ao-transport-baseline-20260929"
+  },
+  {
+    "countryId": "gh",
+    "sourceUrl": "https://www.gacl.com.gh/accra-international-airport/",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_04.json record gh-transport-baseline-20260929"
+  },
+  {
+    "countryId": "gh",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_04.json record gh-transport-baseline-20260929"
+  },
+  {
+    "countryId": "ng",
+    "sourceUrl": "https://faan.gov.ng/passenger-experience/",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_04.json record ng-transport-baseline-20260929"
+  },
+  {
+    "countryId": "ng",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/nigeria/safety-and-security",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_04.json record ng-transport-baseline-20260929"
+  },
+  {
+    "countryId": "ng",
+    "sourceUrl": "https://travel.gc.ca/destinations/nigeria",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_04.json record ng-transport-baseline-20260929"
+  }
+]

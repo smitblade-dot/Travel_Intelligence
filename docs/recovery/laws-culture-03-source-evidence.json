@@ -1,0 +1,66 @@
+[
+  {
+    "countryId": "au",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/australia/safety-and-security",
+    "section": "Laws and culture; driving where relevant",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_03.json record au-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "ca",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/canada/safety-and-security",
+    "section": "Laws and culture; driving where relevant",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_03.json record ca-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "us",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/usa/safety-and-security",
+    "section": "Laws and culture; driving where relevant",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_03.json record us-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "no",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/norway/safety-and-security",
+    "section": "Laws and culture; driving where relevant",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_03.json record no-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "es",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/spain/safety-and-security",
+    "section": "Laws and culture; driving where relevant",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_03.json record es-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "ar",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/argentina/safety-and-security",
+    "section": "Laws and culture; driving where relevant",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_03.json record ar-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "br",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/brazil/safety-and-security",
+    "section": "Laws and culture; driving where relevant",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_03.json record br-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "gb",
+    "sourceUrl": "https://travel.gc.ca/destinations/united-kingdom",
+    "section": "Laws and culture; driving where relevant",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_03.json record gb-laws-culture-baseline-20260929"
+  }
+]
