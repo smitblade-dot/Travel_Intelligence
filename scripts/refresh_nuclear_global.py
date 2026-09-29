@@ -166,7 +166,7 @@ def main():
     except Exception as exc:
         print(f"WARNING: IAEA PRIS refresh failed: {exc}")
         print("Existing nuclear inventory/profile files are preserved.")
-        return 0
+        return 2
 
     profiles = build_profiles(rows, generated_at)
     inventory = {
@@ -212,10 +212,17 @@ def main():
         "note": "Profiles currently contain IAEA PRIS country aggregates. Facility-level counts will expand when RRDB/NFCIS/PIEDB and reactor-level collectors are connected."
     }
 
-    OUT.write_text(json.dumps(inventory, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    PROFILES.write_text(json.dumps(profile_doc, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"IAEA PRIS nuclear country profiles refreshed: {len(profiles)} countries.")
-    print("Facility/site records imported: 0 (by design).")
+    # Country aggregates cannot replace an accepted facility inventory.
+    # Keep this legacy collector review-only until the source adapters are approved.
+    from tempfile import mkdtemp
+    review_root = ROOT / "output" / "nuclear_reviews"
+    review_root.mkdir(parents=True, exist_ok=True)
+    destination = Path(mkdtemp(prefix="aggregate-", dir=review_root))
+    inventory.update(status="INTERNAL_REVIEW", releaseReady=False)
+    profile_doc.update(status="INTERNAL_REVIEW", releaseReady=False)
+    (destination / "aggregate_inventory.candidate.json").write_text(json.dumps(inventory, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    (destination / "aggregate_profiles.candidate.json").write_text(json.dumps(profile_doc, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"IAEA aggregate review candidate: {destination}; accepted inventory and profiles preserved.")
     return 0
 
 if __name__ == "__main__":
