@@ -128,7 +128,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: baseline-${{ matrix.category }}
+          name: generated-baseline-${{ matrix.category }}
           path: data/baseline_batches/${{ matrix.category }}.json
           if-no-files-found: error
 
@@ -148,7 +148,7 @@ jobs:
         id: download
         continue-on-error: true
         with:
-          pattern: baseline-*
+          pattern: generated-baseline-*
           path: ${{ runner.temp }}/baseline-batches
           merge-multiple: true
       - name: Merge sourced batches for branch review
@@ -190,7 +190,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/download-artifact@v5
         with:
-          pattern: baseline-*
+          pattern: generated-baseline-*
           path: ${{ runner.temp }}/baseline-batches
           merge-multiple: true
       - name: Publish only against the latest production main
