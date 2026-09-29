@@ -4,6 +4,16 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts/nuclear_refre
 from collect_details import collect,validate_directory,parse
 class Tests(unittest.TestCase):
  def directory(self):return {'sourceId':'iaea-nfcis','fetchStatus':'SUCCESS','complete':True,'observedTotal':1,'pages':[{'visibleRange':'1-1 of 1','hrefs':['facility/Details/0']}]}
+ def test_authoritative_quality_retained(self):
+  from unittest.mock import patch
+  class ParsedText:
+   out=['Example','Download PDF']
+   def feed(self,_):pass
+  with patch('collect_details.Text',ParsedText),patch('collect_details.fields',return_value={'Country':'CANADA','IAEA Ref No':'0 - Example'}):
+   import collect_details
+   with patch.dict(collect_details.ISO,{'CANADA':'ca'}):
+    row=parse('iaea-nfcis','0','https://infcis.iaea.org/NFCFDB/facility/Details/0',b'fixture','2026-09-29T00:00:00Z')
+  self.assertEqual(row['sourceQuality'],'A');self.assertEqual(row['publicationStatus'],'INTERNAL_REVIEW')
  def test_zero_identity(self):self.assertEqual(validate_directory(self.directory())[0][0],'0')
  def test_stale_partial_rejected(self):
   d=self.directory();d['complete']=False

@@ -36,7 +36,7 @@ def parse(source,key,url,raw,observed):
   if ref!=key+'-PIE':raise ValueError('Source identity mismatch')
   updated=before('Last Update');extra={'facilityClass':'POST_IRRADIATION','lifecycleStatus':None,'databaseUpdatedAtText':None if updated=='Country' else updated}
  if not name or name in ('Help','Facilities') or country not in ISO:raise ValueError('Missing identity or unknown country')
- return {'id':source+'-'+key,'sourceId':source,'sourceRecordId':key,'sourceUrl':url,'observedAt':observed,'evidenceSha256':hashlib.sha256(raw).hexdigest(),'name':name,'countryCode':ISO[country],'countryName':country,'recordKind':'FACILITY','latitude':None,'longitude':None,'publicationStatus':'INTERNAL_REVIEW','statusUncertainty':'Source report is dated evidence, not current operating verification','contentRights':'IAEA_GENERAL_TERMS_ATTRIBUTION_REQUIRED_SPECIFIC_RIGHTS_UNRESOLVED','automationPermission':'UNKNOWN',**extra}
+ return {'id':source+'-'+key,'sourceId':source,'sourceRecordId':key,'sourceUrl':url,'observedAt':observed,'evidenceSha256':hashlib.sha256(raw).hexdigest(),'name':name,'countryCode':ISO[country],'countryName':country,'recordKind':'FACILITY','sourceQuality':'A','latitude':None,'longitude':None,'publicationStatus':'INTERNAL_REVIEW','statusUncertainty':'Source report is dated evidence, not current operating verification','contentRights':'IAEA_GENERAL_TERMS_ATTRIBUTION_REQUIRED_SPECIFIC_RIGHTS_UNRESOLVED','automationPermission':'UNKNOWN',**extra}
 def fetch(source,pair):
  key,url=pair
  try:

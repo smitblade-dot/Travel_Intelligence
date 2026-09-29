@@ -52,3 +52,24 @@ class BootstrapTests(unittest.TestCase):
  def test_bootstrap_invalid_capture_rejected(self):
   (self.acc/'iaea-pris.json').unlink();self.captures['iaea-pris'].write_text('{}')
   r=run(self.inv,self.pro,self.acc,self.captures,self.p/'bootstrap',True);self.assertFalse(r['captureComplete'])
+
+class DiagnosticTests(unittest.TestCase):
+ def test_source_failure_visible_without_payload(self):
+  from run_refresh import diagnostics
+  r=diagnostics({'captureComplete':False,'errors':[{'sourceId':'iaea-piedb','type':'SOURCE_CAPTURE_REJECTED','reason':'Missing capture'}]},[{'sources':['iaea-nfcis'],'error':'Timeout 30000ms exceeded at https://example.org/?token=secret'}])
+  self.assertFalse(r['captureComplete']);self.assertFalse(r['releaseReady']);self.assertEqual(r['captureFailures'][0]['sources'],['iaea-nfcis']);self.assertIn('Timeout',r['captureFailures'][0]['reason']);self.assertNotIn('secret',str(r));self.assertEqual(r['reviewErrors'][0]['sourceId'],'iaea-piedb')
+ def test_raw_html_and_credentials_not_logged(self):
+  from run_refresh import diagnostic_reason
+  self.assertNotIn('private payload',diagnostic_reason('<html>private payload</html>'))
+  self.assertNotIn('hidden',diagnostic_reason('token=hidden password: hidden'))
+
+class DirectoryFailureTests(unittest.TestCase):
+ def test_browser_ledger_reason_not_just_exit_code(self):
+  from run_refresh import directory_failure
+  import subprocess
+  with tempfile.TemporaryDirectory() as t:
+   p=Path(t);(p/'failure.json').write_text(json.dumps({'sourceId':'iaea-nfcis','fetchStatus':'FAILED','error':'Timeout waiting for Next page at https://example.org/?token=private'}))
+   message=directory_failure('iaea-nfcis',p,subprocess.CalledProcessError(2,['node','collector']))
+   self.assertIn('Timeout waiting for Next page',message);self.assertNotIn('private',message)
+   (p/'failure.json').write_text('{')
+   self.assertIn('ledger unavailable',directory_failure('iaea-nfcis',p,'exit2'))
