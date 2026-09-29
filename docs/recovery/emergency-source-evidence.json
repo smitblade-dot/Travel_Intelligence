@@ -1,0 +1,107 @@
+[
+  {
+    "countryId": "bh",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/bahrain/getting-help",
+    "retrievalDate": "2026-09-29",
+    "claim": "Call 999 for ambulance, fire or police assistance.",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "cg",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/congo/getting-help",
+    "retrievalDate": "2026-09-29",
+    "claim": "There is no unified emergency number. FCDO lists 06 665 4804 for reporting crimes to local police, warns that telephone numbers may fail and says few police speak English. Identify local medical facilities and keep their contact details available.",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "ci",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/cote-d-ivoire/getting-help",
+    "retrievalDate": "2026-09-29",
+    "claim": "For emergency assistance, FCDO lists ambulance 185, fire 180 and police 110, 111 or 170.",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "ec",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/ecuador/getting-help",
+    "retrievalDate": "2026-09-29",
+    "claim": "Call 911 for ambulance, fire or police assistance. Tourism police operate in Quito and several other destinations. The Attorney General accepts online robbery/theft reports in English; FCDO warns that following up online after departure can be difficult.",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "ga",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/gabon/getting-help",
+    "retrievalDate": "2026-09-29",
+    "claim": "FCDO lists ambulance 117 and fire/police 177. Depending on the mobile network, SOS Médecins can be reached on 1300, 0174 or 0880; operators may speak only French. Numbers may fail and assistance may be limited in remote areas.",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "gq",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/equatorial-guinea/getting-help",
+    "retrievalDate": "2026-09-29",
+    "claim": "FCDO lists ambulance 3101 and police 666 404040 or 666 303030. Both telephone access and emergency response can be unreliable, particularly in hard-to-reach areas; local advice and privately arranged transport may be necessary.",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "gy",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/guyana/getting-help",
+    "retrievalDate": "2026-09-29",
+    "claim": "Use 913 for ambulance assistance, 912 for fire and 911 for police.",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "il",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/israel/getting-help",
+    "retrievalDate": "2026-09-29",
+    "claim": "Use 101 for ambulance assistance, 102 for fire and 100 for police.",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "mr",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/mauritania/getting-help",
+    "retrievalDate": "2026-09-29",
+    "claim": "FCDO lists ambulance 101, fire 118 and police 117, but explicitly warns that calls may go unanswered.",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "sd",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/sudan/getting-help",
+    "retrievalDate": "2026-09-29",
+    "claim": "FCDO lists 999 for ambulance, fire and police. Conflict has severely disrupted emergency services, which frequently do not respond.",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "sr",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/suriname/getting-help",
+    "retrievalDate": "2026-09-29",
+    "claim": "FCDO lists 115 for ambulance, fire and police assistance, with additional service numbers 113 for ambulance and 110 for fire.",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "ss",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/south-sudan/getting-help",
+    "retrievalDate": "2026-09-29",
+    "claim": "FCDO reports that South Sudan has no central emergency numbers. During a serious incident, contact your travel provider and insurer to establish what assistance they can provide.",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "sy",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/syria/getting-help",
+    "retrievalDate": "2026-09-29",
+    "claim": "Emergency-service capacity may be limited after prolonged conflict. British consular assistance is unavailable inside Syria; British nationals seeking help can contact FCDO in London on +44 20 7008 5000. This is a consular contact, not a local emergency dispatch number.",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "td",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/chad/getting-help",
+    "retrievalDate": "2026-09-29",
+    "claim": "FCDO lists 1212 for ambulance and fire assistance and 2020 for police.",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "ye",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/yemen/getting-help",
+    "retrievalDate": "2026-09-29",
+    "claim": "FCDO lists ambulance/fire 191 and police 199 or 194. Conflict has left emergency services with very restricted capacity and poor reliability.",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  }
+]
