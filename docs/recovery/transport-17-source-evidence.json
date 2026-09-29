@@ -1,0 +1,50 @@
+[
+  {
+    "countryId": "ec",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/ecuador/safety-and-security",
+    "section": "Airport access/identity; full transport and weather sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_17.json record ec-transport-baseline-20260929"
+  },
+  {
+    "countryId": "pe",
+    "sourceUrl": "https://www.airportexpresslima.com/",
+    "section": "Airport access/identity; full transport and weather sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_17.json record pe-transport-baseline-20260929"
+  },
+  {
+    "countryId": "pe",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/peru/safety-and-security",
+    "section": "Airport access/identity; full transport and weather sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_17.json record pe-transport-baseline-20260929"
+  },
+  {
+    "countryId": "eg",
+    "sourceUrl": "https://www.emirates.com/english/destinations/dxb/cai/flights-from-dubai-to-cairo/",
+    "section": "Airport access/identity; full transport and weather sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_17.json record eg-transport-baseline-20260929"
+  },
+  {
+    "countryId": "eg",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/egypt/safety-and-security",
+    "section": "Airport access/identity; full transport and weather sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_17.json record eg-transport-baseline-20260929"
+  },
+  {
+    "countryId": "eg",
+    "sourceUrl": "https://travel.gc.ca/destinations/egypt",
+    "section": "Airport access/identity; full transport and weather sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_17.json record eg-transport-baseline-20260929"
+  }
+]

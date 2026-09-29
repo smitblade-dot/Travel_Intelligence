@@ -1,0 +1,34 @@
+[
+  {
+    "countryId": "kw",
+    "sourceUrl": "https://www.met.gov.kw/Climate/seasons_eng.php",
+    "section": "Full relevant climate, seasons and hazards sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "ENVIRONMENT_04.json record kw-environment-baseline-20260929"
+  },
+  {
+    "countryId": "kw",
+    "sourceUrl": "https://www.smartraveller.gov.au/destinations/middle-east/kuwait",
+    "section": "Full relevant climate, seasons and hazards sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "ENVIRONMENT_04.json record kw-environment-baseline-20260929"
+  },
+  {
+    "countryId": "bh",
+    "sourceUrl": "https://prddsgofilestorage.blob.core.windows.net/api/documents/Bahrain_-_Climate_Fact_Sheet/BAHRAIN_Climate_Fact_Sheet_EN.pdf",
+    "section": "Full relevant climate, seasons and hazards sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "ENVIRONMENT_04.json record bh-environment-baseline-20260929"
+  },
+  {
+    "countryId": "bh",
+    "sourceUrl": "https://www.smartraveller.gov.au/destinations/middle-east/bahrain",
+    "section": "Full relevant climate, seasons and hazards sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "ENVIRONMENT_04.json record bh-environment-baseline-20260929"
+  }
+]

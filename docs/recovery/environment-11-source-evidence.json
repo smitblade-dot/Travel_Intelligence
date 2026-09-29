@@ -1,0 +1,34 @@
+[
+  {
+    "countryId": "ng",
+    "sourceUrl": "https://www.smartraveller.gov.au/destinations/africa/nigeria",
+    "section": "Full relevant climate, seasons and hazards sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "ENVIRONMENT_11.json record ng-environment-baseline-20260929"
+  },
+  {
+    "countryId": "ci",
+    "sourceUrl": "https://eauxetforets.gouv.ci/sites/default/files/flipbook/eaux-et-forets-magazine-02-07-2018/files/basic-html/page7.html",
+    "section": "Full relevant climate, seasons and hazards sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "ENVIRONMENT_11.json record ci-environment-baseline-20260929"
+  },
+  {
+    "countryId": "ci",
+    "sourceUrl": "https://www.gouv.ci/actualite/daouda-konate-directeur-de-la-meteorologie-nationale-la-saison-des-pluies-sera-caracterisee-par-un-deficit-pluviometrique-2393",
+    "section": "Full relevant climate, seasons and hazards sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "ENVIRONMENT_11.json record ci-environment-baseline-20260929"
+  },
+  {
+    "countryId": "ci",
+    "sourceUrl": "https://www.smartraveller.gov.au/destinations/africa/cote-divoire-ivory-coast",
+    "section": "Full relevant climate, seasons and hazards sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "ENVIRONMENT_11.json record ci-environment-baseline-20260929"
+  }
+]

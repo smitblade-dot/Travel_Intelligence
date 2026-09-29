@@ -1,0 +1,66 @@
+[
+  {
+    "countryId": "az",
+    "sourceUrl": "https://www.airport.az/en/guidelines-for-passengers/1.1.1/",
+    "section": "Airport/network identity; full transport/weather and relevant border sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_14.json record az-transport-baseline-20260929"
+  },
+  {
+    "countryId": "az",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/azerbaijan/safety-and-security",
+    "section": "Airport/network identity; full transport/weather and relevant border sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_14.json record az-transport-baseline-20260929"
+  },
+  {
+    "countryId": "az",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/azerbaijan/entry-requirements",
+    "section": "Airport/network identity; full transport/weather and relevant border sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_14.json record az-transport-baseline-20260929"
+  },
+  {
+    "countryId": "kz",
+    "sourceUrl": "https://www.go.flyarystan.com/about-us/en",
+    "section": "Airport/network identity; full transport/weather and relevant border sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_14.json record kz-transport-baseline-20260929"
+  },
+  {
+    "countryId": "kz",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/kazakhstan/safety-and-security",
+    "section": "Airport/network identity; full transport/weather and relevant border sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_14.json record kz-transport-baseline-20260929"
+  },
+  {
+    "countryId": "ru",
+    "sourceUrl": "https://www.emirates.com/ru/english/destinations/dme/dxb/flights-from-moscow-to-dubai/",
+    "section": "Airport/network identity; full transport/weather and relevant border sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_14.json record ru-transport-baseline-20260929"
+  },
+  {
+    "countryId": "ru",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/russia/safety-and-security",
+    "section": "Airport/network identity; full transport/weather and relevant border sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_14.json record ru-transport-baseline-20260929"
+  },
+  {
+    "countryId": "ru",
+    "sourceUrl": "https://travel.gc.ca/destinations/russia",
+    "section": "Airport/network identity; full transport/weather and relevant border sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_14.json record ru-transport-baseline-20260929"
+  }
+]
