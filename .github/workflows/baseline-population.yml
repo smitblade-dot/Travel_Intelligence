@@ -28,7 +28,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
-          ref: ${{ github.ref }}
+          ref: main
           fetch-depth: 1
           persist-credentials: false
       - name: Compile and validate coverage audit
@@ -83,7 +83,9 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
-          ref: ${{ github.ref }}
+          # Keep OIDC-enabled generation instructions and source policy pinned
+          # to reviewed production main, even for branch-dispatched dry runs.
+          ref: main
           fetch-depth: 1
           persist-credentials: false
 
