@@ -62,6 +62,14 @@ def main():
 
     with tempfile.TemporaryDirectory(prefix="ti-baseline-merge-") as temp:
         root = Path(temp)
+        path = fixture(root, "2026-09-01", incoming_obs_id="obs-new", incoming_obs_claim="new same-date claim")
+        before = path.read_bytes()
+        result = run(root)
+        assert result.returncode != 0 and "same dateChecked" in result.stderr
+        assert path.read_bytes() == before
+
+    with tempfile.TemporaryDirectory(prefix="ti-baseline-merge-") as temp:
+        root = Path(temp)
         path = fixture(root, "2026-09-15", source_url="https://other.example/source")
         before = path.read_bytes()
         result = run(root)
@@ -76,7 +84,7 @@ def main():
         assert result.returncode != 0 and "matching SourceObservation" in result.stderr
         assert path.read_bytes() == before
 
-    print("PASS: stale record/source/observation preserved; conflicting observation/source IDs and missing evidence rejected atomically")
+    print("PASS: stale values preserved; conflicting same-date records, observation/source IDs and missing evidence rejected atomically")
     return 0
 
 

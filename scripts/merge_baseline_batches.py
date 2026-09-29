@@ -104,6 +104,11 @@ def main():
                 records[record_id] = record
                 updated_record_ids.add(record_id)
                 updated += 1
+            elif incoming_date == current_date and record != current:
+                raise SystemExit(
+                    f"Conflicting baseline record {record_id} in {path} has the same dateChecked "
+                    f"({incoming_date}); refusing to append observations for a rejected record revision"
+                )
             else:
                 if incoming_date < current_date or not incoming_date:
                     stale_record_ids.add(record_id)
