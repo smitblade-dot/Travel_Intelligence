@@ -8,6 +8,11 @@ on:
         required: false
         type: boolean
         default: false
+      validate_candidate_only:
+        description: Run candidate code checks without AI generation or publication
+        required: false
+        type: boolean
+        default: false
   schedule:
     - cron: "30 20 * * *"
 
@@ -20,6 +25,7 @@ concurrency:
 
 jobs:
   coverage_check:
+    if: inputs.validate_candidate_only != true
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -54,6 +60,44 @@ jobs:
             echo "Coverage audit failed before producing a valid coverage result." >&2
             exit 1
           fi
+
+  candidate_validation:
+    if: github.event_name == 'workflow_dispatch' && inputs.validate_candidate_only == true
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Compile and validate candidate code
+        run: |
+          python3 -m py_compile scripts/audit_baseline_coverage.py scripts/merge_baseline_batches.py
+          python3 scripts/validate_ti_data.py
+          python3 scripts/test_validate_ti_data.py
+          python3 scripts/test_baseline_coverage_grandfathered.py
+          python3 scripts/test_merge_baseline_batches.py
+          python3 scripts/test_nuclear_preservation.py
+          python3 scripts/audit_phase1_foundation.py
+          python3 scripts/audit_production_release.py
+          git diff --check
+
+  candidate_strict_coverage:
+    needs: candidate_validation
+    if: always() && needs.candidate_validation.result == 'success'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Enforce strict candidate coverage
+        run: python3 scripts/audit_baseline_coverage.py --strict
 
   generate:
     needs: coverage_check
