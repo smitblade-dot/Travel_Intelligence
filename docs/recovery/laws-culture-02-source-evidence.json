@@ -1,0 +1,66 @@
+[
+  {
+    "countryId": "bh",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/bahrain/safety-and-security",
+    "section": "Laws and cultural differences",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_02.json record bh-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "sa",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/saudi-arabia/safety-and-security",
+    "section": "Laws and cultural differences",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_02.json record sa-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "qa",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/qatar/safety-and-security",
+    "section": "Laws and cultural differences",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_02.json record qa-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "ae",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/united-arab-emirates/safety-and-security",
+    "section": "Laws and cultural differences",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_02.json record ae-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "om",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/oman/safety-and-security",
+    "section": "Laws and cultural differences",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_02.json record om-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "kw",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/kuwait/safety-and-security",
+    "section": "Laws and cultural differences",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_02.json record kw-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "ir",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/iran/safety-and-security",
+    "section": "Laws and cultural differences",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_02.json record ir-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "iq",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/iraq/safety-and-security",
+    "section": "Laws and cultural differences",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_02.json record iq-laws-culture-baseline-20260929"
+  }
+]
