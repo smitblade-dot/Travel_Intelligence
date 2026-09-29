@@ -1,0 +1,66 @@
+[
+  {
+    "countryId": "ru",
+    "sourceUrl": "https://travel.gc.ca/destinations/russia",
+    "section": "Money",
+    "claim": "Russia uses the ruble (RUB). Foreign-issued cards do not work in banks, shops or ATMs; machines serve Russian-issued cards. Paying for goods/services in foreign currency is illegal. Major-city banks generally exchange euros/dollars; worn dollar notes may be rejected. Verify lawful funding before travel.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "sa",
+    "sourceUrl": "https://www.smartraveller.gov.au/destinations/middle-east/saudi-arabia",
+    "section": "Money",
+    "claim": "Saudi Arabia uses the riyal (SAR). ATMs are widespread; confirm card compatibility with your bank. Exchange through banks or bureaux. Australian advice requires declarations for currency and precious metals above SAR 60,000 equivalent per family/group on arrival/departure; check current customs rules.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "sd",
+    "sourceUrl": "https://travel.gc.ca/destinations/sudan",
+    "section": "Money",
+    "claim": "Sudan uses the pound (SDG), which cannot be exported or converted abroad. Dollars are widely accepted. Foreign cards do not work; ATMs serve local accounts. Canada reports difficult international transfers and cash payment for hotels/international flights. Arrange sufficient lawful funds before travel.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "sn",
+    "sourceUrl": "https://travel.gc.ca/destinations/senegal",
+    "section": "Money",
+    "claim": "Senegal uses the CFA franc (XOF). Large hotels and some shops/restaurants accept cards. ATMs exist in Dakar and most large cities but do not permit large withdrawals. Use reputable banks or exchange bureaux for substantial currency exchanges.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "sr",
+    "sourceUrl": "https://travel.gc.ca/destinations/suriname",
+    "section": "Money",
+    "claim": "Suriname uses the Surinamese dollar and mainly cash. Card use is largely limited to major hotels and some restaurants. Street currency exchange is illegal; use hotels, local banks or official exchange bureaux.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "ss",
+    "sourceUrl": "https://travel.gc.ca/destinations/south-sudan",
+    "section": "Money",
+    "claim": "South Sudan uses SSP, not Sudanese SDG. Cards have limited acceptance; ATMs are unreliable and dispense SSP only. Major expenses need cash; dollar transfers are difficult. Marked or pre-2006 US notes may be refused. Use authorized banks/bureaux; unofficial exchange is illegal.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "sy",
+    "sourceUrl": "https://travel.gc.ca/destinations/syria",
+    "section": "Money",
+    "claim": "Syria uses the pound (SYP) and mainly cash. Cards may fail because foreign banks have suspended transactions; confirm with your provider. City ATMs are unreliable. Use official banks/exchanges, not street dealers, and retain exchange receipts to reconvert remaining pounds before departure; SYP is not convertible abroad.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "td",
+    "sourceUrl": "https://travel.gc.ca/destinations/chad",
+    "section": "Money",
+    "claim": "Chad uses the Central African CFA franc. ATMs are rare and cards mainly accepted at major N’Djamena hotels. Declare imported currency and process proof through a local commercial bank. Local currency cannot be exported; foreign-currency export is limited to the amount declared on entry.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  }
+]

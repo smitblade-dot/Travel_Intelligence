@@ -1,0 +1,50 @@
+[
+  {
+    "countryId": "tm",
+    "sourceUrl": "https://travel.gc.ca/destinations/turkmenistan",
+    "section": "Money",
+    "claim": "Turkmenistan uses the manat (TMT) and primarily cash. A few Ashgabat hotels/restaurants accept American Express/Visa or US-dollar travellers cheques. Banks/exchanges convert dollars and euros. Few international ATMs operate; obtaining cash can be difficult. Declare all foreign currency on arrival.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "tn",
+    "sourceUrl": "https://travel.gc.ca/destinations/tunisia",
+    "section": "Money",
+    "claim": "Tunisia uses the dinar (TND), which cannot be imported or exported. Tourist/urban centres have ATMs and many card-accepting businesses. Foreign-currency declarations and re-export limits are strict and complex; check customs requirements for arrival, departure and transit and retain supporting documentation.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "ug",
+    "sourceUrl": "https://travel.gc.ca/destinations/uganda",
+    "section": "Money",
+    "claim": "Uganda uses the shilling (UGX). Card acceptance is limited to major hotels, airlines and some rental agencies. Exchange bureaux are available at most border crossings and major cities; arrange cash access for other purchases.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "ve",
+    "sourceUrl": "https://travel.gc.ca/destinations/venezuela",
+    "section": "Money",
+    "claim": "Venezuela uses the bolívar; dollars are widely accepted. Bring small notes. Foreign-account ATM withdrawals and emergency wire transfers cannot be relied on. Use authorized exchanges at the official rate; Canada lists US dollars as exchangeable. Cards require ID. Amounts above USD 10,000 require arrival/departure declaration.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "ye",
+    "sourceUrl": "https://travel.gc.ca/destinations/yemen",
+    "section": "Money",
+    "claim": "Yemen uses the rial (YER) and primarily cash. Some major hotels accept cards and ATMs may be available only in large cities. Confirm your hotel’s payment methods and arrange access to sufficient local currency.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "ae",
+    "sourceUrl": "https://travel.gc.ca/destinations/united-arab-emirates",
+    "section": "Money",
+    "claim": "The UAE uses the dirham (AED). ATMs operate across the emirates and major hotels/shops/restaurants accept cards; small businesses may require cash. Canada advises declaring AED 60,000 equivalent or more on arrival/departure, including cash and covered monetary instruments; check current customs rules.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  }
+]

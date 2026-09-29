@@ -1,0 +1,66 @@
+[
+  {
+    "countryId": "ao",
+    "sourceUrl": "https://travel.gc.ca/destinations/angola",
+    "section": "Money",
+    "claim": "Angola uses the kwanza (AOA), which cannot be exported. Card acceptance is limited to some major Luanda hotels/restaurants; Canada says debit cards do not work. ATMs dispense kwanzas and may fail or run dry. Foreign currency can be scarce; arrange payment options before travel.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "ar",
+    "sourceUrl": "https://travel.gc.ca/destinations/argentina",
+    "section": "Money",
+    "claim": "The currency is the Argentine peso (ARS). Foreign cards are accepted in principal cities, sometimes with photo identification. ATM withdrawals from overseas accounts have low transaction/daily limits and may incur substantial fees; check limits with your bank before departure.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "az",
+    "sourceUrl": "https://travel.gc.ca/destinations/azerbaijan",
+    "section": "Money",
+    "claim": "The currency is the Azerbaijani manat (AZN). Cards may be refused outside major businesses. Some city ATMs dispense both manat and US dollars; payment arrangements outside major businesses need a cash alternative.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "br",
+    "sourceUrl": "https://travel.gc.ca/destinations/brazil",
+    "section": "Money",
+    "claim": "The currency is the Brazilian real (BRL). Cards are widely used in cities and formal stores/restaurants but less accepted in rural areas or informal markets. Rural ATMs are scarce; carry cash for small purchases and remote travel. Canadian dollars can be difficult to exchange.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "cg",
+    "sourceUrl": "https://travel.gc.ca/destinations/congo-brazzaville",
+    "section": "Money",
+    "claim": "The currency is the Central African CFA franc (XAF). Payments are mainly cash-based. Large hotels and stores in Brazzaville and Pointe-Noire generally accept major cards and may take euros or US dollars; confirm when booking. Card acceptance beyond these establishments is rare.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "ci",
+    "sourceUrl": "https://travel.gc.ca/destinations/cote-d-ivoire-ivory-coast",
+    "section": "Money",
+    "claim": "The currency is the CFA franc. Major hotels and some shops/restaurants accept cards. ATMs are available in Abidjan and most large cities; carry cash for travel outside major cities.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "cn",
+    "sourceUrl": "https://travel.gc.ca/destinations/china",
+    "section": "Money",
+    "claim": "China uses renminbi/yuan. Major mobile-payment platforms can link international cards; check QR codes and charges. Cards are not universally accepted and foreign-card ATMs may be scarce remotely. Foreign currency cannot legally be used for everyday purchases; exchange only at officially approved facilities.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "dz",
+    "sourceUrl": "https://travel.gc.ca/destinations/algeria",
+    "section": "Money",
+    "claim": "Algeria uses the dinar (DZD) and mainly cash. Cards are usually accepted at major hotels; foreign-card ATMs may fail. Declare foreign currency on arrival, record exchanges and retain bank receipts/declaration for departure. Dinars cannot be exported and black-market exchange is illegal.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  }
+]

@@ -1,0 +1,66 @@
+[
+  {
+    "countryId": "kw",
+    "sourceUrl": "https://travel.gc.ca/destinations/kuwait",
+    "section": "Money",
+    "claim": "Kuwait uses the dinar (KWD). Cards and US dollars are widely accepted; ATMs are available nationwide. Currency holdings over KWD 3,000 equivalent must be declared when entering or leaving; check the current customs form before travel.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "ly",
+    "sourceUrl": "https://travel.gc.ca/destinations/libya",
+    "section": "Currency",
+    "claim": "Libya uses the dinar (LYD). Cash is usually necessary, cards are uncommon and ATMs rare. Dinars cannot be exported; declare foreign currency on entry and exit. Official exchanges accept US dollars, euros, pounds, Swiss francs and Tunisian dinars.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "mr",
+    "sourceUrl": "https://travel.gc.ca/destinations/mauritania",
+    "section": "Money",
+    "claim": "Mauritania uses the ouguiya and mainly cash. Some Nouakchott/Nouadhibou hotels accept cards. Exchanges accept dollars/euros. Declare foreign currency on arrival; exports cannot exceed the declared amount. Ouguiya cannot be exported.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "mx",
+    "sourceUrl": "https://travel.gc.ca/destinations/mexico",
+    "section": "Money and Safety/security fraud",
+    "claim": "Mexico uses the peso (MXN). Card/ATM fraud is frequent; use machines inside banks/businesses and avoid large withdrawals. Declare cash and covered financial instruments above USD 10,000 equivalent on arrival/departure. US-dollar exchange limits depend on immigration status; check provider restrictions.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "ng",
+    "sourceUrl": "https://travel.gc.ca/destinations/nigeria",
+    "section": "Money",
+    "claim": "Nigeria uses the naira (NGN), largely in cash; dollars are widely accepted. ATMs are scarce outside large cities. Some Abuja/Lagos hotels take cards, but Canada advises avoiding cards because of fraud risk. Naira exports are legally limited; verify the current allowance.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "om",
+    "sourceUrl": "https://travel.gc.ca/destinations/oman",
+    "section": "Money",
+    "claim": "Oman uses the rial (OMR). Canada reports widespread card acceptance and acceptance of US-dollar travellers cheques. Check your payment provider and intended accommodation before relying on a particular card or cheque.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "pe",
+    "sourceUrl": "https://travel.gc.ca/destinations/peru",
+    "section": "Money",
+    "claim": "Peru uses the sol (PEN); US dollars are widely accepted. Cards are uncommon outside major cities and merchants may request a passport to verify cardholder identity. Declare amounts above USD 10,000 equivalent on arrival and departure.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "qa",
+    "sourceUrl": "https://travel.gc.ca/destinations/qatar",
+    "section": "Money",
+    "claim": "Qatar uses the riyal (QAR) and cards are widely accepted. Holdings above QAR 50,000 equivalent require an arrival/departure declaration; covered items include currencies, cheques, money orders, precious metals and stones. Check current customs requirements before travel.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  }
+]
