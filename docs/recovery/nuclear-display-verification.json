@@ -28,5 +28,6 @@
     "after": 51,
     "lastRecordVisible": true
   },
-  "legacyFallbackRestrictedToExplicitAggregateStatus": true
+  "legacyFallbackRestrictedToExplicitAggregateStatus": true,
+  "directoryBackLabelAndDestinationVerified": true
 }

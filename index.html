@@ -1433,7 +1433,7 @@
   function renderCountry(){
     var c = countries[currentIso2];
     var wrap = el('section', {class:'country-view'});
-    wrap.appendChild(el('button', {class:'back-btn', onclick:function(){ closeCountry(); }}, ['← All countries']));
+    wrap.appendChild(el('button', {class:'back-btn', onclick:function(){ closeCountry(); }}, [currentView === 'NUCLEAR' ? '← Nuclear directory' : '← All countries']));
 
     if(!c){
       wrap.appendChild(el('div', {class:'empty-state'}, ['Loading country…']));
