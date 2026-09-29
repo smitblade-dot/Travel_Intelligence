@@ -26,6 +26,9 @@ jobs:
       - name: Test rejection of unsupported record data types
         run: python3 scripts/test_validate_ti_data.py
 
+      - name: Test grandfathered baseline coverage semantics
+        run: python3 scripts/test_baseline_coverage_grandfathered.py
+
       - name: Audit Phase 1 foundation
         run: python3 scripts/audit_phase1_foundation.py
 

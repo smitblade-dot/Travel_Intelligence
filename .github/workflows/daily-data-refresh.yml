@@ -66,6 +66,9 @@ jobs:
       - name: Refresh oil & gas summary (deterministic)
         run: python3 scripts/refresh_oilgas.py
 
+      - name: Verify legacy nuclear refresh preserves richer inventories
+        run: python3 scripts/test_nuclear_preservation.py
+
       - name: Refresh IAEA PRIS nuclear aggregates
         run: python3 scripts/refresh_nuclear_global.py
 
@@ -117,6 +120,9 @@ jobs:
 
       - name: Test rejection of unsupported record data types
         run: python3 scripts/test_validate_ti_data.py
+
+      - name: Test grandfathered baseline coverage semantics
+        run: python3 scripts/test_baseline_coverage_grandfathered.py
 
       - name: Audit Phase 1 foundation
         run: python3 scripts/audit_phase1_foundation.py
@@ -194,6 +200,7 @@ jobs:
             fi
             python3 scripts/validate_ti_data.py
             python3 scripts/test_validate_ti_data.py
+            python3 scripts/test_baseline_coverage_grandfathered.py
             python3 scripts/audit_phase1_foundation.py
             python3 scripts/audit_production_release.py
             if git push origin HEAD:main; then

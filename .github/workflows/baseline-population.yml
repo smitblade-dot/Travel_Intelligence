@@ -37,6 +37,7 @@ jobs:
           python3 -m py_compile scripts/audit_baseline_coverage.py
           python3 scripts/validate_ti_data.py
           python3 scripts/test_validate_ti_data.py
+          python3 scripts/test_baseline_coverage_grandfathered.py
       - id: check
         shell: bash
         run: |
@@ -159,6 +160,12 @@ jobs:
           python3 scripts/merge_baseline_batches.py
       - name: Validate merged data
         run: python3 scripts/validate_ti_data.py
+      - name: Test baseline merge collision handling
+        run: python3 scripts/test_merge_baseline_batches.py
+      - name: Audit Phase 1 foundation
+        run: python3 scripts/audit_phase1_foundation.py
+      - name: Audit production integrity
+        run: python3 scripts/audit_production_release.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -204,6 +211,9 @@ jobs:
             cp "$RUNNER_TEMP"/baseline-batches/*.json data/baseline_batches/
             python3 scripts/merge_baseline_batches.py
             python3 scripts/validate_ti_data.py
+            python3 scripts/test_merge_baseline_batches.py
+            python3 scripts/audit_phase1_foundation.py
+            python3 scripts/audit_production_release.py
             python3 scripts/test_validate_ti_data.py
             python3 scripts/audit_baseline_coverage.py --strict
             git add data.json
