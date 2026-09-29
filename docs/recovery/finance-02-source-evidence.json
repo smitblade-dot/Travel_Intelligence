@@ -1,0 +1,66 @@
+[
+  {
+    "countryId": "bh",
+    "sourceUrl": "https://travel.gc.ca/destinations/bahrain",
+    "section": "Money",
+    "claim": "The currency is the Bahraini dinar (BHD). Canada reports broad acceptance of cards, US dollars and Saudi riyals, and availability of ATMs.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "cm",
+    "sourceUrl": "https://travel.gc.ca/destinations/cameroon",
+    "section": "Money",
+    "claim": "Cameroon uses the Central African CFA franc (XAF), predominantly in cash. Some large hotels/stores accept cards or foreign currency; confirm when booking. Cards are rarely accepted outside international hotels. Outbound money transfers require Ministry of Finance authorization; bank transfers can take time and incur fees.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "co",
+    "sourceUrl": "https://travel.gc.ca/destinations/colombia",
+    "section": "Money",
+    "claim": "The currency is the Colombian peso (COP). Cards are widely accepted, while rural ATM availability can be limited. Canadian dollars can be exchanged at currency bureaus; arrange cash access before travelling into rural areas.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "ec",
+    "sourceUrl": "https://travel.gc.ca/destinations/ecuador",
+    "section": "Money and Safety/security",
+    "claim": "Ecuador uses the US dollar (USD), and many businesses accept cards. Card/ATM fraud occurs: use machines inside banks or businesses and check statements. Power outages can interrupt banking and ATMs; avoid relying on a single payment method.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "eg",
+    "sourceUrl": "https://travel.gc.ca/destinations/egypt",
+    "section": "Money and Safety/security",
+    "claim": "Egypt uses the Egyptian pound (EGP). Banks/hotels exchange foreign currency; some tour operators request US-dollar cash. ATM access is limited around Siwa and its road from Marsa Matruh. Check current customs cash import/export and declaration limits before travel.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "ga",
+    "sourceUrl": "https://travel.gc.ca/destinations/gabon",
+    "section": "Money",
+    "claim": "The currency is the CFA franc (XAF). Card use is limited to large hotels, restaurants and supermarkets in Libreville. ATMs exist but withdrawal amounts are restricted. Euros and US dollars are widely accepted, sometimes with high exchange charges; plan cash access.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "gh",
+    "sourceUrl": "https://travel.gc.ca/destinations/ghana",
+    "section": "Money and Safety/security",
+    "claim": "Ghana uses the cedi (GHS). Card/ATM fraud and duplicate charges from connectivity failures are risks. Declare foreign currency on arrival; record transactions on the T-5 form and retain it. Use authorized banks/bureaus for exchange. Cedis cannot be exported; spend or reconvert the balance before departure.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "gq",
+    "sourceUrl": "https://travel.gc.ca/destinations/equatorial-guinea",
+    "section": "Money",
+    "claim": "Equatorial Guinea uses the Central African CFA franc, mainly in cash. Major hotels/airlines accept cards; ATMs are limited to Malabo and Bata. Exchange at banks and arrange sufficient cash. Currency declarations may be required on arrival/departure and import/export limits may apply.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  }
+]

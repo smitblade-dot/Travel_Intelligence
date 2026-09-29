@@ -1,0 +1,66 @@
+[
+  {
+    "countryId": "eg",
+    "sourceUrl": "https://www.trade.gov/knowledge-product/egypt-business-travel",
+    "section": "Languages / practical communication",
+    "retrievalDate": "2026-09-29",
+    "claimLocation": "LANGUAGE_05.json record eg-language-baseline-20260929",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash"
+  },
+  {
+    "countryId": "td",
+    "sourceUrl": "https://www.trade.gov/country-commercial-guides/chad-business-travel",
+    "section": "Languages / practical communication",
+    "retrievalDate": "2026-09-29",
+    "claimLocation": "LANGUAGE_05.json record td-language-baseline-20260929",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash"
+  },
+  {
+    "countryId": "mr",
+    "sourceUrl": "https://www.trade.gov/index.php/country-commercial-guides/mauritania-business-travel",
+    "section": "Languages / practical communication",
+    "retrievalDate": "2026-09-29",
+    "claimLocation": "LANGUAGE_05.json record mr-language-baseline-20260929",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash"
+  },
+  {
+    "countryId": "sn",
+    "sourceUrl": "https://www.trade.gov/country-commercial-guides/senegal-business-travel",
+    "section": "Languages / practical communication",
+    "retrievalDate": "2026-09-29",
+    "claimLocation": "LANGUAGE_05.json record sn-language-baseline-20260929",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash"
+  },
+  {
+    "countryId": "tn",
+    "sourceUrl": "https://www.trade.gov/country-commercial-guides/tunisia-selling-factors-techniques",
+    "section": "Languages / practical communication",
+    "retrievalDate": "2026-09-29",
+    "claimLocation": "LANGUAGE_05.json record tn-language-baseline-20260929",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash"
+  },
+  {
+    "countryId": "kz",
+    "sourceUrl": "https://www.trade.gov/country-commercial-guides/kazakhstan-business-travel",
+    "section": "Languages / practical communication",
+    "retrievalDate": "2026-09-29",
+    "claimLocation": "LANGUAGE_05.json record kz-language-baseline-20260929",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash"
+  },
+  {
+    "countryId": "tm",
+    "sourceUrl": "https://www.trade.gov/country-commercial-guides/turkmenistan-business-travel",
+    "section": "Languages / practical communication",
+    "retrievalDate": "2026-09-29",
+    "claimLocation": "LANGUAGE_05.json record tm-language-baseline-20260929",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash"
+  },
+  {
+    "countryId": "az",
+    "sourceUrl": "https://www.trade.gov/country-commercial-guides/azerbaijan-business-travel",
+    "section": "Languages / practical communication",
+    "retrievalDate": "2026-09-29",
+    "claimLocation": "LANGUAGE_05.json record az-language-baseline-20260929",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash"
+  }
+]

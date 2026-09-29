@@ -1,0 +1,58 @@
+[
+  {
+    "countryId": "eg",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/egypt/safety-and-security",
+    "section": "Laws and culture; driving where relevant",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_06.json record eg-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "jo",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/jordan/safety-and-security",
+    "section": "Laws and culture; driving where relevant",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_06.json record jo-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "ly",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/libya/safety-and-security",
+    "section": "Laws and culture; driving where relevant",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_06.json record ly-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "tn",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/tunisia/safety-and-security",
+    "section": "Laws and culture; driving where relevant",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_06.json record tn-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "sy",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/syria/safety-and-security",
+    "section": "Laws and culture; driving where relevant",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_06.json record sy-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "ye",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/yemen/safety-and-security",
+    "section": "Laws and culture; driving where relevant",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_06.json record ye-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "ss",
+    "sourceUrl": "https://www.smartraveller.gov.au/destinations/africa/south-sudan",
+    "section": "Local laws; identification and curfew guidance",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_06.json record ss-laws-culture-baseline-20260929"
+  }
+]

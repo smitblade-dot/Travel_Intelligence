@@ -1,0 +1,74 @@
+[
+  {
+    "countryId": "ug",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/uganda",
+    "retrievedAt": "2026-09-29T10:28:43.310415+00:00",
+    "responseSha256": "3e4a85d711fe030c71085bc512b81c91a2bb0c74390636e64fa1b271e05e8a74",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_07.json record ug-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "ug",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/uganda/health",
+    "retrievedAt": "2026-09-29T10:28:43.284613+00:00",
+    "responseSha256": "ade60b1dec89ee10358682ede5c5bab0422d3f08dd847c0d869f5d2260b3ecc5",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_07.json record ug-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "us",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/usa",
+    "retrievedAt": "2026-09-29T10:28:43.786178+00:00",
+    "responseSha256": "d94c33ce8e2273659fc3bc8d24854067aa7ad9f2bee7323327a9b13e069b69d1",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_07.json record us-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "us",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/usa/health",
+    "retrievedAt": "2026-09-29T10:28:43.787601+00:00",
+    "responseSha256": "813be318c81d4a3ab87e72d575a5d2eccd8796edc83e381840533f7c01e01faa",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_07.json record us-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "ve",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/venezuela",
+    "retrievedAt": "2026-09-29T10:28:43.825814+00:00",
+    "responseSha256": "389c5387c05719f824326dbabf408b50b0c98954822274fe21e4f0b1836de6b4",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_07.json record ve-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "ve",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/venezuela/health",
+    "retrievedAt": "2026-09-29T10:28:43.788886+00:00",
+    "responseSha256": "dc6922e2442c34d49b123016f9ea6d6b19728d919aedb7e089e873e37d4bbd27",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_07.json record ve-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "ye",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/yemen",
+    "retrievedAt": "2026-09-29T10:28:44.170915+00:00",
+    "responseSha256": "f8a8eaa1f2f22048e2c2d70ac8abab7eb32556b881d0cb83c4d558a7cdbe3bdb",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_07.json record ye-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "ye",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/yemen/health",
+    "retrievedAt": "2026-09-29T10:28:44.130351+00:00",
+    "responseSha256": "71f36ac895f96c943153b61ec127bbdbd557e80ebfa1a20a205b7c10584203f5",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_07.json record ye-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  }
+]

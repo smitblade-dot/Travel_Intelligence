@@ -1,0 +1,50 @@
+[
+  {
+    "countryId": "ca",
+    "sourceUrl": "https://tc.canada.ca/en/aviation/operating-airports-aerodromes/list-airports-owned-transport-canada",
+    "section": "Air gateway listing, internal movement or road/weather constraints as indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_07.json record ca-transport-baseline-20260929"
+  },
+  {
+    "countryId": "ca",
+    "sourceUrl": "https://travel.destinationcanada.com/en-us/getting-around",
+    "section": "Air gateway listing, internal movement or road/weather constraints as indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_07.json record ca-transport-baseline-20260929"
+  },
+  {
+    "countryId": "ca",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/canada/safety-and-security",
+    "section": "Air gateway listing, internal movement or road/weather constraints as indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_07.json record ca-transport-baseline-20260929"
+  },
+  {
+    "countryId": "us",
+    "sourceUrl": "https://www.trade.gov/feature-article/may-2026-international-air-passenger-travel",
+    "section": "Air gateway listing, internal movement or road/weather constraints as indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_07.json record us-transport-baseline-20260929"
+  },
+  {
+    "countryId": "us",
+    "sourceUrl": "https://www.amtrak.com/northeast-regional-train",
+    "section": "Air gateway listing, internal movement or road/weather constraints as indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_07.json record us-transport-baseline-20260929"
+  },
+  {
+    "countryId": "us",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/usa/safety-and-security",
+    "section": "Air gateway listing, internal movement or road/weather constraints as indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_07.json record us-transport-baseline-20260929"
+  }
+]

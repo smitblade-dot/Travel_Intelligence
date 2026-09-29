@@ -1,0 +1,42 @@
+[
+  {
+    "countryId": "cm",
+    "sourceUrl": "https://www.adcsa.info/",
+    "section": "Air gateways or full transport/weather sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_08.json record cm-transport-baseline-20260929"
+  },
+  {
+    "countryId": "cm",
+    "sourceUrl": "https://www.smartraveller.gov.au/destinations/africa/cameroon",
+    "section": "Air gateways or full transport/weather sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_08.json record cm-transport-baseline-20260929"
+  },
+  {
+    "countryId": "sn",
+    "sourceUrl": "https://www.smartraveller.gov.au/destinations/africa/senegal",
+    "section": "Air gateways or full transport/weather sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_08.json record sn-transport-baseline-20260929"
+  },
+  {
+    "countryId": "ci",
+    "sourceUrl": "https://aim.asecna.aero/html/eAIP/FR-_06AD-2.DIAP-fr-FR.html",
+    "section": "Air gateways or full transport/weather sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_08.json record ci-transport-baseline-20260929"
+  },
+  {
+    "countryId": "ci",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/cote-d-ivoire/safety-and-security",
+    "section": "Air gateways or full transport/weather sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_08.json record ci-transport-baseline-20260929"
+  }
+]

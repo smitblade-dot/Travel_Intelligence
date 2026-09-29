@@ -1,0 +1,139 @@
+[
+  {
+    "countryId": "bh",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/bahrain/health",
+    "section": "Health",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "HEALTH.json observation obs-bh-fcdo-health-20260929"
+  },
+  {
+    "countryId": "cg",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/congo/health",
+    "section": "Health",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "HEALTH.json observation obs-cg-fcdo-health-20260929"
+  },
+  {
+    "countryId": "ci",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/cote-d-ivoire/health",
+    "section": "Health",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "HEALTH.json observation obs-ci-fcdo-health-20260929"
+  },
+  {
+    "countryId": "ec",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/ecuador/health",
+    "section": "Health",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "HEALTH.json observation obs-ec-fcdo-health-20260929"
+  },
+  {
+    "countryId": "ga",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/gabon/health",
+    "section": "Health",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "HEALTH.json observation obs-ga-fcdo-health-20260929"
+  },
+  {
+    "countryId": "gq",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/equatorial-guinea/health",
+    "section": "Health",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "HEALTH.json observation obs-gq-fcdo-health-20260929"
+  },
+  {
+    "countryId": "gy",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/guyana/health",
+    "section": "Health",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "HEALTH.json observation obs-gy-fcdo-health-20260929"
+  },
+  {
+    "countryId": "il",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/israel/health",
+    "section": "Health",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "HEALTH.json observation obs-il-fcdo-health-20260929",
+    "sourceDiscrepancy": "FCDO health page says ambulance100; its getting-help page says101 and reviewer checked MDA official101. Health record deliberately omits telephone numbers; emergency record uses getting-help101. Do not propagate health-page typo."
+  },
+  {
+    "countryId": "mr",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/mauritania/health",
+    "section": "Health",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "HEALTH.json observation obs-mr-fcdo-health-20260929"
+  },
+  {
+    "countryId": "sd",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/sudan/health",
+    "section": "Health",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "HEALTH.json observation obs-sd-fcdo-health-20260929"
+  },
+  {
+    "countryId": "sr",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/suriname/health",
+    "section": "Health",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "HEALTH.json observation obs-sr-fcdo-health-20260929"
+  },
+  {
+    "countryId": "ss",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/south-sudan/health",
+    "section": "Health",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "HEALTH.json observation obs-ss-fcdo-health-20260929"
+  },
+  {
+    "countryId": "sy",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/syria/health",
+    "section": "Health",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "HEALTH.json observation obs-sy-fcdo-health-20260929"
+  },
+  {
+    "countryId": "td",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/chad/health",
+    "section": "Health",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "HEALTH.json observation obs-td-fcdo-health-20260929"
+  },
+  {
+    "countryId": "ye",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/yemen/health",
+    "section": "Health",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "HEALTH.json observation obs-ye-fcdo-health-20260929"
+  },
+  {
+    "countryId": "bh",
+    "sourceUrl": "https://travelhealthpro.org.uk/countries/bahrain",
+    "section": "Vaccines/certificates/other risks",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "HEALTH.json observation obs-bh-nathnac-health-20260929"
+  },
+  {
+    "countryId": "il",
+    "sourceUrl": "https://travelhealthpro.org.uk/countries/israel",
+    "section": "Vaccines/certificates/other risks",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "HEALTH.json observation obs-il-nathnac-health-20260929"
+  }
+]

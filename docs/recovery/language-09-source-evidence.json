@@ -1,0 +1,74 @@
+[
+  {
+    "countryId": "gb",
+    "sourceUrl": "https://www.trade.gov/country-commercial-guides/united-kingdom-business-travel",
+    "section": "Languages / practical communication",
+    "retrievalDate": "2026-09-29",
+    "claimLocation": "LANGUAGE_09.json record gb-language-baseline-20260929",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash"
+  },
+  {
+    "countryId": "ir",
+    "sourceUrl": "https://www.axl.cefan.ulaval.ca/asie/iran.htm",
+    "section": "Languages / practical communication",
+    "retrievalDate": "2026-09-29",
+    "claimLocation": "LANGUAGE_09.json record ir-language-baseline-20260929",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash"
+  },
+  {
+    "countryId": "ly",
+    "sourceUrl": "https://www.axl.cefan.ulaval.ca/afrique/libye.htm",
+    "section": "Languages / practical communication",
+    "retrievalDate": "2026-09-29",
+    "claimLocation": "LANGUAGE_09.json record ly-language-baseline-20260929",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash"
+  },
+  {
+    "countryId": "sd",
+    "sourceUrl": "https://www.axl.cefan.ulaval.ca/afrique/soudan.htm",
+    "section": "Languages / practical communication",
+    "retrievalDate": "2026-09-29",
+    "claimLocation": "LANGUAGE_09.json record sd-language-baseline-20260929",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash"
+  },
+  {
+    "countryId": "ss",
+    "sourceUrl": "https://www.axl.cefan.ulaval.ca/afrique/soudan-Sud.htm",
+    "section": "Languages / practical communication",
+    "retrievalDate": "2026-09-29",
+    "claimLocation": "LANGUAGE_09.json record ss-language-baseline-20260929",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash"
+  },
+  {
+    "countryId": "sy",
+    "sourceUrl": "https://www.unhcr.org/ie/sites/en-ie/files/legacy-pdf/55f6b90f9.pdf",
+    "section": "Languages / practical communication",
+    "retrievalDate": "2026-09-29",
+    "claimLocation": "LANGUAGE_09.json record sy-language-baseline-20260929",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash"
+  },
+  {
+    "countryId": "ve",
+    "sourceUrl": "https://gem-report-education-profiles.unesco.org/es/america-latina-y-el-caribe/venezuela-republica-bolivariana-de/_inclusion.html",
+    "section": "Languages / practical communication",
+    "retrievalDate": "2026-09-29",
+    "claimLocation": "LANGUAGE_09.json record ve-language-baseline-20260929",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash"
+  },
+  {
+    "countryId": "ye",
+    "sourceUrl": "https://llacan.cnrs.fr/fichiers/Vanhove/EALL.pdf",
+    "section": "Languages / practical communication",
+    "retrievalDate": "2026-09-29",
+    "claimLocation": "LANGUAGE_09.json record ye-language-baseline-20260929",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash"
+  },
+  {
+    "countryId": "ru",
+    "sourceUrl": "https://discoverrussia.travel/plan-your-trip/important-information",
+    "section": "Languages / practical communication",
+    "retrievalDate": "2026-09-29",
+    "claimLocation": "LANGUAGE_09.json record ru-language-baseline-20260929",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash"
+  }
+]

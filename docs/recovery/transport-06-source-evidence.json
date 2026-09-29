@@ -1,0 +1,74 @@
+[
+  {
+    "countryId": "es",
+    "sourceUrl": "https://www.spain.info/en/how-to-get-there/",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_06.json record es-transport-baseline-20260929"
+  },
+  {
+    "countryId": "es",
+    "sourceUrl": "https://www.spain.info/en/getting-around/",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_06.json record es-transport-baseline-20260929"
+  },
+  {
+    "countryId": "es",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/spain/safety-and-security",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_06.json record es-transport-baseline-20260929"
+  },
+  {
+    "countryId": "no",
+    "sourceUrl": "https://www.visitnorway.com/plan-your-trip/getting-here/?print=on",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_06.json record no-transport-baseline-20260929"
+  },
+  {
+    "countryId": "no",
+    "sourceUrl": "https://www.visitnorway.com/plan-your-trip/getting-around/by-car/",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_06.json record no-transport-baseline-20260929"
+  },
+  {
+    "countryId": "no",
+    "sourceUrl": "https://www.vegvesen.no/en/vehicles/own-and-maintain/tyre-requirements/",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_06.json record no-transport-baseline-20260929"
+  },
+  {
+    "countryId": "gb",
+    "sourceUrl": "https://www.visitbritain.org/travelling-britain",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_06.json record gb-transport-baseline-20260929"
+  },
+  {
+    "countryId": "gb",
+    "sourceUrl": "https://travel.gc.ca/destinations/united-kingdom",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_06.json record gb-transport-baseline-20260929"
+  },
+  {
+    "countryId": "gb",
+    "sourceUrl": "https://www.smartraveller.gov.au/destinations/europe/united-kingdom",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_06.json record gb-transport-baseline-20260929"
+  }
+]

@@ -1,0 +1,146 @@
+[
+  {
+    "countryId": "ae",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/united-arab-emirates",
+    "retrievedAt": "2026-09-29T10:28:31.770893+00:00",
+    "responseSha256": "82c4a733bc8344465b6532d258604deb89ebad976ddadc59bec0ce1ee51d7de4",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_01.json record ae-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "ae",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/united-arab-emirates/health",
+    "retrievedAt": "2026-09-29T10:28:31.802805+00:00",
+    "responseSha256": "2b6fb95248d4e49245c56f1c0d9b3273f5ab3eb76a3fa6661f26890fef8ea64a",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_01.json record ae-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "ao",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/angola",
+    "retrievedAt": "2026-09-29T10:28:31.592581+00:00",
+    "responseSha256": "adda1d0792672a7f7ce41f1ed75dda42cd9e8ecf43c1c28fdb4efc0107fff5a9",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_01.json record ao-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "ao",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/angola/health",
+    "retrievedAt": "2026-09-29T10:28:31.624425+00:00",
+    "responseSha256": "c51840c9dc495ef513cbab8dccbf326229522045608c9f823034e4e8cb589f09",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_01.json record ao-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "ar",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/argentina",
+    "retrievedAt": "2026-09-29T10:28:32.090769+00:00",
+    "responseSha256": "3356fb6f7b8353d90955e97a1bcbfde389b221d06dd1ec55c84b257bb0a314ea",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_01.json record ar-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "ar",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/argentina/health",
+    "retrievedAt": "2026-09-29T10:28:32.223941+00:00",
+    "responseSha256": "331e3bb1cf358453c6024e7efb337abd8d55959c418e89c49aabddd82aec8fca",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_01.json record ar-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "au",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/australia",
+    "retrievedAt": "2026-09-29T10:28:32.310569+00:00",
+    "responseSha256": "de3b78e69454046acb198af99f0da263f45fca8d86ac70fa7207a8fc5ac5b50e",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_01.json record au-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "au",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/australia/health",
+    "retrievedAt": "2026-09-29T10:28:32.278584+00:00",
+    "responseSha256": "90a665ac4f0b74ca4bbf3bfc3746f9a250cc3eca7105040c8cae2331cec3e091",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_01.json record au-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "az",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/azerbaijan",
+    "retrievedAt": "2026-09-29T10:28:32.646895+00:00",
+    "responseSha256": "e14aa2c86755ee5df1cf08a0613b4afd7a078b61a638e25091d0e3ef8ea4f5d5",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_01.json record az-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "az",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/azerbaijan/health",
+    "retrievedAt": "2026-09-29T10:28:32.747215+00:00",
+    "responseSha256": "84fe083241aed4ca21a76b540b86494ef63c71674870dc139244ed1d4c150be2",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_01.json record az-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "bh",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/bahrain",
+    "retrievedAt": "2026-09-29T10:28:32.822491+00:00",
+    "responseSha256": "cfd539518cd95584a614d28bba5bfefc6ad9aa1ce16bd5b350bf5631056ac85f",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_01.json record bh-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "bh",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/bahrain/health",
+    "retrievedAt": "2026-09-29T10:28:32.798970+00:00",
+    "responseSha256": "16339e310c8ef7024895212251b221d43c11f70e583df2900f80a1dfc7d80552",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_01.json record bh-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "br",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/brazil",
+    "retrievedAt": "2026-09-29T10:28:33.145065+00:00",
+    "responseSha256": "7494e777976fa79f6ecbee6add39bbdaf774bcccafc00a40b9bb0ba76b97124e",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_01.json record br-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "br",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/brazil/health",
+    "retrievedAt": "2026-09-29T10:28:33.172062+00:00",
+    "responseSha256": "e10099a41fedec8e55f71e7a8032a2a5d4a5969d785ba06a479f06fc0375953e",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_01.json record br-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "ca",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/canada",
+    "retrievedAt": "2026-09-29T10:28:33.324794+00:00",
+    "responseSha256": "199202d4f00f935e420ef8eb2d747c8a2e8fa40f89766ec996f0a9aef0647803",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_01.json record ca-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "ca",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/canada/health",
+    "retrievedAt": "2026-09-29T10:28:33.273817+00:00",
+    "responseSha256": "55bc62fc4921db5ab78e1253f0fa9206ca9a0f715a9145c1a6be310bf069eb8d",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_01.json record ca-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "countryId": "ae",
+    "sourceUrl": "https://www.dubai.ae/web/dubai.ae/dubai-fact-sheet",
+    "section": "Languages / practical communication",
+    "retrievalDate": "2026-09-29",
+    "claimLocation": "LANGUAGE_01.json record ae-language-baseline-20260929",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash"
+  },
+  {
+    "countryId": "bh",
+    "sourceUrl": "https://www.bahrain.gov.bh/wps/portal/en/BNP/BahrainAtAGlance/AboutBahrain",
+    "section": "Languages / practical communication",
+    "retrievalDate": "2026-09-29",
+    "claimLocation": "LANGUAGE_01.json record bh-language-baseline-20260929",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash"
+  },
+  {
+    "countryId": "qa",
+    "sourceUrl": "https://imo.gov.qa/state-of-qatar/qatar-at-a-glance",
+    "section": "Languages / practical communication",
+    "retrievalDate": "2026-09-29",
+    "claimLocation": "LANGUAGE_01.json record qa-language-baseline-20260929",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash"
+  },
+  {
+    "countryId": "om",
+    "sourceUrl": "https://www.fm.gov.om/en/about-oman/state/key-facts/",
+    "section": "Languages / practical communication",
+    "retrievalDate": "2026-09-29",
+    "claimLocation": "LANGUAGE_01.json record om-language-baseline-20260929",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash"
+  },
+  {
+    "countryId": "jo",
+    "sourceUrl": "https://international.visitjordan.com/page/16/justthefacts.aspx",
+    "section": "Languages / practical communication",
+    "retrievalDate": "2026-09-29",
+    "claimLocation": "LANGUAGE_01.json record jo-language-baseline-20260929",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash"
+  }
+]

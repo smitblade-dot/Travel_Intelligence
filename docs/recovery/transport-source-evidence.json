@@ -1,0 +1,42 @@
+[
+  {
+    "countryId": "ly",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/libya/safety-and-security",
+    "section": "Transport; access; seasonal constraints",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT.json record ly-transport-baseline-20260929"
+  },
+  {
+    "countryId": "ly",
+    "sourceUrl": "https://travel.gc.ca/destinations/libya",
+    "section": "Transport; access; seasonal constraints",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT.json record ly-transport-baseline-20260929"
+  },
+  {
+    "countryId": "sy",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/syria/safety-and-security",
+    "section": "Transport; access; seasonal constraints",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT.json record sy-transport-baseline-20260929"
+  },
+  {
+    "countryId": "sy",
+    "sourceUrl": "https://travel.gc.ca/destinations/syria",
+    "section": "Transport; access; seasonal constraints",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT.json record sy-transport-baseline-20260929"
+  },
+  {
+    "countryId": "ss",
+    "sourceUrl": "https://www.smartraveller.gov.au/destinations/africa/south-sudan",
+    "section": "Transport; access; seasonal constraints",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT.json record ss-transport-baseline-20260929"
+  }
+]

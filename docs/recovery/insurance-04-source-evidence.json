@@ -1,0 +1,146 @@
+[
+  {
+    "countryId": "iq",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/iraq",
+    "retrievedAt": "2026-09-29T10:28:37.509972+00:00",
+    "responseSha256": "5ac7f12a8620091b8cdf2b623ca171a5fdbd6addead8400199162d7409c604dd",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_04.json record iq-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "iq",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/iraq/health",
+    "retrievedAt": "2026-09-29T10:28:37.541543+00:00",
+    "responseSha256": "f059c8871af549aad4a13f90c6245ede007f177cb6e20adf5e11dbc287b1d269",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_04.json record iq-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "ir",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/iran",
+    "retrievedAt": "2026-09-29T10:28:37.542143+00:00",
+    "responseSha256": "8831a6c65e18f332d358c22e0bf74f5d387baf3d163938e67ec62d4ba8c3fa6e",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_04.json record ir-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "ir",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/iran/health",
+    "retrievedAt": "2026-09-29T10:28:37.477496+00:00",
+    "responseSha256": "5f450be354309bc7beed019350660503ac80f685b92f8cb10b9bac428fe93a4b",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_04.json record ir-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "jo",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/jordan",
+    "retrievedAt": "2026-09-29T10:28:38.052642+00:00",
+    "responseSha256": "e811e36908f5484578155f69de5a317cb06993ccfea02fdc76ba025fe2eda69b",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_04.json record jo-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "jo",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/jordan/health",
+    "retrievedAt": "2026-09-29T10:28:37.835688+00:00",
+    "responseSha256": "8579d178b305facfff9bd43a6a44934830ee823a6cfda5a16c8c8a97c8d3d52f",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_04.json record jo-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "jp",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/japan",
+    "retrievedAt": "2026-09-29T10:28:37.989991+00:00",
+    "responseSha256": "357b9a8f85f6ec45348df78b5b0ff8172bc87422016503189b43a5f1ef08b286",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_04.json record jp-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "jp",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/japan/health",
+    "retrievedAt": "2026-09-29T10:28:37.882165+00:00",
+    "responseSha256": "0c0c22a88906ed3c39fb1cb025258f13e0effa48ecf311e45361455379c3bf87",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_04.json record jp-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "kw",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/kuwait",
+    "retrievedAt": "2026-09-29T10:28:38.421003+00:00",
+    "responseSha256": "8eaf5785fd6194b011f16dd1c8008d22567833246893788f50d18702c0a17d48",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_04.json record kw-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "kw",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/kuwait/health",
+    "retrievedAt": "2026-09-29T10:28:38.381956+00:00",
+    "responseSha256": "87ed9eca929ce20d108f02a0901bff4de61131038a1a375958869e3ca250def9",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_04.json record kw-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "kz",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/kazakhstan",
+    "retrievedAt": "2026-09-29T10:28:38.425453+00:00",
+    "responseSha256": "4ca1f89a06d1726c1064da7462ffcefb9da5d3fc6595984a6c9d619052a981cf",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_04.json record kz-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "kz",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/kazakhstan/health",
+    "retrievedAt": "2026-09-29T10:28:38.512192+00:00",
+    "responseSha256": "7e6719305529675aaac9788ffe1846b97b872e2f613abf4baba514e067b54c26",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_04.json record kz-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "ly",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/libya",
+    "retrievedAt": "2026-09-29T10:28:38.931739+00:00",
+    "responseSha256": "6e322b32eb3d1f4f96cfe5747a66fb343b3f86bd7ee29e07562d0fc659946543",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_04.json record ly-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "ly",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/libya/health",
+    "retrievedAt": "2026-09-29T10:28:38.862636+00:00",
+    "responseSha256": "d71f247b3bccebc6a4e76fd9acbfe4f2d00eb97374eb0c59673c879b44221a3f",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_04.json record ly-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "mr",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/mauritania",
+    "retrievedAt": "2026-09-29T10:28:38.829540+00:00",
+    "responseSha256": "de5aa2393e3ac657f7a0b4e1784e6c1a508b74638379dbf4da33154b8fd47151",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_04.json record mr-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "mr",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/mauritania/health",
+    "retrievedAt": "2026-09-29T10:28:38.861497+00:00",
+    "responseSha256": "c224aef18e806e3ff3e89bc4476b51775088decf0bd20b710e448d6881d6e429",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_04.json record mr-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  }
+]

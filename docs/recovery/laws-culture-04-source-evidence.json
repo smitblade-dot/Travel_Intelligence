@@ -1,0 +1,66 @@
+[
+  {
+    "countryId": "cn",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/china/safety-and-security",
+    "section": "Laws and culture; driving where relevant",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_04.json record cn-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "jp",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/japan/safety-and-security",
+    "section": "Laws and culture; driving where relevant",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_04.json record jp-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "id",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/indonesia/safety-and-security",
+    "section": "Laws and culture; driving where relevant",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_04.json record id-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "kz",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/kazakhstan/safety-and-security",
+    "section": "Laws and culture; driving where relevant",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_04.json record kz-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "az",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/azerbaijan/safety-and-security",
+    "section": "Laws and culture; driving where relevant",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_04.json record az-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "ru",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/russia/safety-and-security",
+    "section": "Laws and culture; driving where relevant",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_04.json record ru-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "tm",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/turkmenistan/safety-and-security",
+    "section": "Laws and culture; driving where relevant",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_04.json record tm-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "il",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/israel/safety-and-security",
+    "section": "Laws and culture; driving where relevant",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE_04.json record il-laws-culture-baseline-20260929"
+  }
+]

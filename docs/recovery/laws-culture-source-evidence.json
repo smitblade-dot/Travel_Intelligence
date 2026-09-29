@@ -1,0 +1,58 @@
+[
+  {
+    "countryId": "ci",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/cote-d-ivoire/safety-and-security",
+    "section": "Laws and cultural differences",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE.json record ci-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "ga",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/gabon/safety-and-security",
+    "section": "Laws and cultural differences",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE.json record ga-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "gq",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/equatorial-guinea/safety-and-security",
+    "section": "Laws and cultural differences",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE.json record gq-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "gy",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/guyana/safety-and-security",
+    "section": "Laws and cultural differences",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE.json record gy-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "mr",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/mauritania/safety-and-security",
+    "section": "Laws and cultural differences",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE.json record mr-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "sd",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/sudan/safety-and-security",
+    "section": "Laws and cultural differences",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE.json record sd-laws-culture-baseline-20260929"
+  },
+  {
+    "countryId": "td",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/chad/safety-and-security",
+    "section": "Laws and cultural differences",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "LAWS_CULTURE.json record td-laws-culture-baseline-20260929"
+  }
+]

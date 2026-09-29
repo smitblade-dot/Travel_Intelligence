@@ -1,0 +1,58 @@
+[
+  {
+    "countryId": "eg",
+    "sourceUrl": "https://www.experienceegypt.eg/en/home/geography",
+    "section": "Full relevant climate, seasons and hazards sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "ENVIRONMENT_07.json record eg-environment-baseline-20260929"
+  },
+  {
+    "countryId": "eg",
+    "sourceUrl": "https://www.smartraveller.gov.au/destinations/africa/egypt",
+    "section": "Full relevant climate, seasons and hazards sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "ENVIRONMENT_07.json record eg-environment-baseline-20260929"
+  },
+  {
+    "countryId": "tn",
+    "sourceUrl": "https://www.discovertunisia.com/en/infos-pratiques/weather",
+    "section": "Full relevant climate, seasons and hazards sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "ENVIRONMENT_07.json record tn-environment-baseline-20260929"
+  },
+  {
+    "countryId": "tn",
+    "sourceUrl": "https://www.smartraveller.gov.au/destinations/africa/tunisia",
+    "section": "Full relevant climate, seasons and hazards sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "ENVIRONMENT_07.json record tn-environment-baseline-20260929"
+  },
+  {
+    "countryId": "ly",
+    "sourceUrl": "https://www.fao.org/4/aq042e/aq042e.pdf",
+    "section": "Full relevant climate, seasons and hazards sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "ENVIRONMENT_07.json record ly-environment-baseline-20260929"
+  },
+  {
+    "countryId": "ly",
+    "sourceUrl": "https://www.smartraveller.gov.au/destinations/africa/libya",
+    "section": "Full relevant climate, seasons and hazards sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "ENVIRONMENT_07.json record ly-environment-baseline-20260929"
+  },
+  {
+    "countryId": "ly",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/libya/safety-and-security",
+    "section": "Full relevant climate, seasons and hazards sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "ENVIRONMENT_07.json record ly-environment-baseline-20260929"
+  }
+]

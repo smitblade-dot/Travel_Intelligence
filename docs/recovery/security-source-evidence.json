@@ -1,0 +1,130 @@
+[
+  {
+    "countryId": "cg",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/congo/safety-and-security",
+    "section": "safety-and-security",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash",
+    "claimLocation": "SECURITY.json observation obs-cg-fcdo-security-20260929"
+  },
+  {
+    "countryId": "cg",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/congo/regional-risks",
+    "section": "regional-risks",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash",
+    "claimLocation": "SECURITY.json observation obs-cg-fcdo-security-20260929-regional"
+  },
+  {
+    "countryId": "ci",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/cote-d-ivoire/safety-and-security",
+    "section": "safety-and-security",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash",
+    "claimLocation": "SECURITY.json observation obs-ci-fcdo-security-20260929"
+  },
+  {
+    "countryId": "ci",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/cote-d-ivoire/regional-risks",
+    "section": "regional-risks",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash",
+    "claimLocation": "SECURITY.json observation obs-ci-fcdo-security-20260929-regional"
+  },
+  {
+    "countryId": "ga",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/gabon/safety-and-security",
+    "section": "safety-and-security",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash",
+    "claimLocation": "SECURITY.json observation obs-ga-fcdo-security-20260929"
+  },
+  {
+    "countryId": "gq",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/equatorial-guinea/safety-and-security",
+    "section": "safety-and-security",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash",
+    "claimLocation": "SECURITY.json observation obs-gq-fcdo-security-20260929"
+  },
+  {
+    "countryId": "gy",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/guyana/safety-and-security",
+    "section": "safety-and-security",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash",
+    "claimLocation": "SECURITY.json observation obs-gy-fcdo-security-20260929"
+  },
+  {
+    "countryId": "mr",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/mauritania/safety-and-security",
+    "section": "safety-and-security",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash",
+    "claimLocation": "SECURITY.json observation obs-mr-fcdo-security-20260929"
+  },
+  {
+    "countryId": "mr",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/mauritania/regional-risks",
+    "section": "regional-risks",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash",
+    "claimLocation": "SECURITY.json observation obs-mr-fcdo-security-20260929-regional"
+  },
+  {
+    "countryId": "sd",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/sudan/safety-and-security",
+    "section": "safety-and-security",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash",
+    "claimLocation": "SECURITY.json observation obs-sd-fcdo-security-20260929"
+  },
+  {
+    "countryId": "sd",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/sudan",
+    "section": "warnings and insurance",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash",
+    "claimLocation": "SECURITY.json observation obs-sd-fcdo-security-20260929-regional"
+  },
+  {
+    "countryId": "sr",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/suriname/safety-and-security",
+    "section": "safety-and-security",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash",
+    "claimLocation": "SECURITY.json observation obs-sr-fcdo-security-20260929"
+  },
+  {
+    "countryId": "sr",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/suriname/regional-risks",
+    "section": "regional-risks",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash",
+    "claimLocation": "SECURITY.json observation obs-sr-fcdo-security-20260929-regional"
+  },
+  {
+    "countryId": "ss",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/south-sudan/safety-and-security",
+    "section": "safety-and-security",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash",
+    "claimLocation": "SECURITY.json observation obs-ss-fcdo-security-20260929"
+  },
+  {
+    "countryId": "td",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/chad/safety-and-security",
+    "section": "safety-and-security",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash",
+    "claimLocation": "SECURITY.json observation obs-td-fcdo-security-20260929"
+  },
+  {
+    "countryId": "td",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/chad/regional-risks",
+    "section": "regional-risks",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash",
+    "claimLocation": "SECURITY.json observation obs-td-fcdo-security-20260929-regional"
+  }
+]

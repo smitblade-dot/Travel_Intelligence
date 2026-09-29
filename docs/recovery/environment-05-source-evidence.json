@@ -1,0 +1,50 @@
+[
+  {
+    "countryId": "ir",
+    "sourceUrl": "https://www.fao.org/fileadmin/templates/ess/CountrySTAT/ECO_Tehran/Docs/General_Information_Note_on_Iran_and_the_FAO_Representation_in_the_Country_-_July2016.pdf",
+    "section": "Full relevant climate, seasons and hazards sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "ENVIRONMENT_05.json record ir-environment-baseline-20260929"
+  },
+  {
+    "countryId": "ir",
+    "sourceUrl": "https://www.smartraveller.gov.au/destinations/middle-east/iran",
+    "section": "Full relevant climate, seasons and hazards sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "ENVIRONMENT_05.json record ir-environment-baseline-20260929"
+  },
+  {
+    "countryId": "iq",
+    "sourceUrl": "https://adelphi.de/system/files/mediathek/bilder/Climate_Risk_Profile_Iraq_8.pdf",
+    "section": "Full relevant climate, seasons and hazards sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "ENVIRONMENT_05.json record iq-environment-baseline-20260929"
+  },
+  {
+    "countryId": "iq",
+    "sourceUrl": "https://www.smartraveller.gov.au/destinations/middle-east/iraq",
+    "section": "Full relevant climate, seasons and hazards sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "ENVIRONMENT_05.json record iq-environment-baseline-20260929"
+  },
+  {
+    "countryId": "ye",
+    "sourceUrl": "https://documents1.worldbank.org/curated/en/099114502092313406/pdf/P1735820079ac70108d210446b87c56e45.pdf",
+    "section": "Full relevant climate, seasons and hazards sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "ENVIRONMENT_05.json record ye-environment-baseline-20260929"
+  },
+  {
+    "countryId": "ye",
+    "sourceUrl": "https://www.smartraveller.gov.au/destinations/middle-east/yemen",
+    "section": "Full relevant climate, seasons and hazards sections indexed by observation",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "ENVIRONMENT_05.json record ye-environment-baseline-20260929"
+  }
+]

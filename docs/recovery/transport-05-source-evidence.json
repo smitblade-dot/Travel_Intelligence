@@ -1,0 +1,50 @@
+[
+  {
+    "countryId": "gy",
+    "sourceUrl": "https://www.smartraveller.gov.au/destinations/americas/guyana",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_05.json record gy-transport-baseline-20260929"
+  },
+  {
+    "countryId": "sr",
+    "sourceUrl": "https://www.japi-airport.com/",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_05.json record sr-transport-baseline-20260929"
+  },
+  {
+    "countryId": "sr",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/suriname/safety-and-security",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_05.json record sr-transport-baseline-20260929"
+  },
+  {
+    "countryId": "ga",
+    "sourceUrl": "https://www.libreville-aeroport.com/en/transport/",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_05.json record ga-transport-baseline-20260929"
+  },
+  {
+    "countryId": "ga",
+    "sourceUrl": "https://travel.gc.ca/destinations/gabon",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_05.json record ga-transport-baseline-20260929"
+  },
+  {
+    "countryId": "ga",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/gabon/safety-and-security",
+    "section": "Transport/timetable; seasonal climate; causeway access where stated",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "TRANSPORT_05.json record ga-transport-baseline-20260929"
+  }
+]

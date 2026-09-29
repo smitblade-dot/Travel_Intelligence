@@ -1,0 +1,166 @@
+[
+  {
+    "countryId": "mx",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/mexico",
+    "retrievedAt": "2026-09-29T10:28:39.312960+00:00",
+    "responseSha256": "c0ce5946c1cfece34151724e43c0ed79e4700b7359b6d1c8b52e6743c504c9e4",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_05.json record mx-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "mx",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/mexico/health",
+    "retrievedAt": "2026-09-29T10:28:39.582636+00:00",
+    "responseSha256": "9e022bd1afcffb7cd004413e62dfd365b9ee61a01162e1c38babaa759b4a0dd8",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_05.json record mx-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "ng",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/nigeria",
+    "retrievedAt": "2026-09-29T10:28:39.583418+00:00",
+    "responseSha256": "f1b19ba9e8eeb9e45d5bebe9dca40417bcd2a5694248b1bd7d62c9e31713d6d3",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_05.json record ng-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "ng",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/nigeria/health",
+    "retrievedAt": "2026-09-29T10:28:39.343097+00:00",
+    "responseSha256": "430215c18750d6d81477093d496dc72c6c95a4c3bc5d45134670fb7967061d52",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_05.json record ng-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "no",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/norway",
+    "retrievedAt": "2026-09-29T10:28:39.823239+00:00",
+    "responseSha256": "2cbed59db0195fa166228f7febd37ad4f6bd229e066f3dcd6bad99fc0137f80d",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_05.json record no-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "no",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/norway/health",
+    "retrievedAt": "2026-09-29T10:28:39.961379+00:00",
+    "responseSha256": "0e0e02020a2077e7a370631862984b5510c177af7ca0349c95fe1bdf72da952a",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_05.json record no-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "om",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/oman",
+    "retrievedAt": "2026-09-29T10:28:40.144408+00:00",
+    "responseSha256": "12aa5baafb471859d65b80571b1ec8da229c15354a1d211b7684aadf0488aa88",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_05.json record om-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "om",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/oman/health",
+    "retrievedAt": "2026-09-29T10:28:39.961975+00:00",
+    "responseSha256": "dded4d3b4e19bdddba66cd28b5ee23cbe2b2cd35427eeb9fefa3a13a7adab220",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_05.json record om-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "pe",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/peru",
+    "retrievedAt": "2026-09-29T10:28:40.387838+00:00",
+    "responseSha256": "c045d234085128cced0fef34019da1eaec70d9e3bd1b509b5a8c7008b3f30475",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_05.json record pe-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "pe",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/peru/health",
+    "retrievedAt": "2026-09-29T10:28:40.615336+00:00",
+    "responseSha256": "2e3b28f4b85e8482e27ab875c7a8f32d99fe361e023eae98d670b313fe2fa582",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_05.json record pe-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "qa",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/qatar",
+    "retrievedAt": "2026-09-29T10:28:40.497526+00:00",
+    "responseSha256": "1341a6d566c24db160f606d85a869bb7da152884e2e4919602ee3c4f432f3590",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_05.json record qa-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "qa",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/qatar/health",
+    "retrievedAt": "2026-09-29T10:28:40.640874+00:00",
+    "responseSha256": "edee89e31e82586b34e06fb6f8838b078e3ba69ac994986e3e457a1eb60edb39",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_05.json record qa-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "ru",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/russia",
+    "retrievedAt": "2026-09-29T10:28:41.058438+00:00",
+    "responseSha256": "2afb3c0f09006eeb4893cfc2bec83cff05133427ba6490daa85f6576b29bfacc",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_05.json record ru-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "ru",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/russia/health",
+    "retrievedAt": "2026-09-29T10:28:40.966938+00:00",
+    "responseSha256": "af4f1b490d9418acee4d66c40e6dfcb3f0bce95e2bcafb142d2dc4374cc0dcf7",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_05.json record ru-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "sa",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/saudi-arabia",
+    "retrievedAt": "2026-09-29T10:28:41.018377+00:00",
+    "responseSha256": "337314051bdd6b98a1d638b9b54b0d42d50ce02abf9c682ce8ede7d375554aad",
+    "section": "Travel insurance and destination warnings",
+    "claimLocation": "INSURANCE_05.json record sa-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "sa",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/saudi-arabia/health",
+    "retrievedAt": "2026-09-29T10:28:41.015732+00:00",
+    "responseSha256": "cbcfff086133e67cddf460918396da4f190cdc7cd5df87359983cc31100de8d4",
+    "section": "Healthcare and medical costs",
+    "claimLocation": "INSURANCE_05.json record sa-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "sa",
+    "sourceUrl": "https://www.chi.gov.sa/en/Rules/Pages/healthInsurance.aspx",
+    "retrievedAt": "2026-09-29T10:33:34.654019+00:00",
+    "responseSha256": "22ba1aaeae8cb22842341bb603814cecc917bf956e9eb6cd3de0fbb8c634bd39",
+    "captureMethod": "WEB_TOOL_RENDERED_SOURCE_TEXT",
+    "section": "Official visitor health insurance scheme",
+    "claimLocation": "INSURANCE_05.json record sa-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  },
+  {
+    "countryId": "qa",
+    "sourceUrl": "https://hamad.qa/EN/Patient-Information/Insurance/Pages/default.aspx",
+    "retrievedAt": "2026-09-29T10:33:34.660872+00:00",
+    "responseSha256": "f67360195a1c4fb0dadc36939f97bbb51cc671ee4ffe95b583f6b3e7c1d5cfc9",
+    "captureMethod": "WEB_TOOL_RENDERED_SOURCE_TEXT",
+    "section": "Official visitor health insurance scheme",
+    "claimLocation": "INSURANCE_05.json record qa-insurance-baseline-20260929",
+    "reviewStatus": "PENDING_INDEPENDENT_QA"
+  }
+]

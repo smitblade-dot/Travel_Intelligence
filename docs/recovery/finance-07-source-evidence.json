@@ -1,0 +1,79 @@
+[
+  {
+    "countryId": "au",
+    "sourceUrl": "https://www.australia.com/en/facts-and-planning/about-australia/key-facts-about-australia.html",
+    "claim": "Australia uses AUD; currency exchange/ATMs are readily available, cards are widely accepted, some merchants impose surcharges and travellers cheques are not widely accepted.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "au",
+    "sourceUrl": "https://www.austrac.gov.au/general-public/moving-money-overseas",
+    "claim": "Cash and covered bearer negotiable instruments with a combined value of AUD 10,000 equivalent or more require declaration when entering/leaving Australia.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "ca",
+    "sourceUrl": "https://www.canada.ca/en/immigration-refugees-citizenship/services/settle-canada/money.html",
+    "claim": "Canada uses Canadian dollars. Foreign debit/credit cards can withdraw cash at ABMs; most airports have exchange offices.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "ca",
+    "sourceUrl": "https://www.cbsa-asfc.gc.ca/publications/forms-formulaires/e667-eng.html",
+    "claim": "Currency and monetary instruments with combined value at least CAD 10,000 equivalent must be reported when imported or exported.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "es",
+    "sourceUrl": "https://www.spain.info/en/travel-tips/coins-banknotes/",
+    "claim": "Spain uses euros; ATMs are readily available and Visa/Mastercard acceptance widespread. Some merchants impose minimum card spending.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "es",
+    "sourceUrl": "https://travel.gc.ca/destinations/spain",
+    "claim": "Currency or monetary instruments of EUR 10,000 equivalent or more require a declaration at the EU external border.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "gb",
+    "sourceUrl": "https://www.visitbritain.com/en/plan-your-trip/useful-information",
+    "claim": "Sterling is used. Cards/contactless are widespread but some small establishments require cash. ATMs operate across Britain/Northern Ireland; withdrawal and conversion fees can apply.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "gb",
+    "sourceUrl": "https://www.gov.uk/bringing-cash-into-uk",
+    "claim": "Declare GBP 10,000 or more between Great Britain and outside the UK; Northern Ireland uses EUR 10,000 for non-EU travel and arrivals from Great Britain. Family/group totals count.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "no",
+    "sourceUrl": "https://www.visitnorway.com/plan-your-trip/travel-tips-a-z/currency-and-prices/",
+    "claim": "Norway uses kroner (NOK); almost all establishments accept card or phone payments. Post offices and some grocery stores reject foreign credit cards but accept debit cards.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "no",
+    "sourceUrl": "https://travel.gc.ca/destinations/norway",
+    "claim": "Canada advises declaration of NOK 25,000 equivalent or more in currency and covered convertible instruments when entering/leaving Norway.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "us",
+    "sourceUrl": "https://travel.gc.ca/destinations/united-states",
+    "claim": "US dollars are used. Canadian currency/personal cheques are not widely accepted and most banking transactions require a US account. More than USD 10,000 in covered cash/instruments crossing the border must be declared.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  }
+]

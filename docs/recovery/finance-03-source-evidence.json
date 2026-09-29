@@ -1,0 +1,74 @@
+[
+  {
+    "countryId": "gy",
+    "sourceUrl": "https://travel.gc.ca/destinations/guyana",
+    "section": "Money",
+    "claim": "The currency is the Guyanese dollar (GYD); US dollars are widely accepted. Canada describes card acceptance as confined to major hotels and reports few ATMs accepting foreign cards. Arrange sufficient cash and use banks, hotels or established exchange bureaus.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "id",
+    "sourceUrl": "https://travel.gc.ca/destinations/indonesia",
+    "section": "Money",
+    "claim": "The currency is the rupiah (IDR). Cards are less widely accepted outside major urban and tourism centres, so carry cash for remote destinations.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "il",
+    "sourceUrl": "https://travel.gc.ca/destinations/israel-and-palestine",
+    "section": "Money",
+    "claim": "The currency in Israel is the Israeli shekel (ILS). ATMs are available, but Canada warns that they may not accept Canadian cards. Check card compatibility before relying on ATM withdrawals. This record covers Israel only; conditions in the West Bank and Gaza differ.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "iq",
+    "sourceUrl": "https://travel.gc.ca/destinations/iraq",
+    "section": "Money",
+    "claim": "Iraq uses the dinar (IQD), mainly in cash; some shops take US dollars. ATMs are limited and may reject international cards. Canada advises that more than USD 10,000 equivalent in cash cannot be taken out unless declared on entry. Arrange funds and verify current customs requirements before travel.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "ir",
+    "sourceUrl": "https://travel.gc.ca/destinations/iran",
+    "section": "Money",
+    "claim": "Iran uses the rial. Canada reports credit cards are not accepted, ATMs serve local banking, and sanctions prevent transfers through commercial banking or money-transfer companies.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "jo",
+    "sourceUrl": "https://travel.gc.ca/destinations/jordan",
+    "section": "Money",
+    "claim": "The currency is the Jordanian dinar (JOD). ATMs operate in large cities and Queen Alia International Airport but are limited elsewhere. Larger Amman and tourist-area stores/restaurants accept cards. US dollars and euros are the easiest currencies to exchange.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "jp",
+    "sourceUrl": "https://travel.gc.ca/destinations/japan",
+    "section": "Money",
+    "claim": "The currency is the yen (JPY). Major hotels and restaurants accept cards, but cash remains important. ATMs are widespread, although many do not accept foreign debit cards; verify a compatible withdrawal option before relying on your card.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "kz",
+    "sourceUrl": "https://travel.gc.ca/destinations/kazakhstan",
+    "section": "Money",
+    "claim": "The currency is the Kazakh tenge (KZT). Cards are less widely accepted in rural areas than major cities; carry cash when travelling outside urban centres.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  },
+  {
+    "countryId": "ir",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/iran/safety-and-security",
+    "section": "Money",
+    "claim": "FCDO says foreign debit/cash cards do not work, cash access is difficult, and street currency exchange is illegal. Travellers should establish lawful access to sufficient rials before travelling.",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked in reviewer reports keyed by batch hash"
+  }
+]

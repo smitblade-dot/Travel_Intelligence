@@ -1,0 +1,90 @@
+[
+  {
+    "countryId": "cg",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/congo/entry-requirements",
+    "section": "Entry requirements",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "ENTRY.json observation obs-cg-fcdo-entry-20260929"
+  },
+  {
+    "countryId": "ci",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/cote-d-ivoire/entry-requirements",
+    "section": "Entry requirements",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "ENTRY.json observation obs-ci-fcdo-entry-20260929"
+  },
+  {
+    "countryId": "ec",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/ecuador/entry-requirements",
+    "section": "Entry requirements",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "ENTRY.json observation obs-ec-fcdo-entry-20260929"
+  },
+  {
+    "countryId": "ga",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/gabon/entry-requirements",
+    "section": "Entry requirements",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "ENTRY.json observation obs-ga-fcdo-entry-20260929"
+  },
+  {
+    "countryId": "gq",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/equatorial-guinea/entry-requirements",
+    "section": "Entry requirements",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "ENTRY.json observation obs-gq-fcdo-entry-20260929"
+  },
+  {
+    "countryId": "gy",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/guyana/entry-requirements",
+    "section": "Entry requirements",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "ENTRY.json observation obs-gy-fcdo-entry-20260929"
+  },
+  {
+    "countryId": "mr",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/mauritania/entry-requirements",
+    "section": "Entry requirements",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "ENTRY.json observation obs-mr-fcdo-entry-20260929"
+  },
+  {
+    "countryId": "sd",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/sudan/entry-requirements",
+    "section": "Entry requirements",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "ENTRY.json observation obs-sd-fcdo-entry-20260929"
+  },
+  {
+    "countryId": "sr",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/suriname/entry-requirements",
+    "section": "Entry requirements",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "ENTRY.json observation obs-sr-fcdo-entry-20260929"
+  },
+  {
+    "countryId": "ss",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/south-sudan/entry-requirements",
+    "section": "Entry requirements",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "ENTRY.json observation obs-ss-fcdo-entry-20260929"
+  },
+  {
+    "countryId": "td",
+    "sourceUrl": "https://www.gov.uk/foreign-travel-advice/chad/entry-requirements",
+    "section": "Entry requirements",
+    "retrievalDate": "2026-09-29",
+    "reviewStatus": "CAPTURED_BEFORE_INDEPENDENT_QA; acceptance tracked by batch hash",
+    "claimLocation": "ENTRY.json observation obs-td-fcdo-entry-20260929"
+  }
+]
