@@ -1222,7 +1222,12 @@
     wrap.appendChild(banner);
 
     wrap.appendChild(renderCurrentIntelligence());
-    if(publishedNuclearRecords().length) wrap.appendChild(el('button', {class:'btn',onclick:function(){currentView = 'NUCLEAR'; currentIso2 = null; render();}}, ['Browse global nuclear infrastructure']));
+    if(publishedNuclearRecords().length){
+      var nuclearSection = el('section', {'aria-label':'Global nuclear infrastructure'});
+      nuclearSection.appendChild(el('div', {class:'section-head'}, [el('h2', {}, ['Global nuclear infrastructure'])]));
+      nuclearSection.appendChild(el('button', {class:'btn',onclick:function(){currentView = 'NUCLEAR'; currentIso2 = null; render();}}, ['Browse global nuclear infrastructure']));
+      wrap.appendChild(nuclearSection);
+    }
 
     // Hotspots & hot topics — the most current thing on the site.
     var hotspots = computeHotspots(6);
