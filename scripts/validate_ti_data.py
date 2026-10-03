@@ -19,6 +19,10 @@ EVENT_STATUSES = {
     "SUPERSEDED", "RESOLVED",
 }
 PUBLICATION_STATUSES = {"DRAFT", "INTERNAL_REVIEW", "PUBLISHED", "WITHDRAWN"}
+DATA_TYPES = {
+    "FACT", "REQUIREMENT", "CONSIDERATION", "WARNING",
+    "CONTACT", "STATISTIC", "PROCEDURE",
+}
 
 def fail(msg):
     print(f"ERROR: {msg}")
@@ -64,6 +68,12 @@ def main():
         country_ids.add(cid)
 
     for record in records:
+        data_type = record.get("dataType")
+        if data_type not in DATA_TYPES:
+            return fail(
+                f"record {record.get('id')}: unsupported dataType {data_type!r}; "
+                f"expected one of {', '.join(sorted(DATA_TYPES))}"
+            )
         cid = str(record.get("countryId", "")).lower()
         if cid not in country_ids:
             return fail(f"record {record.get('id')}: countryId does not reference an existing country: {cid!r}")

@@ -133,11 +133,13 @@ def parse_pris_country_table(html):
         raise RuntimeError(f"IAEA PRIS table sanity check failed: only {len(rows)} country rows")
     return rows
 
-def build_profiles(rows, generated_at):
+def build_profiles(rows, generated_at, existing_profiles=()):
+    previous = {p.get("iso2"): p for p in existing_profiles if p.get("iso2")}
     profiles = []
     for country, reactor_count, capacity_mw in rows:
         iso2 = ISO2[country]
-        profiles.append({
+        prior = previous.pop(iso2, {})
+        profile = {
             "iso2": iso2,
             "iso3": ISO3[iso2],
             "name": COUNTRY_NAMES[iso2],
@@ -152,12 +154,55 @@ def build_profiles(rows, generated_at):
             "sourceIds": ["iaea-pris"],
             "sourceStatus": "COUNTRY_AGGREGATE_ONLY",
             "lastRefreshed": generated_at
-        })
+        }
+        # PRIS only provides power-reactor aggregates here. Preserve fields
+        # maintained by future facility-level collectors instead of resetting
+        # research-reactor, fuel-cycle or other nuclear coverage to zero.
+        for key in ("researchReactors", "fuelCycleFacilities", "otherNuclearFacilities"):
+            if prior.get(key):
+                profile[key] = prior[key]
+        profile["facilityClasses"] = sorted(set(profile["facilityClasses"]) | set(prior.get("facilityClasses", [])))
+        profile["sourceIds"] = sorted(set(profile["sourceIds"]) | set(prior.get("sourceIds", [])))
+        if prior.get("sourceStatus") not in (None, "COUNTRY_AGGREGATE_ONLY"):
+            profile["sourceStatus"] = prior["sourceStatus"]
+        profiles.append(profile)
+    # Preserve profile-only countries from sources not represented in PRIS,
+    # such as research reactors and fuel-cycle facilities.
+    profiles.extend(previous.values())
     return profiles
 
 def main():
     scope = load_json(SCOPE)
     country_scope = load_json(COUNTRY_SCOPE)
+    # This legacy collector can only produce country aggregates. Refuse to
+    # replace any richer accepted inventory or profiles until the facility-aware
+    # collector is integrated. A blocked refresh must be visible to automation.
+    try:
+        for path, collections in ((OUT, ("facilities", "locations")),):
+            if path.exists():
+                existing = load_json(path)
+                if not isinstance(existing, dict):
+                    raise ValueError(f"{path.name} is not an object")
+                for key in collections:
+                    values = existing.get(key, [])
+                    if not isinstance(values, list):
+                        raise ValueError(f"{path.name}.{key} is not an array")
+                    if values:
+                        print(f"ERROR: {path.name} contains {key}; country-only refresh cannot replace it.")
+                        print("Existing nuclear inventory/profile files are preserved.")
+                        return 1
+        if PROFILES.exists():
+            current_profiles = load_json(PROFILES)
+            if not isinstance(current_profiles, dict) or not isinstance(current_profiles.get("profiles", []), list):
+                raise ValueError("Existing profile document is invalid")
+            for profile in current_profiles.get("profiles", []):
+                if not isinstance(profile, dict) or profile.get("sourceStatus") != "COUNTRY_AGGREGATE_ONLY":
+                    print("ERROR: Existing profiles contain non-aggregate intelligence; refusing replacement.")
+                    return 1
+    except (OSError, ValueError, TypeError) as exc:
+        print(f"ERROR: Cannot safely inspect existing nuclear data: {exc}")
+        return 1
+
     generated_at = datetime.now(timezone.utc).isoformat()
 
     try:
@@ -168,7 +213,12 @@ def main():
         print("Existing nuclear inventory/profile files are preserved.")
         return 0
 
-    profiles = build_profiles(rows, generated_at)
+    existing_inventory = load_json(OUT) if OUT.exists() else {}
+    existing_profile_doc = load_json(PROFILES) if PROFILES.exists() else {}
+    previous_profiles = existing_profile_doc.get("profiles", existing_inventory.get("countries", []))
+    profiles = build_profiles(rows, generated_at, previous_profiles)
+    facilities = existing_inventory.get("facilities", [])
+    locations = existing_inventory.get("locations", [])
     inventory = {
         "schemaVersion": "1.1",
         "generatedAt": generated_at,
@@ -177,15 +227,15 @@ def main():
         "coverage": {
             "scope": "GLOBAL",
             "countries": len(profiles),
-            "locations": 0,
-            "facilities": 0,
-            "facilityInventoryStatus": "COUNTRY_AGGREGATES_ONLY",
-            "note": "Country-level operating power-reactor aggregates are sourced from IAEA PRIS. Facility/site records are only populated when authoritative reactor-level or facility-level records are ingested."
+            "locations": len(locations),
+            "facilities": len(facilities),
+            "facilityInventoryStatus": "FACILITY_LEVEL_PARTIAL" if facilities else "COUNTRY_AGGREGATES_ONLY",
+            "note": "IAEA PRIS refreshes country-level operating power-reactor aggregates. Existing sourced facility/site records from other collectors are preserved; zero facilities means site-level coverage is not yet connected."
         },
         "sources": scope["sources"],
         "countries": profiles,
-        "facilities": [],
-        "locations": [],
+        "facilities": facilities,
+        "locations": locations,
         "unresolved": [
             {
                 "sourceId": "iaea-rrdb",

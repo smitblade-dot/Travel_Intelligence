@@ -1,0 +1,50 @@
+name: TI production integrity audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "data.json"
+      - "data/**"
+      - "config/**"
+      - "scripts/**"
+      - "index.html"
+      - ".github/workflows/**"
+  pull_request:
+    branches: [main]
+    paths:
+      - "data.json"
+      - "data/**"
+      - "config/**"
+      - "scripts/**"
+      - "index.html"
+      - ".github/workflows/**"
+
+permissions:
+  contents: read
+
+jobs:
+  integrity-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Validate TI data model
+        run: python3 scripts/validate_ti_data.py
+
+      - name: Test rejection of unsupported record data types
+        run: python3 scripts/test_validate_ti_data.py
+
+      - name: Test nuclear inventory preservation guard
+        run: python3 scripts/test_nuclear_preservation.py
+
+      - name: Test grandfathered baseline coverage semantics
+        run: python3 scripts/test_baseline_coverage_grandfathered.py
+
+      - name: Audit Phase 1 foundation
+        run: python3 scripts/audit_phase1_foundation.py
+
+      - name: Audit production release integrity
+        run: python3 scripts/audit_production_release.py
