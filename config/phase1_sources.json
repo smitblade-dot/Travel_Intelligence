@@ -79,6 +79,71 @@
       "rights": "source-specific",
       "automationPermission": "yes",
       "notes": "Discovery/corroboration. Original report rights remain with the publisher."
+    },
+    {
+      "id": "safecast-radiation",
+      "category": "RADIOLOGICAL_NUCLEAR",
+      "name": "Safecast",
+      "kind": "live-observation",
+      "url": "https://safecast.org/data/",
+      "endpoint": "https://api.safecast.org/measurements.json?distance=100&latitude=<lat>&longitude=<lon>&captured_after=<timestamp>&per_page=100",
+      "accessMethod": "http-json",
+      "priority": "P0",
+      "rights": "cc0",
+      "automationPermission": "yes",
+      "notes": "Open global radiation observations. Use for anomaly detection and corroboration, not as proof of a radiological incident. Compare a station against its own baseline and nearby independent observations."
+    },
+    {
+      "id": "epa-radnet",
+      "category": "RADIOLOGICAL_NUCLEAR",
+      "name": "US EPA RadNet",
+      "kind": "live-observation",
+      "url": "https://www.epa.gov/radnet/radnet-near-real-time-air-data",
+      "endpoint": "https://www.epa.gov/radnet/radnet-csv-file-downloads",
+      "accessMethod": "web-csv",
+      "priority": "P1",
+      "rights": "source-specific",
+      "automationPermission": "yes",
+      "notes": "US near-real-time gamma monitoring. Use station-level trends/baselines; EPA notes normal levels vary by location and weather can affect readings."
+    },
+    {
+      "id": "ctbto-radionuclide",
+      "category": "RADIOLOGICAL_NUCLEAR",
+      "name": "CTBTO radionuclide monitoring",
+      "kind": "restricted-reference",
+      "url": "https://www.ctbto.org/our-work/monitoring-technologies/radionuclide-monitoring",
+      "endpoint": null,
+      "accessMethod": "restricted-data",
+      "priority": "P1",
+      "rights": "restricted",
+      "automationPermission": "no",
+      "notes": "80-station radionuclide network. Use public CTBTO material for methodology/context; direct IMS data access requires the applicable CTBTO access route and conditions."
+    },
+    {
+      "id": "iaea-irmis",
+      "category": "RADIOLOGICAL_NUCLEAR",
+      "name": "IAEA IRMIS",
+      "kind": "official-reference",
+      "url": "https://nucleus.iaea.org/Pages/IRMIS.aspx",
+      "endpoint": null,
+      "accessMethod": "official-web",
+      "priority": "P1",
+      "rights": "source-specific",
+      "automationPermission": "no",
+      "notes": "Official emergency/radiation information source. Do not invent an API endpoint; investigate machine-readable access separately."
+    },
+    {
+      "id": "crucix-nuclear-watch",
+      "category": "RADIOLOGICAL_NUCLEAR",
+      "name": "CRUCIX Nuclear Watch",
+      "kind": "aggregator-discovery",
+      "url": "https://www.crucix.live/",
+      "endpoint": null,
+      "accessMethod": "web",
+      "priority": "P1",
+      "rights": "source-specific",
+      "automationPermission": "investigate",
+      "notes": "Secondary signal/corroboration layer. Do not scrape or publish CRUCIX readings directly without establishing access rights and provenance."
     }
   ]
 }

@@ -71,14 +71,17 @@ jobs:
             deterministic review queue is in data/phase1_review_queue.json,
             infrastructure relationships are in
             data/infrastructure_graph.json, and the conservative transport
-            reference network is in data/transport_network.json. Use these as
-            discovery/reference material only. Verify important claims against
+            reference network is in data/transport_network.json, and any current radiological signal snapshot in
+            data/radiological_signals.json. Use these as discovery/reference
+            material only. Verify important claims against
             the actual primary source before creating or updating any public
             TI event. Do not invent affected infrastructure or routes from a
             country-level association alone. Prefer explicit verified
             relationships; otherwise leave the relationship unresolved. Do
             not invent events from signals alone. Preserve source provenance
-            and uncertainty. The oilGasSummary section was refreshed
+            and uncertainty. Radiological sensor anomalies are signals only;
+            require authoritative corroboration before publishing a nuclear or
+            radiological incident. The oilGasSummary section was refreshed
             separately; do not touch or re-derive it. Commit and push
             substantive TI changes yourself.
           claude_args: |
