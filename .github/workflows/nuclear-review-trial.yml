@@ -1,0 +1,68 @@
+name: Nuclear inventory review trial
+on:
+  workflow_dispatch: {}
+  pull_request:
+    paths:
+      - 'scripts/nuclear_refresh/**'
+      - 'tests/nuclear-directory.test.mjs'
+      - 'tests/test_nuclear_*.py'
+      - '.github/workflows/nuclear-review-trial.yml'
+permissions:
+  contents: read
+concurrency:
+  group: nuclear-review-trial-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+      - name: Check directory accounting
+        run: node --test tests/nuclear-directory.test.mjs
+      - name: Check detail and preservation behavior
+        run: python3 -m unittest discover -s tests -p 'test_nuclear_*.py'
+  collect-review:
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)
+    needs: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: scripts/nuclear_refresh/browser/package-lock.json
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+      - name: Install locked browser collector dependency
+        working-directory: scripts/nuclear_refresh/browser
+        run: npm ci --ignore-scripts
+      - name: Install version-matched Chromium
+        working-directory: scripts/nuclear_refresh/browser
+        run: npx --no-install playwright install --with-deps chromium
+      - name: Collect public inventories into review artifacts
+        env:
+          TI_NUCLEAR_RUN: ${{ runner.temp }}/ti-nuclear-${{ github.run_id }}-${{ github.run_attempt }}
+        run: >-
+          python3 scripts/nuclear_refresh/run_refresh.py
+          --repo .
+          --out "$TI_NUCLEAR_RUN"
+          --accepted-snapshots data/nuclear_accepted_snapshots
+          --bootstrap-review
+      - name: Retain review evidence and failure reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nuclear-review-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/ti-nuclear-${{ github.run_id }}-${{ github.run_attempt }}/
+          retention-days: 7
+          if-no-files-found: warn

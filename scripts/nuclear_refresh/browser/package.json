@@ -1,0 +1,1 @@
+{"name":"ti-nuclear-directory-collector","private":true,"type":"module","engines":{"node":">=20"},"dependencies":{"playwright":"1.62.1"}}
