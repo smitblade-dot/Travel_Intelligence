@@ -14,19 +14,27 @@ permissions:
   id-token: write
 
 jobs:
+  schedule_gate:
+    runs-on: ubuntu-latest
+    outputs:
+      should_run: ${{ steps.gate.outputs.should_run }}
+    steps:
+      - id: gate
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+          elif [ "$(TZ=Europe/Nicosia date +%H)" = "21" ]; then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "should_run=false" >> "$GITHUB_OUTPUT"
+            echo "Unused Cyprus DST cron candidate; no refresh required."
+          fi
+
   refresh:
+    needs: schedule_gate
+    if: needs.schedule_gate.outputs.should_run == 'true'
     runs-on: ubuntu-latest
     steps:
-      - name: Enforce 21:00 Cyprus daily run
-        if: github.event_name == 'schedule'
-        run: |
-          local_hour=$(TZ=Europe/Nicosia date +%H)
-          if [ "$local_hour" != "21" ]; then
-            echo "Candidate UTC schedule is not 21:00 in Cyprus; intentional no-op."
-            exit 0
-          fi
-          echo "Running TI daily refresh at 21:00 Europe/Nicosia."
-
       - uses: actions/checkout@v6
         with:
           fetch-depth: 1
@@ -89,27 +97,38 @@ jobs:
       - name: Build traveller impact graph
         run: python3 scripts/build_traveller_impact_graph.py
 
+      - name: Synchronise public intelligence metadata
+        run: |
+          python3 - << 'PYEOF'
+          import json, datetime
+          from pathlib import Path
+          p = Path("data.json")
+          d = json.loads(p.read_text(encoding="utf-8"))
+          published = [e for e in d["events"] if e.get("publicationStatus") == "PUBLISHED"]
+          published_ids = {e.get("id") for e in published}
+          published_obs = [o for o in d["sourceObservations"] if o.get("eventId") in published_ids]
+          d["meta"]["counts"].update({
+              "countries": len(d["countries"]),
+              "records": len(d["records"]),
+              "sources": len(d["sources"]),
+              "locations": len(d["locations"]),
+              "events": len(d["events"]),
+              "sourceObservations": len(d["sourceObservations"]),
+          })
+          d["meta"]["currentIntelligence"] = {
+              "events": len(published),
+              "sourceObservations": len(published_obs),
+          }
+          d["meta"]["generated"] = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+          p.write_text(json.dumps(d, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
+          print(f"Metadata synced: published events={len(published)}, published observations={len(published_obs)}")
+          PYEOF
+
       - name: Validate TI data model
         run: python3 scripts/validate_ti_data.py
 
       - name: Audit Phase 1 foundation
         run: python3 scripts/audit_phase1_foundation.py
-
-      - name: Ensure meta.generated reflects this run
-        run: |
-          python3 - << 'PYEOF'
-          import re, datetime
-          path = "data.json"
-          with open(path, "r", encoding="utf-8") as f:
-              text = f.read()
-          now = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-          new_text, n = re.subn(r'"generated":"[^"]*"', f'"generated":"{now}"', text, count=1)
-          if n != 1:
-              raise SystemExit(f"Expected exactly one meta.generated field, found {n}")
-          with open(path, "w", encoding="utf-8") as f:
-              f.write(new_text)
-          print(f"meta.generated set to {now}")
-          PYEOF
 
       - name: Safety-net commit and push
         run: |
