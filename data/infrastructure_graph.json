@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generated": "2026-10-02T18:07:57.682895+00:00",
+  "generated": "2026-10-05T18:09:19.094470+00:00",
   "purpose": "Deterministic relationship graph for travel-impact resolution; not a source of truth.",
   "nodes": [
     {
@@ -586,6 +586,30 @@
       "infrastructure": "RAIL",
       "locationId": null,
       "countryId": "ru",
+      "status": "EXPLICIT_EVENT_RELATIONSHIP",
+      "resolvedLocation": false
+    },
+    {
+      "eventId": "ru-volgograd-samara-drone-2026-10-01",
+      "infrastructure": "ENERGY",
+      "locationId": null,
+      "countryId": "ru",
+      "status": "EXPLICIT_EVENT_RELATIONSHIP",
+      "resolvedLocation": false
+    },
+    {
+      "eventId": "ru-volgograd-samara-drone-2026-10-01",
+      "infrastructure": "AVIATION",
+      "locationId": null,
+      "countryId": "ru",
+      "status": "EXPLICIT_EVENT_RELATIONSHIP",
+      "resolvedLocation": false
+    },
+    {
+      "eventId": "ve-blackout-protests-2026-09-27",
+      "infrastructure": "ENERGY",
+      "locationId": null,
+      "countryId": "ve",
       "status": "EXPLICIT_EVENT_RELATIONSHIP",
       "resolvedLocation": false
     }
