@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generated": "2026-10-05T18:17:27.418418+00:00",
+  "generated": "2026-10-06T18:21:00.490864+00:00",
   "purpose": "Safe first-stage traveller-impact graph; explicit relationships only.",
   "rules": {
     "locationContainment": "A verified event at a child location may be inherited by its parent locations for discovery.",
@@ -113,6 +113,18 @@
     },
     {
       "eventId": "sa-houthi-interception-2026-09-26",
+      "countryId": "sa",
+      "locationId": null,
+      "locationChain": [],
+      "affectedInfrastructure": [],
+      "impactType": [
+        "NONE_IDENTIFIED"
+      ],
+      "relationshipPrecision": "COUNTRY",
+      "travellerImpactStatus": "COUNTRY_LEVEL_ONLY"
+    },
+    {
+      "eventId": "sa-houthi-interception-2026-10-01",
       "countryId": "sa",
       "locationId": null,
       "locationChain": [],
