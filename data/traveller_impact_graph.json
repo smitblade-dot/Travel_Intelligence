@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generated": "2026-10-08T18:22:02.048113+00:00",
+  "generated": "2026-10-09T18:24:22.427764+00:00",
   "purpose": "Safe first-stage traveller-impact graph; explicit relationships only.",
   "rules": {
     "locationContainment": "A verified event at a child location may be inherited by its parent locations for discovery.",
@@ -146,6 +146,22 @@
       "impactType": [
         "FLOODING",
         "MARITIME"
+      ],
+      "relationshipPrecision": "COUNTRY",
+      "travellerImpactStatus": "COUNTRY_LEVEL_ONLY"
+    },
+    {
+      "eventId": "nhc-isaias-us-2026-10-07",
+      "countryId": "us",
+      "locationId": null,
+      "locationChain": [],
+      "affectedInfrastructure": [
+        "ENERGY"
+      ],
+      "impactType": [
+        "FLOODING",
+        "MARITIME",
+        "ENERGY"
       ],
       "relationshipPrecision": "COUNTRY",
       "travellerImpactStatus": "COUNTRY_LEVEL_ONLY"
