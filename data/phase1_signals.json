@@ -1,123 +1,11 @@
 {
   "schemaVersion": "1.0",
-  "generated": "2026-10-09T18:07:32.254645+00:00",
+  "generated": "2026-10-10T18:05:43.375510+00:00",
   "purpose": "Reviewable Phase 1 signals; not published TI events.",
   "sources": {
     "ourairports-airports": {
-      "ok": true,
-      "count": 86226,
-      "sample": [
-        {
-          "ident": "EGLL",
-          "type": "large_airport",
-          "name": "London Heathrow Airport",
-          "latitude": "51.470748",
-          "longitude": "-0.459909",
-          "iso_country": "GB",
-          "iata_code": "LHR",
-          "icao_code": "EGLL",
-          "scheduled_service": "1"
-        },
-        {
-          "ident": "KLAX",
-          "type": "large_airport",
-          "name": "Los Angeles International Airport",
-          "latitude": "33.942501",
-          "longitude": "-118.407997",
-          "iso_country": "US",
-          "iata_code": "LAX",
-          "icao_code": "KLAX",
-          "scheduled_service": "1"
-        },
-        {
-          "ident": "KORD",
-          "type": "large_airport",
-          "name": "Chicago O'Hare International Airport",
-          "latitude": "41.9786",
-          "longitude": "-87.9048",
-          "iso_country": "US",
-          "iata_code": "ORD",
-          "icao_code": "KORD",
-          "scheduled_service": "1"
-        },
-        {
-          "ident": "KJFK",
-          "type": "large_airport",
-          "name": "John F. Kennedy International Airport",
-          "latitude": "40.639447",
-          "longitude": "-73.779317",
-          "iso_country": "US",
-          "iata_code": "JFK",
-          "icao_code": "KJFK",
-          "scheduled_service": "1"
-        },
-        {
-          "ident": "KATL",
-          "type": "large_airport",
-          "name": "Hartsfield Jackson Atlanta International Airport",
-          "latitude": "33.6367",
-          "longitude": "-84.428101",
-          "iso_country": "US",
-          "iata_code": "ATL",
-          "icao_code": "KATL",
-          "scheduled_service": "1"
-        },
-        {
-          "ident": "LFPG",
-          "type": "large_airport",
-          "name": "Charles de Gaulle International Airport",
-          "latitude": "49.00896",
-          "longitude": "2.554117",
-          "iso_country": "FR",
-          "iata_code": "CDG",
-          "icao_code": "LFPG",
-          "scheduled_service": "1"
-        },
-        {
-          "ident": "KSFO",
-          "type": "large_airport",
-          "name": "San Francisco International Airport",
-          "latitude": "37.619806",
-          "longitude": "-122.374821",
-          "iso_country": "US",
-          "iata_code": "SFO",
-          "icao_code": "KSFO",
-          "scheduled_service": "1"
-        },
-        {
-          "ident": "EHAM",
-          "type": "large_airport",
-          "name": "Amsterdam Airport Schiphol",
-          "latitude": "52.308601",
-          "longitude": "4.76389",
-          "iso_country": "NL",
-          "iata_code": "AMS",
-          "icao_code": "EHAM",
-          "scheduled_service": "1"
-        },
-        {
-          "ident": "KDFW",
-          "type": "large_airport",
-          "name": "Dallas Fort Worth International Airport",
-          "latitude": "32.896801",
-          "longitude": "-97.038002",
-          "iso_country": "US",
-          "iata_code": "DFW",
-          "icao_code": "KDFW",
-          "scheduled_service": "1"
-        },
-        {
-          "ident": "EDDF",
-          "type": "large_airport",
-          "name": "Frankfurt Main Airport",
-          "latitude": "50.026706",
-          "longitude": "8.55835",
-          "iso_country": "DE",
-          "iata_code": "FRA",
-          "icao_code": "EDDF",
-          "scheduled_service": "1"
-        }
-      ]
+      "ok": false,
+      "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1000)>"
     },
     "gdelt-events": {
       "ok": false,
@@ -131,44 +19,44 @@
           {
             "type": "Feature",
             "bbox": [
-              -104.7,
-              16.0,
-              -104.7,
-              16.0
+              -104.8,
+              17.4,
+              -104.8,
+              17.4
             ],
             "geometry": {
               "type": "Point",
               "coordinates": [
-                -104.7,
-                16.0
+                -104.8,
+                17.4
               ]
             },
             "properties": {
               "eventtype": "TC",
               "eventid": 1001335,
-              "episodeid": 9,
+              "episodeid": 13,
               "eventname": "SIMON-26",
               "glide": "",
               "name": "Tropical Cyclone SIMON-26",
               "description": "Tropical Cyclone SIMON-26",
-              "htmldescription": "Red Tropical Cyclone SIMON-26 in Mexico from: 07 Oct 2026  to: 09 Oct 2026 .",
-              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Red/TC.png",
-              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Red/TC.png",
+              "htmldescription": "Orange Tropical Cyclone SIMON-26 in Mexico from: 07 Oct 2026  to: 10 Oct 2026 .",
+              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/TC.png",
+              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/TC.png",
               "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=TC&eventid=1001335&episodeid=9",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1001335&episodeid=9&eventtype=TC",
+                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=TC&eventid=1001335&episodeid=13",
+                "report": "https://www.gdacs.org/report.aspx?eventid=1001335&episodeid=13&eventtype=TC",
                 "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=TC&eventid=1001335"
               },
-              "alertlevel": "Red",
-              "alertscore": 3,
-              "episodealertlevel": "Red",
-              "episodealertscore": 3.0,
+              "alertlevel": "Orange",
+              "alertscore": 2,
+              "episodealertlevel": "Orange",
+              "episodealertscore": 2.0,
               "istemporary": "false",
               "iscurrent": "true",
               "country": "Mexico",
               "fromdate": "2026-10-07T15:00:00",
-              "todate": "2026-10-09T15:00:00",
-              "datemodified": "2026-10-09T15:14:50",
+              "todate": "2026-10-10T15:00:00",
+              "datemodified": "2026-10-10T16:27:32",
               "iso3": "MEX",
               "source": "NOAA",
               "sourceid": "",
@@ -183,8 +71,8 @@
                 }
               ],
               "severitydata": {
-                "severity": 231.48,
-                "severitytext": "Hurricane/Typhoon > 74 mph (maximum wind speed of 231 km/h)",
+                "severity": 249.9984,
+                "severitytext": "Hurricane/Typhoon > 74 mph (maximum wind speed of 250 km/h)",
                 "severityunit": "km/h"
               }
             }
@@ -192,44 +80,44 @@
           {
             "type": "Feature",
             "bbox": [
-              -87.3,
-              27.7,
-              -87.3,
-              27.7
+              -86.8,
+              32.8,
+              -86.8,
+              32.8
             ],
             "geometry": {
               "type": "Point",
               "coordinates": [
-                -87.3,
-                27.7
+                -86.8,
+                32.8
               ]
             },
             "properties": {
               "eventtype": "TC",
               "eventid": 1001334,
-              "episodeid": 12,
+              "episodeid": 16,
               "eventname": "ISAIAS-26",
               "glide": "",
               "name": "Tropical Cyclone ISAIAS-26",
               "description": "Tropical Cyclone ISAIAS-26",
-              "htmldescription": "Orange Tropical Cyclone ISAIAS-26 in United States from: 06 Oct 2026  to: 09 Oct 2026 .",
-              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/TC.png",
+              "htmldescription": "Orange Tropical Cyclone ISAIAS-26 in United States from: 06 Oct 2026  to: 10 Oct 2026 .",
+              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Green/TC.png",
               "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/TC.png",
               "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=TC&eventid=1001334&episodeid=12",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1001334&episodeid=12&eventtype=TC",
+                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=TC&eventid=1001334&episodeid=16",
+                "report": "https://www.gdacs.org/report.aspx?eventid=1001334&episodeid=16&eventtype=TC",
                 "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=TC&eventid=1001334"
               },
               "alertlevel": "Orange",
               "alertscore": 2,
-              "episodealertlevel": "Orange",
-              "episodealertscore": 2.0,
+              "episodealertlevel": "Green",
+              "episodealertscore": 1.0,
               "istemporary": "false",
               "iscurrent": "true",
               "country": "United States",
               "fromdate": "2026-10-06T21:00:00",
-              "todate": "2026-10-09T15:00:00",
-              "datemodified": "2026-10-09T15:16:07",
+              "todate": "2026-10-10T15:00:00",
+              "datemodified": "2026-10-10T16:57:47",
               "iso3": "USA",
               "source": "NOAA",
               "sourceid": "",
@@ -245,8 +133,68 @@
               ],
               "severitydata": {
                 "severity": 194.4432,
-                "severitytext": "Hurricane/Typhoon > 74 mph (maximum wind speed of 194 km/h)",
+                "severitytext": "Tropical Depression (maximum wind speed of 194 km/h)",
                 "severityunit": "km/h"
+              }
+            }
+          },
+          {
+            "type": "Feature",
+            "bbox": [
+              -80.769,
+              7.5868,
+              -80.769,
+              7.5868
+            ],
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -80.769,
+                7.5868
+              ]
+            },
+            "properties": {
+              "eventtype": "EQ",
+              "eventid": 1570339,
+              "episodeid": 1738684,
+              "eventname": "",
+              "glide": "EQ-2026-000188-PAN",
+              "name": "Earthquake in Panama",
+              "description": "Earthquake in Panama",
+              "htmldescription": "Orange M 7.7 Earthquake in Panama at: 09 Oct 2026 17:56:06.",
+              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/EQ.png",
+              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/EQ.png",
+              "url": {
+                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=EQ&eventid=1570339&episodeid=1738684",
+                "report": "https://www.gdacs.org/report.aspx?eventid=1570339&episodeid=1738684&eventtype=EQ",
+                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=EQ&eventid=1570339"
+              },
+              "alertlevel": "Orange",
+              "alertscore": 2,
+              "episodealertlevel": "Orange",
+              "episodealertscore": 1.98926787671041,
+              "istemporary": "false",
+              "iscurrent": "true",
+              "country": "Panama",
+              "fromdate": "2026-10-09T17:56:06",
+              "todate": "2026-10-09T17:56:06",
+              "datemodified": "2026-10-10T00:01:48",
+              "iso3": "PAN",
+              "source": "NEIC",
+              "sourceid": "",
+              "polygonlabel": "Centroid",
+              "Class": "Point_Centroid",
+              "affectedcountries": [
+                {
+                  "iso2": "PA",
+                  "iso3": "PAN",
+                  "countryname": "Panama"
+                }
+              ],
+              "severitydata": {
+                "severity": 7.7,
+                "severitytext": "Magnitude 7.7M, Depth:12.647km",
+                "severityunit": "M"
               }
             }
           },
@@ -393,7 +341,7 @@
               "glide": "DR-2026-000143-COD",
               "name": "Drought in Democratic Republic of Congo, Kenya, Tanzania, Uganda",
               "description": "Drought in Democratic Republic of Congo, Kenya, Tanzania, Uganda",
-              "htmldescription": "Orange Drought in Democratic Republic of Congo, Kenya, Tanzania, Uganda from: 21 May 2026  to: 07 Oct 2026 .",
+              "htmldescription": "Orange Drought in Democratic Republic of Congo, Kenya, Tanzania, Uganda from: 21 May 2026  to: 08 Oct 2026 .",
               "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "url": {
@@ -409,8 +357,8 @@
               "iscurrent": "false",
               "country": "Democratic Republic of Congo, Kenya, Tanzania, Uganda",
               "fromdate": "2026-05-21T00:00:00",
-              "todate": "2026-10-07T00:00:00",
-              "datemodified": "2026-10-09T05:57:18",
+              "todate": "2026-10-08T00:00:00",
+              "datemodified": "2026-10-10T05:57:19",
               "iso3": "COD",
               "source": "GDO",
               "sourceid": "",
@@ -468,7 +416,7 @@
               "glide": "DR-2026-000117-ETH",
               "name": "Drought in Democratic Republic of Congo, Central African Republic, Cameroon, Djibouti, Eritrea, Ethiopia, Kenya, Niger, Nigeria, Sudan, Somalia, South Sudan, Chad",
               "description": "Drought in Democratic Republic of Congo, Central African Republic, Cameroon, Djibouti, Eritrea, Ethiopia, Kenya, Niger, Nigeria, Sudan, Somalia, South Sudan, Chad",
-              "htmldescription": "Orange Drought in Democratic Republic of Congo, Central African Republic, Cameroon, Djibouti, Eritrea, Ethiopia, Kenya, Niger, Nigeria, Sudan, Somalia, South Sudan, Chad from: 21 Jun 2026  to: 07 Oct 2026 .",
+              "htmldescription": "Orange Drought in Democratic Republic of Congo, Central African Republic, Cameroon, Djibouti, Eritrea, Ethiopia, Kenya, Niger, Nigeria, Sudan, Somalia, South Sudan, Chad from: 21 Jun 2026  to: 08 Oct 2026 .",
               "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "url": {
@@ -484,8 +432,8 @@
               "iscurrent": "false",
               "country": "Democratic Republic of Congo, Central African Republic, Cameroon, Djibouti, Eritrea, Ethiopia, Kenya, Niger, Nigeria, Sudan, Somalia, South Sudan, Chad",
               "fromdate": "2026-06-21T00:00:00",
-              "todate": "2026-10-07T00:00:00",
-              "datemodified": "2026-10-09T05:57:17",
+              "todate": "2026-10-08T00:00:00",
+              "datemodified": "2026-10-10T05:57:18",
               "iso3": "COD",
               "source": "GDO",
               "sourceid": "",
@@ -588,7 +536,7 @@
               "glide": "DR-2026-000153-BLZ",
               "name": "Drought in The Bahamas, Belize, Costa Rica, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador",
               "description": "Drought in The Bahamas, Belize, Costa Rica, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador",
-              "htmldescription": "Orange Drought in The Bahamas, Belize, Costa Rica, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador from: 21 Apr 2026  to: 07 Oct 2026 .",
+              "htmldescription": "Orange Drought in The Bahamas, Belize, Costa Rica, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador from: 21 Apr 2026  to: 08 Oct 2026 .",
               "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "url": {
@@ -604,8 +552,8 @@
               "iscurrent": "false",
               "country": "The Bahamas, Belize, Costa Rica, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador",
               "fromdate": "2026-04-21T00:00:00",
-              "todate": "2026-10-07T00:00:00",
-              "datemodified": "2026-10-09T05:57:24",
+              "todate": "2026-10-08T00:00:00",
+              "datemodified": "2026-10-10T05:57:28",
               "iso3": "BHS",
               "source": "GDO",
               "sourceid": "",
@@ -698,7 +646,7 @@
               "glide": "DR-2025-000239-ALB",
               "name": "Drought in Austria, Bosnia  and  Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Moldova, Montenegro, Netherlands, Norway, Poland, Romania, Serbia, Russia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, ",
               "description": "Drought in Austria, Bosnia  and  Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Moldova, Montenegro, Netherlands, Norway, Poland, Romania, Serbia, Russia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, ",
-              "htmldescription": "Orange Drought in Austria, Bosnia  and  Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Moldova, Montenegro, Netherlands, Norway, Poland, Romania, Serbia, Russia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, from: 21 Dec 2025  to: 07 Oct 2026 .",
+              "htmldescription": "Orange Drought in Austria, Bosnia  and  Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Moldova, Montenegro, Netherlands, Norway, Poland, Romania, Serbia, Russia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, from: 21 Dec 2025  to: 08 Oct 2026 .",
               "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "url": {
@@ -714,8 +662,8 @@
               "iscurrent": "true",
               "country": "Austria, Bosnia & Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Moldova, Montenegro, Netherlands, Norway, Poland, Romania, Serbia, Russia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, ",
               "fromdate": "2025-12-21T00:00:00",
-              "todate": "2026-10-07T00:00:00",
-              "datemodified": "2026-10-09T05:57:05",
+              "todate": "2026-10-08T00:00:00",
+              "datemodified": "2026-10-10T05:57:06",
               "iso3": "AUT",
               "source": "GDO",
               "sourceid": "",
@@ -915,7 +863,7 @@
               "country": "India",
               "fromdate": "2026-08-09T01:00:00",
               "todate": "2026-10-03T01:00:00",
-              "datemodified": "2026-10-09T15:22:35",
+              "datemodified": "2026-10-10T15:22:30",
               "iso3": "IND",
               "source": "GLOFAS",
               "sourceid": "",
@@ -5708,126 +5656,6 @@
                 "severity": 5.6,
                 "severitytext": "Magnitude 5.6M, Depth:10km",
                 "severityunit": "M"
-              }
-            }
-          },
-          {
-            "type": "Feature",
-            "bbox": [
-              126.7545,
-              7.2649,
-              126.7545,
-              7.2649
-            ],
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                126.7545,
-                7.2649
-              ]
-            },
-            "properties": {
-              "eventtype": "EQ",
-              "eventid": 1504268,
-              "episodeid": 1665061,
-              "eventname": "",
-              "glide": "EQ-2025-000189-PHL",
-              "name": "Earthquake in Philippines",
-              "description": "Earthquake in Philippines",
-              "htmldescription": "Orange M 7.4 Earthquake in Philippines at: 10 Oct 2025 01:43:59.",
-              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/EQ.png",
-              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/EQ.png",
-              "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=EQ&eventid=1504268&episodeid=1665061",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1504268&episodeid=1665061&eventtype=EQ",
-                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=EQ&eventid=1504268"
-              },
-              "alertlevel": "Orange",
-              "alertscore": 2,
-              "episodealertlevel": "Orange",
-              "episodealertscore": 1.53345744983787,
-              "istemporary": "false",
-              "iscurrent": "false",
-              "country": "Philippines",
-              "fromdate": "2025-10-10T01:43:59",
-              "todate": "2025-10-10T01:43:59",
-              "datemodified": "2025-10-11T17:00:57",
-              "iso3": "PHL",
-              "source": "NEIC",
-              "sourceid": "",
-              "polygonlabel": "Centroid",
-              "Class": "Point_Centroid",
-              "affectedcountries": [
-                {
-                  "iso2": "PH",
-                  "iso3": "PHL",
-                  "countryname": "Philippines"
-                }
-              ],
-              "severitydata": {
-                "severity": 7.4,
-                "severitytext": "Magnitude 7.4M, Depth:58.087km",
-                "severityunit": "M"
-              }
-            }
-          },
-          {
-            "type": "Feature",
-            "bbox": [
-              5.6575,
-              13.7542,
-              5.6575,
-              13.7542
-            ],
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                5.6575,
-                13.7542
-              ]
-            },
-            "properties": {
-              "eventtype": "FL",
-              "eventid": 1103479,
-              "episodeid": 18,
-              "eventname": "",
-              "glide": "",
-              "name": "Flood in Nigeria",
-              "description": "Flood in Nigeria",
-              "htmldescription": "Orange Flood in Nigeria from: 31 Aug 2025 01 to: 10 Oct 2025 01.",
-              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Green/FL.png",
-              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/FL.png",
-              "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=FL&eventid=1103479&episodeid=18",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1103479&episodeid=18&eventtype=FL",
-                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=FL&eventid=1103479"
-              },
-              "alertlevel": "Orange",
-              "alertscore": 2,
-              "episodealertlevel": "Green",
-              "episodealertscore": 0.5,
-              "istemporary": "false",
-              "iscurrent": "false",
-              "country": "Nigeria",
-              "fromdate": "2025-08-31T01:00:00",
-              "todate": "2025-10-10T01:00:00",
-              "datemodified": "2025-10-18T05:06:30",
-              "iso3": "NGA",
-              "source": "GLOFAS",
-              "sourceid": "",
-              "polygonlabel": "Centroid",
-              "Class": "Point_Centroid",
-              "affectedcountries": [
-                {
-                  "iso2": "NG",
-                  "iso3": "NGA",
-                  "countryname": "Nigeria"
-                }
-              ],
-              "severitydata": {
-                "severity": 0.0,
-                "severitytext": "Magnitude 0 ",
-                "severityunit": ""
               }
             }
           }

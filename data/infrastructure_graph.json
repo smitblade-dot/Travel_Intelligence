@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generated": "2026-10-09T18:07:49.901563+00:00",
+  "generated": "2026-10-10T18:05:57.051109+00:00",
   "purpose": "Deterministic relationship graph for travel-impact resolution; not a source of truth.",
   "nodes": [
     {
@@ -631,6 +631,38 @@
     },
     {
       "eventId": "ru-moscow-drone-2026-10-06",
+      "infrastructure": "AVIATION",
+      "locationId": null,
+      "countryId": "ru",
+      "status": "EXPLICIT_EVENT_RELATIONSHIP",
+      "resolvedLocation": false
+    },
+    {
+      "eventId": "nhc-isaias-us-2026-10-07",
+      "infrastructure": "ENERGY",
+      "locationId": null,
+      "countryId": "us",
+      "status": "EXPLICIT_EVENT_RELATIONSHIP",
+      "resolvedLocation": false
+    },
+    {
+      "eventId": "sa-airport-attacks-2026-10-06",
+      "infrastructure": "AVIATION",
+      "locationId": null,
+      "countryId": "sa",
+      "status": "EXPLICIT_EVENT_RELATIONSHIP",
+      "resolvedLocation": false
+    },
+    {
+      "eventId": "ru-ryazan-bashkortostan-moscow-drone-2026-10-07",
+      "infrastructure": "ENERGY",
+      "locationId": null,
+      "countryId": "ru",
+      "status": "EXPLICIT_EVENT_RELATIONSHIP",
+      "resolvedLocation": false
+    },
+    {
+      "eventId": "ru-ryazan-bashkortostan-moscow-drone-2026-10-07",
       "infrastructure": "AVIATION",
       "locationId": null,
       "countryId": "ru",
