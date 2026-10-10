@@ -94,6 +94,34 @@ def main():
                     "generatedAt": now,
                 })
 
+    # Radiological watchpoints: only candidate anomalies enter the review queue.
+    # These remain signals until authoritative corroboration is found.
+    radiation_path = ROOT / "data" / "radiological_signals.json"
+    if radiation_path.exists():
+        try:
+            radiation = json.loads(radiation_path.read_text(encoding="utf-8"))
+            for wp in radiation.get("watchpoints", []):
+                if not wp.get("candidateAnomaly"):
+                    continue
+                queue.append({
+                    "id": f"sig-radiological-{wp.get('id')}",
+                    "sourceId": "safecast-radiation",
+                    "sourceUrl": wp.get("sourceUrl"),
+                    "discoveryType": "RADIATION_ANOMALY",
+                    "countryIds": country_ids(wp.get("country", ""), known),
+                    "candidateCategories": ["RADIOLOGICAL_NUCLEAR"],
+                    "location": {
+                        "name": wp.get("name"),
+                        "country": wp.get("country"),
+                    },
+                    "claim": "Safecast measurements near a monitored nuclear/radiological watchpoint show a candidate deviation from the established local baseline.",
+                    "analysis": wp.get("analysis"),
+                    "status": "NEEDS_PRIMARY_SOURCE_VERIFICATION",
+                    "generatedAt": now,
+                })
+        except Exception as exc:
+            print(f"Radiological signal file could not be resolved: {exc}")
+
     # Other feeds are retained as source-level summaries for later specialist
     # resolvers. This keeps the review queue small and deterministic.
     for source_id, item in signals.get("sources", {}).items():

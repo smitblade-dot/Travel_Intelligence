@@ -1,0 +1,92 @@
+name: Radiological and nuclear monitoring
+
+on:
+  schedule:
+    - cron: "0 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Configure git identity
+        run: |
+          git config --global user.name "Forged Titanium Bot"
+          git config --global user.email "actions@users.noreply.github.com"
+
+      - name: Collect radiological signals
+        run: python3 scripts/collect_radiological_signals.py
+
+      - name: Validate radiological signal JSON
+        run: |
+          python3 - << 'PYEOF'
+          import json
+          for path in [
+              "data/radiological_signals.json",
+              "data/radiological_history.json",
+              "config/radiological_watchlist.json",
+          ]:
+              with open(path, encoding="utf-8") as f:
+                  json.load(f)
+              print("valid:", path)
+          PYEOF
+
+      - name: Detect candidate anomalies
+        id: anomaly
+        run: |
+          candidate=$(python3 - << 'PYEOF'
+          import json
+          with open("data/radiological_signals.json", encoding="utf-8") as f:
+              data = json.load(f)
+          print("true" if any(x.get("candidateAnomaly") for x in data.get("watchpoints", [])) else "false")
+          PYEOF
+          )
+          echo "candidate=$candidate" >> "$GITHUB_OUTPUT"
+          echo "Candidate anomaly: $candidate"
+
+      - name: Verify candidate anomaly with Claude
+        if: steps.anomaly.outputs.candidate == 'true'
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          show_full_output: true
+          prompt: >
+            Review the candidate radiological anomaly in
+            data/radiological_signals.json. Treat Safecast as a secondary
+            signal only. Verify the observation against authoritative primary
+            sources where possible, including the relevant national radiation
+            regulator/operator, IAEA public emergency information, and other
+            independent official monitoring or credible local sources. Check
+            whether weather, rainfall, station behaviour, sensor/device changes,
+            or other benign explanations could account for the reading.
+            Do not publish a nuclear or radiological incident from the sensor
+            signal alone. If corroboration is insufficient, preserve the signal
+            as unverified and do not create a public Current Intelligence
+            event. If authoritative corroboration supports a real
+            traveller-relevant change, update the appropriate TI country/event
+            record with explicit SourceObservations and uncertainty, following
+            CLAUDE.md. Do not invent protective actions or health advice.
+            Validate any changes and commit/push substantive TI changes.
+          claude_args: |
+            --model claude-sonnet-5
+            --allowedTools "Bash,Read,Write,Edit,Glob,Grep,WebSearch,WebFetch"
+            --max-turns 60
+
+      - name: Safety-net commit and push
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            git add data/radiological_signals.json data/radiological_history.json
+            git commit -m "Automated radiological monitoring refresh — $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          else
+            echo "Nothing outstanding — monitoring step already committed."
+          fi
