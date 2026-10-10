@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generated": "2026-10-09T18:24:22.427764+00:00",
+  "generated": "2026-10-10T18:11:57.918286+00:00",
   "purpose": "Safe first-stage traveller-impact graph; explicit relationships only.",
   "rules": {
     "locationContainment": "A verified event at a child location may be inherited by its parent locations for discovery.",
