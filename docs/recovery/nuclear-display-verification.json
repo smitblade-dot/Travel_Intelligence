@@ -1,0 +1,33 @@
+{
+  "testScope": "Local staged display; synthetic published fixture, then actual INTERNAL_REVIEW inventory",
+  "desktop": {
+    "width": 1280,
+    "pageScrollWidth": 1280,
+    "cardWidth": 1140
+  },
+  "mobile": {
+    "width": 390,
+    "pageScrollWidth": 390,
+    "cardWidth": 366
+  },
+  "contrastRatios": {
+    "text": 7.9,
+    "link": 6.12
+  },
+  "contrastNote": "Final browser computed link137,184,255 against47,53,59 matches6.12:1",
+  "privateFixtureHidden": true,
+  "sourceStatusDate2008DisplayedSeparateFrom2026Retrieval": true,
+  "realReviewInventoryFacilityEntriesHidden": true,
+  "legacyPlusCoreCountries": 71,
+  "reviewOnlyAlbaniaHidden": true,
+  "legacyArmeniaVisible": true,
+  "productionModified": false,
+  "globalDirectoryMobileNavigation": true,
+  "paginationFixture": {
+    "before": 50,
+    "after": 51,
+    "lastRecordVisible": true
+  },
+  "legacyFallbackRestrictedToExplicitAggregateStatus": true,
+  "directoryBackLabelAndDestinationVerified": true
+}
