@@ -1090,6 +1090,7 @@
     if(c) meta.push(c.name);
     if(event.eventDate) meta.push(fmtDate(event.eventDate));
     if(event.lastUpdated) meta.push('Updated '+fmtDate(event.lastUpdated));
+    if(event.lifecycleStage) meta.push(event.lifecycleStage.replace(/_/g,' '));
     var statusClass='ci-status-'+String(status).toLowerCase().replace(/_/g,'-');
     var card=el('article',{class:'ci-card '+statusClass,tabindex:'0',role:'button','aria-label':'Open '+title},[
       el('div',{class:'ci-top'},[
@@ -1159,7 +1160,7 @@
 
   function renderCurrentIntelligence(){
     var wrap=el('section',{class:'current-intelligence'});
-    var events=publishedCurrentEvents();
+    var events=publishedCurrentEvents().filter(function(e){return e.lifecycleStage!=='HOT_TOPIC';});
     wrap.appendChild(el('div',{class:'section-head'},[
       el('h2',{},['Current Intelligence']),
       el('span',{class:'section-hint'},[events.length+' published event'+(events.length===1?'':'s')])
@@ -1213,6 +1214,14 @@
     wrap.appendChild(banner);
 
     wrap.appendChild(renderCurrentIntelligence());
+    var hotEvents=publishedCurrentEvents().filter(function(e){return e.lifecycleStage==='HOT_TOPIC';});
+    if(hotEvents.length){
+      var hotSection=el('section',{class:'current-intelligence'});
+      hotSection.appendChild(el('div',{class:'section-head'},[el('h2',{},['Continuing Hot Topics'])]));
+      var hotGrid=el('div',{class:'ci-grid'});
+      hotEvents.forEach(function(e){hotGrid.appendChild(currentEventCard(e));});
+      hotSection.appendChild(hotGrid); wrap.appendChild(hotSection);
+    }
 
     // Hotspots & hot topics — the most current thing on the site.
     var hotspots = computeHotspots(6);
@@ -2229,3 +2238,4 @@
 </script>
 
 <div class="legal-footer">FORGEDTITANIUM LTD a Company Registered in the Republic of Cyprus,<br>Reg No: HE 490451</div></body></html><!-- cache-refresh 2026-09-21T14:03:36Z -->
+

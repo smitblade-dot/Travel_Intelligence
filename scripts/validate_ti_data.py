@@ -92,6 +92,10 @@ def main():
         if not eid or eid in event_ids:
             return fail(f"duplicate/missing event id: {eid!r}")
         event_ids.add(eid)
+        if event.get("lifecycleStage") and event["lifecycleStage"] not in {"ALERT", "CURRENT", "HOT_TOPIC", "ARCHIVED"}:
+            return fail(f"invalid lifecycleStage on {eid}")
+        if event.get("lifecycleStage") and event.get("sensitiveAllegation") and event.get("publicationStatus") == "PUBLISHED" and event.get("legalReviewStatus") != "APPROVED":
+            return fail(f"{eid}: sensitive lifecycle event requires recorded legal approval before publication")
         if event.get("eventStatus") and event["eventStatus"] not in EVENT_STATUSES:
             return fail(f"invalid eventStatus on {eid}: {event['eventStatus']}")
         if event.get("publicationStatus") and event["publicationStatus"] not in PUBLICATION_STATUSES:
@@ -108,6 +112,8 @@ def main():
             return fail(f"{oid}: sourceUrl is required")
         if not obs.get("extractedClaim"):
             return fail(f"{oid}: extractedClaim is required")
+        if not obs.get("independenceGroupId"):
+            return fail(f"{oid}: independenceGroupId is required")
         targets = [obs.get(k) for k in OBS_TARGETS if obs.get(k)]
         if len(targets) != 1:
             return fail(f"{oid}: exactly one of recordId or eventId is required")
@@ -129,3 +135,4 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
+
