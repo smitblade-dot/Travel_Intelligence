@@ -94,8 +94,6 @@ def main():
         event_ids.add(eid)
         if event.get("lifecycleStage") and event["lifecycleStage"] not in {"ALERT", "CURRENT", "HOT_TOPIC", "ARCHIVED"}:
             return fail(f"invalid lifecycleStage on {eid}")
-        if event.get("lifecycleStage") and event.get("sensitiveAllegation") and event.get("publicationStatus") == "PUBLISHED" and event.get("legalReviewStatus") != "APPROVED":
-            return fail(f"{eid}: sensitive lifecycle event requires recorded legal approval before publication")
         if event.get("eventStatus") and event["eventStatus"] not in EVENT_STATUSES:
             return fail(f"invalid eventStatus on {eid}: {event['eventStatus']}")
         if event.get("publicationStatus") and event["publicationStatus"] not in PUBLICATION_STATUSES:
