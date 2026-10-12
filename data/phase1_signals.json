@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generated": "2026-10-11T18:06:16.807420+00:00",
+  "generated": "2026-10-12T18:07:03.748464+00:00",
   "purpose": "Reviewable Phase 1 signals; not published TI events.",
   "sources": {
     "ourairports-airports": {
@@ -16,6 +16,67 @@
       "data": {
         "type": "FeatureCollection",
         "features": [
+          {
+            "type": "Feature",
+            "bbox": [
+              -106.5,
+              20.1,
+              -106.5,
+              20.1
+            ],
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -106.5,
+                20.1
+              ]
+            },
+            "properties": {
+              "eventtype": "TC",
+              "eventid": 1001335,
+              "episodeid": 21,
+              "eventname": "SIMON-26",
+              "glide": "",
+              "name": "Tropical Cyclone SIMON-26",
+              "description": "Tropical Cyclone SIMON-26",
+              "htmldescription": "Orange Tropical Cyclone SIMON-26 in Mexico from: 07 Oct 2026  to: 12 Oct 2026 .",
+              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Green/TC.png",
+              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/TC.png",
+              "url": {
+                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=TC&eventid=1001335&episodeid=21",
+                "report": "https://www.gdacs.org/report.aspx?eventid=1001335&episodeid=21&eventtype=TC",
+                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=TC&eventid=1001335"
+              },
+              "alertlevel": "Orange",
+              "alertscore": 2,
+              "episodealertlevel": "Green",
+              "episodealertscore": 1.0,
+              "istemporary": "false",
+              "iscurrent": "true",
+              "country": "Mexico",
+              "fromdate": "2026-10-07T15:00:00",
+              "todate": "2026-10-12T15:00:00",
+              "datemodified": "2026-10-12T15:16:25",
+              "iso3": "MEX",
+              "source": "NOAA",
+              "sourceid": "",
+              "polygonlabel": "Centroid",
+              "Class": "Point_Centroid",
+              "countryonland": "",
+              "affectedcountries": [
+                {
+                  "iso2": "MX",
+                  "iso3": "MEX",
+                  "countryname": "Mexico"
+                }
+              ],
+              "severitydata": {
+                "severity": 249.9984,
+                "severitytext": "Hurricane/Typhoon > 74 mph (maximum wind speed of 250 km/h)",
+                "severityunit": "km/h"
+              }
+            }
+          },
           {
             "type": "Feature",
             "bbox": [
@@ -56,8 +117,8 @@
               "country": "United States",
               "fromdate": "2026-10-06T21:00:00",
               "todate": "2026-10-11T15:00:00",
-              "datemodified": "2026-10-11T17:59:07",
-              "iso3": "USA",
+              "datemodified": "2026-10-12T18:00:27",
+              "iso3": "",
               "source": "NOAA",
               "sourceid": "",
               "polygonlabel": "Centroid",
@@ -80,121 +141,60 @@
           {
             "type": "Feature",
             "bbox": [
-              -105.3,
-              19.2,
-              -105.3,
-              19.2
+              123.132,
+              10.412,
+              123.132,
+              10.412
             ],
             "geometry": {
               "type": "Point",
               "coordinates": [
-                -105.3,
-                19.2
+                123.132,
+                10.412
               ]
             },
             "properties": {
-              "eventtype": "TC",
-              "eventid": 1001335,
-              "episodeid": 17,
-              "eventname": "SIMON-26",
-              "glide": "",
-              "name": "Tropical Cyclone SIMON-26",
-              "description": "Tropical Cyclone SIMON-26",
-              "htmldescription": "Orange Tropical Cyclone SIMON-26 in Mexico from: 07 Oct 2026  to: 11 Oct 2026 .",
-              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/TC.png",
-              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/TC.png",
+              "eventtype": "VO",
+              "eventid": 1000152,
+              "episodeid": 1,
+              "eventname": "Kanlaon",
+              "glide": "VO-2026-000190-PHL",
+              "name": "Eruption  Kanlaon",
+              "description": "Eruption  Kanlaon",
+              "htmldescription": "Orange Eruption Kanlaon in Philippines at: 10 Oct 2026 05:58.",
+              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/VO.png",
+              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/VO.png",
               "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=TC&eventid=1001335&episodeid=17",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1001335&episodeid=17&eventtype=TC",
-                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=TC&eventid=1001335"
+                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=VO&eventid=1000152&episodeid=1",
+                "report": "https://www.gdacs.org/report.aspx?eventid=1000152&episodeid=1&eventtype=VO",
+                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=VO&eventid=1000152"
               },
               "alertlevel": "Orange",
               "alertscore": 2,
               "episodealertlevel": "Orange",
-              "episodealertscore": 2.0,
+              "episodealertscore": 1.5,
               "istemporary": "false",
               "iscurrent": "true",
-              "country": "Mexico",
-              "fromdate": "2026-10-07T15:00:00",
-              "todate": "2026-10-11T15:00:00",
-              "datemodified": "2026-10-11T14:58:54",
-              "iso3": "MEX",
-              "source": "NOAA",
-              "sourceid": "",
-              "polygonlabel": "Centroid",
-              "Class": "Point_Centroid",
-              "countryonland": "",
-              "affectedcountries": [
-                {
-                  "iso2": "MX",
-                  "iso3": "MEX",
-                  "countryname": "Mexico"
-                }
-              ],
-              "severitydata": {
-                "severity": 249.9984,
-                "severitytext": "Hurricane/Typhoon > 74 mph (maximum wind speed of 250 km/h)",
-                "severityunit": "km/h"
-              }
-            }
-          },
-          {
-            "type": "Feature",
-            "bbox": [
-              -80.769,
-              7.5868,
-              -80.769,
-              7.5868
-            ],
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                -80.769,
-                7.5868
-              ]
-            },
-            "properties": {
-              "eventtype": "EQ",
-              "eventid": 1570339,
-              "episodeid": 1738684,
-              "eventname": "",
-              "glide": "EQ-2026-000188-PAN",
-              "name": "Earthquake in Panama",
-              "description": "Earthquake in Panama",
-              "htmldescription": "Orange M 7.7 Earthquake in Panama at: 09 Oct 2026 17:56:06.",
-              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/EQ.png",
-              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/EQ.png",
-              "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=EQ&eventid=1570339&episodeid=1738684",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1570339&episodeid=1738684&eventtype=EQ",
-                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=EQ&eventid=1570339"
-              },
-              "alertlevel": "Orange",
-              "alertscore": 2,
-              "episodealertlevel": "Orange",
-              "episodealertscore": 1.91912908711068,
-              "istemporary": "false",
-              "iscurrent": "true",
-              "country": "Panama",
-              "fromdate": "2026-10-09T17:56:06",
-              "todate": "2026-10-09T17:56:06",
-              "datemodified": "2026-10-10T19:01:40",
-              "iso3": "PAN",
-              "source": "NEIC",
+              "country": "Philippines",
+              "fromdate": "2026-10-10T05:58:00",
+              "todate": "2026-10-10T05:58:00",
+              "datemodified": "2026-10-12T06:02:40",
+              "iso3": "PHL",
+              "source": "TOKYO",
               "sourceid": "",
               "polygonlabel": "Centroid",
               "Class": "Point_Centroid",
               "affectedcountries": [
                 {
-                  "iso2": "PA",
-                  "iso3": "PAN",
-                  "countryname": "Panama"
+                  "iso2": "PH",
+                  "iso3": "PHL",
+                  "countryname": "Philippines"
                 }
               ],
               "severitydata": {
-                "severity": 7.7,
-                "severitytext": "Magnitude 7.7M, Depth:12.647km",
-                "severityunit": "M"
+                "severity": 0.0,
+                "severitytext": "",
+                "severityunit": ""
               }
             }
           },
@@ -221,7 +221,7 @@
               "glide": "DR-2025-000239-ALB",
               "name": "Drought in Austria, Bosnia  and  Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Moldova, Montenegro, Netherlands, Norway, Poland, Romania, Serbia, Russia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, ",
               "description": "Drought in Austria, Bosnia  and  Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Moldova, Montenegro, Netherlands, Norway, Poland, Romania, Serbia, Russia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, ",
-              "htmldescription": "Orange Drought in Austria, Bosnia  and  Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Moldova, Montenegro, Netherlands, Norway, Poland, Romania, Serbia, Russia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, from: 21 Dec 2025  to: 09 Oct 2026 .",
+              "htmldescription": "Orange Drought in Austria, Bosnia  and  Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Moldova, Montenegro, Netherlands, Norway, Poland, Romania, Serbia, Russia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, from: 21 Dec 2025  to: 10 Oct 2026 .",
               "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "url": {
@@ -237,8 +237,8 @@
               "iscurrent": "true",
               "country": "Austria, Bosnia & Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Moldova, Montenegro, Netherlands, Norway, Poland, Romania, Serbia, Russia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, ",
               "fromdate": "2025-12-21T00:00:00",
-              "todate": "2026-10-09T00:00:00",
-              "datemodified": "2026-10-11T05:57:04",
+              "todate": "2026-10-10T00:00:00",
+              "datemodified": "2026-10-12T05:57:04",
               "iso3": "AUT",
               "source": "GDO",
               "sourceid": "",
@@ -421,7 +421,7 @@
               "glide": "DR-2026-000153-BLZ",
               "name": "Drought in The Bahamas, Belize, Costa Rica, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador",
               "description": "Drought in The Bahamas, Belize, Costa Rica, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador",
-              "htmldescription": "Orange Drought in The Bahamas, Belize, Costa Rica, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador from: 21 Apr 2026  to: 09 Oct 2026 .",
+              "htmldescription": "Orange Drought in The Bahamas, Belize, Costa Rica, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador from: 21 Apr 2026  to: 10 Oct 2026 .",
               "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "url": {
@@ -437,8 +437,8 @@
               "iscurrent": "false",
               "country": "The Bahamas, Belize, Costa Rica, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador",
               "fromdate": "2026-04-21T00:00:00",
-              "todate": "2026-10-09T00:00:00",
-              "datemodified": "2026-10-11T05:57:24",
+              "todate": "2026-10-10T00:00:00",
+              "datemodified": "2026-10-12T05:57:21",
               "iso3": "BHS",
               "source": "GDO",
               "sourceid": "",
@@ -531,7 +531,7 @@
               "glide": "DR-2026-000117-ETH",
               "name": "Drought in Democratic Republic of Congo, Central African Republic, Cameroon, Djibouti, Eritrea, Ethiopia, Kenya, Niger, Nigeria, Sudan, Somalia, South Sudan, Chad",
               "description": "Drought in Democratic Republic of Congo, Central African Republic, Cameroon, Djibouti, Eritrea, Ethiopia, Kenya, Niger, Nigeria, Sudan, Somalia, South Sudan, Chad",
-              "htmldescription": "Orange Drought in Democratic Republic of Congo, Central African Republic, Cameroon, Djibouti, Eritrea, Ethiopia, Kenya, Niger, Nigeria, Sudan, Somalia, South Sudan, Chad from: 21 Jun 2026  to: 09 Oct 2026 .",
+              "htmldescription": "Orange Drought in Democratic Republic of Congo, Central African Republic, Cameroon, Djibouti, Eritrea, Ethiopia, Kenya, Niger, Nigeria, Sudan, Somalia, South Sudan, Chad from: 21 Jun 2026  to: 10 Oct 2026 .",
               "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "url": {
@@ -547,8 +547,8 @@
               "iscurrent": "false",
               "country": "Democratic Republic of Congo, Central African Republic, Cameroon, Djibouti, Eritrea, Ethiopia, Kenya, Niger, Nigeria, Sudan, Somalia, South Sudan, Chad",
               "fromdate": "2026-06-21T00:00:00",
-              "todate": "2026-10-09T00:00:00",
-              "datemodified": "2026-10-11T05:57:15",
+              "todate": "2026-10-10T00:00:00",
+              "datemodified": "2026-10-12T05:57:14",
               "iso3": "COD",
               "source": "GDO",
               "sourceid": "",
@@ -651,7 +651,7 @@
               "glide": "DR-2026-000143-COD",
               "name": "Drought in Democratic Republic of Congo, Kenya, Tanzania, Uganda",
               "description": "Drought in Democratic Republic of Congo, Kenya, Tanzania, Uganda",
-              "htmldescription": "Orange Drought in Democratic Republic of Congo, Kenya, Tanzania, Uganda from: 21 May 2026  to: 09 Oct 2026 .",
+              "htmldescription": "Orange Drought in Democratic Republic of Congo, Kenya, Tanzania, Uganda from: 21 May 2026  to: 10 Oct 2026 .",
               "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "url": {
@@ -667,8 +667,8 @@
               "iscurrent": "false",
               "country": "Democratic Republic of Congo, Kenya, Tanzania, Uganda",
               "fromdate": "2026-05-21T00:00:00",
-              "todate": "2026-10-09T00:00:00",
-              "datemodified": "2026-10-11T05:57:18",
+              "todate": "2026-10-10T00:00:00",
+              "datemodified": "2026-10-12T05:57:15",
               "iso3": "COD",
               "source": "GDO",
               "sourceid": "",
@@ -700,6 +700,66 @@
                 "severity": 270713.0,
                 "severitytext": "Medium impact for agricultural drought in 270713 km2",
                 "severityunit": "km2"
+              }
+            }
+          },
+          {
+            "type": "Feature",
+            "bbox": [
+              -80.769,
+              7.5868,
+              -80.769,
+              7.5868
+            ],
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -80.769,
+                7.5868
+              ]
+            },
+            "properties": {
+              "eventtype": "EQ",
+              "eventid": 1570339,
+              "episodeid": 1738684,
+              "eventname": "",
+              "glide": "EQ-2026-000188-PAN",
+              "name": "Earthquake in Panama",
+              "description": "Earthquake in Panama",
+              "htmldescription": "Orange M 7.7 Earthquake in Panama at: 09 Oct 2026 17:56:06.",
+              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/EQ.png",
+              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/EQ.png",
+              "url": {
+                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=EQ&eventid=1570339&episodeid=1738684",
+                "report": "https://www.gdacs.org/report.aspx?eventid=1570339&episodeid=1738684&eventtype=EQ",
+                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=EQ&eventid=1570339"
+              },
+              "alertlevel": "Orange",
+              "alertscore": 2,
+              "episodealertlevel": "Orange",
+              "episodealertscore": 1.91912908711068,
+              "istemporary": "false",
+              "iscurrent": "true",
+              "country": "Panama",
+              "fromdate": "2026-10-09T17:56:06",
+              "todate": "2026-10-09T17:56:06",
+              "datemodified": "2026-10-12T01:55:25",
+              "iso3": "PAN",
+              "source": "NEIC",
+              "sourceid": "",
+              "polygonlabel": "Centroid",
+              "Class": "Point_Centroid",
+              "affectedcountries": [
+                {
+                  "iso2": "PA",
+                  "iso3": "PAN",
+                  "countryname": "Panama"
+                }
+              ],
+              "severitydata": {
+                "severity": 7.7,
+                "severitytext": "Magnitude 7.7M, Depth:12.647km",
+                "severityunit": "M"
               }
             }
           },
@@ -739,7 +799,7 @@
               "episodealertlevel": "Orange",
               "episodealertscore": 1.5,
               "istemporary": "false",
-              "iscurrent": "true",
+              "iscurrent": "false",
               "country": "Philippines",
               "fromdate": "2026-10-08T10:29:00",
               "todate": "2026-10-08T10:29:00",
@@ -799,7 +859,7 @@
               "episodealertlevel": "Orange",
               "episodealertscore": 1.18722060465239,
               "istemporary": "false",
-              "iscurrent": "true",
+              "iscurrent": "false",
               "country": "Vanuatu",
               "fromdate": "2026-10-08T09:00:07",
               "todate": "2026-10-08T09:00:07",
@@ -1434,66 +1494,6 @@
           {
             "type": "Feature",
             "bbox": [
-              6.0772,
-              50.5262,
-              6.0772,
-              50.5262
-            ],
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                6.0772,
-                50.5262
-              ]
-            },
-            "properties": {
-              "eventtype": "WF",
-              "eventid": 1030534,
-              "episodeid": 5,
-              "eventname": "",
-              "glide": "WF-2026-000155-BEL",
-              "name": "Forest fires in Belgium",
-              "description": "Forest fires in Belgium",
-              "htmldescription": "Orange Forest fires in Belgium from: 14 Aug 2026 to: 17 Aug 2026.",
-              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/WF.png",
-              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/WF.png",
-              "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=WF&eventid=1030534&episodeid=5",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1030534&episodeid=5&eventtype=WF",
-                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=WF&eventid=1030534"
-              },
-              "alertlevel": "Orange",
-              "alertscore": 2,
-              "episodealertlevel": "Orange",
-              "episodealertscore": 1.5,
-              "istemporary": "false",
-              "iscurrent": "false",
-              "country": "Belgium",
-              "fromdate": "2026-08-14T00:00:00",
-              "todate": "2026-08-17T00:00:00",
-              "datemodified": "2026-09-30T09:40:23",
-              "iso3": "BEL",
-              "source": "GWIS",
-              "sourceid": "",
-              "polygonlabel": "Centroid",
-              "Class": "Point_Centroid",
-              "affectedcountries": [
-                {
-                  "iso2": "BE",
-                  "iso3": "BEL",
-                  "countryname": "Belgium"
-                }
-              ],
-              "severitydata": {
-                "severity": 6356.0,
-                "severitytext": "Orange impact for forestfire in 6356 ha",
-                "severityunit": "ha"
-              }
-            }
-          },
-          {
-            "type": "Feature",
-            "bbox": [
               -0.7181,
               42.4725,
               -0.7181,
@@ -1547,6 +1547,66 @@
               "severitydata": {
                 "severity": 19294.0,
                 "severitytext": "Orange impact for forestfire in 19294 ha",
+                "severityunit": "ha"
+              }
+            }
+          },
+          {
+            "type": "Feature",
+            "bbox": [
+              6.0772,
+              50.5262,
+              6.0772,
+              50.5262
+            ],
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                6.0772,
+                50.5262
+              ]
+            },
+            "properties": {
+              "eventtype": "WF",
+              "eventid": 1030534,
+              "episodeid": 5,
+              "eventname": "",
+              "glide": "WF-2026-000155-BEL",
+              "name": "Forest fires in Belgium",
+              "description": "Forest fires in Belgium",
+              "htmldescription": "Orange Forest fires in Belgium from: 14 Aug 2026 to: 17 Aug 2026.",
+              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/WF.png",
+              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/WF.png",
+              "url": {
+                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=WF&eventid=1030534&episodeid=5",
+                "report": "https://www.gdacs.org/report.aspx?eventid=1030534&episodeid=5&eventtype=WF",
+                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=WF&eventid=1030534"
+              },
+              "alertlevel": "Orange",
+              "alertscore": 2,
+              "episodealertlevel": "Orange",
+              "episodealertscore": 1.5,
+              "istemporary": "false",
+              "iscurrent": "false",
+              "country": "Belgium",
+              "fromdate": "2026-08-14T00:00:00",
+              "todate": "2026-08-17T00:00:00",
+              "datemodified": "2026-09-30T09:40:23",
+              "iso3": "BEL",
+              "source": "GWIS",
+              "sourceid": "",
+              "polygonlabel": "Centroid",
+              "Class": "Point_Centroid",
+              "affectedcountries": [
+                {
+                  "iso2": "BE",
+                  "iso3": "BEL",
+                  "countryname": "Belgium"
+                }
+              ],
+              "severitydata": {
+                "severity": 6356.0,
+                "severitytext": "Orange impact for forestfire in 6356 ha",
                 "severityunit": "ha"
               }
             }
@@ -2040,66 +2100,6 @@
           {
             "type": "Feature",
             "bbox": [
-              -4.5405,
-              40.3594,
-              -4.5405,
-              40.3594
-            ],
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                -4.5405,
-                40.3594
-              ]
-            },
-            "properties": {
-              "eventtype": "WF",
-              "eventid": 1029643,
-              "episodeid": 22,
-              "eventname": "",
-              "glide": "WF-2026-000130-ESP",
-              "name": "Forest fires in Spain",
-              "description": "Forest fires in Spain",
-              "htmldescription": "Orange Forest fires in Spain from: 22 Jul 2026 to: 30 Jul 2026.",
-              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/WF.png",
-              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/WF.png",
-              "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=WF&eventid=1029643&episodeid=22",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1029643&episodeid=22&eventtype=WF",
-                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=WF&eventid=1029643"
-              },
-              "alertlevel": "Orange",
-              "alertscore": 2,
-              "episodealertlevel": "Orange",
-              "episodealertscore": 1.5,
-              "istemporary": "false",
-              "iscurrent": "false",
-              "country": "Spain",
-              "fromdate": "2026-07-22T00:00:00",
-              "todate": "2026-07-30T00:00:00",
-              "datemodified": "2026-09-30T09:40:30",
-              "iso3": "ESP",
-              "source": "GWIS",
-              "sourceid": "",
-              "polygonlabel": "Centroid",
-              "Class": "Point_Centroid",
-              "affectedcountries": [
-                {
-                  "iso2": "ES",
-                  "iso3": "ESP",
-                  "countryname": "Spain"
-                }
-              ],
-              "severitydata": {
-                "severity": 66098.0,
-                "severitytext": "Orange impact for forestfire in 66098 ha",
-                "severityunit": "ha"
-              }
-            }
-          },
-          {
-            "type": "Feature",
-            "bbox": [
               -0.2541,
               39.8863,
               -0.2541,
@@ -2153,6 +2153,66 @@
               "severitydata": {
                 "severity": 13370.0,
                 "severitytext": "Orange impact for forestfire in 13370 ha",
+                "severityunit": "ha"
+              }
+            }
+          },
+          {
+            "type": "Feature",
+            "bbox": [
+              -4.5405,
+              40.3594,
+              -4.5405,
+              40.3594
+            ],
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -4.5405,
+                40.3594
+              ]
+            },
+            "properties": {
+              "eventtype": "WF",
+              "eventid": 1029643,
+              "episodeid": 22,
+              "eventname": "",
+              "glide": "WF-2026-000130-ESP",
+              "name": "Forest fires in Spain",
+              "description": "Forest fires in Spain",
+              "htmldescription": "Orange Forest fires in Spain from: 22 Jul 2026 to: 30 Jul 2026.",
+              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/WF.png",
+              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/WF.png",
+              "url": {
+                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=WF&eventid=1029643&episodeid=22",
+                "report": "https://www.gdacs.org/report.aspx?eventid=1029643&episodeid=22&eventtype=WF",
+                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=WF&eventid=1029643"
+              },
+              "alertlevel": "Orange",
+              "alertscore": 2,
+              "episodealertlevel": "Orange",
+              "episodealertscore": 1.5,
+              "istemporary": "false",
+              "iscurrent": "false",
+              "country": "Spain",
+              "fromdate": "2026-07-22T00:00:00",
+              "todate": "2026-07-30T00:00:00",
+              "datemodified": "2026-09-30T09:40:30",
+              "iso3": "ESP",
+              "source": "GWIS",
+              "sourceid": "",
+              "polygonlabel": "Centroid",
+              "Class": "Point_Centroid",
+              "affectedcountries": [
+                {
+                  "iso2": "ES",
+                  "iso3": "ESP",
+                  "countryname": "Spain"
+                }
+              ],
+              "severitydata": {
+                "severity": 66098.0,
+                "severitytext": "Orange impact for forestfire in 66098 ha",
                 "severityunit": "ha"
               }
             }
@@ -2842,66 +2902,6 @@
           {
             "type": "Feature",
             "bbox": [
-              -8.2824,
-              40.6204,
-              -8.2824,
-              40.6204
-            ],
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                -8.2824,
-                40.6204
-              ]
-            },
-            "properties": {
-              "eventtype": "WF",
-              "eventid": 1029260,
-              "episodeid": 11,
-              "eventname": "",
-              "glide": "WF-2026-000101-PRT",
-              "name": "Forest fires in Portugal",
-              "description": "Forest fires in Portugal",
-              "htmldescription": "Orange Forest fires in Portugal from: 02 Jul 2026 to: 08 Jul 2026.",
-              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/WF.png",
-              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/WF.png",
-              "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=WF&eventid=1029260&episodeid=11",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1029260&episodeid=11&eventtype=WF",
-                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=WF&eventid=1029260"
-              },
-              "alertlevel": "Orange",
-              "alertscore": 2,
-              "episodealertlevel": "Orange",
-              "episodealertscore": 1.5,
-              "istemporary": "false",
-              "iscurrent": "false",
-              "country": "Portugal",
-              "fromdate": "2026-07-02T00:00:00",
-              "todate": "2026-07-08T00:00:00",
-              "datemodified": "2026-09-30T09:40:32",
-              "iso3": "PRT",
-              "source": "GWIS",
-              "sourceid": "",
-              "polygonlabel": "Centroid",
-              "Class": "Point_Centroid",
-              "affectedcountries": [
-                {
-                  "iso2": "PT",
-                  "iso3": "PRT",
-                  "countryname": "Portugal"
-                }
-              ],
-              "severitydata": {
-                "severity": 19670.0,
-                "severitytext": "Orange impact for forestfire in 19670 ha",
-                "severityunit": "ha"
-              }
-            }
-          },
-          {
-            "type": "Feature",
-            "bbox": [
               2.5677,
               42.6724,
               2.5677,
@@ -2955,6 +2955,66 @@
               "severitydata": {
                 "severity": 6576.0,
                 "severitytext": "Orange impact for forestfire in 6576 ha",
+                "severityunit": "ha"
+              }
+            }
+          },
+          {
+            "type": "Feature",
+            "bbox": [
+              -8.2824,
+              40.6204,
+              -8.2824,
+              40.6204
+            ],
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -8.2824,
+                40.6204
+              ]
+            },
+            "properties": {
+              "eventtype": "WF",
+              "eventid": 1029260,
+              "episodeid": 11,
+              "eventname": "",
+              "glide": "WF-2026-000101-PRT",
+              "name": "Forest fires in Portugal",
+              "description": "Forest fires in Portugal",
+              "htmldescription": "Orange Forest fires in Portugal from: 02 Jul 2026 to: 08 Jul 2026.",
+              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/WF.png",
+              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/WF.png",
+              "url": {
+                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=WF&eventid=1029260&episodeid=11",
+                "report": "https://www.gdacs.org/report.aspx?eventid=1029260&episodeid=11&eventtype=WF",
+                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=WF&eventid=1029260"
+              },
+              "alertlevel": "Orange",
+              "alertscore": 2,
+              "episodealertlevel": "Orange",
+              "episodealertscore": 1.5,
+              "istemporary": "false",
+              "iscurrent": "false",
+              "country": "Portugal",
+              "fromdate": "2026-07-02T00:00:00",
+              "todate": "2026-07-08T00:00:00",
+              "datemodified": "2026-09-30T09:40:32",
+              "iso3": "PRT",
+              "source": "GWIS",
+              "sourceid": "",
+              "polygonlabel": "Centroid",
+              "Class": "Point_Centroid",
+              "affectedcountries": [
+                {
+                  "iso2": "PT",
+                  "iso3": "PRT",
+                  "countryname": "Portugal"
+                }
+              ],
+              "severitydata": {
+                "severity": 19670.0,
+                "severitytext": "Orange impact for forestfire in 19670 ha",
                 "severityunit": "ha"
               }
             }
@@ -5536,66 +5596,6 @@
                 "severity": 0.0,
                 "severitytext": "",
                 "severityunit": ""
-              }
-            }
-          },
-          {
-            "type": "Feature",
-            "bbox": [
-              123.9375,
-              10.9457,
-              123.9375,
-              10.9457
-            ],
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                123.9375,
-                10.9457
-              ]
-            },
-            "properties": {
-              "eventtype": "EQ",
-              "eventid": 1504796,
-              "episodeid": 1665698,
-              "eventname": "",
-              "glide": "EQ-2025-000192-PHL",
-              "name": "Earthquake in Philippines",
-              "description": "Earthquake in Philippines",
-              "htmldescription": "Orange M 5.7 Earthquake in Philippines at: 12 Oct 2025 17:05:59.",
-              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/EQ.png",
-              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/EQ.png",
-              "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=EQ&eventid=1504796&episodeid=1665698",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1504796&episodeid=1665698&eventtype=EQ",
-                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=EQ&eventid=1504796"
-              },
-              "alertlevel": "Orange",
-              "alertscore": 2,
-              "episodealertlevel": "Orange",
-              "episodealertscore": 1.30992531920971,
-              "istemporary": "false",
-              "iscurrent": "false",
-              "country": "Philippines",
-              "fromdate": "2025-10-12T17:05:59",
-              "todate": "2025-10-12T17:05:59",
-              "datemodified": "2025-10-14T15:00:42",
-              "iso3": "PHL",
-              "source": "NEIC",
-              "sourceid": "",
-              "polygonlabel": "Centroid",
-              "Class": "Point_Centroid",
-              "affectedcountries": [
-                {
-                  "iso2": "PH",
-                  "iso3": "PHL",
-                  "countryname": "Philippines"
-                }
-              ],
-              "severitydata": {
-                "severity": 5.7,
-                "severitytext": "Magnitude 5.7M, Depth:10km",
-                "severityunit": "M"
               }
             }
           }
