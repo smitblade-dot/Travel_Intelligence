@@ -17,6 +17,8 @@ SIGNALS = ROOT / "data" / "phase1_signals.json"
 OUT = ROOT / "data" / "phase1_review_queue.json"
 
 COUNTRY_ALIASES = {
+    "russia": "ru", "sochi": "ru", "sirius": "ru",
+    "fairford": "gb", "gloucestershire": "gb",
     "iraq": "iq", "kuwait": "kw", "libya": "ly", "guyana": "gy",
     "cyprus": "cy", "qatar": "qa", "saudi arabia": "sa",
     "united arab emirates": "ae", "uae": "ae", "oman": "om",
@@ -38,11 +40,11 @@ KEYWORDS = {
     "BORDER": ["border", "border crossing", "checkpoint", "crossing closed"],
     "ROAD": ["road", "highway", "motorway", "bridge", "route", "traffic"],
     "RAIL": ["rail", "railway", "train", "metro"],
-    "PORT": ["port", "harbour", "harbor", "ferry"],
+    "PORT": ["port", "harbour", "harbor", "ferry", "tanker", "maritime", "unmanned vessel"],
     "DRONE": ["drone", "uav", "uas", "unmanned aircraft"],
     "FLOOD": ["flood", "river level", "flooding"],
     "FIRE": ["wildfire", "forest fire", "fire", "burning"],
-    "SECURITY": ["attack", "riot", "protest", "explosion", "shooting", "militia"],
+    "SECURITY": ["attack", "riot", "protest", "explosion", "shooting", "militia", "airbase", "bomber", "terror", "arson", "redeploy"],
     "WEATHER": ["cyclone", "hurricane", "storm", "typhoon", "extreme weather"],
     "EARTHQUAKE": ["earthquake", "seismic", "tsunami"],
 }
@@ -54,7 +56,7 @@ def country_ids(text, known):
     t = norm(text)
     hits = []
     for alias, cid in COUNTRY_ALIASES.items():
-        if alias in t and cid in known and cid not in hits:
+        if re.search(r"(?<!\w)" + re.escape(alias) + r"(?!\w)", t) and cid in known and cid not in hits:
             hits.append(cid)
     return hits
 
@@ -80,7 +82,7 @@ def main():
             ])
             cids = country_ids(text, known)
             cats = categories(text)
-            if cids and cats:
+            if cats:
                 queue.append({
                     "id": f"sig-gdelt-{len(queue)+1:04d}",
                     "sourceId": "gdelt-events",
@@ -90,7 +92,7 @@ def main():
                     "candidateCategories": cats,
                     "claim": article.get("title"),
                     "observedAt": article.get("seendate"),
-                    "status": "NEEDS_PRIMARY_SOURCE_VERIFICATION",
+                    "status": "NEEDS_PRIMARY_SOURCE_VERIFICATION" if cids else "NEEDS_GEOGRAPHIC_RESOLUTION",
                     "generatedAt": now,
                 })
 
@@ -121,3 +123,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

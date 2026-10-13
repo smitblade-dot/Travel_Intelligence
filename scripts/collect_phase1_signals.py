@@ -72,12 +72,14 @@ def collect_gdelt():
     query = (
         '("airport closed" OR "airport closure" OR "airspace closed" OR '
         '"border closed" OR "border crossing closed" OR "flight cancelled" '
-        'OR "drone ban" OR "drone restrictions")'
+        'OR "drone ban" OR "drone restrictions" OR "airbase" OR "bomber" '
+        'OR "terror plot" OR "tanker fire" OR "tanker attack" '
+        'OR "unmanned vessel" OR "oil spill" OR "beaches closed")'
     )
     url = (
         "https://api.gdeltproject.org/api/v2/doc/doc"
         f"?query={quote(query)}&mode=artlist&format=json&maxrecords=50"
-        "&sort=datedesc"
+        "&sort=datedesc&timespan=14d"
     )
     return safe_json(url)
 
@@ -161,3 +163,4 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
+
