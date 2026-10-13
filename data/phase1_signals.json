@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generated": "2026-10-12T18:07:03.748464+00:00",
+  "generated": "2026-10-13T18:10:30.838758+00:00",
   "purpose": "Reviewable Phase 1 signals; not published TI events.",
   "sources": {
     "ourairports-airports": {
@@ -19,32 +19,32 @@
           {
             "type": "Feature",
             "bbox": [
-              -106.5,
-              20.1,
-              -106.5,
-              20.1
+              -107.3,
+              20.3,
+              -107.3,
+              20.3
             ],
             "geometry": {
               "type": "Point",
               "coordinates": [
-                -106.5,
-                20.1
+                -107.3,
+                20.3
               ]
             },
             "properties": {
               "eventtype": "TC",
               "eventid": 1001335,
-              "episodeid": 21,
+              "episodeid": 25,
               "eventname": "SIMON-26",
               "glide": "",
               "name": "Tropical Cyclone SIMON-26",
               "description": "Tropical Cyclone SIMON-26",
-              "htmldescription": "Orange Tropical Cyclone SIMON-26 in Mexico from: 07 Oct 2026  to: 12 Oct 2026 .",
+              "htmldescription": "Orange Tropical Cyclone SIMON-26 in Mexico from: 07 Oct 2026  to: 13 Oct 2026 .",
               "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Green/TC.png",
               "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/TC.png",
               "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=TC&eventid=1001335&episodeid=21",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1001335&episodeid=21&eventtype=TC",
+                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=TC&eventid=1001335&episodeid=25",
+                "report": "https://www.gdacs.org/report.aspx?eventid=1001335&episodeid=25&eventtype=TC",
                 "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=TC&eventid=1001335"
               },
               "alertlevel": "Orange",
@@ -55,8 +55,8 @@
               "iscurrent": "true",
               "country": "Mexico",
               "fromdate": "2026-10-07T15:00:00",
-              "todate": "2026-10-12T15:00:00",
-              "datemodified": "2026-10-12T15:16:25",
+              "todate": "2026-10-13T15:00:00",
+              "datemodified": "2026-10-13T15:00:41",
               "iso3": "MEX",
               "source": "NOAA",
               "sourceid": "",
@@ -117,7 +117,7 @@
               "country": "United States",
               "fromdate": "2026-10-06T21:00:00",
               "todate": "2026-10-11T15:00:00",
-              "datemodified": "2026-10-12T18:00:27",
+              "datemodified": "2026-10-13T17:59:44",
               "iso3": "",
               "source": "NOAA",
               "sourceid": "",
@@ -135,66 +135,6 @@
                 "severity": 194.4432,
                 "severitytext": "Tropical Depression (maximum wind speed of 194 km/h)",
                 "severityunit": "km/h"
-              }
-            }
-          },
-          {
-            "type": "Feature",
-            "bbox": [
-              123.132,
-              10.412,
-              123.132,
-              10.412
-            ],
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                123.132,
-                10.412
-              ]
-            },
-            "properties": {
-              "eventtype": "VO",
-              "eventid": 1000152,
-              "episodeid": 1,
-              "eventname": "Kanlaon",
-              "glide": "VO-2026-000190-PHL",
-              "name": "Eruption  Kanlaon",
-              "description": "Eruption  Kanlaon",
-              "htmldescription": "Orange Eruption Kanlaon in Philippines at: 10 Oct 2026 05:58.",
-              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/VO.png",
-              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/VO.png",
-              "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=VO&eventid=1000152&episodeid=1",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1000152&episodeid=1&eventtype=VO",
-                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=VO&eventid=1000152"
-              },
-              "alertlevel": "Orange",
-              "alertscore": 2,
-              "episodealertlevel": "Orange",
-              "episodealertscore": 1.5,
-              "istemporary": "false",
-              "iscurrent": "true",
-              "country": "Philippines",
-              "fromdate": "2026-10-10T05:58:00",
-              "todate": "2026-10-10T05:58:00",
-              "datemodified": "2026-10-12T06:02:40",
-              "iso3": "PHL",
-              "source": "TOKYO",
-              "sourceid": "",
-              "polygonlabel": "Centroid",
-              "Class": "Point_Centroid",
-              "affectedcountries": [
-                {
-                  "iso2": "PH",
-                  "iso3": "PHL",
-                  "countryname": "Philippines"
-                }
-              ],
-              "severitydata": {
-                "severity": 0.0,
-                "severitytext": "",
-                "severityunit": ""
               }
             }
           },
@@ -221,7 +161,7 @@
               "glide": "DR-2025-000239-ALB",
               "name": "Drought in Austria, Bosnia  and  Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Moldova, Montenegro, Netherlands, Norway, Poland, Romania, Serbia, Russia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, ",
               "description": "Drought in Austria, Bosnia  and  Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Moldova, Montenegro, Netherlands, Norway, Poland, Romania, Serbia, Russia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, ",
-              "htmldescription": "Orange Drought in Austria, Bosnia  and  Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Moldova, Montenegro, Netherlands, Norway, Poland, Romania, Serbia, Russia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, from: 21 Dec 2025  to: 10 Oct 2026 .",
+              "htmldescription": "Orange Drought in Austria, Bosnia  and  Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Moldova, Montenegro, Netherlands, Norway, Poland, Romania, Serbia, Russia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, from: 21 Dec 2025  to: 11 Oct 2026 .",
               "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "url": {
@@ -237,8 +177,8 @@
               "iscurrent": "true",
               "country": "Austria, Bosnia & Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Moldova, Montenegro, Netherlands, Norway, Poland, Romania, Serbia, Russia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, ",
               "fromdate": "2025-12-21T00:00:00",
-              "todate": "2026-10-10T00:00:00",
-              "datemodified": "2026-10-12T05:57:04",
+              "todate": "2026-10-11T00:00:00",
+              "datemodified": "2026-10-13T05:57:05",
               "iso3": "AUT",
               "source": "GDO",
               "sourceid": "",
@@ -421,7 +361,7 @@
               "glide": "DR-2026-000153-BLZ",
               "name": "Drought in The Bahamas, Belize, Costa Rica, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador",
               "description": "Drought in The Bahamas, Belize, Costa Rica, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador",
-              "htmldescription": "Orange Drought in The Bahamas, Belize, Costa Rica, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador from: 21 Apr 2026  to: 10 Oct 2026 .",
+              "htmldescription": "Orange Drought in The Bahamas, Belize, Costa Rica, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador from: 21 Apr 2026  to: 11 Oct 2026 .",
               "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "url": {
@@ -437,8 +377,8 @@
               "iscurrent": "false",
               "country": "The Bahamas, Belize, Costa Rica, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador",
               "fromdate": "2026-04-21T00:00:00",
-              "todate": "2026-10-10T00:00:00",
-              "datemodified": "2026-10-12T05:57:21",
+              "todate": "2026-10-11T00:00:00",
+              "datemodified": "2026-10-13T05:57:28",
               "iso3": "BHS",
               "source": "GDO",
               "sourceid": "",
@@ -531,7 +471,7 @@
               "glide": "DR-2026-000117-ETH",
               "name": "Drought in Democratic Republic of Congo, Central African Republic, Cameroon, Djibouti, Eritrea, Ethiopia, Kenya, Niger, Nigeria, Sudan, Somalia, South Sudan, Chad",
               "description": "Drought in Democratic Republic of Congo, Central African Republic, Cameroon, Djibouti, Eritrea, Ethiopia, Kenya, Niger, Nigeria, Sudan, Somalia, South Sudan, Chad",
-              "htmldescription": "Orange Drought in Democratic Republic of Congo, Central African Republic, Cameroon, Djibouti, Eritrea, Ethiopia, Kenya, Niger, Nigeria, Sudan, Somalia, South Sudan, Chad from: 21 Jun 2026  to: 10 Oct 2026 .",
+              "htmldescription": "Orange Drought in Democratic Republic of Congo, Central African Republic, Cameroon, Djibouti, Eritrea, Ethiopia, Kenya, Niger, Nigeria, Sudan, Somalia, South Sudan, Chad from: 21 Jun 2026  to: 11 Oct 2026 .",
               "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "url": {
@@ -547,8 +487,8 @@
               "iscurrent": "false",
               "country": "Democratic Republic of Congo, Central African Republic, Cameroon, Djibouti, Eritrea, Ethiopia, Kenya, Niger, Nigeria, Sudan, Somalia, South Sudan, Chad",
               "fromdate": "2026-06-21T00:00:00",
-              "todate": "2026-10-10T00:00:00",
-              "datemodified": "2026-10-12T05:57:14",
+              "todate": "2026-10-11T00:00:00",
+              "datemodified": "2026-10-13T05:57:19",
               "iso3": "COD",
               "source": "GDO",
               "sourceid": "",
@@ -651,7 +591,7 @@
               "glide": "DR-2026-000143-COD",
               "name": "Drought in Democratic Republic of Congo, Kenya, Tanzania, Uganda",
               "description": "Drought in Democratic Republic of Congo, Kenya, Tanzania, Uganda",
-              "htmldescription": "Orange Drought in Democratic Republic of Congo, Kenya, Tanzania, Uganda from: 21 May 2026  to: 10 Oct 2026 .",
+              "htmldescription": "Orange Drought in Democratic Republic of Congo, Kenya, Tanzania, Uganda from: 21 May 2026  to: 11 Oct 2026 .",
               "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "url": {
@@ -667,8 +607,8 @@
               "iscurrent": "false",
               "country": "Democratic Republic of Congo, Kenya, Tanzania, Uganda",
               "fromdate": "2026-05-21T00:00:00",
-              "todate": "2026-10-10T00:00:00",
-              "datemodified": "2026-10-12T05:57:15",
+              "todate": "2026-10-11T00:00:00",
+              "datemodified": "2026-10-13T05:57:20",
               "iso3": "COD",
               "source": "GDO",
               "sourceid": "",
@@ -706,6 +646,66 @@
           {
             "type": "Feature",
             "bbox": [
+              123.132,
+              10.412,
+              123.132,
+              10.412
+            ],
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                123.132,
+                10.412
+              ]
+            },
+            "properties": {
+              "eventtype": "VO",
+              "eventid": 1000152,
+              "episodeid": 1,
+              "eventname": "Kanlaon",
+              "glide": "VO-2026-000190-PHL",
+              "name": "Eruption  Kanlaon",
+              "description": "Eruption  Kanlaon",
+              "htmldescription": "Orange Eruption Kanlaon in Philippines at: 10 Oct 2026 05:58.",
+              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/VO.png",
+              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/VO.png",
+              "url": {
+                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=VO&eventid=1000152&episodeid=1",
+                "report": "https://www.gdacs.org/report.aspx?eventid=1000152&episodeid=1&eventtype=VO",
+                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=VO&eventid=1000152"
+              },
+              "alertlevel": "Orange",
+              "alertscore": 2,
+              "episodealertlevel": "Orange",
+              "episodealertscore": 1.5,
+              "istemporary": "false",
+              "iscurrent": "true",
+              "country": "Philippines",
+              "fromdate": "2026-10-10T05:58:00",
+              "todate": "2026-10-10T05:58:00",
+              "datemodified": "2026-10-12T06:02:40",
+              "iso3": "PHL",
+              "source": "TOKYO",
+              "sourceid": "",
+              "polygonlabel": "Centroid",
+              "Class": "Point_Centroid",
+              "affectedcountries": [
+                {
+                  "iso2": "PH",
+                  "iso3": "PHL",
+                  "countryname": "Philippines"
+                }
+              ],
+              "severitydata": {
+                "severity": 0.0,
+                "severitytext": "",
+                "severityunit": ""
+              }
+            }
+          },
+          {
+            "type": "Feature",
+            "bbox": [
               -80.769,
               7.5868,
               -80.769,
@@ -737,13 +737,13 @@
               "alertlevel": "Orange",
               "alertscore": 2,
               "episodealertlevel": "Orange",
-              "episodealertscore": 1.91912908711068,
+              "episodealertscore": 1.045,
               "istemporary": "false",
-              "iscurrent": "true",
+              "iscurrent": "false",
               "country": "Panama",
               "fromdate": "2026-10-09T17:56:06",
               "todate": "2026-10-09T17:56:06",
-              "datemodified": "2026-10-12T01:55:25",
+              "datemodified": "2026-10-12T20:01:14",
               "iso3": "PAN",
               "source": "NEIC",
               "sourceid": "",
