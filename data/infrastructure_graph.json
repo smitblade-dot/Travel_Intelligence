@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generated": "2026-10-13T18:10:50.893589+00:00",
+  "generated": "2026-10-14T18:21:40.077998+00:00",
   "purpose": "Deterministic relationship graph for travel-impact resolution; not a source of truth.",
   "nodes": [
     {
@@ -666,6 +666,14 @@
       "infrastructure": "AVIATION",
       "locationId": null,
       "countryId": "ru",
+      "status": "EXPLICIT_EVENT_RELATIONSHIP",
+      "resolvedLocation": false
+    },
+    {
+      "eventId": "sa-riyadh-airport-attack-2026-10-10",
+      "infrastructure": "AVIATION",
+      "locationId": null,
+      "countryId": "sa",
       "status": "EXPLICIT_EVENT_RELATIONSHIP",
       "resolvedLocation": false
     }
