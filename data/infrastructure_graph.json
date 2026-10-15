@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generated": "2026-10-14T18:21:40.077998+00:00",
+  "generated": "2026-10-15T18:19:37.463021+00:00",
   "purpose": "Deterministic relationship graph for travel-impact resolution; not a source of truth.",
   "nodes": [
     {
@@ -674,6 +674,30 @@
       "infrastructure": "AVIATION",
       "locationId": null,
       "countryId": "sa",
+      "status": "EXPLICIT_EVENT_RELATIONSHIP",
+      "resolvedLocation": false
+    },
+    {
+      "eventId": "sa-aramco-dhahran-fire-2026-10-13",
+      "infrastructure": "ENERGY",
+      "locationId": null,
+      "countryId": "sa",
+      "status": "EXPLICIT_EVENT_RELATIONSHIP",
+      "resolvedLocation": false
+    },
+    {
+      "eventId": "ru-moscow-airports-drone-2026-10-09",
+      "infrastructure": "AVIATION",
+      "locationId": null,
+      "countryId": "ru",
+      "status": "EXPLICIT_EVENT_RELATIONSHIP",
+      "resolvedLocation": false
+    },
+    {
+      "eventId": "ru-novoshakhtinsk-refinery-fire-2026-10-10",
+      "infrastructure": "ENERGY",
+      "locationId": null,
+      "countryId": "ru",
       "status": "EXPLICIT_EVENT_RELATIONSHIP",
       "resolvedLocation": false
     }
