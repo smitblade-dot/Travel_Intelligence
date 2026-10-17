@@ -1,0 +1,12 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';
+import {range,validatePages} from '../scripts/nuclear_refresh/browser/directory.mjs';
+const source='iaea-nfcis';const pages=()=>[{visibleRange:'1-2 of 3',hrefs:['facility/Details/0','facility/Details/2']},{visibleRange:'3-3 of 3',hrefs:['facility/Details/3']}];
+test('complete pagination preserves actual ID zero',()=>assert.equal(validatePages(source,pages()).observedTotal,3));
+test('omitted last page rejected',()=>assert.throws(()=>validatePages(source,pages().slice(0,1))));
+test('changed denominator rejected',()=>{const p=pages();p[1].visibleRange='3-3 of 4';assert.throws(()=>validatePages(source,p));});
+test('duplicates across pages rejected',()=>{const p=pages();p[1].hrefs=['facility/Details/0'];assert.throws(()=>validatePages(source,p));});
+test('other origin rejected',()=>{const p=pages();p[1].hrefs=['https://evil.example/facility/Details/3'];assert.throws(()=>validatePages(source,p));});
+test('skipped page range rejected',()=>{const p=pages();p[1].visibleRange='4-4 of 4';assert.throws(()=>validatePages(source,p));});
+test('wrong row count rejected',()=>{const p=pages();p[0].hrefs.pop();assert.throws(()=>validatePages(source,p));});
+test('malformed and empty ranges rejected',()=>{for(const s of ['No data','0-0 of 0','1-10 of 9'])assert.throws(()=>range(s));});
+test('fresh single PIE page accepted',()=>assert.equal(validatePages('iaea-piedb',[{visibleRange:'1-1 of 1',hrefs:['facility/Details/34']}]).observedTotal,1));
