@@ -23,11 +23,27 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "should_run=true" >> "$GITHUB_OUTPUT"
-          elif [ "$(TZ=Europe/Nicosia date +%H)" = "21" ]; then
-            echo "should_run=true" >> "$GITHUB_OUTPUT"
           else
-            echo "should_run=false" >> "$GITHUB_OUTPUT"
-            echo "Unused Cyprus DST cron candidate; no refresh required."
+            # GitHub scheduled jobs can start late. Check the cron slot that
+            # triggered this run, not the runner's actual wall-clock hour.
+            # The 18:00 UTC slot is 21:00 Cyprus in summer; the 19:00 UTC
+            # slot is 21:00 Cyprus in winter.
+            SCHEDULED_CRON="${{ github.event.schedule }}"
+            EXPECTED_CRON="$(python3 - <<'PY'
+          from datetime import datetime, timezone
+          from zoneinfo import ZoneInfo
+          now = datetime.now(timezone.utc)
+          cyprus_utc_offset = now.astimezone(ZoneInfo("Europe/Nicosia")).utcoffset().total_seconds() / 3600
+          print("0 18 * * *" if cyprus_utc_offset == 3 else "0 19 * * *")
+          PY
+            )"
+            if [ "$SCHEDULED_CRON" = "$EXPECTED_CRON" ]; then
+              echo "should_run=true" >> "$GITHUB_OUTPUT"
+              echo "Executing Cyprus 21:00 scheduled slot (even if GitHub started it late)."
+            else
+              echo "should_run=false" >> "$GITHUB_OUTPUT"
+              echo "Unused Cyprus DST cron candidate: $SCHEDULED_CRON (expected $EXPECTED_CRON)."
+            fi
           fi
 
   refresh:
