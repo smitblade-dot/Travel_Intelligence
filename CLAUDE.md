@@ -243,3 +243,8 @@ Do not modify sibling repositories.
 Do not delete historical data simply because a source is temporarily
 unavailable.
 Do not force changes when verification finds no material update.
+
+Gas/LNG imports must preserve Unknown (unverified / presumed) independently
+from disruption. The operating_summary and operating_evidence fields retain
+coverage gaps even when worst_status indicates an actual restriction elsewhere.
+Never treat source_generated as asset verification or Unknown as normal.
