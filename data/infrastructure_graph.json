@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generated": "2026-10-12T18:07:18.636748+00:00",
+  "generated": "2026-10-20T05:08:50.751797+00:00",
   "purpose": "Deterministic relationship graph for travel-impact resolution; not a source of truth.",
   "nodes": [
     {
@@ -664,6 +664,38 @@
     {
       "eventId": "ru-ryazan-bashkortostan-moscow-drone-2026-10-07",
       "infrastructure": "AVIATION",
+      "locationId": null,
+      "countryId": "ru",
+      "status": "EXPLICIT_EVENT_RELATIONSHIP",
+      "resolvedLocation": false
+    },
+    {
+      "eventId": "sa-riyadh-airport-attack-2026-10-10",
+      "infrastructure": "AVIATION",
+      "locationId": null,
+      "countryId": "sa",
+      "status": "EXPLICIT_EVENT_RELATIONSHIP",
+      "resolvedLocation": false
+    },
+    {
+      "eventId": "sa-aramco-dhahran-fire-2026-10-13",
+      "infrastructure": "ENERGY",
+      "locationId": null,
+      "countryId": "sa",
+      "status": "EXPLICIT_EVENT_RELATIONSHIP",
+      "resolvedLocation": false
+    },
+    {
+      "eventId": "ru-moscow-airports-drone-2026-10-09",
+      "infrastructure": "AVIATION",
+      "locationId": null,
+      "countryId": "ru",
+      "status": "EXPLICIT_EVENT_RELATIONSHIP",
+      "resolvedLocation": false
+    },
+    {
+      "eventId": "ru-novoshakhtinsk-refinery-fire-2026-10-10",
+      "infrastructure": "ENERGY",
       "locationId": null,
       "countryId": "ru",
       "status": "EXPLICIT_EVENT_RELATIONSHIP",

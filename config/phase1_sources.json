@@ -8,12 +8,15 @@
       "name": "OurAirports",
       "kind": "reference",
       "url": "https://ourairports.com/data/",
-      "endpoint": "https://ourairports.com/airports.csv",
+      "endpoint": "https://davidmegginson.github.io/ourairports-data/airports.csv",
       "accessMethod": "csv",
       "priority": "P0",
       "rights": "public-domain",
       "automationPermission": "yes",
-      "notes": "Canonical airport reference layer. Do not treat as live operational status."
+      "notes": "Canonical airport reference layer. Do not treat as live operational status.",
+      "fallbackEndpoints": [
+        "https://raw.githubusercontent.com/davidmegginson/ourairports-data/main/airports.csv"
+      ]
     },
     {
       "id": "gdelt-events",
@@ -48,11 +51,12 @@
       "kind": "observation",
       "url": "https://firms.modaps.eosdis.nasa.gov/",
       "endpoint": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/",
-      "accessMethod": "api-key",
+      "accessMethod": "public-csv-or-api-key",
       "priority": "P0",
       "rights": "source-specific",
       "automationPermission": "yes",
-      "notes": "Requires FIRMS MAP_KEY. Keep key in GitHub Actions secrets; never commit it."
+      "notes": "Public S-NPP VIIRS C2 24-hour CSV is available without a key. Optional MAP_KEY stays in Actions secrets. Hotspots are observations, not confirmed fires or travel incidents.",
+      "publicEndpoint": "https://firms.modaps.eosdis.nasa.gov/data/active_fire/suomi-npp-viirs-c2/csv/SUOMI_VIIRS_C2_Global_24h.csv"
     },
     {
       "id": "adsblol-aircraft",
@@ -60,12 +64,13 @@
       "name": "ADSB.lol",
       "kind": "live-signal",
       "url": "https://www.adsb.lol/",
-      "endpoint": "https://api.adsb.lol/v2/all",
+      "endpoint": "https://api.adsb.lol/v2/point/{lat}/{lon}/{radius}",
       "accessMethod": "http-json",
       "priority": "P0",
       "rights": "odbl",
       "automationPermission": "yes",
-      "notes": "Use as an aircraft signal, not as sole proof of airport/airspace status."
+      "notes": "One scheduled large/medium airport per tracked country, where available; bounded geographic sample, never global coverage or proof of operational status. ODbL attribution retained.",
+      "radiusNm": 100
     },
     {
       "id": "reliefweb-disasters",
@@ -73,12 +78,13 @@
       "name": "ReliefWeb",
       "kind": "discovery",
       "url": "https://reliefweb.int/",
-      "endpoint": "https://api.reliefweb.int/v1/reports?appname=travel-intelligence",
+      "endpoint": "https://api.reliefweb.int/v2/reports",
       "accessMethod": "http-json",
       "priority": "P0",
       "rights": "source-specific",
       "automationPermission": "yes",
-      "notes": "Discovery/corroboration. Original report rights remain with the publisher."
+      "notes": "Requires a provider-approved RELIEFWEB_APPNAME. Do not impersonate another application. Discovery only; original publisher rights apply.",
+      "appnameEnvironment": "RELIEFWEB_APPNAME"
     }
   ]
 }
