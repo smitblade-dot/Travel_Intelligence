@@ -6,43 +6,58 @@ only explicit country membership/airport-reference relationships. Live routes
 are deliberately not inferred from aircraft observations.
 """
 from __future__ import annotations
-import csv, io, json
+import json
+import sys
+from feed_support import airport_reference
 from datetime import datetime, timezone
 from pathlib import Path
-from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data.json"
 OUT = ROOT / "data" / "transport_network.json"
-
-def fetch(url):
-    req = Request(url, headers={"User-Agent": "TravelIntelligence/0.1"})
-    with urlopen(req, timeout=30) as r:
-        return r.read()
 
 def main():
     data = json.loads(DATA.read_text(encoding="utf-8"))
     countries = {c.get("id"): c for c in data.get("countries", []) if c.get("id")}
     locations = data.get("locations", [])
     airports = []
+    reference_health = {'status': 'healthy'}
+    # OurAirports uses ISO alpha-2; TI's country.id carries that same code.
+    country_map = {cid.upper(): cid for cid in countries}
     try:
-        rows = csv.DictReader(io.StringIO(fetch("https://ourairports.com/airports.csv").decode("utf-8", errors="replace")))
-        for row in rows:
-            if row.get("iso_country") in {countries[c].get("iso3") for c in countries}:
-                airports.append({
-                    "id": row.get("ident"),
-                    "name": row.get("name"),
-                    "countryId": next((cid for cid, c in countries.items() if c.get("iso3") == row.get("iso_country")), None),
-                    "iata": row.get("iata_code") or None,
-                    "icao": row.get("icao_code") or None,
-                    "latitude": float(row["latitude_deg"]) if row.get("latitude_deg") else None,
-                    "longitude": float(row["longitude_deg"]) if row.get("longitude_deg") else None,
-                    "scheduledService": row.get("scheduled_service"),
-                    "type": row.get("type"),
-                    "sourceId": "ourairports-airports"
-                })
-    except Exception as exc:
-        print(f"Airport reference fetch failed: {exc}")
+        reference = airport_reference()
+        for row in reference['rows']:
+            cid = country_map.get(row.get('iso_country'))
+            # Travel reference scope: scheduled-service and large/medium airports.
+            if not cid or not (row.get('scheduled_service') == 'yes' or row.get('type') in ('large_airport', 'medium_airport')):
+                continue
+            lat, lon = float(row['latitude_deg']), float(row['longitude_deg'])
+            if not (-90 <= lat <= 90 and -180 <= lon <= 180):
+                raise ValueError('Airport coordinates out of range')
+            airports.append({
+                'id': row['ident'], 'name': row['name'], 'countryId': cid,
+                'iata': row.get('iata_code') or None, 'icao': row.get('icao_code') or None,
+                'latitude': lat, 'longitude': lon,
+                'scheduledService': row.get('scheduled_service'), 'type': row['type'],
+                'sourceId': 'ourairports-airports'
+            })
+        if not airports:
+            raise ValueError('No airports matched tracked countries')
+        reference_health.update(sourceUrl=reference['sourceUrl'], fetchedAt=reference['fetchedAt'],
+                                scope='Scheduled-service and large/medium airports in tracked countries')
+    except Exception:
+        # Never replace usable reference nodes with an empty/partial download.
+        previous = json.loads(OUT.read_text()) if OUT.exists() else {}
+        previous_airports = previous.get('nodes', {}).get('airports', [])
+        if not previous_airports:
+            print('::error::Airport reference unavailable and no usable previous network exists; output preserved')
+            return 1
+        airports = previous_airports
+        old_health = previous.get('airportReference', {})
+        reference_health = {'status': 'stale', 'error': 'Current airport refresh failed; previous nodes retained',
+                            'fetchedAt': old_health.get('fetchedAt', previous.get('generated')),
+                            'sourceUrl': old_health.get('sourceUrl')}
+        print('::warning::Airport refresh failed; previous airport nodes retained with stale provenance')
 
     location_nodes = [{
         "id": x.get("id"),
@@ -62,6 +77,7 @@ def main():
         "schemaVersion": "1.0",
         "generated": datetime.now(timezone.utc).isoformat(),
         "purpose": "Conservative transport reference network. Not a live route database.",
+        "airportReference": reference_health,
         "nodes": {
             "airports": airports,
             "tiLocations": location_nodes
@@ -85,4 +101,4 @@ def main():
     print(f"Wrote {OUT}: {len(airports)} airports, {len(location_nodes)} TI locations")
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

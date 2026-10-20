@@ -2,11 +2,10 @@ name: Daily travel intelligence data refresh
 
 on:
   schedule:
-    # GitHub Actions uses UTC. Run at both candidate UTC hours and let the
-    # guard below select the 21:00 Europe/Nicosia execution. This keeps the
-    # refresh at 21:00 Cyprus time across daylight-saving changes.
-    - cron: "0 18 * * *"
-    - cron: "0 19 * * *"
+    # GitHub resolves the local schedule, including Cyprus DST transitions.
+    # Runner queue delays must never decide whether the refresh is allowed.
+    - cron: "0 21 * * *"
+      timezone: "Europe/Nicosia"
   workflow_dispatch: {}
 
 permissions:
@@ -20,14 +19,18 @@ jobs:
       should_run: ${{ steps.gate.outputs.should_run }}
     steps:
       - id: gate
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          SCHEDULED_CRON: ${{ github.event.schedule }}
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          if [ "$EVENT_NAME" = "workflow_dispatch" ] || {
+            [ "$EVENT_NAME" = "schedule" ] && [ "$SCHEDULED_CRON" = "0 21 * * *" ];
+          }; then
             echo "should_run=true" >> "$GITHUB_OUTPUT"
-          elif [ "$(TZ=Europe/Nicosia date +%H)" = "21" ]; then
-            echo "should_run=true" >> "$GITHUB_OUTPUT"
+            echo "Refresh allowed: $EVENT_NAME / $SCHEDULED_CRON (21:00 Europe/Nicosia)."
           else
             echo "should_run=false" >> "$GITHUB_OUTPUT"
-            echo "Unused Cyprus DST cron candidate; no refresh required."
+            echo "Unexpected trigger: $EVENT_NAME / $SCHEDULED_CRON."
           fi
 
   refresh:
@@ -47,6 +50,7 @@ jobs:
       - name: Collect Phase 1 open-data signals
         env:
           FIRMS_MAP_KEY: ${{ secrets.FIRMS_MAP_KEY }}
+          RELIEFWEB_APPNAME: ${{ vars.RELIEFWEB_APPNAME }}
         run: python3 scripts/collect_phase1_signals.py
 
       - name: Resolve signals to TI review queue
@@ -56,6 +60,9 @@ jobs:
         run: python3 scripts/build_infrastructure_graph.py
 
       - name: Build transport reference network
+        # Preserve independent verification if no reference can be fetched.
+        # The final strict feed audit still fails on empty/stale airport data.
+        continue-on-error: true
         run: python3 scripts/build_transport_network.py
 
       - name: Refresh oil & gas summary (deterministic)
@@ -87,15 +94,8 @@ jobs:
             relationships; otherwise leave the relationship unresolved. Do
             not invent events from signals alone. Preserve source provenance
             and uncertainty. The oilGasSummary section was refreshed
-            separately; do not touch or re-derive it. Commit and push
-            substantive TI changes only after validation; do not push during
-            this step. Leave publication to the validated safety-net step.
-            Review security redeployments, alleged plots, tanker casualties
-            and coastal restrictions as well as transport closures. Retain
-            unresolved geographic leads for review. Review continuing Hot
-            Topics explicitly, including Fairford and Sochi; event age alone
-            is not grounds for deletion. Allegations require review and
-            must not be promoted to confirmed attribution.
+            separately; do not touch or re-derive it. Make substantive TI changes
+            and leave them uncommitted; do not push during this step. Leave publication to the validated safety-net step. Review security redeployments, alleged plots, tanker casualties and coastal restrictions as well as transport closures. Retain unresolved geographic leads for review. Review continuing Hot Topics explicitly, including Fairford and Sochi; event age alone is not grounds for deletion. Allegations require review and must not be promoted to confirmed attribution.
           claude_args: |
             --model claude-sonnet-5
             --allowedTools "Bash,Read,Write,Edit,Glob,Grep,WebSearch,WebFetch"
@@ -152,3 +152,8 @@ jobs:
             echo "Nothing outstanding — refresh step already committed."
           fi
 
+      # Run after the validated update is saved: outages must be visible without
+      # suppressing independently verified intelligence from working sources.
+      - name: Audit discovery feed health
+        if: always()
+        run: python3 scripts/audit_feed_health.py
