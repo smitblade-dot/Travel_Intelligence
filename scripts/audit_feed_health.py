@@ -15,7 +15,8 @@ def audit(root=ROOT):
     network = json.loads((root / 'data/transport_network.json').read_text())
     problems = []
     generated = datetime.fromisoformat(signals['generated'])
-    if generated.tzinfo is None or datetime.now(timezone.utc) - generated > timedelta(hours=24):
+    age = datetime.now(timezone.utc) - generated if generated.tzinfo else None
+    if age is None or age > timedelta(hours=24) or age < -timedelta(minutes=5):
         problems.append('Discovery snapshot is stale or has no timezone')
     lines = ['## Discovery feed health', '', '| Source | Status | Detail |', '|---|---|---|']
     for source in config['sources']:

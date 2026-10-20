@@ -25,7 +25,8 @@ this final coverage check. Never describe such a run as a fully healthy refresh.
 - **ADSB.lol:** the unsupported `/v2/all` call is replaced by documented point
   queries, at most one per second, around one scheduled large/medium airport
   per tracked country where available. Each query covers 100 nautical miles.
-  Store exact sampled areas and failures, deduplicate observations and cap
+  A ten-minute overall budget bounds provider stalls. Store exact sampled
+  areas and failures, deduplicate observations and cap
   stored aircraft at 200. This is a geographic sample, not global/national
   coverage. Empty aircraft data never proves closure, flight disruption or
   absence of activity. ODbL attribution is retained.
@@ -67,3 +68,14 @@ Baseline generation is outside this correction.
 - https://firms.modaps.eosdis.nasa.gov/api/area/
 - https://apidoc.reliefweb.int/parameters#appname
 - https://blog.gdeltproject.org/gdelt-doc-2-0-api-debuts/
+
+## Live recovery evidence — 20 October 2026
+
+A temporary-output probe recovered all 52 ADS-B sample areas (394 distinct
+observed aircraft), 86,258 validated airport reference rows and 3,926 transport
+airport nodes across 52 tracked countries. NASA's public CSV returned 62,763
+rows with acquisitions dated 20 October. GDACS also returned usable data.
+GDELT remained HTTP 503 after bounded retries. ReliefWeb rejected the previously
+configured `travel-intelligence` appname with HTTP 403 and an explicit request
+for provider approval. The health audit returned 1, correctly reporting those
+two coverage gaps instead of declaring the entire refresh healthy.

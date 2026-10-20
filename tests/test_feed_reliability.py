@@ -106,6 +106,17 @@ class FeedRecoveryTests(unittest.TestCase):
                 self.assertEqual(result['requestedAreas'], 2)
                 self.assertTrue(all('/v2/point/' in call.args[0] for call in fetch.call_args_list))
 
+    def test_adsb_budget_marks_unrequested_areas_as_degraded(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'data.json').write_text(json.dumps({'countries': [{'id': 'gb'}]}))
+            with patch.object(collector, 'ROOT', root), patch.object(collector, 'airport_reference', return_value={'rows': [AIRPORT]}), patch.object(collector.time, 'monotonic', side_effect=[0, 601]), patch.object(collector, 'safe_json') as fetch:
+                result = collector.collect_adsblol()
+                fetch.assert_not_called()
+                self.assertFalse(result['ok'])
+                self.assertEqual(result['status'], 'degraded')
+                self.assertIn('not requested', result['areas'][0]['error'])
+
 
 class TransportAndHealthTests(unittest.TestCase):
     def setUp(self):
@@ -157,6 +168,10 @@ class TransportAndHealthTests(unittest.TestCase):
             (self.root / 'data/phase1_signals.json').write_text(json.dumps(signal))
             self.assertEqual(health.audit(self.root), 1)
             signal['sources'] = {}
+            (self.root / 'data/phase1_signals.json').write_text(json.dumps(signal))
+            self.assertEqual(health.audit(self.root), 1)
+            signal['sources'] = {'feed': {'ok': True, 'status': 'healthy'}}
+            signal['generated'] = (datetime.now(timezone.utc) - timedelta(days=2)).isoformat()
             (self.root / 'data/phase1_signals.json').write_text(json.dumps(signal))
             self.assertEqual(health.audit(self.root), 1)
 

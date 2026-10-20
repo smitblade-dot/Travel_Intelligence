@@ -68,7 +68,7 @@ def collect_adsblol():
     if not points:
         return failure('No validated airport points available for ADS-B sampling')
     areas, aircraft = [], {}
-    deadline = time.monotonic() + 120
+    deadline = time.monotonic() + 600
     for index, point in enumerate(points.values()):
         if time.monotonic() >= deadline:
             areas.append({**point, 'ok': False, 'error': 'Sampling time budget exhausted; not requested'})
