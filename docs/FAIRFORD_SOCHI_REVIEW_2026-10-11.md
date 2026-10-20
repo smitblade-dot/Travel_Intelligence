@@ -4,7 +4,7 @@ Based on main b33c151cbe27eb4d6be51b18a598510882feaccc, whose dataset was genera
 
 Two discrete events, five checked source observations, conservative reporting-chain groups. Both are HOT_TOPIC: Fairford is seven days old and remains an investigation/redeployment issue; Sochi is five days old with an unresolved maritime/environmental aftermath. Neither is a fresh alert. CONFIRMED applies to the redeployment and fire/rescue respectively, not responsibility or attack details.
 
-Publication is PUBLISHED following sourcing and attribution checks. The confirmed core developments are distinct from UNVERIFIED allegations and DISPUTED environmental extent in claimAssessments and the public uncertainty text. REVIEW_RECOMMENDED remains advisory metadata; no external legal approval is claimed. The additional mandatory legal-approval gate has been removed.
+20 October publication-control correction: both restored events remain DRAFT, matching comparable production records with sensitiveAllegation=true and legalReviewStatus=REVIEW_RECOMMENDED. No approval or policy exception is asserted. Their confirmed core developments remain distinct from UNVERIFIED allegations and DISPUTED environmental extent in claimAssessments and uncertainty text. A documented publication decision is outstanding; the public interface continues to show only PUBLISHED events.
 
 Fairford: accessible Reuters copy in Defense News confirms the Pentagon statement. Supplied Air & Space Forces URL was blocked. Guardian reporting and later Times coverage were consulted; no threat mechanism or perpetrator is asserted.
 
@@ -15,3 +15,5 @@ Collection gaps established in code: closure-only GDELT query; no Russia/Sochi/F
 The public homepage now has a separate Continuing Hot Topics section for published HOT_TOPIC events. Only PUBLISHED records appear publicly. Country event views retain published event coverage. No baseline, upstream oil/gas summary or sibling repository is changed.
 
 Daily prompt now explicitly reviews these subjects and leaves pushing until after existing validation steps. No publication safeguard is bypassed.
+
+20 October integration supersedes the historical baseline above: reconciled against main 05088d3 after Gas/LNG #1 and TI #17 merged. All production records are retained; only the two draft events and their five sources/five observations are added. Dataset generation time and publication counts are regenerated without changing evidence observation dates. Production feed retry/schema handling, 24-hour discovery window and feed-health audit remain intact.
