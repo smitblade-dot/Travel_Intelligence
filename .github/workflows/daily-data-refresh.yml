@@ -2,11 +2,10 @@ name: Daily travel intelligence data refresh
 
 on:
   schedule:
-    # GitHub Actions uses UTC. Run at both candidate UTC hours and let the
-    # guard below select the 21:00 Europe/Nicosia execution. This keeps the
-    # refresh at 21:00 Cyprus time across daylight-saving changes.
-    - cron: "0 18 * * *"
-    - cron: "0 19 * * *"
+    # GitHub resolves the local schedule, including Cyprus DST transitions.
+    # Runner queue delays must never decide whether the refresh is allowed.
+    - cron: "0 21 * * *"
+      timezone: "Europe/Nicosia"
   workflow_dispatch: {}
 
 permissions:
@@ -20,30 +19,18 @@ jobs:
       should_run: ${{ steps.gate.outputs.should_run }}
     steps:
       - id: gate
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          SCHEDULED_CRON: ${{ github.event.schedule }}
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          if [ "$EVENT_NAME" = "workflow_dispatch" ] || {
+            [ "$EVENT_NAME" = "schedule" ] && [ "$SCHEDULED_CRON" = "0 21 * * *" ];
+          }; then
             echo "should_run=true" >> "$GITHUB_OUTPUT"
+            echo "Refresh allowed: $EVENT_NAME / $SCHEDULED_CRON (21:00 Europe/Nicosia)."
           else
-            # GitHub scheduled jobs can start late. Check the cron slot that
-            # triggered this run, not the runner's actual wall-clock hour.
-            # The 18:00 UTC slot is 21:00 Cyprus in summer; the 19:00 UTC
-            # slot is 21:00 Cyprus in winter.
-            SCHEDULED_CRON="${{ github.event.schedule }}"
-            EXPECTED_CRON="$(python3 - <<'PY'
-          from datetime import datetime, timezone
-          from zoneinfo import ZoneInfo
-          now = datetime.now(timezone.utc)
-          cyprus_utc_offset = now.astimezone(ZoneInfo("Europe/Nicosia")).utcoffset().total_seconds() / 3600
-          print("0 18 * * *" if cyprus_utc_offset == 3 else "0 19 * * *")
-          PY
-            )"
-            if [ "$SCHEDULED_CRON" = "$EXPECTED_CRON" ]; then
-              echo "should_run=true" >> "$GITHUB_OUTPUT"
-              echo "Executing Cyprus 21:00 scheduled slot (even if GitHub started it late)."
-            else
-              echo "should_run=false" >> "$GITHUB_OUTPUT"
-              echo "Unused Cyprus DST cron candidate: $SCHEDULED_CRON (expected $EXPECTED_CRON)."
-            fi
+            echo "should_run=false" >> "$GITHUB_OUTPUT"
+            echo "Unexpected trigger: $EVENT_NAME / $SCHEDULED_CRON."
           fi
 
   refresh:
