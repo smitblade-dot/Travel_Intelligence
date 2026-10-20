@@ -1,123 +1,11 @@
 {
   "schemaVersion": "1.0",
-  "generated": "2026-10-16T18:17:02.761571+00:00",
+  "generated": "2026-10-20T05:08:37.313623+00:00",
   "purpose": "Reviewable Phase 1 signals; not published TI events.",
   "sources": {
     "ourairports-airports": {
-      "ok": true,
-      "count": 86255,
-      "sample": [
-        {
-          "ident": "EGLL",
-          "type": "large_airport",
-          "name": "London Heathrow Airport",
-          "latitude": "51.470748",
-          "longitude": "-0.459909",
-          "iso_country": "GB",
-          "iata_code": "LHR",
-          "icao_code": "EGLL",
-          "scheduled_service": "1"
-        },
-        {
-          "ident": "KLAX",
-          "type": "large_airport",
-          "name": "Los Angeles International Airport",
-          "latitude": "33.942501",
-          "longitude": "-118.407997",
-          "iso_country": "US",
-          "iata_code": "LAX",
-          "icao_code": "KLAX",
-          "scheduled_service": "1"
-        },
-        {
-          "ident": "KORD",
-          "type": "large_airport",
-          "name": "Chicago O'Hare International Airport",
-          "latitude": "41.9786",
-          "longitude": "-87.9048",
-          "iso_country": "US",
-          "iata_code": "ORD",
-          "icao_code": "KORD",
-          "scheduled_service": "1"
-        },
-        {
-          "ident": "KJFK",
-          "type": "large_airport",
-          "name": "John F. Kennedy International Airport",
-          "latitude": "40.639447",
-          "longitude": "-73.779317",
-          "iso_country": "US",
-          "iata_code": "JFK",
-          "icao_code": "KJFK",
-          "scheduled_service": "1"
-        },
-        {
-          "ident": "KATL",
-          "type": "large_airport",
-          "name": "Hartsfield Jackson Atlanta International Airport",
-          "latitude": "33.6367",
-          "longitude": "-84.428101",
-          "iso_country": "US",
-          "iata_code": "ATL",
-          "icao_code": "KATL",
-          "scheduled_service": "1"
-        },
-        {
-          "ident": "LFPG",
-          "type": "large_airport",
-          "name": "Charles de Gaulle International Airport",
-          "latitude": "49.00896",
-          "longitude": "2.554117",
-          "iso_country": "FR",
-          "iata_code": "CDG",
-          "icao_code": "LFPG",
-          "scheduled_service": "1"
-        },
-        {
-          "ident": "KSFO",
-          "type": "large_airport",
-          "name": "San Francisco International Airport",
-          "latitude": "37.619806",
-          "longitude": "-122.374821",
-          "iso_country": "US",
-          "iata_code": "SFO",
-          "icao_code": "KSFO",
-          "scheduled_service": "1"
-        },
-        {
-          "ident": "EHAM",
-          "type": "large_airport",
-          "name": "Amsterdam Airport Schiphol",
-          "latitude": "52.308601",
-          "longitude": "4.76389",
-          "iso_country": "NL",
-          "iata_code": "AMS",
-          "icao_code": "EHAM",
-          "scheduled_service": "1"
-        },
-        {
-          "ident": "KDFW",
-          "type": "large_airport",
-          "name": "Dallas Fort Worth International Airport",
-          "latitude": "32.896801",
-          "longitude": "-97.038002",
-          "iso_country": "US",
-          "iata_code": "DFW",
-          "icao_code": "KDFW",
-          "scheduled_service": "1"
-        },
-        {
-          "ident": "EDDF",
-          "type": "large_airport",
-          "name": "Frankfurt Main Airport",
-          "latitude": "50.026706",
-          "longitude": "8.55835",
-          "iso_country": "DE",
-          "iata_code": "FRA",
-          "icao_code": "EDDF",
-          "scheduled_service": "1"
-        }
-      ]
+      "ok": false,
+      "error": "HTTP Error 500: Too many connections"
     },
     "gdelt-events": {
       "ok": false,
@@ -131,99 +19,44 @@
           {
             "type": "Feature",
             "bbox": [
-              -109.5,
-              20.6,
-              -109.5,
-              20.6
+              135.6,
+              15.9,
+              135.6,
+              15.9
             ],
             "geometry": {
               "type": "Point",
               "coordinates": [
-                -109.5,
-                20.6
-              ]
-            },
-            "properties": {
-              "eventtype": "TC",
-              "eventid": 1001335,
-              "episodeid": 37,
-              "eventname": "SIMON-26",
-              "glide": "",
-              "name": "Tropical Cyclone SIMON-26",
-              "description": "Tropical Cyclone SIMON-26",
-              "htmldescription": "Orange Tropical Cyclone SIMON-26 in México from: 07 Oct 2026  to: 16 Oct 2026 .",
-              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Green/TC.png",
-              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/TC.png",
-              "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=TC&eventid=1001335&episodeid=37",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1001335&episodeid=37&eventtype=TC",
-                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=TC&eventid=1001335"
-              },
-              "alertlevel": "Orange",
-              "alertscore": 2,
-              "episodealertlevel": "Green",
-              "episodealertscore": 1.0,
-              "istemporary": "false",
-              "iscurrent": "true",
-              "country": "México",
-              "fromdate": "2026-10-07T15:00:00",
-              "todate": "2026-10-16T15:00:00",
-              "datemodified": "2026-10-16T17:39:14",
-              "iso3": "MEX",
-              "source": "NOAA",
-              "sourceid": "",
-              "polygonlabel": "Centroid",
-              "Class": "Point_Centroid",
-              "countryonland": "",
-              "affectedcountries": [],
-              "severitydata": {
-                "severity": 249.9984,
-                "severitytext": "Tropical Storm (maximum wind speed of 250 km/h)",
-                "severityunit": "km/h"
-              }
-            }
-          },
-          {
-            "type": "Feature",
-            "bbox": [
-              151.4,
-              11.4,
-              151.4,
-              11.4
-            ],
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                151.4,
-                11.4
+                135.6,
+                15.9
               ]
             },
             "properties": {
               "eventtype": "TC",
               "eventid": 1001338,
-              "episodeid": 9,
+              "episodeid": 23,
               "eventname": "CHAMPI-26",
-              "glide": "",
+              "glide": "TC-2026-000192-GUM",
               "name": "Tropical Cyclone CHAMPI-26",
               "description": "Tropical Cyclone CHAMPI-26",
-              "htmldescription": "Orange Tropical Cyclone CHAMPI-26 in Guam from: 14 Oct 2026  to: 16 Oct 2026 .",
-              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/TC.png",
-              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/TC.png",
+              "htmldescription": "Red Tropical Cyclone CHAMPI-26 in Guam, Northern Mariana Islands, Japan from: 14 Oct 2026  to: 20 Oct 2026 .",
+              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Green/TC.png",
+              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Red/TC.png",
               "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=TC&eventid=1001338&episodeid=9",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1001338&episodeid=9&eventtype=TC",
+                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=TC&eventid=1001338&episodeid=23",
+                "report": "https://www.gdacs.org/report.aspx?eventid=1001338&episodeid=23&eventtype=TC",
                 "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=TC&eventid=1001338"
               },
-              "alertlevel": "Orange",
-              "alertscore": 2,
-              "episodealertlevel": "Orange",
-              "episodealertscore": 2.0,
+              "alertlevel": "Red",
+              "alertscore": 3,
+              "episodealertlevel": "Green",
+              "episodealertscore": 1.0,
               "istemporary": "false",
               "iscurrent": "true",
-              "country": "Guam",
+              "country": "Guam, Northern Mariana Islands, Japan",
               "fromdate": "2026-10-14T12:00:00",
-              "todate": "2026-10-16T12:00:00",
-              "datemodified": "2026-10-16T14:09:41",
+              "todate": "2026-10-20T00:00:00",
+              "datemodified": "2026-10-20T03:00:51",
               "iso3": "GUM",
               "source": "JTWC",
               "sourceid": "",
@@ -235,11 +68,16 @@
                   "iso2": "GU",
                   "iso3": "GUM",
                   "countryname": "Guam"
+                },
+                {
+                  "iso2": "JP",
+                  "iso3": "JPN",
+                  "countryname": "Japan"
                 }
               ],
               "severitydata": {
-                "severity": 249.9984,
-                "severitytext": "Tropical Storm (maximum wind speed of 250 km/h)",
+                "severity": 268.5168,
+                "severitytext": "Hurricane/Typhoon > 74 mph (maximum wind speed of 269 km/h)",
                 "severityunit": "km/h"
               }
             }
@@ -267,7 +105,7 @@
               "glide": "DR-2025-000239-ALB",
               "name": "Drought in Austria, Bosnia  and  Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Moldova, Montenegro, Netherlands, Norway, Poland, Romania, Serbia, Russia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, ",
               "description": "Drought in Austria, Bosnia  and  Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Moldova, Montenegro, Netherlands, Norway, Poland, Romania, Serbia, Russia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, ",
-              "htmldescription": "Orange Drought in Austria, Bosnia  and  Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Moldova, Montenegro, Netherlands, Norway, Poland, Romania, Serbia, Russia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, from: 21 Dec 2025  to: 14 Oct 2026 .",
+              "htmldescription": "Orange Drought in Austria, Bosnia  and  Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Moldova, Montenegro, Netherlands, Norway, Poland, Romania, Serbia, Russia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, from: 21 Dec 2025  to: 18 Oct 2026 .",
               "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "url": {
@@ -283,8 +121,8 @@
               "iscurrent": "true",
               "country": "Austria, Bosnia & Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Moldova, Montenegro, Netherlands, Norway, Poland, Romania, Serbia, Russia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, ",
               "fromdate": "2025-12-21T00:00:00",
-              "todate": "2026-10-14T00:00:00",
-              "datemodified": "2026-10-16T05:57:04",
+              "todate": "2026-10-18T00:00:00",
+              "datemodified": "2026-10-20T05:07:06",
               "iso3": "AUT",
               "source": "GDO",
               "sourceid": "",
@@ -467,7 +305,7 @@
               "glide": "DR-2026-000153-BLZ",
               "name": "Drought in The Bahamas, Belize, Costa Rica, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador",
               "description": "Drought in The Bahamas, Belize, Costa Rica, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador",
-              "htmldescription": "Orange Drought in The Bahamas, Belize, Costa Rica, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador from: 21 Apr 2026  to: 14 Oct 2026 .",
+              "htmldescription": "Orange Drought in The Bahamas, Belize, Costa Rica, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador from: 21 Apr 2026  to: 18 Oct 2026 .",
               "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "url": {
@@ -483,8 +321,8 @@
               "iscurrent": "false",
               "country": "The Bahamas, Belize, Costa Rica, Cuba, Dominican Republic, Guatemala, Honduras, Haiti, Mexico, Nicaragua, El Salvador",
               "fromdate": "2026-04-21T00:00:00",
-              "todate": "2026-10-14T00:00:00",
-              "datemodified": "2026-10-16T05:57:25",
+              "todate": "2026-10-18T00:00:00",
+              "datemodified": "2026-10-20T05:07:42",
               "iso3": "BHS",
               "source": "GDO",
               "sourceid": "",
@@ -557,6 +395,81 @@
           {
             "type": "Feature",
             "bbox": [
+              33.546,
+              0.772,
+              33.546,
+              0.772
+            ],
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                33.546,
+                0.772
+              ]
+            },
+            "properties": {
+              "eventtype": "DR",
+              "eventid": 1027465,
+              "episodeid": 8,
+              "eventname": "Uganda, Kenya, Tanzania-2026",
+              "glide": "DR-2026-000143-COD",
+              "name": "Drought in Democratic Republic of Congo, Kenya, Tanzania, Uganda",
+              "description": "Drought in Democratic Republic of Congo, Kenya, Tanzania, Uganda",
+              "htmldescription": "Orange Drought in Democratic Republic of Congo, Kenya, Tanzania, Uganda from: 21 May 2026  to: 18 Oct 2026 .",
+              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
+              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
+              "url": {
+                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=DR&eventid=1027465&episodeid=8",
+                "report": "https://www.gdacs.org/report.aspx?eventid=1027465&episodeid=8&eventtype=DR",
+                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=DR&eventid=1027465"
+              },
+              "alertlevel": "Orange",
+              "alertscore": 2,
+              "episodealertlevel": "Orange",
+              "episodealertscore": 1.25,
+              "istemporary": "false",
+              "iscurrent": "false",
+              "country": "Democratic Republic of Congo, Kenya, Tanzania, Uganda",
+              "fromdate": "2026-05-21T00:00:00",
+              "todate": "2026-10-18T00:00:00",
+              "datemodified": "2026-10-20T05:07:29",
+              "iso3": "COD",
+              "source": "GDO",
+              "sourceid": "",
+              "polygonlabel": "Centroid",
+              "Class": "Point_Centroid",
+              "affectedcountries": [
+                {
+                  "iso2": "CD",
+                  "iso3": "COD",
+                  "countryname": "Democratic Republic of Congo"
+                },
+                {
+                  "iso2": "KE",
+                  "iso3": "KEN",
+                  "countryname": "Kenya"
+                },
+                {
+                  "iso2": "TZ",
+                  "iso3": "TZA",
+                  "countryname": "Tanzania"
+                },
+                {
+                  "iso2": "UG",
+                  "iso3": "UGA",
+                  "countryname": "Uganda"
+                }
+              ],
+              "severitydata": {
+                "severity": 270713.0,
+                "severitytext": "Medium impact for agricultural drought in 270713 km2",
+                "severityunit": "km2"
+              }
+            }
+          },
+          {
+            "type": "Feature",
+            "bbox": [
               26.125,
               9.246,
               26.125,
@@ -577,7 +490,7 @@
               "glide": "DR-2026-000117-ETH",
               "name": "Drought in Democratic Republic of Congo, Central African Republic, Cameroon, Djibouti, Eritrea, Ethiopia, Kenya, Niger, Nigeria, Sudan, Somalia, South Sudan, Chad",
               "description": "Drought in Democratic Republic of Congo, Central African Republic, Cameroon, Djibouti, Eritrea, Ethiopia, Kenya, Niger, Nigeria, Sudan, Somalia, South Sudan, Chad",
-              "htmldescription": "Orange Drought in Democratic Republic of Congo, Central African Republic, Cameroon, Djibouti, Eritrea, Ethiopia, Kenya, Niger, Nigeria, Sudan, Somalia, South Sudan, Chad from: 21 Jun 2026  to: 14 Oct 2026 .",
+              "htmldescription": "Orange Drought in Democratic Republic of Congo, Central African Republic, Cameroon, Djibouti, Eritrea, Ethiopia, Kenya, Niger, Nigeria, Sudan, Somalia, South Sudan, Chad from: 21 Jun 2026  to: 18 Oct 2026 .",
               "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
               "url": {
@@ -593,8 +506,8 @@
               "iscurrent": "false",
               "country": "Democratic Republic of Congo, Central African Republic, Cameroon, Djibouti, Eritrea, Ethiopia, Kenya, Niger, Nigeria, Sudan, Somalia, South Sudan, Chad",
               "fromdate": "2026-06-21T00:00:00",
-              "todate": "2026-10-14T00:00:00",
-              "datemodified": "2026-10-16T05:57:16",
+              "todate": "2026-10-18T00:00:00",
+              "datemodified": "2026-10-20T05:07:25",
               "iso3": "COD",
               "source": "GDO",
               "sourceid": "",
@@ -677,75 +590,55 @@
           {
             "type": "Feature",
             "bbox": [
-              33.546,
-              0.772,
-              33.546,
-              0.772
+              -110.3,
+              21.5,
+              -110.3,
+              21.5
             ],
             "geometry": {
               "type": "Point",
               "coordinates": [
-                33.546,
-                0.772
+                -110.3,
+                21.5
               ]
             },
             "properties": {
-              "eventtype": "DR",
-              "eventid": 1027465,
-              "episodeid": 8,
-              "eventname": "Uganda, Kenya, Tanzania-2026",
-              "glide": "DR-2026-000143-COD",
-              "name": "Drought in Democratic Republic of Congo, Kenya, Tanzania, Uganda",
-              "description": "Drought in Democratic Republic of Congo, Kenya, Tanzania, Uganda",
-              "htmldescription": "Orange Drought in Democratic Republic of Congo, Kenya, Tanzania, Uganda from: 21 May 2026  to: 14 Oct 2026 .",
-              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
-              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/DR.png",
+              "eventtype": "TC",
+              "eventid": 1001335,
+              "episodeid": 38,
+              "eventname": "SIMON-26",
+              "glide": "",
+              "name": "Tropical Cyclone SIMON-26",
+              "description": "Tropical Cyclone SIMON-26",
+              "htmldescription": "Orange Tropical Cyclone SIMON-26 in México from: 07 Oct 2026  to: 16 Oct 2026 .",
+              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Green/TC.png",
+              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/TC.png",
               "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=DR&eventid=1027465&episodeid=8",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1027465&episodeid=8&eventtype=DR",
-                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=DR&eventid=1027465"
+                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=TC&eventid=1001335&episodeid=38",
+                "report": "https://www.gdacs.org/report.aspx?eventid=1001335&episodeid=38&eventtype=TC",
+                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=TC&eventid=1001335"
               },
               "alertlevel": "Orange",
               "alertscore": 2,
-              "episodealertlevel": "Orange",
-              "episodealertscore": 1.25,
+              "episodealertlevel": "Green",
+              "episodealertscore": 1.0,
               "istemporary": "false",
-              "iscurrent": "false",
-              "country": "Democratic Republic of Congo, Kenya, Tanzania, Uganda",
-              "fromdate": "2026-05-21T00:00:00",
-              "todate": "2026-10-14T00:00:00",
-              "datemodified": "2026-10-16T05:57:19",
-              "iso3": "COD",
-              "source": "GDO",
+              "iscurrent": "true",
+              "country": "México",
+              "fromdate": "2026-10-07T15:00:00",
+              "todate": "2026-10-16T21:00:00",
+              "datemodified": "2026-10-17T17:37:52",
+              "iso3": "MEX",
+              "source": "NOAA",
               "sourceid": "",
               "polygonlabel": "Centroid",
               "Class": "Point_Centroid",
-              "affectedcountries": [
-                {
-                  "iso2": "CD",
-                  "iso3": "COD",
-                  "countryname": "Democratic Republic of Congo"
-                },
-                {
-                  "iso2": "KE",
-                  "iso3": "KEN",
-                  "countryname": "Kenya"
-                },
-                {
-                  "iso2": "TZ",
-                  "iso3": "TZA",
-                  "countryname": "Tanzania"
-                },
-                {
-                  "iso2": "UG",
-                  "iso3": "UGA",
-                  "countryname": "Uganda"
-                }
-              ],
+              "countryonland": "",
+              "affectedcountries": [],
               "severitydata": {
-                "severity": 270713.0,
-                "severitytext": "Medium impact for agricultural drought in 270713 km2",
-                "severityunit": "km2"
+                "severity": 249.9984,
+                "severitytext": "Tropical Depression (maximum wind speed of 250 km/h)",
+                "severityunit": "km/h"
               }
             }
           },
@@ -789,7 +682,7 @@
               "country": "United States",
               "fromdate": "2026-10-06T21:00:00",
               "todate": "2026-10-11T15:00:00",
-              "datemodified": "2026-10-16T18:10:04",
+              "datemodified": "2026-10-20T04:54:15",
               "iso3": "USA",
               "source": "NOAA",
               "sourceid": "",
@@ -904,13 +797,13 @@
               "alertlevel": "Orange",
               "alertscore": 2,
               "episodealertlevel": "Orange",
-              "episodealertscore": 1.16022383519923,
+              "episodealertscore": 1.42777390096292,
               "istemporary": "false",
               "iscurrent": "false",
               "country": "Panama",
               "fromdate": "2026-10-09T17:56:06",
               "todate": "2026-10-09T17:56:06",
-              "datemodified": "2026-10-16T15:50:20",
+              "datemodified": "2026-10-19T10:10:23",
               "iso3": "PAN",
               "source": "NEIC",
               "sourceid": "",
@@ -2267,66 +2160,6 @@
           {
             "type": "Feature",
             "bbox": [
-              -0.2541,
-              39.8863,
-              -0.2541,
-              39.8863
-            ],
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                -0.2541,
-                39.8863
-              ]
-            },
-            "properties": {
-              "eventtype": "WF",
-              "eventid": 1029794,
-              "episodeid": 15,
-              "eventname": "",
-              "glide": "WF-2026-000131-ESP",
-              "name": "Forest fires in Spain",
-              "description": "Forest fires in Spain",
-              "htmldescription": "Orange Forest fires in Spain from: 25 Jul 2026 to: 30 Jul 2026.",
-              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/WF.png",
-              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/WF.png",
-              "url": {
-                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=WF&eventid=1029794&episodeid=15",
-                "report": "https://www.gdacs.org/report.aspx?eventid=1029794&episodeid=15&eventtype=WF",
-                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=WF&eventid=1029794"
-              },
-              "alertlevel": "Orange",
-              "alertscore": 2,
-              "episodealertlevel": "Orange",
-              "episodealertscore": 1.5,
-              "istemporary": "false",
-              "iscurrent": "false",
-              "country": "Spain",
-              "fromdate": "2026-07-25T00:00:00",
-              "todate": "2026-07-30T00:00:00",
-              "datemodified": "2026-09-30T09:40:31",
-              "iso3": "ESP",
-              "source": "GWIS",
-              "sourceid": "",
-              "polygonlabel": "Centroid",
-              "Class": "Point_Centroid",
-              "affectedcountries": [
-                {
-                  "iso2": "ES",
-                  "iso3": "ESP",
-                  "countryname": "Spain"
-                }
-              ],
-              "severitydata": {
-                "severity": 13370.0,
-                "severitytext": "Orange impact for forestfire in 13370 ha",
-                "severityunit": "ha"
-              }
-            }
-          },
-          {
-            "type": "Feature",
-            "bbox": [
               -4.5405,
               40.3594,
               -4.5405,
@@ -2380,6 +2213,66 @@
               "severitydata": {
                 "severity": 66098.0,
                 "severitytext": "Orange impact for forestfire in 66098 ha",
+                "severityunit": "ha"
+              }
+            }
+          },
+          {
+            "type": "Feature",
+            "bbox": [
+              -0.2541,
+              39.8863,
+              -0.2541,
+              39.8863
+            ],
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -0.2541,
+                39.8863
+              ]
+            },
+            "properties": {
+              "eventtype": "WF",
+              "eventid": 1029794,
+              "episodeid": 15,
+              "eventname": "",
+              "glide": "WF-2026-000131-ESP",
+              "name": "Forest fires in Spain",
+              "description": "Forest fires in Spain",
+              "htmldescription": "Orange Forest fires in Spain from: 25 Jul 2026 to: 30 Jul 2026.",
+              "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/WF.png",
+              "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/WF.png",
+              "url": {
+                "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=WF&eventid=1029794&episodeid=15",
+                "report": "https://www.gdacs.org/report.aspx?eventid=1029794&episodeid=15&eventtype=WF",
+                "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=WF&eventid=1029794"
+              },
+              "alertlevel": "Orange",
+              "alertscore": 2,
+              "episodealertlevel": "Orange",
+              "episodealertscore": 1.5,
+              "istemporary": "false",
+              "iscurrent": "false",
+              "country": "Spain",
+              "fromdate": "2026-07-25T00:00:00",
+              "todate": "2026-07-30T00:00:00",
+              "datemodified": "2026-09-30T09:40:31",
+              "iso3": "ESP",
+              "source": "GWIS",
+              "sourceid": "",
+              "polygonlabel": "Centroid",
+              "Class": "Point_Centroid",
+              "affectedcountries": [
+                {
+                  "iso2": "ES",
+                  "iso3": "ESP",
+                  "countryname": "Spain"
+                }
+              ],
+              "severitydata": {
+                "severity": 13370.0,
+                "severitytext": "Orange impact for forestfire in 13370 ha",
                 "severityunit": "ha"
               }
             }
@@ -5712,7 +5605,7 @@
     },
     "adsblol-aircraft": {
       "ok": false,
-      "error": "HTTP Error 503: Service Temporarily Unavailable"
+      "error": "HTTP Error 400: Bad Request"
     },
     "reliefweb-disasters": {
       "ok": false,
