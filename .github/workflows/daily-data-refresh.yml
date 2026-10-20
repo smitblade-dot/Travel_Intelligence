@@ -2,11 +2,10 @@ name: Daily travel intelligence data refresh
 
 on:
   schedule:
-    # GitHub Actions uses UTC. Run at both candidate UTC hours and let the
-    # guard below select the 21:00 Europe/Nicosia execution. This keeps the
-    # refresh at 21:00 Cyprus time across daylight-saving changes.
-    - cron: "0 18 * * *"
-    - cron: "0 19 * * *"
+    # GitHub resolves the local schedule, including Cyprus DST transitions.
+    # Runner queue delays must never decide whether the refresh is allowed.
+    - cron: "0 21 * * *"
+      timezone: "Europe/Nicosia"
   workflow_dispatch: {}
 
 permissions:
@@ -20,14 +19,18 @@ jobs:
       should_run: ${{ steps.gate.outputs.should_run }}
     steps:
       - id: gate
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          SCHEDULED_CRON: ${{ github.event.schedule }}
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          if [ "$EVENT_NAME" = "workflow_dispatch" ] || {
+            [ "$EVENT_NAME" = "schedule" ] && [ "$SCHEDULED_CRON" = "0 21 * * *" ];
+          }; then
             echo "should_run=true" >> "$GITHUB_OUTPUT"
-          elif [ "$(TZ=Europe/Nicosia date +%H)" = "21" ]; then
-            echo "should_run=true" >> "$GITHUB_OUTPUT"
+            echo "Refresh allowed: $EVENT_NAME / $SCHEDULED_CRON (21:00 Europe/Nicosia)."
           else
             echo "should_run=false" >> "$GITHUB_OUTPUT"
-            echo "Unused Cyprus DST cron candidate; no refresh required."
+            echo "Unexpected trigger: $EVENT_NAME / $SCHEDULED_CRON."
           fi
 
   refresh:
