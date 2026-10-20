@@ -89,3 +89,33 @@ GDELT remained HTTP 503 after bounded retries. ReliefWeb rejected the previously
 configured `travel-intelligence` appname with HTTP 403 and an explicit request
 for provider approval. The health audit returned 1, correctly reporting those
 two coverage gaps instead of declaring the entire refresh healthy.
+
+## Post-merge follow-up — 20 October 2026
+
+[Read-only main-branch probe 39377032375](https://github.com/smitblade-dot/Travel_Intelligence/actions/runs/39377032375)
+at commit `45f9bef6420ca5d01bf918953d61fbb770aa0a03` completed collection
+at 05:51 UTC. GDELT was healthy at 05:50:40 UTC; the earlier HTTP 503 was
+therefore transient, not evidence of a continuing outage. Keep the existing
+bounded retries, Retry-After handling and 24-hour query. No alternate endpoint,
+unbounded retry or cached-success substitution is justified by this evidence.
+
+OurAirports, GDACS, NASA FIRMS and all 52 ADS-B sample areas also passed;
+3,926 airport nodes were built. ReliefWeb alone was blocked because the Actions
+variable was empty. The final audit correctly exited 1. Offline regression
+checks passed. This was not a production intelligence refresh and published
+no intelligence; a successful Pages deployment is likewise not proof of a
+successful daily intelligence refresh.
+
+No ReliefWeb approval or application correspondence was found in the connected
+FT, personal or S41 Gmail accounts during this follow-up. This does not prove
+that an application was never submitted or that approval has not reached
+another mailbox. Do not resubmit or configure a guessed appname. Obtain the
+actual approval email before configuring `RELIEFWEB_APPNAME`, then use the
+read-only live probe to validate access before claiming restored coverage.
+HTTP 401/403 is explicitly blocked; transient outages remain unavailable.
+
+Live probes retain discovery JSON and transport reference artifacts for seven
+days, including on audit failure, so source URLs, observation timestamps and
+sampling limitations can be inspected independently. Artifacts are diagnostic
+evidence, not verified TI events or authority to publish. Existing independent
+PR QA, source verification and publication controls remain mandatory.
