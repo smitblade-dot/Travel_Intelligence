@@ -38,7 +38,7 @@ def collect_ourairports():
 def collect_gdelt():
     query = ('("airport closed" OR "airport closure" OR "airspace closed" OR '
              '"border closed" OR "border crossing closed" OR "flight cancelled" '
-             'OR "drone ban" OR "drone restrictions")')
+             'OR "drone ban" OR "drone restrictions" OR "airbase" OR "bomber" OR "terror plot" OR "tanker fire" OR "tanker attack" OR "unmanned vessel" OR "oil spill" OR "beaches closed")')
     # Bound the query to the recent refresh window, not the default long search.
     url = ('https://api.gdeltproject.org/api/v2/doc/doc?query=' + quote(query) +
            '&mode=artlist&format=json&maxrecords=50&sort=datedesc&timespan=24h')

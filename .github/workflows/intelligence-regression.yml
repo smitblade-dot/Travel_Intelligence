@@ -1,0 +1,37 @@
+name: Intelligence and publication regressions
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - data.json
+      - 'scripts/**'
+      - 'tests/test_*.py'
+      - .github/workflows/intelligence-regression.yml
+  push:
+    branches: [main]
+    paths:
+      - data.json
+      - 'scripts/**'
+      - 'tests/test_*.py'
+      - .github/workflows/intelligence-regression.yml
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Install schedule-test dependency
+        run: python -m pip install PyYAML==6.0.3
+      - name: Run all intelligence and publication regressions
+        run: python -m unittest discover -s tests -p 'test_*.py'
+      - name: Validate intelligence schema
+        run: python scripts/validate_ti_data.py
+      - name: Audit foundation and publication counts
+        run: python scripts/audit_phase1_foundation.py
