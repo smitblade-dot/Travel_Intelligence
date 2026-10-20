@@ -50,6 +50,7 @@ jobs:
       - name: Collect Phase 1 open-data signals
         env:
           FIRMS_MAP_KEY: ${{ secrets.FIRMS_MAP_KEY }}
+          RELIEFWEB_APPNAME: ${{ vars.RELIEFWEB_APPNAME }}
         run: python3 scripts/collect_phase1_signals.py
 
       - name: Resolve signals to TI review queue
@@ -59,6 +60,9 @@ jobs:
         run: python3 scripts/build_infrastructure_graph.py
 
       - name: Build transport reference network
+        # Preserve independent verification if no reference can be fetched.
+        # The final strict feed audit still fails on empty/stale airport data.
+        continue-on-error: true
         run: python3 scripts/build_transport_network.py
 
       - name: Refresh oil & gas summary (deterministic)
@@ -147,3 +151,9 @@ jobs:
           else
             echo "Nothing outstanding — refresh step already committed."
           fi
+
+      # Run after the validated update is saved: outages must be visible without
+      # suppressing independently verified intelligence from working sources.
+      - name: Audit discovery feed health
+        if: always()
+        run: python3 scripts/audit_feed_health.py
