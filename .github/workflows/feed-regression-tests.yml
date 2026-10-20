@@ -1,0 +1,25 @@
+name: Discovery feed regression checks
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/feed_support.py'
+      - 'scripts/collect_phase1_signals.py'
+      - 'scripts/build_transport_network.py'
+      - 'scripts/audit_feed_health.py'
+      - 'config/phase1_sources.json'
+      - 'tests/test_feed_reliability.py'
+      - '.github/workflows/feed-regression-tests.yml'
+      - '.github/workflows/daily-data-refresh.yml'
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  feed-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: python -m unittest discover -s tests -p test_feed_reliability.py -v

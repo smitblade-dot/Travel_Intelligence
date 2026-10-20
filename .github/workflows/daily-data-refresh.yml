@@ -50,6 +50,7 @@ jobs:
       - name: Collect Phase 1 open-data signals
         env:
           FIRMS_MAP_KEY: ${{ secrets.FIRMS_MAP_KEY }}
+          RELIEFWEB_APPNAME: ${{ vars.RELIEFWEB_APPNAME }}
         run: python3 scripts/collect_phase1_signals.py
 
       - name: Resolve signals to TI review queue
@@ -147,3 +148,9 @@ jobs:
           else
             echo "Nothing outstanding — refresh step already committed."
           fi
+
+      # Run after the validated update is saved: outages must be visible without
+      # suppressing independently verified intelligence from working sources.
+      - name: Audit discovery feed health
+        if: always()
+        run: python3 scripts/audit_feed_health.py

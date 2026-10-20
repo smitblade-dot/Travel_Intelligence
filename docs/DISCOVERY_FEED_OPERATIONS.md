@@ -1,0 +1,69 @@
+# Discovery feed recovery
+
+The daily refresh distinguishes data-model validation from provider coverage.
+A structurally valid intelligence update may still have degraded discovery
+inputs. Collection warns immediately. The final `Audit discovery feed health`
+step writes a source-by-source Actions summary and fails the run when any
+configured source is blocked, unavailable or partial, or the airport reference
+is stale/empty. Independently verified intelligence can still be saved before
+this final coverage check. Never describe such a run as a fully healthy refresh.
+
+## Sources
+
+- **OurAirports:** use the publisher's daily GitHub Pages CSV, then the same
+  publisher's raw GitHub mirror. Validate CSV columns and country codes. Share
+  the download between scripts through a per-run cache outside the checkout.
+  Match CSV ISO alpha-2 against TI country.id, not TI iso3. The transport
+  network includes scheduled-service and large/medium airports in tracked
+  countries. If refreshing fails, retain previous airport nodes with their
+  original fetch timestamp and explicitly stale status. With no previous
+  non-empty network, fail without overwriting the output.
+- **GDELT:** bounded 24-hour news query, at most three requests on transient
+  failures, with backoff and Retry-After handling. A persistent provider outage
+  or rate limit remains a reported failure; no attempt to evade it.
+- **GDACS:** validate the current GeoJSON features array before accepting it.
+- **ADSB.lol:** the unsupported `/v2/all` call is replaced by documented point
+  queries, at most one per second, around one scheduled large/medium airport
+  per tracked country where available. Each query covers 100 nautical miles.
+  Store exact sampled areas and failures, deduplicate observations and cap
+  stored aircraft at 200. This is a geographic sample, not global/national
+  coverage. Empty aircraft data never proves closure, flight disruption or
+  absence of activity. ODbL attribution is retained.
+- **NASA FIRMS:** use the public S-NPP VIIRS C2 Global 24-hour CSV without a
+  key. If `FIRMS_MAP_KEY` already exists in Actions secrets, try the correctly
+  ordered area API first, then the public file. Validate CSV and acquisition
+  dates. Credential-bearing API URLs must never enter logs or snapshots.
+  A hotspot is an observation, not a confirmed fire or travel incident.
+- **ReliefWeb:** v1 is retired. v2 requires a provider-approved appname.
+  Obtain approval through the provider's form and set repository Actions
+  variable `RELIEFWEB_APPNAME` to the approved value. Do not use another
+  organisation's appname or guess an approved value. Missing configuration
+  is `blocked`, not a successful empty result. The public RSS endpoint
+  returned an empty response during investigation and is not used as a
+  bypass or assumed fallback.
+
+## Checks
+
+```
+python3 -m unittest discover -s tests -p test_feed_reliability.py -v
+python3 scripts/collect_phase1_signals.py
+python3 scripts/build_transport_network.py
+python3 scripts/audit_feed_health.py
+```
+
+The first command is offline. The following commands contact providers and
+write discovery/reference outputs; run in a temporary checkout for a probe.
+The scripts never create public TI events. Existing source verification,
+publication controls, TI data validation and independent PR QA remain in place.
+Baseline generation is outside this correction.
+
+## Provider references
+
+- https://ourairports.com/data/
+- https://github.com/davidmegginson/ourairports-data
+- https://api.adsb.lol/docs
+- https://api.adsb.lol/api/openapi.json
+- https://firms.modaps.eosdis.nasa.gov/active_fire/
+- https://firms.modaps.eosdis.nasa.gov/api/area/
+- https://apidoc.reliefweb.int/parameters#appname
+- https://blog.gdeltproject.org/gdelt-doc-2-0-api-debuts/

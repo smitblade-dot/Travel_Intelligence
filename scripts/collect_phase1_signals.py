@@ -1,163 +1,153 @@
 #!/usr/bin/env python3
-"""
-Collect Phase 1 open-data signals for Travel Intelligence.
-
-Important:
-- This script creates a reviewable signal snapshot.
-- It does NOT publish TI events automatically.
-- External claims must be verified against the original source before publication.
-- API keys belong in environment variables/GitHub Actions secrets.
-"""
-
-from __future__ import annotations
-
-import csv
-import io
+"""Collect discovery evidence; never publish events or infer operational status."""
 import json
 import os
 import sys
-from datetime import datetime, timezone
+import time
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
-from urllib.parse import quote
-from urllib.request import Request, urlopen
+from urllib.parse import quote, urlencode
+
+from feed_support import airport_reference, csv_rows, fetch, source_config
 
 ROOT = Path(__file__).resolve().parents[1]
-CONFIG = ROOT / "config" / "phase1_sources.json"
-OUT = ROOT / "data" / "phase1_signals.json"
-TIMEOUT = 30
+OUT = ROOT / 'data' / 'phase1_signals.json'
 
 
-def fetch(url: str, headers: dict[str, str] | None = None) -> bytes:
-    req = Request(url, headers=headers or {"User-Agent": "TravelIntelligence/0.1"})
-    with urlopen(req, timeout=TIMEOUT) as response:
-        return response.read()
+def failure(error, status='unavailable'):
+    return {'ok': False, 'status': status, 'error': str(error)}
 
 
-def get_json(url: str):
-    return json.loads(fetch(url).decode("utf-8"))
-
-
-def safe_json(url: str):
+def safe_json(url, field, attempts=3):
     try:
-        return {"ok": True, "data": get_json(url)}
-    except Exception as exc:
-        return {"ok": False, "error": str(exc)}
+        data = json.loads(fetch(url, attempts=attempts))
+        if not isinstance(data, dict) or not isinstance(data.get(field), list):
+            raise ValueError(f'Response lacks expected {field} array')
+        return {'ok': True, 'status': 'healthy', 'sourceUrl': url, 'data': data}
+    except (RuntimeError, ValueError) as exc:
+        return failure(exc)
 
 
 def collect_ourairports():
-    url = "https://ourairports.com/airports.csv"
-    try:
-        raw = fetch(url)
-        rows = list(csv.DictReader(io.StringIO(raw.decode("utf-8", errors="replace"))))
-        # Keep only the reference fields needed by TI.
-        airports = []
-        for row in rows:
-            airports.append({
-                "ident": row.get("ident"),
-                "type": row.get("type"),
-                "name": row.get("name"),
-                "latitude": row.get("latitude_deg"),
-                "longitude": row.get("longitude_deg"),
-                "iso_country": row.get("iso_country"),
-                "iata_code": row.get("iata_code"),
-                "icao_code": row.get("icao_code"),
-                "scheduled_service": row.get("scheduled_service"),
-            })
-        return {"ok": True, "count": len(airports), "sample": airports[:10]}
-    except Exception as exc:
-        return {"ok": False, "error": str(exc)}
+    reference = airport_reference()
+    return {'ok': True, 'status': 'healthy', 'sourceUrl': reference['sourceUrl'],
+            'fetchedAt': reference['fetchedAt'], 'count': len(reference['rows']),
+            'sample': reference['rows'][:10]}
 
 
 def collect_gdelt():
-    query = (
-        '("airport closed" OR "airport closure" OR "airspace closed" OR '
-        '"border closed" OR "border crossing closed" OR "flight cancelled" '
-        'OR "drone ban" OR "drone restrictions")'
-    )
-    url = (
-        "https://api.gdeltproject.org/api/v2/doc/doc"
-        f"?query={quote(query)}&mode=artlist&format=json&maxrecords=50"
-        "&sort=datedesc"
-    )
-    return safe_json(url)
+    query = ('("airport closed" OR "airport closure" OR "airspace closed" OR '
+             '"border closed" OR "border crossing closed" OR "flight cancelled" '
+             'OR "drone ban" OR "drone restrictions")')
+    # Bound the query to the recent refresh window, not the default long search.
+    url = ('https://api.gdeltproject.org/api/v2/doc/doc?query=' + quote(query) +
+           '&mode=artlist&format=json&maxrecords=50&sort=datedesc&timespan=24h')
+    return safe_json(url, 'articles')
 
 
 def collect_gdacs():
-    # Keep this deliberately defensive: GDACS has changed API paths over time.
-    candidates = [
-        "https://www.gdacs.org/gdacsapi/api/events/geteventlist/SEARCH",
-        "https://www.gdacs.org/gdacsapi/api/events/geteventlist/SEARCH?eventtype=ALL",
-    ]
-    for url in candidates:
-        result = safe_json(url)
-        if result["ok"]:
-            return result
-    return {"ok": False, "error": "No configured GDACS endpoint returned usable JSON"}
+    return safe_json(source_config('gdacs-alerts')['endpoint'], 'features')
 
 
 def collect_adsblol():
-    # A full-world snapshot can be large. The endpoint is intentionally sampled
-    # here for signal collection rather than storing every aircraft in Git.
-    return safe_json("https://api.adsb.lol/v2/all")
+    config = source_config('adsblol-aircraft')
+    countries = {c['id'].upper(): c['id'] for c in json.loads((ROOT / 'data.json').read_text())['countries']}
+    points = {}
+    rows = sorted(airport_reference()['rows'], key=lambda r: (r['type'] != 'large_airport', r['ident']))
+    for row in rows:
+        country = countries.get(row['iso_country'])
+        if (country and country not in points and row.get('scheduled_service') == 'yes'
+                and row['type'] in ('large_airport', 'medium_airport')):
+            try:
+                lat, lon = float(row['latitude_deg']), float(row['longitude_deg'])
+                if not (-90 <= lat <= 90 and -180 <= lon <= 180):
+                    continue
+            except (ValueError, TypeError):
+                continue
+            points[country] = {'countryId': country, 'airportId': row['ident'], 'lat': lat, 'lon': lon}
+    if not points:
+        return failure('No validated airport points available for ADS-B sampling')
+    areas, aircraft = [], {}
+    deadline = time.monotonic() + 120
+    for index, point in enumerate(points.values()):
+        if time.monotonic() >= deadline:
+            areas.append({**point, 'ok': False, 'error': 'Sampling time budget exhausted; not requested'})
+            continue
+        if index:
+            time.sleep(1)  # Free community service: no concurrent/burst requests.
+        url = config['endpoint'].format(lat=point['lat'], lon=point['lon'], radius=config['radiusNm'])
+        result = safe_json(url, 'ac', attempts=1)
+        areas.append({**point, 'sourceUrl': url, 'ok': result['ok'], 'error': result.get('error')})
+        if result['ok']:
+            for item in result['data']['ac']:
+                if isinstance(item, dict) and item.get('hex'):
+                    aircraft[item['hex']] = item
+    successes = sum(a['ok'] for a in areas)
+    return {'ok': successes > 0, 'status': 'healthy' if successes == len(areas) else 'degraded',
+            'coverage': '100 nm samples around one scheduled airport per available tracked country; not national/global coverage. No aircraft is not evidence of closure.',
+            'requestedAreas': len(areas), 'successfulAreas': successes, 'areas': areas,
+            'unrepresentedCountryIds': sorted(set(countries.values()) - set(points)),
+            'count': len(aircraft), 'data': {'ac': list(aircraft.values())[:200]},
+            'storedSampleLimit': 200, 'attribution': 'ADSB.lol / ODbL 1.0'}
 
 
 def collect_reliefweb():
-    url = (
-        "https://api.reliefweb.int/v1/reports"
-        "?appname=travel-intelligence&limit=50&sort[]=date:desc"
-    )
-    return safe_json(url)
+    config = source_config('reliefweb-disasters')
+    appname = os.environ.get(config['appnameEnvironment'], '').strip()
+    if not appname:
+        return failure('RELIEFWEB_APPNAME is not configured; obtain a provider-approved appname', 'blocked')
+    url = config['endpoint'] + '?' + urlencode({'appname': appname, 'limit': 50, 'sort[]': 'date:desc'})
+    return safe_json(url, 'data')
 
 
 def collect_firms():
-    key = os.environ.get("FIRMS_MAP_KEY")
-    if not key:
-        return {"ok": False, "skipped": True, "reason": "FIRMS_MAP_KEY not configured"}
-    # A global FIRMS request can be large; use the last 24 hours as the initial
-    # signal layer. The exact endpoint can be changed to country/area queries later.
-    url = f"https://firms.modaps.eosdis.nasa.gov/api/area/csv/{key}/world/VIIRS_SNPP_NRT/1"
-    try:
-        raw = fetch(url)
-        rows = list(csv.DictReader(io.StringIO(raw.decode("utf-8", errors="replace"))))
-        return {"ok": True, "count": len(rows), "sample": rows[:25]}
-    except Exception as exc:
-        return {"ok": False, "error": str(exc)}
+    config = source_config('nasa-firms')
+    key = os.environ.get('FIRMS_MAP_KEY', '').strip()
+    # Correct keyed API order is key / sensor / area / days.
+    urls = ([config['endpoint'] + quote(key, safe='') + '/VIIRS_SNPP_NRT/world/1'] if key else [])
+    urls.append(config['publicEndpoint'])
+    for url in urls:
+        try:
+            rows = csv_rows(fetch(url), ['latitude', 'longitude', 'acq_date', 'acq_time'])
+            dates = [datetime.strptime(r['acq_date'], '%Y-%m-%d').replace(tzinfo=timezone.utc) for r in rows]
+            if dates and max(dates) < datetime.now(timezone.utc) - timedelta(days=2):
+                raise ValueError('FIRMS response is stale')
+            return {'ok': True, 'status': 'healthy', 'count': len(rows), 'sample': rows[:25],
+                    'sourceUrl': config['publicEndpoint'] if url == config['publicEndpoint'] else config['endpoint'],
+                    'accessMethod': 'public-csv' if url == config['publicEndpoint'] else 'api-key',
+                    'coverage': 'Global S-NPP VIIRS near-real-time 24-hour file; stored observations are a bounded sample.',
+                    'latestAcquisitionDate': max(dates).date().isoformat() if dates else None}
+        except (RuntimeError, ValueError):
+            continue
+    return failure('FIRMS returned no usable current CSV (public download and any configured API key)')
 
 
 def main():
     started = datetime.now(timezone.utc).isoformat()
-    output = {
-        "schemaVersion": "1.0",
-        "generated": started,
-        "purpose": "Reviewable Phase 1 signals; not published TI events.",
-        "sources": {},
-    }
-
-    collectors = {
-        "ourairports-airports": collect_ourairports,
-        "gdelt-events": collect_gdelt,
-        "gdacs-alerts": collect_gdacs,
-        "adsblol-aircraft": collect_adsblol,
-        "reliefweb-disasters": collect_reliefweb,
-        "nasa-firms": collect_firms,
-    }
-
+    output = {'schemaVersion': '1.0', 'generated': started,
+              'purpose': 'Reviewable Phase 1 signals; not published TI events.', 'sources': {}}
+    collectors = {'ourairports-airports': collect_ourairports, 'gdelt-events': collect_gdelt,
+                  'gdacs-alerts': collect_gdacs, 'adsblol-aircraft': collect_adsblol,
+                  'reliefweb-disasters': collect_reliefweb, 'nasa-firms': collect_firms}
     for source_id, collector in collectors.items():
         try:
-            output["sources"][source_id] = collector()
-        except Exception as exc:
-            output["sources"][source_id] = {"ok": False, "error": str(exc)}
-
+            item = collector()
+        except Exception:
+            # Generic exception handling must not expose credential-bearing URLs.
+            item = failure('Collector failed; response could not be validated')
+        item['attemptedAt'] = datetime.now(timezone.utc).isoformat()
+        output['sources'][source_id] = item
+        print(f"{source_id}: {item['status']}" + (f" — {item['error']}" if item.get('error') else ''), flush=True)
+        if item['status'] != 'healthy':
+            print(f"::warning title=Discovery coverage degraded::{source_id}: {item.get('error', 'partial response')}")
+    output['health'] = 'healthy' if all(v['status'] == 'healthy' for v in output['sources'].values()) else 'degraded'
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps(output, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"Wrote {OUT}")
-    failed = [k for k, v in output["sources"].items() if not v.get("ok")]
-    if failed:
-        print("Sources without a usable response:", ", ".join(failed))
-        # Collection should remain useful if one free service is unavailable.
-        return 0
+    OUT.write_text(json.dumps(output, ensure_ascii=False, indent=2) + '\n')
+    print(f'Wrote {OUT}; coverage={output["health"]}')
+    # Keep independent intelligence verification running; strict health audit is
+    # the final workflow step, after structural validation and safe publication.
     return 0
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     sys.exit(main())
