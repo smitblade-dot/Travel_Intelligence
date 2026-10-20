@@ -88,7 +88,9 @@ class FeedRecoveryTests(unittest.TestCase):
             self.assertEqual(collector.collect_reliefweb()['status'], 'blocked')
             fetch.assert_not_called()
         with patch.dict(os.environ, {'RELIEFWEB_APPNAME': 'approved-test'}), patch.object(collector, 'fetch', return_value=b'{"data":[]}') as fetch:
-            self.assertTrue(collector.collect_reliefweb()['ok'])
+            result = collector.collect_reliefweb()
+            self.assertTrue(result['ok'])
+            self.assertNotIn('approved-test', json.dumps(result))
             self.assertIn('/v2/reports?', fetch.call_args.args[0])
             self.assertIn('appname=approved-test', fetch.call_args.args[0])
 

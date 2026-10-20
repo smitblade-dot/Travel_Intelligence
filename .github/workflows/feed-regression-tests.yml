@@ -23,3 +23,20 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m unittest discover -s tests -p test_feed_reliability.py -v
+
+  live-probe:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Collect live discovery evidence without publication
+        env:
+          FIRMS_MAP_KEY: ${{ secrets.FIRMS_MAP_KEY }}
+          RELIEFWEB_APPNAME: ${{ vars.RELIEFWEB_APPNAME }}
+        run: python3 scripts/collect_phase1_signals.py
+      - name: Build temporary transport reference
+        continue-on-error: true
+        run: python3 scripts/build_transport_network.py
+      - name: Audit live provider coverage
+        if: always()
+        run: python3 scripts/audit_feed_health.py

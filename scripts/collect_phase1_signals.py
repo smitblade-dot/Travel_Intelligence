@@ -97,7 +97,10 @@ def collect_reliefweb():
     if not appname:
         return failure('RELIEFWEB_APPNAME is not configured; obtain a provider-approved appname', 'blocked')
     url = config['endpoint'] + '?' + urlencode({'appname': appname, 'limit': 50, 'sort[]': 'date:desc'})
-    return safe_json(url, 'data')
+    result = safe_json(url, 'data')
+    if result.get('ok'):
+        result['sourceUrl'] = config['endpoint']
+    return result
 
 
 def collect_firms():

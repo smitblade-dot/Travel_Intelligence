@@ -43,6 +43,11 @@ this final coverage check. Never describe such a run as a fully healthy refresh.
   returned an empty response during investigation and is not used as a
   bypass or assumed fallback.
 
+The transport step's failure is isolated from intelligence verification. The
+final strict feed-health audit still fails the overall run if airport data is
+empty or stale. TI model validation and the Phase 1 audit retain their existing
+fail-closed behaviour. Approved ReliefWeb appnames are omitted from stored URLs.
+
 ## Checks
 
 ```
@@ -57,6 +62,11 @@ write discovery/reference outputs; run in a temporary checkout for a probe.
 The scripts never create public TI events. Existing source verification,
 publication controls, TI data validation and independent PR QA remain in place.
 Baseline generation is outside this correction.
+
+For a probe from GitHub's runner, manually dispatch **Discovery feed regression
+checks** on main. Its additional live-probe job collects and audits temporary
+outputs with read-only repository permission. It never commits or publishes
+data and intentionally fails when any configured provider remains degraded.
 
 ## Provider references
 

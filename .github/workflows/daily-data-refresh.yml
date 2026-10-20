@@ -60,6 +60,9 @@ jobs:
         run: python3 scripts/build_infrastructure_graph.py
 
       - name: Build transport reference network
+        # Preserve independent verification if no reference can be fetched.
+        # The final strict feed audit still fails on empty/stale airport data.
+        continue-on-error: true
         run: python3 scripts/build_transport_network.py
 
       - name: Refresh oil & gas summary (deterministic)

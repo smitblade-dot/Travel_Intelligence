@@ -23,6 +23,10 @@ def audit(root=ROOT):
         item = signals.get('sources', {}).get(source['id'], {})
         status = item.get('status', 'unverified')
         detail = item.get('error', '')
+        if not detail and 'count' in item:
+            detail = f"{item['count']} observations/reference rows"
+        if 'requestedAreas' in item:
+            detail += f"; areas {item.get('successfulAreas', 0)}/{item['requestedAreas']}"
         if not item.get('ok') or status != 'healthy':
             problems.append(source['id'] + ': ' + (detail or status))
         lines.append(f"| {source['name']} | {status} | {detail} |")
