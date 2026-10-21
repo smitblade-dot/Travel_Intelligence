@@ -12,7 +12,7 @@ import os
 import re
 import sys
 import time
-from datetime import date, datetime, timedelta, timezone
+from datetime import date as calendar_date, datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from pathlib import Path
 from urllib.parse import quote, urlparse
@@ -148,7 +148,7 @@ def publish(data, items, decisions):
             continue
         incident_date = decision.get("incidentDate")
         try:
-            incident_day = date.fromisoformat(incident_date) if isinstance(incident_date, str) else None
+            incident_day = calendar_date.fromisoformat(incident_date) if isinstance(incident_date, str) else None
         except ValueError:
             incident_day = None
         if incident_day and (incident_day > now_utc().date() or
