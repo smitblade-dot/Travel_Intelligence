@@ -241,11 +241,14 @@ def main():
             budget = {"date": today, "input": 0, "output": 0}
         if budget["input"] >= MAX_DAILY_INPUT_TOKENS or budget["output"] >= MAX_DAILY_OUTPUT_TOKENS:
             print("BUDGET_PAUSE", json.dumps(budget))
-            return
-        decisions, usage = ask_haiku(fresh, countries, existing)
-        budget["input"] += usage["input"]
-        budget["output"] += usage["output"]
-        state["budget"] = budget
+            fresh = []
+        if fresh:
+            decisions, usage = ask_haiku(fresh, countries, existing)
+            budget["input"] += usage["input"]
+            budget["output"] += usage["output"]
+            state["budget"] = budget
+        else:
+            decisions = []
         if not isinstance(decisions, list):
             raise ValueError("Haiku decisions must be a list")
         if os.getenv("TI_MONITOR_PUBLISH", "false").lower() == "true":
