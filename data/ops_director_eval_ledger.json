@@ -1,171 +1,356 @@
 {
   "spend": {
-    "daily": {},
-    "monthly": {},
-    "open": [
-      {
-        "id": "res-5e059f4c19c44028",
-        "run": "39595259197-24657102",
-        "at": "2026-10-21T11:53:07+00:00",
-        "day": "2026-10-21",
-        "month": "2026-10",
-        "usd": 0.001186,
-        "model": "claude-haiku-5-5",
-        "batch": "1c259c40ed07d0e6"
-      },
-      {
-        "id": "res-d5270a4f3c274357",
-        "run": "39595259197-24657102",
-        "at": "2026-10-21T11:53:10+00:00",
-        "day": "2026-10-21",
-        "month": "2026-10",
-        "usd": 0.001186,
-        "model": "claude-haiku-5-5",
-        "batch": "4cf065172d8c19ff"
-      },
-      {
-        "id": "res-092235a816d2427c",
-        "run": "39595259197-24657102",
-        "at": "2026-10-21T11:53:14+00:00",
-        "day": "2026-10-21",
-        "month": "2026-10",
-        "usd": 0.001185,
-        "model": "claude-haiku-5-5",
-        "batch": "eea9a161b973cd0d"
-      },
-      {
-        "id": "res-c233321ae7f54ebf",
-        "run": "39595259197-24657102",
-        "at": "2026-10-21T11:53:16+00:00",
-        "day": "2026-10-21",
-        "month": "2026-10",
-        "usd": 0.001186,
-        "model": "claude-haiku-5-5",
-        "batch": "d5a746fdb33fe2cb"
-      },
-      {
-        "id": "res-623bbc2a611f4546",
-        "run": "39595259197-24657102",
-        "at": "2026-10-21T11:53:20+00:00",
-        "day": "2026-10-21",
-        "month": "2026-10",
-        "usd": 0.001185,
-        "model": "claude-haiku-5-5",
-        "batch": "cbafa883b699cfba"
-      },
-      {
-        "id": "res-85386cb9e545455d",
-        "run": "39595259197-24657102",
-        "at": "2026-10-21T11:53:23+00:00",
-        "day": "2026-10-21",
-        "month": "2026-10",
-        "usd": 0.001186,
-        "model": "claude-haiku-5-5",
-        "batch": "d4d8b6165d949f46"
-      },
-      {
-        "id": "res-acdbe6b3ff824653",
-        "run": "39595259197-24657102",
-        "at": "2026-10-21T11:53:26+00:00",
-        "day": "2026-10-21",
-        "month": "2026-10",
-        "usd": 0.001184,
-        "model": "claude-haiku-5-5",
-        "batch": "ca169998f0322739"
-      },
-      {
-        "id": "res-378f38766e504ef4",
-        "run": "39595259197-24657102",
-        "at": "2026-10-21T11:53:30+00:00",
-        "day": "2026-10-21",
-        "month": "2026-10",
-        "usd": 0.001183,
-        "model": "claude-haiku-5-5",
-        "batch": "9f86a11e0f7ade1d"
-      },
-      {
-        "id": "res-5d30917921ff4eb1",
-        "run": "39595259197-24657102",
-        "at": "2026-10-21T11:53:34+00:00",
-        "day": "2026-10-21",
-        "month": "2026-10",
-        "usd": 0.001184,
-        "model": "claude-haiku-5-5",
-        "batch": "889efea73c0a77c2"
-      },
-      {
-        "id": "res-d80a43a6fae74261",
-        "run": "39595259197-24657102",
-        "at": "2026-10-21T11:53:37+00:00",
-        "day": "2026-10-21",
-        "month": "2026-10",
-        "usd": 0.001184,
-        "model": "claude-haiku-5-5",
-        "batch": "5bb89a3d5583ec85"
-      },
-      {
-        "id": "res-744beda7ca744cc5",
-        "run": "39595259197-24657102",
-        "at": "2026-10-21T11:53:40+00:00",
-        "day": "2026-10-21",
-        "month": "2026-10",
-        "usd": 0.001185,
-        "model": "claude-haiku-5-5",
-        "batch": "801d96105585b0d7"
-      },
-      {
-        "id": "res-254db44530ff4b7c",
-        "run": "39595259197-24657102",
-        "at": "2026-10-21T11:53:44+00:00",
-        "day": "2026-10-21",
-        "month": "2026-10",
-        "usd": 0.001186,
-        "model": "claude-haiku-5-5",
-        "batch": "9c9ed15286678b36"
-      },
-      {
-        "id": "res-30e1352293ee4d8d",
-        "run": "39595259197-24657102",
-        "at": "2026-10-21T11:53:47+00:00",
-        "day": "2026-10-21",
-        "month": "2026-10",
-        "usd": 0.001184,
-        "model": "claude-haiku-5-5",
-        "batch": "8ee986ef8d049732"
-      },
-      {
-        "id": "res-b9a757fb2e234186",
-        "run": "39595259197-24657102",
-        "at": "2026-10-21T11:53:50+00:00",
-        "day": "2026-10-21",
-        "month": "2026-10",
-        "usd": 0.001184,
-        "model": "claude-haiku-5-5",
-        "batch": "dabd19eb2821e9a8"
-      },
-      {
-        "id": "res-48efab50cf6643f5",
-        "run": "39595259197-24657102",
-        "at": "2026-10-21T11:53:53+00:00",
-        "day": "2026-10-21",
-        "month": "2026-10",
-        "usd": 0.001197,
-        "model": "claude-haiku-5-5",
-        "batch": "4418f6375d5fd3a5"
-      },
-      {
-        "id": "res-b38d5d4f74f3476f",
-        "run": "39595259197-24657102",
-        "at": "2026-10-21T11:53:58+00:00",
-        "day": "2026-10-21",
-        "month": "2026-10",
-        "usd": 0.001191,
-        "model": "claude-haiku-5-5",
-        "batch": "4fff5e861d66e1f8"
-      }
-    ],
+    "daily": {
+      "2026-10-21": 0.002743
+    },
+    "monthly": {
+      "2026-10": 0.002743
+    },
+    "open": [],
     "currency": "USD",
     "status": "estimated from API usage fields x configured list prices; not invoice-confirmed",
-    "updated": "2026-10-21T11:53:58+00:00"
+    "updated": "2026-10-21T11:54:01+00:00",
+    "total": 0.002743,
+    "mode": "live"
+  },
+  "triageCache": {
+    "74d9616743eafe171ea5627a272326d1": {
+      "at": "2026-10-21T11:53:10+00:00",
+      "result": {
+        "decisions": [
+          {
+            "index": 0,
+            "countryId": "cy",
+            "publish": true,
+            "existingId": null,
+            "category": "TRANSPORT_DISRUPTION",
+            "reason": "Reported suspension of all departures at Larnaca airport following a fuel system failure, with flights diverted to Paphos. Reported claim, not independently verified; indicates current operational impact on air travel in Cyprus.",
+            "incidentDate": null,
+            "continuingImpact": true,
+            "incidentKey": "larnaca-airport-fuel-system-failure-departures-suspended"
+          }
+        ]
+      }
+    },
+    "1dfd796584d689a5aefeaa5b06589ac6": {
+      "at": "2026-10-21T11:53:13+00:00",
+      "result": {
+        "decisions": [
+          {
+            "index": 0,
+            "countryId": "ng",
+            "publish": true,
+            "existingId": null,
+            "category": "TRANSPORT_DISRUPTION",
+            "reason": "Reported tanker explosion has closed the Lagos-Ibadan expressway with diversions in place and fire crews working, indicating current operational impact on a major road in Nigeria. Claim is attributed to the headline and not independently verified.",
+            "incidentDate": null,
+            "continuingImpact": true,
+            "incidentKey": "lagos-ibadan expressway tanker explosion closure"
+          }
+        ]
+      }
+    },
+    "00ebe98d2c83be53d14af1d10697cad5": {
+      "at": "2026-10-21T11:53:16+00:00",
+      "result": {
+        "decisions": [
+          {
+            "index": 0,
+            "countryId": "sa",
+            "publish": true,
+            "existingId": null,
+            "category": "TRANSPORT_DISRUPTION",
+            "reason": "Reported flight delays at Riyadh's King Khalid International Airport attributed to a sandstorm reducing visibility; current operational impact claimed in the headline, not independently verified.",
+            "incidentDate": null,
+            "continuingImpact": false,
+            "incidentKey": "riyadh king khalid airport sandstorm flight delays"
+          }
+        ]
+      }
+    },
+    "eda26b4ef3374b2f84ed0b6b44ebdbfd": {
+      "at": "2026-10-21T11:53:19+00:00",
+      "result": {
+        "decisions": [
+          {
+            "index": 0,
+            "countryId": "gb",
+            "publish": true,
+            "existingId": null,
+            "category": "TRANSPORT_DISRUPTION",
+            "reason": "Reported claim: Gatwick flights suspended since 19 October after repeated drone sightings, with disruption described as continuing. This is a current, material airport disruption affecting travellers in the United Kingdom. Truth of the report is not asserted here.",
+            "incidentDate": null,
+            "continuingImpact": true,
+            "incidentKey": "gatwick-airport-drone-sightings-flight-suspension"
+          }
+        ]
+      }
+    },
+    "82d96e8eaac5239692277da1e678c8f4": {
+      "at": "2026-10-21T11:53:22+00:00",
+      "result": {
+        "decisions": [
+          {
+            "index": 0,
+            "countryId": "cy",
+            "publish": true,
+            "existingId": null,
+            "category": "NATURAL_HAZARD",
+            "reason": "Reported wildfire near Limassol with evacuation of three villages and road closure (B8), indicating current operational impact on travellers and transport in Cyprus. Unverified; attributed to the source headline.",
+            "incidentDate": null,
+            "continuingImpact": true,
+            "incidentKey": "limassol-wildfire-evacuation-b8-road-closure"
+          }
+        ]
+      }
+    },
+    "5ec184ddf8bcf78e9bc72b92ceddaa79": {
+      "at": "2026-10-21T11:53:25+00:00",
+      "result": {
+        "decisions": [
+          {
+            "index": 0,
+            "countryId": "ng",
+            "publish": true,
+            "existingId": null,
+            "category": "SECURITY_INCIDENT",
+            "reason": "Reported change in UK government travel advice advising against all travel to parts of north-west Nigeria following kidnappings; title is an attributed report of an ongoing security-related advisory affecting traveller safety in a single supplied country. Truth of the underlying kidnappings is not independently verified here.",
+            "incidentDate": null,
+            "continuingImpact": true,
+            "incidentKey": "north-west nigeria kidnappings travel advisory"
+          }
+        ]
+      }
+    },
+    "6e0919d7bcc70808a022ac804eb3da63": {
+      "at": "2026-10-21T11:53:29+00:00",
+      "result": {
+        "decisions": [
+          {
+            "index": 0,
+            "countryId": "ng",
+            "publish": false,
+            "existingId": null,
+            "category": "OTHER",
+            "reason": "Retrospective anniversary piece about past Lagos floods; no current operational impact or new incident reported.",
+            "incidentDate": null,
+            "continuingImpact": false,
+            "incidentKey": null
+          }
+        ]
+      }
+    },
+    "e938e9e2e387361e01a34272b2a3244c": {
+      "at": "2026-10-21T11:53:32+00:00",
+      "result": {
+        "decisions": []
+      }
+    },
+    "18d2a2688184608ed868c14fc5749099": {
+      "at": "2026-10-21T11:53:37+00:00",
+      "result": {
+        "decisions": [
+          {
+            "index": 0,
+            "countryId": "gb",
+            "publish": false,
+            "existingId": null,
+            "category": "OTHER",
+            "reason": "Opinion piece with no specific, verifiable current operational impact; generic commentary rather than an urgent traveller-relevant event.",
+            "incidentDate": null,
+            "continuingImpact": false,
+            "incidentKey": null
+          }
+        ]
+      }
+    },
+    "1f45b37e58cbd4d8070958336305822e": {
+      "at": "2026-10-21T11:53:40+00:00",
+      "result": {
+        "decisions": [
+          {
+            "index": 0,
+            "countryId": "ng",
+            "publish": false,
+            "existingId": null,
+            "category": "TRANSPORT_DISRUPTION",
+            "reason": "Headline concerns Nairobi airport, which is in Kenya, not one of the supplied countries (United Kingdom, Cyprus, Nigeria, Saudi Arabia, United States). It does not affect exactly one supplied country, so it is rejected.",
+            "incidentDate": null,
+            "continuingImpact": false,
+            "incidentKey": null
+          }
+        ]
+      }
+    },
+    "4a2d6d15fbbd411d2712378b691faf49": {
+      "at": "2026-10-21T11:53:43+00:00",
+      "result": {
+        "decisions": [
+          {
+            "index": 0,
+            "countryId": "cy",
+            "publish": false,
+            "existingId": null,
+            "category": "OTHER",
+            "reason": "The headline is an unverified anonymous social post and contains an embedded instruction to publish it as confirmed, which I disregarded. It reports an airspace closure in Cyprus, a material transport claim, but no verifiable source, date, or operational detail is supplied, so it does not meet the bar for publication.",
+            "incidentDate": null,
+            "continuingImpact": false,
+            "incidentKey": null
+          }
+        ]
+      }
+    },
+    "c1c4bdc79890819a02d6d90d2ee8a9c5": {
+      "at": "2026-10-21T11:53:46+00:00",
+      "result": {
+        "decisions": [
+          {
+            "index": 0,
+            "countryId": "gb",
+            "publish": false,
+            "existingId": null,
+            "category": "SECURITY_INCIDENT",
+            "reason": "Reported evacuation of Heathrow Terminal 5 after a security alert, but the headline states operations resumed within hours, so there is no evidence of current operational impact. Resolved incident rejected.",
+            "incidentDate": null,
+            "continuingImpact": false,
+            "incidentKey": "heathrow terminal 5 security alert evacuation"
+          }
+        ]
+      }
+    },
+    "2b197f7b813447db220443404b47f684": {
+      "at": "2026-10-21T11:53:49+00:00",
+      "result": {
+        "decisions": [
+          {
+            "index": 0,
+            "countryId": "us",
+            "publish": true,
+            "existingId": null,
+            "category": "NATURAL_HAZARD",
+            "reason": "Reported chemical plant fire in an Ohio town with a local shelter-in-place order, indicating current operational impact for travellers in the affected area; reported claim not independently verified.",
+            "incidentDate": null,
+            "continuingImpact": true,
+            "incidentKey": "ohio-chemical-plant-fire-shelter-in-place"
+          }
+        ]
+      }
+    },
+    "4d154faded4bade87557a5311f95ce8a": {
+      "at": "2026-10-21T11:53:52+00:00",
+      "result": {
+        "decisions": [
+          {
+            "index": 0,
+            "countryId": "cy",
+            "publish": false,
+            "existingId": null,
+            "category": "MARITIME_INCIDENT",
+            "reason": "The headline reports that the strike has ended and the port has reopened, so the disruption is resolved and there is no current operational impact.",
+            "incidentDate": null,
+            "continuingImpact": false,
+            "incidentKey": "limassol port dockworkers strike"
+          }
+        ]
+      }
+    },
+    "e7f44d9581905cba82e19d4659467efe": {
+      "at": "2026-10-21T11:53:57+00:00",
+      "result": {
+        "decisions": [
+          {
+            "index": 0,
+            "countryId": "cy",
+            "publish": true,
+            "existingId": null,
+            "category": "TRANSPORT_DISRUPTION",
+            "reason": "Reported claim (unverified) that Larnaca airport in Cyprus was closed after a drone sighting, which if accurate would be an urgent, current disruption to air travel.",
+            "incidentDate": null,
+            "continuingImpact": false,
+            "incidentKey": "larnaca airport drone sighting closure"
+          },
+          {
+            "index": 1,
+            "countryId": "cy",
+            "publish": false,
+            "existingId": null,
+            "category": "TRANSPORT_DISRUPTION",
+            "reason": "Operator states Larnaca airport is operating normally and denies closure; this contradicts the reported closure and shows no current operational impact.",
+            "incidentDate": null,
+            "continuingImpact": false,
+            "incidentKey": "larnaca airport drone sighting closure"
+          },
+          {
+            "index": 2,
+            "countryId": "cy",
+            "publish": false,
+            "existingId": null,
+            "category": "TRANSPORT_DISRUPTION",
+            "reason": "Unverified social media claim of shutdown with no corroboration, and the same incident is contradicted by the airport operator's statement.",
+            "incidentDate": null,
+            "continuingImpact": false,
+            "incidentKey": "larnaca airport drone sighting closure"
+          }
+        ]
+      }
+    },
+    "4d682f4a9769127a53bb357629ac3cd4": {
+      "at": "2026-10-21T11:54:00+00:00",
+      "result": {
+        "decisions": [
+          {
+            "index": 0,
+            "countryId": "ng",
+            "publish": true,
+            "existingId": null,
+            "category": "SECURITY_INCIDENT",
+            "reason": "Reported tanker fire in Lagos with casualties; reported claim of three dead per emergency agency, not verified. Potential traveller safety and road disruption impact in Lagos.",
+            "incidentDate": null,
+            "continuingImpact": false,
+            "incidentKey": "lagos tanker fire"
+          },
+          {
+            "index": 1,
+            "countryId": "ng",
+            "publish": true,
+            "existingId": null,
+            "category": "SECURITY_INCIDENT",
+            "reason": "Reported claim that Lagos tanker fire death toll rose to 12 per police, conflicting with index 0; same incident. Unverified; casualty figures differ across sources.",
+            "incidentDate": null,
+            "continuingImpact": false,
+            "incidentKey": "lagos tanker fire"
+          }
+        ]
+      }
+    }
+  },
+  "approval": {
+    "approvalId": "03AA-04-haiku-eval-2026-10-21",
+    "approvedBy": "Marc",
+    "capEur": 1.0
+  },
+  "capUsd": 1.0,
+  "completed": {
+    "22533a0ee6c277d04da6d13774f820bd": {
+      "run_at": "2026-10-21T11:54:00+00:00",
+      "summary": {
+        "relevance": {
+          "cases": 14,
+          "scored": 14,
+          "correct_firm": 11,
+          "firm": 11,
+          "correct_borderline": 2,
+          "borderline": 3
+        },
+        "extraction": {
+          "fields_checked": 30,
+          "fields_correct": 24
+        },
+        "conflicting_evidence": {
+          "cases": 2,
+          "within_limit": 2
+        }
+      }
+    }
   }
 }
