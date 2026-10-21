@@ -27,7 +27,7 @@ from urllib.parse import quote, urlsplit
 from urllib.request import Request, urlopen
 
 from . import BUSINESS_APPLICATION, SUBSTREAM
-from .monitor_state import FileStateBackend, GitStateBackend, StateSyncError, dump_state
+from .monitor_state import FileStateBackend, GitStateBackend, Snapshot, StateSyncError, dump_state
 from .sanitise import clean_text, redact_text
 from .scheduling import display, last_daily_slot
 
@@ -706,10 +706,28 @@ def apply(state, results, cfg, now):
 # ---- persistence and entry point ---------------------------------------------------------------------------
 class BranchStateBackend(GitStateBackend):
     """Compare-and-swap commits to the controller's own state branch. It holds only controller files and is
-    created as an orphan branch on first use, so state commits never touch main or trigger a Pages build."""
+    created as an orphan branch on first use, so state commits never touch main or trigger a Pages build.
+    With ``create=False`` (observe mode) it is strictly read-only: a missing branch reads as no state."""
+
+    def __init__(self, *a, create=True, **kw):
+        super().__init__(*a, **kw)
+        self.create = create
+
+    def _exists(self):
+        return bool(self.git("ls-remote", "--heads", self.remote, self.branch).stdout.strip())
+
+    def snapshot(self):
+        if not self.create and not self._exists():
+            return Snapshot(lambda key: None)
+        return super().snapshot()
+
+    def transact(self, fn, message=""):
+        if not self.create:
+            raise StateSyncError("read-only state backend (observe mode) refuses to write")
+        return super().transact(fn, message)
 
     def _fetch(self):
-        if not self.git("ls-remote", "--heads", self.remote, self.branch).stdout.strip():
+        if self.create and not self._exists():
             ident = {"GIT_AUTHOR_NAME": "Travel Intelligence Bot", "GIT_COMMITTER_NAME": "Travel Intelligence Bot",
                      "GIT_AUTHOR_EMAIL": "actions@users.noreply.github.com",
                      "GIT_COMMITTER_EMAIL": "actions@users.noreply.github.com"}
@@ -731,7 +749,8 @@ def make_pc_backend(env, root, cfg):
         return None
     if not cfg.state_branch:
         return None
-    return BranchStateBackend(root, STATE_PATHS, branch=cfg.state_branch, mirror_worktree=False)
+    return BranchStateBackend(root, STATE_PATHS, branch=cfg.state_branch, mirror_worktree=False,
+                              create=cfg.mode == "active")
 
 
 def _summary(env, text):
@@ -776,7 +795,7 @@ def run(env=None, root=None, data_root=None, now=None, api=None, http=http_reque
             return EXIT_STATE
     else:
         new_state, delta, planned = apply(state, results, cfg, now)
-        report = render_report(cfg, results, new_state, delta, planned, now)
+        report = render_report(cfg, results, new_state, delta, planned, now, persisted=False, prior=state)
     out(report)
     for line in annotations(results, new_state, delta, cfg):
         out(line)
@@ -864,7 +883,9 @@ def verdict(results, tasks):
     return "OK"
 
 
-def render_report(cfg, results, state, delta, planned, now):
+def render_report(cfg, results, state, delta, planned, now, persisted=True, prior=None):
+    """``persisted`` False (observe): the run recorded nothing, so the report says what was detected and how it
+    relates to the ledger it read (``prior``), and never claims a task, incident or dispatch was created."""
     tasks = state["tasks"]
     open_ = sorted((t for t in tasks if t["state"] == "blocked"),
                    key=lambda t: (-SEVERITY_RANK[t["severity"]], t["first_seen_utc"]))
@@ -882,6 +903,8 @@ def render_report(cfg, results, state, delta, planned, now):
             f"{k}={json.dumps(val, default=str)}" for k, val in r.facts.items()
             if not isinstance(val, dict) or k in ("counts", "baseline_coverage"))
         L.append(f"| {r.name} | {r.status} | {clean_text(facts, 300).replace('|', '/')} |")
+    if not persisted:
+        return "\n".join(L + _observed(open_, prior, delta, cfg)) + "\n"
     L += ["", f"## Open exceptions ({len(open_)})", ""]
     if open_:
         L += ["| Severity | Since (UTC) | Seen | Exception | Action | Task |", "|---|---|---|---|---|---|"]
@@ -903,6 +926,36 @@ def render_report(cfg, results, state, delta, planned, now):
     return "\n".join(L) + "\n"
 
 
+def _observed(found, prior, delta, cfg):
+    ledger = {t["dedupe_key"]: t for t in (prior or {}).get("tasks") or [] if t["state"] == "blocked"}
+    have_ledger = bool((prior or {}).get("lastRun"))
+    L = ["", f"## Exceptions detected by this run ({len(found)})", "",
+         "**Observe mode: nothing was written.** These exceptions were detected by this run only. No task, "
+         "incident, state change or dispatch was recorded, so no task identifiers exist for new detections.", ""]
+    if found:
+        L += ["| Severity | Exception | Action | Persisted ledger |", "|---|---|---|---|"]
+        for t in found:
+            known = ledger.get(t["dedupe_key"])
+            status = (f"open since {known['first_seen_utc']} ({known['id']})" if known
+                      else "not recorded (observe mode)")
+            L.append(f"| {t['severity'].upper()} | {t['summary'].replace('|', '/')} | "
+                     f"{t['blocking_reason'].replace('|', '/')} | {status} |")
+    else:
+        L.append("None.")
+    L += ["", "## Ledger", ""]
+    if have_ledger:
+        L.append(f"- Read the persisted ledger (last written {prior['lastRun']}). Not changed by this run: it would "
+                 f"have opened {len(delta['opened'])}, escalated {len(delta['escalated'])} and resolved "
+                 f"{len(delta['resolved'])}.")
+    else:
+        L.append("- No persisted ledger was read (TI_PC_STATE_BRANCH unset, or the branch does not exist until "
+                 "the first active run). Nothing was created.")
+    L += ["", "## Recovery", "", "- Off in observe mode: nothing is dispatched."]
+    if cfg.warnings or cfg.errors:
+        L += ["", "## Configuration", ""] + [f"- ERROR: {e}" for e in cfg.errors] + [f"- {w}" for w in cfg.warnings]
+    return L
+
+
 def annotations(results, state, delta, cfg):
     """GitHub annotations: new and escalated exceptions only, so a standing fault does not repeat every hour."""
     by_id = {t["id"]: t for t in state["tasks"]}
@@ -913,7 +966,8 @@ def annotations(results, state, delta, cfg):
         t = by_id.get(i)
         if t and t["severity"] != "info":
             level = "error" if t["severity"] == "critical" else "warning"
-            lines.append(f"::{level} title=Production {t['severity']}: {t['check']}::{t['summary']}")
+            tag = "" if cfg.mode == "active" else " (observe: detected, not recorded)"
+            lines.append(f"::{level} title=Production {t['severity']}: {t['check']}{tag}::{t['summary']}")
     for r in results:
         if r.status == "UNVERIFIED":
             lines.append(f"::warning title=Production check UNVERIFIED: {r.name}::{clean_text(r.detail, 200)}")

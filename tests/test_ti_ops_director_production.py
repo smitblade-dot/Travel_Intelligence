@@ -617,12 +617,38 @@ class EntryPointTests(Harness):
 
     def test_observe_writes_nothing_and_stays_green(self):
         root = make_root(self.tmp)
-        env, out, _ = self.env(TI_PC_MODE="observe")
+        env, out, summary = self.env(TI_PC_MODE="observe")
+        lines = []
         code = pc.run(env=env, root=root, api=self.failing(root), http=site_for(root)[0], validator=ok_validator,
-                      now=NOW, out=lambda *_: None)
+                      now=NOW, out=lines.append)
         self.assertEqual(code, EXIT_OK)
         self.assertFalse(Path(env["TI_PC_STATE_DIR"]).exists())
         self.assertIn("dispatches=[]", out.read_text())
+        report = summary.read_text()
+        self.assertIn("## Exceptions detected by this run", report)
+        self.assertIn("Observe mode: nothing was written", report)
+        self.assertIn("not recorded (observe mode)", report)
+        self.assertIn("No persisted ledger was read", report)
+        self.assertIn("Off in observe mode", report)
+        for claim in ("pc-", "## Open exceptions", "Opened:", "## Changes this run"):
+            self.assertNotIn(claim, report)
+        self.assertTrue(any("(observe: detected, not recorded)" in l for l in lines if l.startswith("::error")))
+
+    def test_observe_reads_an_existing_ledger_without_changing_it(self):
+        root = make_root(self.tmp)
+        env, _, summary = self.env()
+        pc.run(env=env, root=root, api=self.failing(root), http=site_for(root)[0], validator=ok_validator, now=NOW,
+               out=lambda *_: None)
+        path = Path(env["TI_PC_STATE_DIR"]) / STATE_PATHS["state"]
+        before = path.read_text()
+        task = next(t for t in json.loads(before)["tasks"] if t["dedupe_key"] == "workflow:monitor:missed")
+        summary.write_text("")
+        pc.run(env=dict(env, TI_PC_MODE="observe"), root=root, api=self.failing(root), http=site_for(root)[0],
+               validator=ok_validator, now=NOW + timedelta(hours=1), out=lambda *_: None)
+        self.assertEqual(path.read_text(), before)
+        report = summary.read_text()
+        self.assertIn(f"open since {task['first_seen_utc']} ({task['id']})", report)
+        self.assertIn("Read the persisted ledger", report)
 
     def test_cli_command_reaches_the_controller(self):
         p = subprocess.run(["python3", str(ROOT / "scripts/ops_director.py"), "production-check"], cwd=self.tmp,
@@ -662,6 +688,19 @@ class StateBranchTests(unittest.TestCase):
                                 "ti-ops-state"], capture_output=True, text=True).stdout.split()
         self.assertEqual(sorted(files), sorted(STATE_PATHS.values()))
         self.assertFalse((self.work / STATE_PATHS["state"]).exists())     # nothing mirrored into main's checkout
+
+
+    def test_observe_backend_never_creates_or_writes_the_branch(self):
+        cfg = load_pc_config({"TI_PC_MODE": "observe", "TI_PC_STATE_BRANCH": "ti-ops-state"}, ROOT)
+        b = pc.make_pc_backend({}, self.work, cfg)
+        b.git("remote", "set-url", "origin", str(self.tmp / "remote.git"))
+        self.assertEqual(b.snapshot().state(), {})
+        from ti_ops_director.monitor_state import StateSyncError
+        with self.assertRaises(StateSyncError):
+            b.transact(lambda snap: ({"state": "{}"}, None))
+        heads = subprocess.run(["git", "ls-remote", "--heads", str(self.tmp / "remote.git")],
+                               capture_output=True, text=True).stdout
+        self.assertNotIn("ti-ops-state", heads)
 
 
 class MasterAgentIntegrationTests(unittest.TestCase):

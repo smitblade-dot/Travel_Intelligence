@@ -125,8 +125,15 @@ dispatches. Queue scheduling is off unless `production_check_interval_minutes` i
 | Mode (`TI_PC_MODE`) | Scheduled runs | Writes | Alerts | Dispatch |
 |---|---|---|---|---|
 | unset / `off` | job skipped | none | none | none |
-| `observe` | checks and job summary | none (reads the state branch if set) | annotations; job stays green | none |
+| `observe` | checks and job summary | **none**: never creates or writes the state branch; reads it only if it already exists | annotations marked "detected, not recorded"; job stays green | none |
 | `active` | checks, summary, state branch | state branch only | job red (exit 1) only when an exception is **newly opened or escalated to critical** | only if allow-listed |
+
+**Observe-mode report semantics.** An observe run detects exceptions but records nothing. Its report is
+headed "Exceptions detected by this run", states that no task, incident, state change or dispatch was
+recorded, shows no task identifiers for new detections, and marks each one "not recorded (observe mode)".
+If a persisted ledger already exists (from earlier active runs), each detection shows whether that ledger
+holds it as an open task, and the report says what an active run would have opened or resolved, without
+changing the ledger. Only active runs open, escalate or resolve tasks.
 
 A manual run with the mode unset is one read-only observation. Pause = `observe`. Stop = `off`, or disable
 the workflow in the Actions tab (immediate, overrides everything). Exit 3 = configuration error (invalid
