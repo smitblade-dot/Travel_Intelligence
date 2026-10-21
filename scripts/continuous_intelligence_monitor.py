@@ -13,6 +13,7 @@ import re
 import sys
 import time
 from datetime import datetime, timedelta, timezone
+from email.utils import parsedate_to_datetime
 from pathlib import Path
 from urllib.parse import quote, urlparse
 from urllib.request import Request, urlopen
@@ -21,7 +22,7 @@ import xml.etree.ElementTree as ET
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data.json"
 STATE = ROOT / "data" / "continuous_monitor_state.json"
-MODEL = os.getenv("TI_HAIKU_MODEL", "claude-haiku-4-5-20251001")
+MODEL = os.getenv("TI_HAIKU_MODEL") or "claude-haiku-4-5-20251001"
 MAX_ITEMS = 12
 MAX_AGE_HOURS = 36
 # Public RSS/Atom search leads. These are discovery signals, not independent verification.
@@ -110,9 +111,6 @@ def ask_haiku(items, countries, existing):
     }
     body = {"model": MODEL, "max_tokens": 2200, "temperature": 0,
             "messages": [{"role": "user", "content": json.dumps(prompt)}]}
-    raw = fetch("https://api.anthropic.com/v1/messages", headers={
-        "x-api-key": api_key, "anthropic-version": "2023-06-01", "content-type": "application/json"
-    }, timeout=60) if False else None
     # POST explicitly; fetch() is intentionally GET-only for RSS.
     request = Request("https://api.anthropic.com/v1/messages",
                       data=json.dumps(body).encode(), method="POST",
@@ -215,7 +213,21 @@ def main():
     state = json.loads(STATE.read_text()) if STATE.exists() else {"seen": []}
     discovered, errors = discover()
     seen = set(state.get("seen", []))
-    fresh = [x for x in discovered if stable_id("seen", x["url"]) not in seen][:MAX_ITEMS]
+    fresh = []
+    for item in discovered:
+        if stable_id("seen", item["url"]) in seen:
+            continue
+        try:
+            stamp = parsedate_to_datetime(item["date"]) if item["date"] else None
+            if stamp and stamp.tzinfo and stamp < now_utc() - timedelta(hours=MAX_AGE_HOURS):
+                continue
+        except (TypeError, ValueError, OverflowError):
+            continue
+        if not stamp:
+            continue
+        fresh.append(item)
+        if len(fresh) >= MAX_ITEMS:
+            break
     print("DISCOVERY", json.dumps({"collected": len(discovered), "new": len(fresh), "errors": errors}))
     if fresh:
         countries = [{"id": c["id"], "name": c.get("name", "")} for c in data["countries"]]
