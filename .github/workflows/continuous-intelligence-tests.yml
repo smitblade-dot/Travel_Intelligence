@@ -1,0 +1,22 @@
+name: Continuous intelligence agent tests
+on:
+  pull_request:
+    paths:
+      - "scripts/continuous_intelligence_monitor.py"
+      - "tests/test_continuous_intelligence_monitor.py"
+      - ".github/workflows/continuous-intelligence-monitor.yml"
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Syntax and offline tests
+        run: |
+          python -m py_compile scripts/continuous_intelligence_monitor.py
+          python -m unittest discover -s tests -p 'test_continuous_intelligence_monitor.py' -v
