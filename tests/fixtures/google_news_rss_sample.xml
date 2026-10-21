@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Hand-written sample in the shape of a Google News RSS search result: the item link is a
+     news.google.com redirect and the original publisher is named in <source>. Not a recorded feed. -->
+<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/">
+  <channel>
+    <title>"airport closed" - Google News</title>
+    <link>https://news.google.com/search?q=%22airport+closed%22</link>
+    <item>
+      <title>Gatwick flights suspended since 19 October after repeated drone sightings - Reuters</title>
+      <link>https://news.google.com/rss/articles/CBMiSampleRedirectTokenGatwick001?oc=5</link>
+      <guid isPermaLink="false">CBMiSampleRedirectTokenGatwick001</guid>
+      <pubDate>Wed, 21 Oct 2026 06:40:00 GMT</pubDate>
+      <description>Gatwick flights suspended since 19 October after repeated drone sightings  Reuters</description>
+      <source url="https://www.reuters.com">Reuters</source>
+    </item>
+    <item>
+      <title>Chemical plant fire in Ohio town prompts local shelter-in-place order - The Columbus Dispatch</title>
+      <link>https://news.google.com/rss/articles/CBMiSampleRedirectTokenOhio002?oc=5</link>
+      <guid isPermaLink="false">CBMiSampleRedirectTokenOhio002</guid>
+      <pubDate>Wed, 21 Oct 2026 05:10:00 GMT</pubDate>
+      <source url="https://www.dispatch.com">The Columbus Dispatch</source>
+    </item>
+    <item>
+      <title>Larnaca airport suspends all departures after fuel system failure</title>
+      <link>https://news.google.com/rss/articles/CBMiSampleRedirectTokenNoSource003?oc=5</link>
+      <guid isPermaLink="false">CBMiSampleRedirectTokenNoSource003</guid>
+      <pubDate>Wed, 21 Oct 2026 07:05:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>

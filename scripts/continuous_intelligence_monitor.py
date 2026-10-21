@@ -59,23 +59,61 @@ def stable_id(prefix, value):
 
 
 def get_text(el, key):
-    node = el.find(key)
+    node = el.find(key, NS)          # without NS every "atom:" lookup silently found nothing
     return "".join(node.itertext()).strip() if node is not None else ""
 
 
+# Feed hosts that redirect to someone else's article. Their hostname is never the original publisher.
+AGGREGATOR_HOSTS = {"news.google.com"}
+
+
+def _https_origin(url):
+    parts = urlparse(url or "")
+    return f"https://{parts.hostname}" if parts.scheme in ("http", "https") and parts.hostname else None
+
+
 def parse_feed(blob, feed_url):
+    """Headline, article link, publication date and, where the feed states it, the original publisher.
+
+    Google News RSS items link to a news.google.com redirect and name the publisher in
+    <source url="https://publisher.example">Publisher</source>; Atom entries may carry <source><title>.
+    """
     root = ET.fromstring(blob)
     entries = []
     if root.tag.endswith("rss") or root.find("channel") is not None:
         for item in root.findall(".//channel/item"):
+            src = item.find("source")
             entries.append({"title": get_text(item, "title"), "url": get_text(item, "link"),
-                            "date": get_text(item, "pubDate"), "feed": feed_url})
+                            "date": get_text(item, "pubDate"), "feed": feed_url,
+                            "publisher": "".join(src.itertext()).strip() if src is not None else "",
+                            "publisherUrl": _https_origin(src.get("url")) if src is not None else None})
     else:
         for item in root.findall("atom:entry", NS):
             link = item.find("atom:link", NS)
+            src = item.find("atom:source", NS)
+            src_link = src.find("atom:link", NS) if src is not None else None
             entries.append({"title": get_text(item, "atom:title"), "url": link.get("href", "") if link is not None else "",
-                            "date": get_text(item, "atom:published") or get_text(item, "atom:updated"), "feed": feed_url})
+                            "date": get_text(item, "atom:published") or get_text(item, "atom:updated"), "feed": feed_url,
+                            "publisher": get_text(src, "atom:title") if src is not None else "",
+                            "publisherUrl": _https_origin(src_link.get("href")) if src_link is not None else None})
     return [x for x in entries if x["title"] and x["url"].startswith("https://")]
+
+
+def attribution(item):
+    """(source_id, record) for the ORIGINAL publisher. An aggregator redirect is not a publisher."""
+    link_host = urlparse(item["url"]).hostname or "unknown"
+    via = "Google News RSS" if link_host in AGGREGATOR_HOSTS else None
+    name = (item.get("publisher") or "").strip()[:120]
+    if name:
+        origin = item.get("publisherUrl")
+        key = urlparse(origin).hostname if origin else name.lower()
+        return stable_id("pub", key), {"sourceName": name, "organisation": name, "url": origin, "discoveredVia": via}
+    if via:
+        return stable_id("pub-unidentified", link_host), {
+            "sourceName": "Original publisher not identified", "organisation": None, "url": None, "discoveredVia": via}
+    # A direct feed (TI_MONITOR_FEEDS): the article is on the publisher's own site.
+    return stable_id("rss", link_host), {"sourceName": link_host, "organisation": link_host,
+                                         "url": "https://" + link_host, "discoveredVia": None}
 
 
 def discover():
@@ -127,6 +165,65 @@ def ask_haiku(items, countries, existing, spend):
     return spend.triage(system, user, key, validator=decisions_valid, max_chars=80000)
 
 
+# Man-made hazards that a model may label NATURAL_HAZARD. A natural term alongside keeps the model's label.
+MAN_MADE_TERMS = re.compile(r"\b(chemical|plant|factory|refinery|industrial|explosion|blast|gas leak|pipeline|"
+                            r"tanker|warehouse|spill|toxic|hazmat)\b", re.I)
+NATURAL_TERMS = re.compile(r"\b(earthquake|quake|flood\w*|wildfire|bushfire|forest fire|storm|sandstorm|cyclone|"
+                           r"hurricane|typhoon|tornado|landslide|volcan\w*|eruption|tsunami|heatwave|drought|"
+                           r"avalanche|snow\w*)\b", re.I)
+CATEGORIES = {"SECURITY_INCIDENT", "TRANSPORT_DISRUPTION", "MARITIME_INCIDENT", "NATURAL_HAZARD", "OTHER"}
+
+
+def classify_event(category, title):
+    """(eventType, eventSubtype). A chemical-plant fire is not a natural hazard just because the model said so."""
+    event_type = category if category in CATEGORIES else "OTHER"
+    if event_type == "NATURAL_HAZARD" and MAN_MADE_TERMS.search(title) and not NATURAL_TERMS.search(title):
+        return "OTHER", "INDUSTRIAL_INCIDENT"
+    return event_type, None
+
+
+MONTHS = {m: i for i, m in enumerate(["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"], 1)}
+_MON = r"(jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?|sep(?:t(?:ember)?)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)"
+_DAY_MONTH = re.compile(r"\b(\d{1,2})(?:st|nd|rd|th)?\s+" + _MON + r"\.?(?:,?\s+(\d{4}))?\b", re.I)
+_MONTH_DAY = re.compile(r"\b" + _MON + r"\.?\s+(\d{1,2})(?:st|nd|rd|th)?(?:,?\s+(\d{4}))?\b", re.I)
+_ISO = re.compile(r"\b(\d{4})-(\d{2})-(\d{2})\b")
+
+
+def stated_date(title, reference):
+    """The single calendar date written in the headline, or None. A date without a year takes the year that
+    puts it on or before ``reference`` (the report's publication date). Two different dates, or a date outside
+    the 31 days up to the report (e.g. a future reopening date), give None: an unclear date is never guessed."""
+    found = set()
+    for m in _ISO.finditer(title):
+        found.add((int(m.group(1)), int(m.group(2)), int(m.group(3))))
+    for rx, d_i, m_i in ((_DAY_MONTH, 1, 2), (_MONTH_DAY, 2, 1)):
+        for m in rx.finditer(title):
+            month, day = MONTHS[m.group(m_i)[:3].lower()], int(m.group(d_i))
+            year = int(m.group(3)) if m.group(3) else reference.year
+            found.add((year, month, day, bool(m.group(3))))
+    dates = set()
+    for f in found:
+        try:
+            d = calendar_date(f[0], f[1], f[2])
+        except ValueError:
+            continue
+        if len(f) == 4 and not f[3] and d > reference + timedelta(days=1):
+            d = d.replace(year=d.year - 1)
+        dates.add(d)
+    if len(dates) != 1:
+        return None
+    d = dates.pop()
+    return d if reference - timedelta(days=31) <= d <= reference + timedelta(days=1) else None
+
+
+def report_published(item):
+    try:
+        stamp = parsedate_to_datetime(item.get("date") or "")
+        return stamp.astimezone(timezone.utc) if stamp and stamp.tzinfo else None
+    except (TypeError, ValueError, OverflowError):
+        return None
+
+
 def normalise_incident_key(value):
     """Lowercase words joined by single hyphens. The live Haiku 5.5 evaluation (21 Oct 2026) returned keys
     such as 'lagos-ibadan expressway tanker explosion closure'; spaces are not a reason to drop a report."""
@@ -151,11 +248,16 @@ def publish(data, items, decisions):
         used.add(idx)
         if decision.get("publish") is not True or cid not in countries:
             continue
+        published_at = report_published(items[idx])
         incident_date = decision.get("incidentDate")
         try:
             incident_day = calendar_date.fromisoformat(incident_date) if isinstance(incident_date, str) else None
         except ValueError:
             incident_day = None
+        date_basis = "model_from_headline" if incident_day else None
+        if incident_day is None:      # the model missed a date the headline states explicitly
+            incident_day = stated_date(items[idx]["title"], (published_at or now_utc()).date())
+            date_basis = "headline_text" if incident_day else "not_stated"
         if incident_day and (incident_day > now_utc().date() or
                              incident_day < now_utc().date() - timedelta(days=3)):
             if decision.get("continuingImpact") is not True:
@@ -185,23 +287,28 @@ def publish(data, items, decisions):
         eid = stable_id("early", cid + ":" + url)
         if eid in existing:
             continue
-        domain = urlparse(url).hostname or "unknown"
-        sid = stable_id("rss", domain)
+        sid, who = attribution(item)
         if not any(s["id"] == sid for s in data["sources"]):
-            data["sources"].append({"id": sid, "sourceName": domain, "organisation": domain,
-                                    "sourceType": "MEDIA", "url": "https://" + domain,
+            data["sources"].append({"id": sid, "sourceName": who["sourceName"], "organisation": who["organisation"],
+                                    "sourceType": "MEDIA", "url": who["url"], "discoveredVia": who["discoveredVia"],
                                     "active": True, "sourceQuality": "F", "accessMethod": "PUBLIC_RSS",
                                     "automationPermission": "UNKNOWN", "contentRights": "FACTUAL_SUMMARY_ONLY",
                                     "originalLanguage": "en", "dateChecked": date})
+        reporter = who["sourceName"] if who["organisation"] else "A report whose original publisher is not identified"
+        via = f" (found via {who['discoveredVia']})" if who["discoveredVia"] else ""
+        event_type, event_subtype = classify_event(decision.get("category"), item["title"])
         oid = stable_id("obs-early", url)
         title = item["title"][:180]
         event = {
             "id": eid, "countryId": cid, "monitorIncidentKey": cid + ":" + incident_key, "title": "Early report: " + title,
-            "summary": "An RSS discovery source reports: " + title + ". This is an unverified report; "
-                       "Travel Intelligence has not independently established the incident or its impact.",
-            "eventType": decision.get("category") if decision.get("category") in
-                {"SECURITY_INCIDENT", "TRANSPORT_DISRUPTION", "MARITIME_INCIDENT", "NATURAL_HAZARD", "OTHER"} else "OTHER",
-            "eventDate": incident_day.isoformat() if incident_day else date, "eventTime": None, "eventStatus": "EARLY_REPORT",
+            "summary": (reporter + via + (" reports: " if who["organisation"] else " says: ") + title +
+                        ". This is an unverified report; Travel Intelligence has not independently established the "
+                        "incident or its impact."),
+            "eventType": event_type, "eventSubtype": event_subtype,
+            # Incident date only when stated; publication and retrieval are kept separately, never substituted.
+            "eventDate": incident_day.isoformat() if incident_day else None, "incidentDateBasis": date_basis,
+            "reportPublishedAt": published_at.isoformat(timespec="seconds") if published_at else None,
+            "retrievedAt": timestamp, "eventTime": None, "eventStatus": "EARLY_REPORT",
             "publicationStatus": "PUBLISHED", "lifecycleStage": "ALERT",
             "confidence": "LOW", "geographicScope": "NATIONAL", "locationId": None,
             "impactType": [], "affectedInfrastructure": [], "conflictingInformation": False,
@@ -214,7 +321,9 @@ def publish(data, items, decisions):
                                "note": "Attributed source signal published without corroboration."}],
         }
         obs = {"id": oid, "recordId": None, "eventId": eid, "sourceId": sid,
-               "sourceUrl": url, "extractedClaim": title, "publicationDate": date,
+               "sourceUrl": url, "publisherName": who["sourceName"] if who["organisation"] else None,
+               "publisherUrl": who["url"], "discoveredVia": who["discoveredVia"], "extractedClaim": title,
+               "publicationDate": published_at.date().isoformat() if published_at else None,
                "dateChecked": date, "observationStatus": "UNVERIFIED",
                "independenceGroupId": stable_id("rss-report", url),
                "originalLanguage": "en", "translationMethod": "NONE",

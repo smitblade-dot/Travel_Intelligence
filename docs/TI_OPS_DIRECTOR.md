@@ -5,6 +5,25 @@ Automation Agents. Business application: Travel Intelligence. Agent development,
 under 03AA-04. No agent number, organisational code, cost code or document number has been invented:
 the cost code field is intentionally absent until the FT register supplies it.
 
+## Completion record (21 October 2026)
+
+**Status: complete for the agreed scope; merged as PR #27 (`26e8321`).** Ongoing paid triage and
+publication are disabled (no `TI_OPS_*` limits, `TI_OPS_DRY_RUN` and `TI_MONITOR_PUBLISH` unset).
+
+- **Implemented:** the controller (one SQLite queue, leases, pause/stop, scheduling, report); the
+  `feed_health_diagnostic` worker; the spending gateway (reservation before every paid call, per-task,
+  daily, monthly and evaluation total limits, shared ledger on Actions); the Haiku monitor routed through
+  it, with fail-closed publication and run outcome reported separately from triage outcome.
+- **Measured validation:** 160 offline tests and all PR checks green; Docker image built and
+  smoke-tested; live read-only feed diagnostic on Actions; approved live Haiku 5.5 evaluation (run
+  39595259197): relevance 11/11 firm cases, injection ignored, 0 malformed replies, conflicting reports
+  never doubled. One defect found (incident-key format) and fixed.
+- **Actual test cost:** 16 calls, $0.002742 (about EUR 0.0024 at the ECB rate of 20 Oct 2026) of the
+  EUR 1 evaluation cap; estimated from API usage fields, not an invoice. No other paid calls.
+- **Operational report:** each monitor run's job summary (Actions tab > "Continuous intelligence
+  monitoring (Haiku)"), and `python3 scripts/ops_director.py report`; the live feed diagnostic appears in
+  the summary of "TI Ops Director tests". Evaluation evidence: `docs/evidence/ops_director_haiku_eval.json`.
+
 ## What this is, and is not
 
 This work package delivers the **controller foundation, one working diagnostic worker, and (second

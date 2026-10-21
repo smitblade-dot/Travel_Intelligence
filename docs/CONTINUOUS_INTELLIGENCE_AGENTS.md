@@ -34,7 +34,15 @@
 - Missing API key fails the job explicitly. Failed feeds are logged; all-feed outage
   fails the job. A failed Haiku request does not advance the discovery cursor.
 - Only dated headlines from the past 36 hours enter triage. RSS publication time is
-  **not** asserted as incident time. The event date records the day of detection.
+  **not** asserted as incident time. `eventDate` holds an incident date only when one is
+  stated (by the model from the headline, or written in the headline itself, within the 31 days
+  before the report); otherwise it is empty and `incidentDateBasis` is `not_stated`. The report's
+  publication time (`reportPublishedAt`) and retrieval time (`retrievedAt`) are kept separately.
+- Attribution names the original publisher from the feed's `<source>` metadata. A Google News
+  redirect host is never recorded as the publisher; without metadata the publisher is recorded
+  as not identified. The article link is kept as the observation's `sourceUrl`.
+- A NATURAL_HAZARD label on a man-made incident (for example a chemical-plant fire) is
+  re-filed as OTHER / INDUSTRIAL_INCIDENT unless the headline also names a natural hazard.
 - No source feed is treated as independently corroborating itself. Headlines are
   not automatically promoted to CONFIRMED.
 - The first pass is a *foundation*, not full 24/7 source coverage. It does not
