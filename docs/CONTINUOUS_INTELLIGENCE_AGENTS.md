@@ -35,8 +35,10 @@
   fails the job. A failed Haiku request does not advance the discovery cursor.
 - Only dated headlines from the past 36 hours enter triage. RSS publication time is
   **not** asserted as incident time. `eventDate` holds an incident date only when one is
-  stated (by the model from the headline, or written in the headline itself, within the 31 days
-  before the report); otherwise it is empty and `incidentDateBasis` is `not_stated`. The report's
+  stated: by the model, or written in the headline after "since" or "on", in the 31 days up to
+  and including the report's date. Reopening, resumption and planned dates, and any date after the
+  report (including one the model returns), are never used. Otherwise it is empty and
+  `incidentDateBasis` is `not_stated`. The report's
   publication time (`reportPublishedAt`) and retrieval time (`retrievedAt`) are kept separately.
 - Attribution names the original publisher from the feed's `<source>` metadata. A Google News
   redirect host is never recorded as the publisher; without metadata the publisher is recorded

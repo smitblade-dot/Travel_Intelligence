@@ -125,13 +125,51 @@ class IncidentDates(unittest.TestCase):
     def test_headline_date_rules(self):
         ref = date(2026, 10, 21)
         cases = {"Flights halted since 19 October": date(2026, 10, 19),
+                 "Gatwick flights suspended since 19 October after repeated drone sightings": date(2026, 10, 19),
+                 "Heathrow Terminal 5 evacuated on 20 October": date(2026, 10, 20),
                  "Storm hit on Oct. 3, 2026": date(2026, 10, 3),
+                 "Airport closed since 19 October; flights resume 22 October": date(2026, 10, 19),
                  "Airport shut on 30 December": None,                 # would be 10 months old: not guessed
                  "Flights resume December 30": None,                  # future reopening, not an incident date
-                 "Closed from 2026-10-18 to 2026-10-20": None,        # two dates: ambiguous
+                 "Flights resume 22 October": None,                   # resumption date, report of 21 October
+                 "Flights resume on 21 October": None,                # resumption, even on the report's own day
+                 "Airport expected to reopen on 20 October": None,    # planned reopening
+                 "Strike planned on 20 October": None,                # planned, not occurred
+                 "Airport closed 19 October": None,                   # meaning not shown ("since"/"on" absent)
+                 "Closed from 2026-10-18 to 2026-10-20": None,        # range: not an incident date
                  "Riyadh flights delayed as sandstorm cuts visibility": None}
         for title, expected in cases.items():
             self.assertEqual(monitor.stated_date(title, ref), expected, title)
+
+    def test_29_february_never_crashes(self):
+        # Yearless 29 February in a non-leap reference year, and rolled back from a leap year into a non-leap one.
+        self.assertIsNone(monitor.stated_date("Port shut since 29 February", date(2026, 10, 21)))
+        self.assertIsNone(monitor.stated_date("Port shut since 29 February", date(2028, 2, 10)))
+        self.assertEqual(monitor.stated_date("Port shut since 29 February", date(2028, 3, 5)), date(2028, 2, 29))
+        item = {"title": "Port shut since 29 February after strike", "url": "https://example.org/feb",
+                "date": "Thu, 10 Feb 2028 06:00:00 GMT", "feed": "f"}
+        decision = dict(RECORDED["cy_airport_suspension"][0], continuingImpact=False)
+        self.assertEqual(publish([item], [decision])["events"], [])          # undated, not ongoing: review
+
+    def test_resumption_headline_never_supplies_the_incident_date(self):
+        item = {"title": "Larnaca flights resume 22 October after fuel system repair", "url": "https://example.org/res",
+                "date": "Wed, 21 Oct 2026 06:00:00 GMT", "feed": "f"}
+        base = dict(RECORDED["cy_airport_suspension"][0])
+        # Not ongoing and no incident date: held for review, nothing published.
+        self.assertEqual(publish([item], [dict(base, continuingImpact=False)])["events"], [])
+        # Ongoing: published, but the resumption date is not presented as the incident date.
+        event = publish([item], [dict(base, continuingImpact=True)])["events"][0]
+        self.assertEqual((event["eventDate"], event["incidentDateBasis"]), (None, "not_stated"))
+        # Even if the model returns the future date itself, it is not used as the incident date.
+        event = publish([item], [dict(base, continuingImpact=True, incidentDate="2026-10-22")])["events"][0]
+        self.assertEqual((event["eventDate"], event["incidentDateBasis"]), (None, "not_stated"))
+        self.assertEqual(publish([item], [dict(base, continuingImpact=False, incidentDate="2026-10-22")])["events"], [])
+
+    def test_valid_since_date_still_publishes_with_its_date(self):
+        item = {"title": "Airport closed since 19 October; flights resume 22 October", "url": "https://example.org/mix",
+                "date": "Wed, 21 Oct 2026 06:00:00 GMT", "feed": "f"}
+        event = publish([item], [dict(RECORDED["cy_airport_suspension"][0], continuingImpact=False)])["events"][0]
+        self.assertEqual((event["eventDate"], event["incidentDateBasis"]), ("2026-10-19", "headline_text"))
 
     def test_old_stated_date_still_goes_to_review_unless_ongoing(self):
         item = {"title": "Airport closed on 2 October after fuel leak", "url": "https://example.org/old",

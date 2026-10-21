@@ -189,31 +189,55 @@ _MONTH_DAY = re.compile(r"\b" + _MON + r"\.?\s+(\d{1,2})(?:st|nd|rd|th)?(?:,?\s+
 _ISO = re.compile(r"\b(\d{4})-(\d{2})-(\d{2})\b")
 
 
+# A headline date is an incident date only when the wording says so ("suspended since 19 October",
+# "evacuated on 20 October"). Reopening, resumption and planned dates are never incident dates.
+_INCIDENT_CUE = re.compile(r"\b(since|on)\s+(?:(?:mon|tues|wednes|thurs|fri|satur|sun)day,?\s+)?$", re.I)
+_FORWARD = re.compile(r"\b(resum\w*|reopen\w*|re-open\w*|restart\w*|restor\w*|plann\w*|plan|schedul\w*|expect\w*|"
+                      r"will|due|until|till|postpon\w*|delayed to|from|by|ahead of|before|next)\b", re.I)
+
+
+def _clause_before(title, start):
+    """Text of the same clause before position ``start`` (clauses end at , ; : - | or 'and')."""
+    head = title[:start]
+    cut = max(head.rfind(c) for c in ",;:|") + 1
+    for sep in (" - ", " and "):
+        cut = max(cut, head.lower().rfind(sep) + len(sep) if sep in head.lower() else 0)
+    return head[cut:]
+
+
 def stated_date(title, reference):
-    """The single calendar date written in the headline, or None. A date without a year takes the year that
-    puts it on or before ``reference`` (the report's publication date). Two different dates, or a date outside
-    the 31 days up to the report (e.g. a future reopening date), give None: an unclear date is never guessed."""
-    found = set()
+    """The incident date the headline states, or None.
+
+    Only a date introduced by "since" or "on", with no reopening, resumption or planning word earlier in
+    the same clause, counts. A date without a year takes the year that puts it on or before ``reference``
+    (the report's publication date). A date after the report, more than 31 days before it, two different
+    incident dates, or an impossible date (29 February rolled into a non-leap year) all give None: an
+    unclear date is never guessed.
+    """
+    candidates = []
     for m in _ISO.finditer(title):
-        found.add((int(m.group(1)), int(m.group(2)), int(m.group(3))))
+        candidates.append((m.start(), int(m.group(1)), int(m.group(2)), int(m.group(3)), True))
     for rx, d_i, m_i in ((_DAY_MONTH, 1, 2), (_MONTH_DAY, 2, 1)):
         for m in rx.finditer(title):
-            month, day = MONTHS[m.group(m_i)[:3].lower()], int(m.group(d_i))
-            year = int(m.group(3)) if m.group(3) else reference.year
-            found.add((year, month, day, bool(m.group(3))))
+            explicit_year = bool(m.group(3))
+            year = int(m.group(3)) if explicit_year else reference.year
+            candidates.append((m.start(), year, MONTHS[m.group(m_i)[:3].lower()], int(m.group(d_i)), explicit_year))
     dates = set()
-    for f in found:
+    for start, year, month, day, explicit_year in candidates:
+        clause = _clause_before(title, start)
+        if not _INCIDENT_CUE.search(clause) or _FORWARD.search(clause):
+            continue                                   # meaning not shown to be the incident: ignore it
         try:
-            d = calendar_date(f[0], f[1], f[2])
+            d = calendar_date(year, month, day)
+            if not explicit_year and d > reference:
+                d = d.replace(year=d.year - 1)         # 29 February into a non-leap year raises: dropped below
         except ValueError:
             continue
-        if len(f) == 4 and not f[3] and d > reference + timedelta(days=1):
-            d = d.replace(year=d.year - 1)
         dates.add(d)
     if len(dates) != 1:
         return None
     d = dates.pop()
-    return d if reference - timedelta(days=31) <= d <= reference + timedelta(days=1) else None
+    return d if reference - timedelta(days=31) <= d <= reference else None
 
 
 def report_published(item):
@@ -254,9 +278,14 @@ def publish(data, items, decisions):
             incident_day = calendar_date.fromisoformat(incident_date) if isinstance(incident_date, str) else None
         except ValueError:
             incident_day = None
+        reference_day = (published_at or now_utc()).date()
+        if incident_day and incident_day > reference_day:
+            # A date after the report is a planned/reopening date, never the incident date.
+            print("FUTURE_DATE_NOT_INCIDENT", idx, incident_date)
+            incident_day = None
         date_basis = "model_from_headline" if incident_day else None
         if incident_day is None:      # the model missed a date the headline states explicitly
-            incident_day = stated_date(items[idx]["title"], (published_at or now_utc()).date())
+            incident_day = stated_date(items[idx]["title"], reference_day)
             date_basis = "headline_text" if incident_day else "not_stated"
         if incident_day and (incident_day > now_utc().date() or
                              incident_day < now_utc().date() - timedelta(days=3)):
