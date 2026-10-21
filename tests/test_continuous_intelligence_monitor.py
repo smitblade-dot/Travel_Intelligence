@@ -24,12 +24,32 @@ class MonitorTests(unittest.TestCase):
         items = [{"title": "Airport incident reported", "url": "https://example.org/story",
                   "date": "Wed, 21 Oct 2026 07:00:00 GMT"}]
         decisions = [{"index": 0, "countryId": "gb", "publish": True,
-                      "existingId": None, "category": "TRANSPORT_DISRUPTION"}]
+                      "existingId": None, "category": "TRANSPORT_DISRUPTION", "incidentDate": None, "continuingImpact": True, "incidentKey": "airport-incident-reported"}]
         self.assertEqual(monitor.publish(data, items, decisions), 1)
         self.assertEqual(data["events"][0]["publicationStatus"], "PUBLISHED")
         self.assertEqual(data["events"][0]["eventStatus"], "EARLY_REPORT")
         self.assertEqual(data["events"][0]["confidence"], "LOW")
         self.assertEqual(len(data["sourceObservations"]), 1)
+        self.assertEqual(monitor.publish(data, items, decisions), 0)
+
+    def test_reject_old_incident(self):
+        data = {"countries": [{"id": "gb"}], "records": [], "sources": [],
+                "locations": [], "events": [], "sourceObservations": [],
+                "meta": {"counts": {}, "currentIntelligence": {}}}
+        items = [{"title": "Old tanker fire", "url": "https://example.org/old"}]
+        decisions = [{"index": 0, "countryId": "gb", "publish": True,
+                      "incidentDate": "2025-01-01", "continuingImpact": False,
+                      "incidentKey": "old-tanker-fire"}]
+        self.assertEqual(monitor.publish(data, items, decisions), 0)
+
+    def test_reject_unknown_date_without_continuing_impact(self):
+        data = {"countries": [{"id": "gb"}], "records": [], "sources": [],
+                "locations": [], "events": [], "sourceObservations": [],
+                "meta": {"counts": {}, "currentIntelligence": {}}}
+        items = [{"title": "Undated headline", "url": "https://example.org/unknown"}]
+        decisions = [{"index": 0, "countryId": "gb", "publish": True,
+                      "incidentDate": None, "continuingImpact": False,
+                      "incidentKey": "undated-incident"}]
         self.assertEqual(monitor.publish(data, items, decisions), 0)
 
     def test_reject_unknown_country(self):
