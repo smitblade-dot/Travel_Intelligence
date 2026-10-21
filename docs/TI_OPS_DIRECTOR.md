@@ -251,7 +251,9 @@ Remaining model behaviour, which the guards treat conservatively:
 - The Gatwick headline's "since 19 October" was not extracted as a date. It is still published, because
   the model marked it ongoing.
 
-A re-run of the same prompt, model and cases is recognised from the ledger and makes no call.
+A re-run of the same prompt, model and cases is recognised from the ledger and makes no call; this was
+confirmed on the next push (run 39595790904: "already evaluated", no reservation). One approval covers one
+completed evaluation: a changed prompt or case set is refused until Marc gives a new approval.
 
 Known limits, recorded rather than hidden:
 - The triage schema cannot express "conflicting reports". If the model gives contradictory headlines

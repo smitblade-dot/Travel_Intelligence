@@ -222,6 +222,9 @@ def run_approved_eval(approval, backend, env, monitor, doc, rate, today, provide
     done = (state.get("completed") or {}).get(fp)
     if done:
         return {"skipped": "already evaluated with this prompt, model and case set", "result": done}
+    if state.get("completed") and (state.get("approval") or {}).get("approvalId") == approval["approvalId"]:
+        # One approval covers one evaluation. A changed prompt or case set needs a new approval from Marc.
+        return {"skipped": "approval already used for a completed evaluation; a new approval is required"}
     run_env = {"ANTHROPIC_API_KEY": env.get("ANTHROPIC_API_KEY", ""), "TI_OPS_DRY_RUN": "false",
                "TI_HAIKU_MODEL": model, "TI_OPS_MAX_MODEL_CALLS_PER_TASK": "2",
                **{k: str(cap) for k in ("TI_OPS_PER_TASK_LIMIT_USD", "TI_OPS_DAILY_LIMIT_USD",

@@ -98,6 +98,16 @@ class BoundedRun(unittest.TestCase):
         self.assertIn("skipped", r)
         self.assertEqual(prov.calls, [])
 
+    def test_one_approval_covers_one_completed_evaluation(self):
+        remote = Remote()
+        backend = GitStateBackend(remote.runner(), PATHS)
+        used = {"completed": {"other-prompt-fingerprint": {"run_at": "x"}}, "approval": {"approvalId": APPROVAL["approvalId"]}}
+        backend.transact(lambda snap: ({"state": json.dumps(used)}, None))
+        prov = FakeProvider(replies(), tempfile.mkdtemp())
+        r = monitor_eval.run_approved_eval(APPROVAL, backend, ENV, monitor, DOC, RATE, "2026-10-21", provider=prov)
+        self.assertIn("new approval is required", r["skipped"])
+        self.assertEqual(prov.calls, [])
+
     def test_total_cap_holds_across_runs_and_counts_retries(self):
         remote = Remote()
         backend = GitStateBackend(remote.runner(), PATHS)
