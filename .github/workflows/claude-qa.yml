@@ -23,17 +23,23 @@ jobs:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           show_full_output: true
           prompt: >
-            Perform an independent QA review of this Travel Intelligence pull
-            request. Review the actual diff against main and the repository's
+            Perform an independent QA review ONLY of Travel Intelligence PR
+            #${{ github.event.pull_request.number }} in ${{ github.repository }}.
+            The exact head is ${{ github.event.pull_request.head.sha }} and
+            the exact base is ${{ github.event.pull_request.base.sha }}.
+            Inspect git diff ${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}.
+            Do not choose, inspect or report on a different open pull request.
+            Begin the final report with the PR number and both commit SHAs.
+            Review the actual diff and the repository's
             CLAUDE.md rules. Do not modify files, commit, push, or merge.
             Challenge the implementation rather than assuming it is correct.
             Check functional correctness, regression risk, data integrity,
             source provenance, Current Intelligence publication controls,
             source-tier correctness, workflow safety, accessibility including
             red-green colour-blind usability, legal/compliance implications,
-            mobile/UI behaviour, and unintended changes. Confirm that the
-            consolidation preserves the newer main data and adds the intended
-            source-registry/government-advisory functionality. Report exactly:
+            mobile/UI behaviour, and unintended changes. Confirm that the change preserves newer production records and source
+            evidence and implements the purpose of this triggering PR.
+            Do not apply an unrelated source-registry consolidation brief. Report exactly:
             PASS, PASS WITH ISSUES, or FAIL, followed by each issue with
             severity, file, location, problem and recommended correction.
             If no issues are found, state that explicitly. This is a review

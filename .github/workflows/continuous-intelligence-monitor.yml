@@ -1,0 +1,52 @@
+name: Continuous intelligence monitoring (Haiku)
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+# Prevent simultaneous monitor writers; the 21:00 consolidation remains separate.
+concurrency:
+  group: ti-continuous-monitor
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 1
+      - name: Run discovery and Haiku triage
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TI_HAIKU_MODEL: ${{ vars.TI_HAIKU_MODEL }}
+          # Publication fails closed: only the exact value "true" publishes; unset/empty/other = off.
+          TI_MONITOR_PUBLISH: ${{ vars.TI_MONITOR_PUBLISH }}
+          TI_MONITOR_FEEDS: ${{ vars.TI_MONITOR_FEEDS }}
+          # Spending gateway (docs/TI_OPS_DIRECTOR.md, "Production transition"). Paid triage stays OFF until
+          # TI_OPS_DRY_RUN=false and all three USD limits are set to positive numbers.
+          TI_OPS_DRY_RUN: ${{ vars.TI_OPS_DRY_RUN }}
+          TI_OPS_PER_TASK_LIMIT_USD: ${{ vars.TI_OPS_PER_TASK_LIMIT_USD }}
+          TI_OPS_DAILY_LIMIT_USD: ${{ vars.TI_OPS_DAILY_LIMIT_USD }}
+          TI_OPS_MONTHLY_LIMIT_USD: ${{ vars.TI_OPS_MONTHLY_LIMIT_USD }}
+          TI_OPS_MAX_MODEL_CALLS_PER_TASK: ${{ vars.TI_OPS_MAX_MODEL_CALLS_PER_TASK }}
+          # Spend reservations, budgets, cursor and result cache are compare-and-swap commits to main,
+          # so limits hold across runs, re-runs and concurrent runs. The monitor pushes its own state.
+          TI_MONITOR_STATE_BACKEND: git
+        # Exit 0: run executed (triage may still be NOT COMPLETED: read the job summary).
+        # Exit 3: configuration defect (no paid call). Exit 4: state not persisted or triage stalled.
+        run: |
+          if [ -z "$ANTHROPIC_API_KEY" ]; then
+            echo "::error::Missing ANTHROPIC_API_KEY. Monitoring cannot run."
+            exit 1
+          fi
+          python3 scripts/continuous_intelligence_monitor.py
+      - name: Re-validate canonical intelligence data as pushed
+        if: always()
+        run: python3 scripts/validate_ti_data.py

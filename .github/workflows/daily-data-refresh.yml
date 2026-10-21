@@ -94,8 +94,8 @@ jobs:
             relationships; otherwise leave the relationship unresolved. Do
             not invent events from signals alone. Preserve source provenance
             and uncertainty. The oilGasSummary section was refreshed
-            separately; do not touch or re-derive it. Commit and push
-            substantive TI changes yourself.
+            separately; do not touch or re-derive it. Make substantive TI changes
+            and leave them uncommitted; do not push during this step. Leave publication to the validated safety-net step. Review security redeployments, alleged plots, tanker casualties and coastal restrictions as well as transport closures. Retain unresolved geographic leads for review. Review continuing Hot Topics explicitly, including Fairford and Sochi; event age alone is not grounds for deletion. Allegations require review and must not be promoted to confirmed attribution.
           claude_args: |
             --model claude-sonnet-5
             --allowedTools "Bash,Read,Write,Edit,Glob,Grep,WebSearch,WebFetch"

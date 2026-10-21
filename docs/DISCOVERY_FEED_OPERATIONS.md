@@ -106,16 +106,37 @@ checks passed. This was not a production intelligence refresh and published
 no intelligence; a successful Pages deployment is likewise not proof of a
 successful daily intelligence refresh.
 
-No ReliefWeb approval or application correspondence was found in the connected
-FT, personal or S41 Gmail accounts during this follow-up. This does not prove
-that an application was never submitted or that approval has not reached
-another mailbox. Do not resubmit or configure a guessed appname. Obtain the
-actual approval email before configuring `RELIEFWEB_APPNAME`, then use the
-read-only live probe to validate access before claiming restored coverage.
-HTTP 401/403 is explicitly blocked; transient outages remain unavailable.
+At that follow-up, approval correspondence had not been located. This was a
+historical evidence gap, superseded by the approval recorded below. HTTP
+401/403 is explicitly blocked; transient outages remain unavailable.
 
 Live probes retain discovery JSON and transport reference artifacts for seven
 days, including on audit failure, so source URLs, observation timestamps and
 sampling limitations can be inspected independently. Artifacts are diagnostic
 evidence, not verified TI events or authority to publish. Existing independent
 PR QA, source verification and publication controls remain mandatory.
+
+
+## Approved application configuration - 21 October 2026
+
+FORGEDTITANIUM received ReliefWeb approval at 01:00 UTC on 21 October 2026.
+Marc verified the approved application name directly from the original email.
+The exact approved value is now configured as the repository Actions variable
+`RELIEFWEB_APPNAME`; the existing daily refresh and read-only probe consume
+that variable. Approval is no longer outstanding. Do not replace it with a
+guessed name or submit a duplicate application.
+
+The 20 October production run
+[39499702808](https://github.com/smitblade-dot/Travel_Intelligence/actions/runs/39499702808)
+passed TI model validation and the foundation audit, and saved the validated
+update before failing the strict discovery-health audit. This establishes
+validation and a saved update, not a fully healthy discovery refresh.
+
+Verification has three separate acceptance points: the read-only probe must
+show successful live ReliefWeb access and retain provenance; regression checks
+and independent PR QA must pass on the integrated head; and a complete
+production refresh must pass collection, data validation, foundation audit,
+validated commit/push and the strict discovery-health audit. Confirm Pages
+deployment separately where publication occurs. Provider approval or a Pages
+deployment alone does not prove those other stages succeeded. Do not weaken
+publication safeguards to satisfy discovery coverage.

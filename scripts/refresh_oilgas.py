@@ -28,6 +28,7 @@ import sys
 import urllib.request
 from collections import Counter
 from pathlib import Path
+from operating_status import classify
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DATA_JSON = REPO_ROOT / "data.json"
@@ -36,7 +37,7 @@ COUNTRY_MAP = REPO_ROOT / "oilgas-country-map.json"
 CRUDE_URL = "https://raw.githubusercontent.com/smitblade-dot/crude-flow-dashboard/main/data.json"
 GAS_URL = "https://raw.githubusercontent.com/smitblade-dot/gas-lng-flow-dashboard/main/data.json"
 
-STATUS_RANK = {"Red": 0, "Amber": 1, "Blue": 2, "Green": 3}
+STATUS_RANK = {"Red": 0, "Amber": 1, "Unknown": 2, "Blue": 3, "Green": 4}
 MIN_EXPECTED_ENTRIES = 20  # sanity floor; today's real count is 28 of 29
 
 
@@ -54,13 +55,15 @@ def truncate(text, limit=320):
     return text[:limit].rsplit(" ", 1)[0] + "..."
 
 
-def build_commodity_entry(dashboard, country_name):
+def build_commodity_entry(dashboard, country_name, *, gas=False, now=None):
     countries = dashboard.get("countries", [])
     row = next((c for c in countries if c.get("country") == country_name), None)
     if row is None:
         return None
 
     infra_rows = [i for i in dashboard.get("infrastructure", []) if i.get("country") == country_name]
+    if gas:
+        infra_rows = [dict(i, map_status=classify(i, now), reported_map_status=i.get('reported_map_status', i.get('map_status'))) for i in infra_rows]
     status_counts = Counter(i.get("map_status") for i in infra_rows if i.get("map_status"))
     worst_status = None
     if status_counts:
@@ -74,6 +77,7 @@ def build_commodity_entry(dashboard, country_name):
             "status": i.get("status"),
             "map_status": i.get("map_status"),
             "watch_item": i.get("watch_item"),
+            **({k: i.get(k) for k in ('reported_map_status', 'verification', 'verification_note', 'source', 'source_date', 'verified_at')} if gas else {}),
         }
         for i in infra_sorted[:4]
     ]
@@ -122,6 +126,10 @@ def build_commodity_entry(dashboard, country_name):
         "infrastructure_count": len(infra_rows),
         "infrastructure_status_counts": dict(status_counts),
         "worst_status": worst_status,
+        **({"unverified_infrastructure_count": status_counts.get("Unknown", 0),
+            "operating_summary": f"{status_counts.get('Green', 0)} confirmed normal; {status_counts.get('Unknown', 0)} unverified / presumed; {status_counts.get('Amber', 0) + status_counts.get('Red', 0)} restricted / disrupted. Unknown is not evidence of disruption.",
+            "operating_evidence": [{"name": i.get("infrastructure_name"), "layer": i.get("layer"), "map_status": i.get("map_status"), "status": i.get("status"), "source": i.get("source"), "verified_at": i.get("verified_at")} for i in infra_rows],
+            "status_policy": "Asset-specific evidence expires after 30 days; dataset refresh is not operating verification."} if gas else {}),
         "notable_infrastructure": notable_infrastructure,
         "latest_flow": latest_flow,
         "active_disruptions": active_disruptions,
@@ -152,7 +160,7 @@ def main():
             if c:
                 entry["crude"] = c
         if names.get("gas"):
-            g = build_commodity_entry(gas, names["gas"])
+            g = build_commodity_entry(gas, names["gas"], gas=True)
             if g:
                 entry["gas"] = g
         if entry:

@@ -1,0 +1,25 @@
+{
+  "_comment": "Anthropic API list prices in USD per million tokens, keyed by model ID. Checked against platform.claude.com/docs/en/about-claude/pricing and .../models/overview on 21 October 2026. Re-verify before relying on them; unlisted models are treated as unpriced and paid calls to them are blocked.",
+  "models": {
+    "claude-haiku-5-5": {
+      "input_per_mtok": 0.10, "output_per_mtok": 0.50,
+      "long_context_threshold_tokens": 100000, "long_input_per_mtok": 0.50, "long_output_per_mtok": 2.50,
+      "batch_discount": 0.5,
+      "verified_at": "2026-10-21", "source_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "notes": "Rates for prompts over 100k tokens are five times higher. Tokenizer yields about 30 percent more tokens than Haiku 4.5. Thinking tokens count toward max_tokens."
+    },
+    "claude-haiku-4-5-20251001": {
+      "input_per_mtok": 1.0, "output_per_mtok": 5.0, "batch_discount": 0.5,
+      "verified_at": "2026-10-21", "source_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "notes": "Price is the Haiku 4.5 row. The dated ID is the repository's existing value; it is not printed on the pricing or models pages, so confirm it with the Models API."
+    },
+    "claude-sonnet-5-5": {
+      "input_per_mtok": 2.0, "output_per_mtok": 10.0, "batch_discount": 0.5,
+      "verified_at": "2026-10-21", "source_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+    },
+    "claude-opus-5-5": {
+      "input_per_mtok": 4.0, "output_per_mtok": 20.0, "batch_discount": 0.5,
+      "verified_at": "2026-10-21", "source_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+    }
+  }
+}
