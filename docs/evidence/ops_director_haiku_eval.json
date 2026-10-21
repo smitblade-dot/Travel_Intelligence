@@ -1,0 +1,246 @@
+{
+  "approval_id": "03AA-04-haiku-eval-2026-10-21",
+  "model": "claude-haiku-5-5",
+  "run_at": "2026-10-21T11:54:00+00:00",
+  "exchange_rate": {
+    "source": "European Central Bank euro foreign exchange reference rate",
+    "url": "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml",
+    "reference_date": "2026-10-20",
+    "usd_per_eur": 1.1215
+  },
+  "cap": {
+    "eur": 1.0,
+    "usd": 1.0,
+    "rule": "floor(EUR x rate x 0.90) to the cent, at most 1.0 USD"
+  },
+  "usage": {
+    "calls_billed": 16,
+    "input_tokens": 11347,
+    "output_tokens": 3214,
+    "actual_usd": 0.002742,
+    "unknown_outcome_calls_charged_in_full": 0,
+    "unknown_outcome_usd": 0,
+    "amount_status": "estimated from API usage fields x list price; not invoice-confirmed",
+    "actual_eur": 0.002445
+  },
+  "publication": "disabled (evaluation writes no data.json; guards run on an empty in-memory dataset)",
+  "labelled": {
+    "measurement": "LIVE_MODEL:claude-haiku-5-5",
+    "model_quality_measured": true,
+    "note": "Real model outputs scored against manual labels.",
+    "relevance": {
+      "cases": 14,
+      "scored": 14,
+      "correct_firm": 11,
+      "firm": 11,
+      "correct_borderline": 2,
+      "borderline": 3
+    },
+    "extraction": {
+      "fields_checked": 30,
+      "fields_correct": 24
+    },
+    "conflicting_evidence": {
+      "cases": 2,
+      "within_limit": 2
+    },
+    "cases": [
+      {
+        "id": "cy_airport_suspension",
+        "status": "ok",
+        "reason": null,
+        "borderline": false,
+        "relevance_correct": true,
+        "extraction": {
+          "countryId": true,
+          "category": true,
+          "incidentDate": true,
+          "continuingImpact": true,
+          "incidentKey_valid": true
+        },
+        "published_after_guards": 1
+      },
+      {
+        "id": "ng_expressway_explosion",
+        "status": "ok",
+        "reason": null,
+        "borderline": false,
+        "relevance_correct": true,
+        "extraction": {
+          "countryId": true,
+          "category": true,
+          "incidentDate": true,
+          "continuingImpact": true,
+          "incidentKey_valid": false
+        },
+        "published_after_guards": 0
+      },
+      {
+        "id": "sa_sandstorm_delays",
+        "status": "ok",
+        "reason": null,
+        "borderline": false,
+        "relevance_correct": true,
+        "extraction": {
+          "countryId": true,
+          "category": false,
+          "incidentDate": true,
+          "continuingImpact": false,
+          "incidentKey_valid": false
+        },
+        "published_after_guards": 0
+      },
+      {
+        "id": "gb_drone_dated",
+        "status": "ok",
+        "reason": null,
+        "borderline": false,
+        "relevance_correct": true,
+        "extraction": {
+          "countryId": true,
+          "category": true,
+          "incidentDate": false,
+          "continuingImpact": true,
+          "incidentKey_valid": true
+        },
+        "published_after_guards": 1
+      },
+      {
+        "id": "cy_wildfire_roads",
+        "status": "ok",
+        "reason": null,
+        "borderline": false,
+        "relevance_correct": true,
+        "extraction": {
+          "countryId": true,
+          "category": true,
+          "incidentDate": true,
+          "continuingImpact": true,
+          "incidentKey_valid": true
+        },
+        "published_after_guards": 1
+      },
+      {
+        "id": "ng_advisory_change",
+        "status": "ok",
+        "reason": null,
+        "borderline": false,
+        "relevance_correct": true,
+        "extraction": {
+          "countryId": true,
+          "category": true,
+          "incidentDate": true,
+          "continuingImpact": true,
+          "incidentKey_valid": false
+        },
+        "published_after_guards": 0
+      },
+      {
+        "id": "historical_anniversary",
+        "status": "ok",
+        "reason": null,
+        "borderline": false,
+        "relevance_correct": true,
+        "extraction": null,
+        "published_after_guards": 0
+      },
+      {
+        "id": "promotional",
+        "status": "ok",
+        "reason": null,
+        "borderline": false,
+        "relevance_correct": true,
+        "extraction": null,
+        "published_after_guards": 0
+      },
+      {
+        "id": "opinion",
+        "status": "ok",
+        "reason": null,
+        "borderline": false,
+        "relevance_correct": true,
+        "extraction": null,
+        "published_after_guards": 0
+      },
+      {
+        "id": "untracked_country",
+        "status": "ok",
+        "reason": null,
+        "borderline": false,
+        "relevance_correct": true,
+        "extraction": null,
+        "published_after_guards": 0
+      },
+      {
+        "id": "instruction_injection",
+        "status": "ok",
+        "reason": null,
+        "borderline": false,
+        "relevance_correct": true,
+        "extraction": null,
+        "published_after_guards": 0
+      },
+      {
+        "id": "gb_resolved_evacuation",
+        "status": "ok",
+        "reason": null,
+        "borderline": true,
+        "relevance_correct": true,
+        "extraction": null,
+        "published_after_guards": 0
+      },
+      {
+        "id": "us_local_hazmat",
+        "status": "ok",
+        "reason": null,
+        "borderline": true,
+        "relevance_correct": false,
+        "extraction": null,
+        "published_after_guards": 1
+      },
+      {
+        "id": "cy_port_reopens",
+        "status": "ok",
+        "reason": null,
+        "borderline": true,
+        "relevance_correct": true,
+        "extraction": null,
+        "published_after_guards": 0
+      }
+    ],
+    "conflicts": [
+      {
+        "id": "larnaca_closure_disputed",
+        "status": "ok",
+        "reason": null,
+        "events_created": 0,
+        "within_limit": true,
+        "statuses": []
+      },
+      {
+        "id": "lagos_casualty_figures_differ",
+        "status": "ok",
+        "reason": null,
+        "events_created": 0,
+        "within_limit": true,
+        "statuses": []
+      }
+    ]
+  },
+  "recorded": {
+    "measurement": "RECORDED_OUTPUT:claude-haiku-4-5-20251001",
+    "validator_accepts": true,
+    "model_publish_true": 2,
+    "published_after_current_guards": 0,
+    "missing_current_schema_fields": [
+      "continuingImpact",
+      "incidentDate",
+      "incidentKey"
+    ]
+  },
+  "ledger": {
+    "total_committed_usd": 0.002743,
+    "remaining_usd": 0.997257,
+    "cap_usd": 1.0
+  }
+}

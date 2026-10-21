@@ -1,0 +1,27 @@
+# Run from the repository root:  docker compose -f deploy/ops_director/docker-compose.yml up -d --build
+# Starts in DRY-RUN. No paid model call is possible without limits in the config file.
+services:
+  ops-director:
+    build:
+      context: ../..
+      dockerfile: deploy/ops_director/Dockerfile
+    container_name: ti-ops-director
+    restart: unless-stopped
+    read_only: true
+    tmpfs: ["/tmp"]
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    environment:
+      TZ: UTC
+      TI_OPS_CONFIG: /config/ops_director.json
+      # Secrets come from an env file kept OUTSIDE git (chmod 600). Never commit it.
+      # ANTHROPIC_API_KEY, RELIEFWEB_APPNAME (provider-approved only) and FIRMS_MAP_KEY are optional.
+    env_file:
+      - path: ${TI_OPS_ENV_FILE:-/etc/ti-ops-director/secrets.env}
+        required: false
+    volumes:
+      - ops_data:/data
+      - ${TI_OPS_CONFIG_FILE:-../../config/ops_director.example.json}:/config/ops_director.json:ro
+      - ${TI_REPO_PATH:-../..}:/repo:ro
+volumes:
+  ops_data:
