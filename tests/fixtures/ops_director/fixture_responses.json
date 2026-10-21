@@ -1,0 +1,33 @@
+{
+ "_label": "FIXTURE: synthetic provider responses for deterministic tests and demonstration. NOT live evidence.",
+ "gdelt-events": {
+  "as_of": "2026-10-21T07:00:00+00:00",
+  "status": 503,
+  "body": "Service Unavailable"
+ },
+ "reliefweb-disasters": {
+  "as_of": "2026-10-21T07:00:00+00:00",
+  "status": null,
+  "body": ""
+ },
+ "adsblol-aircraft": {
+  "as_of": "2026-10-21T07:00:00+00:00",
+  "status": 200,
+  "body": "{\"now\": 1792566000000, \"ac\": [{\"hex\": \"4b1805\"}]}"
+ },
+ "gdacs-alerts": {
+  "as_of": "2026-10-21T07:00:00+00:00",
+  "status": 200,
+  "body": "{\"features\": [{\"properties\": {\"todate\": \"2026-10-20T00:00:00\", \"name\": \"fixture\"}}]}"
+ },
+ "nasa-firms": {
+  "as_of": "2026-10-21T07:00:00+00:00",
+  "status": 200,
+  "body": "latitude,longitude,acq_date,acq_time\n34.1,33.2,2026-10-21,0412\n"
+ },
+ "ourairports-airports": {
+  "as_of": "2026-10-21T07:00:00+00:00",
+  "status": 200,
+  "body": "ident,iso_country,latitude_deg,longitude_deg\nLCLK,CY,34.875,33.62\n"
+ }
+}

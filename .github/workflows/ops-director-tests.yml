@@ -1,0 +1,28 @@
+name: TI Ops Director tests
+on:
+  pull_request:
+    paths:
+      - "scripts/ti_ops_director/**"
+      - "scripts/ops_director.py"
+      - "tests/test_ti_ops_director*.py"
+      - "tests/ops_support.py"
+      - "tests/fixtures/ops_director/**"
+      - "config/ops_director.example.json"
+      - ".github/workflows/ops-director-tests.yml"
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Offline tests (no network provider, no API cost)
+        run: |
+          python -m compileall -q scripts/ti_ops_director scripts/ops_director.py
+          python -m unittest discover -s tests -p 'test_ti_ops_director*.py' -v
+      - name: Fixture demonstration
+        run: TI_OPS_DB_PATH="$RUNNER_TEMP/ops.sqlite3" python scripts/ops_director.py demo --mode fixture
