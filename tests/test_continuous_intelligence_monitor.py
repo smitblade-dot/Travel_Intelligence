@@ -11,6 +11,22 @@ spec.loader.exec_module(monitor)
 
 
 class MonitorTests(unittest.TestCase):
+    def test_json_parser_accepts_single_object(self):
+        self.assertEqual(monitor.parse_haiku_decisions('{"decisions": []}'), [])
+        self.assertEqual(monitor.parse_haiku_decisions('```json\\n{"decisions": []}\\n```'), [])
+
+    def test_json_parser_rejects_multiple_objects(self):
+        with self.assertRaises(ValueError):
+            monitor.parse_haiku_decisions('{"decisions": []}\\n{"decisions": []}')
+
+    def test_json_parser_rejects_trailing_text(self):
+        with self.assertRaises(ValueError):
+            monitor.parse_haiku_decisions('{"decisions": []} extra')
+
+    def test_json_parser_rejects_missing_decisions(self):
+        with self.assertRaises(ValueError):
+            monitor.parse_haiku_decisions('{"result": []}')
+
     def test_rss_parser(self):
         xml = b'<rss><channel><item><title>Airport closure reported</title><link>https://example.org/a</link><pubDate>Wed, 21 Oct 2026 07:00:00 GMT</pubDate></item></channel></rss>'
         items = monitor.parse_feed(xml, "https://example.org/feed")
