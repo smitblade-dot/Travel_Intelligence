@@ -54,13 +54,14 @@ def measurement_of(spend):
     return LIVE + ":" + spend.cfg.models["haiku"] if live else MOCKED
 
 
-def score_decision(labels, decision):
-    """Relevance = publish flag against the label; extraction only for relevant cases."""
+def score_decision(labels, decision, normalise=None):
+    """Relevance = publish flag against the label; extraction only for relevant cases. ``normalise`` is the
+    monitor's own incident-key normalisation, so the score matches what the guard accepts."""
     decision = decision or {}
     row = {"relevance_correct": (decision.get("publish") is True) == labels["relevant"], "extraction": None}
     if labels["relevant"]:
         fields = {f: decision.get(f) == labels.get(f) for f in EXTRACTION_FIELDS}
-        key = decision.get("incidentKey")
+        key = normalise(decision.get("incidentKey")) if normalise else decision.get("incidentKey")
         fields["incidentKey_valid"] = isinstance(key, str) and bool(re.fullmatch(r"[a-z0-9-]{8,100}", key))
         row["extraction"] = fields
     return row
@@ -76,7 +77,8 @@ def evaluate_labelled(doc, spend, monitor):
         row = {"id": case["id"], "status": res.status, "reason": res.reason, "borderline": bool(case.get("borderline"))}
         if res.status in ("ok", "cached"):
             dec = next((d for d in res.output["decisions"] if d.get("index") == 0), None)
-            row.update(score_decision(case["labels"], dec))
+            row.update(score_decision(case["labels"], dec, getattr(monitor, "normalise_incident_key", None)))
+            row["decision"] = dec                    # the model's own output, kept for review
             row["published_after_guards"] = monitor.publish(_empty_data(doc["countries"]), [item], res.output["decisions"])
         rel.append(row)
     conflicts = []
@@ -87,6 +89,7 @@ def evaluate_labelled(doc, spend, monitor):
         if res.status in ("ok", "cached"):
             data = _empty_data(doc["countries"])
             row["events_created"] = monitor.publish(data, items, res.output["decisions"])
+            row["decisions"] = res.output["decisions"]
             row["within_limit"] = row["events_created"] <= case["labels"]["max_events"]
             row["statuses"] = sorted({e["eventStatus"] + "/" + e["confidence"] for e in data["events"]})
         conflicts.append(row)

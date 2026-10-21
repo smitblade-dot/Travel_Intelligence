@@ -208,29 +208,50 @@ refused above 60,000 estimated tokens so the 100k tier is never entered, and a r
 80 percent of the threshold at the long rates. Prices are keyed by model ID, so setting `TI_HAIKU_MODEL`
 back to the old ID reprices correctly and restores `temperature: 0`. Rollback is that one variable.
 
-### Model compatibility evaluation
+### Model compatibility evaluation (measured 21 October 2026)
 
-**Haiku 5.5 output quality has NOT been measured.** No paid testing was authorised. What exists:
+**Approved live run.** Marc approved up to EUR 1 for one bounded Haiku quality evaluation only
+(`config/ops_director_eval_approval.json`). This approval is not ongoing paid operation. Workflow
+`ops-director-eval.yml`, run 39595259197, used the repository API key with publication off.
 
-| Evidence | Source | What it shows |
-|---|---|---|
-| 14 labelled relevance/extraction cases (3 borderline), 2 conflicting-evidence batches | `tests/fixtures/ops_director/monitor_labelled_cases.json`, headlines written by hand, labels assigned manually | The scorer, prompt path, gateway and guards work. With **mocked** outputs this says nothing about the model. |
-| 12 malformed-response cases | same file; `extra_object` reproduces the class of the failed production run 39562356978 (`JSONDecodeError: Extra data`), whose actual text was not logged | The strict parser rejects trailing objects, prose, truncation and refusals, and accepts one fenced object. One corrective retry, then blocked. |
-| 12 recorded decisions | verbatim from run 39558803018 (Haiku **4.5**, prompt before PR #25); the inputs were not logged and are not reconstructed | The validator accepts the real output shape. Today's guards publish **none** of its two `publish: true` decisions, because that prompt had no `incidentKey`. |
+- **Rate:** ECB reference rate dated 2026-10-20: 1 EUR = 1.1215 USD, fetched by the run itself; the run
+  refuses if the rate is unavailable or more than 5 days old.
+- **Cap:** EUR 1 × 1.1215 × 0.90, rounded down to the cent and limited to 1.00 USD, gives a 1.00 USD cap.
+- **Enforcement:** every reservation, corrective retries included, was checked against the all-time total
+  in `data/ops_director_eval_ledger.json` before the call.
+- **Usage:** 16 calls, 11,347 input and 3,214 output tokens.
+- **Cost:** **0.002742 USD (about EUR 0.0024)**, estimated from API usage fields at list price, not from an
+  invoice. 0.997257 USD of the cap remains unused.
+- **Results:** `docs/evidence/ops_director_haiku_eval.json`. The verbatim model decisions are in
+  `tests/fixtures/ops_director/monitor_recorded_haiku55.json`.
 
-Mocked integration tests (`tests/test_ti_ops_director_monitor_eval.py`, `..._monitor_integration.py`)
-are labelled `MOCKED_OUTPUTS`. `eval-monitor` labels its result `LIVE_MODEL:<model>` only with the real
-provider outside dry-run, and sets `model_quality_measured: true` only if every case ran. Run it once with
-a small allowance before `TI_MONITOR_PUBLISH` is turned on:
+| Measure (`claude-haiku-5-5`, production prompt) | Result |
+|---|---|
+| Relevance, firm cases (publish flag matches the manual label) | **11 / 11** |
+| Relevance, borderline cases | 2 / 3 (published the local Ohio chemical-fire shelter order) |
+| Instruction-injection headline | not followed, not published |
+| Extraction fields (country, category, date, ongoing, valid key) | 24 / 30 as measured; the 3 invalid keys are fixed in code (below) |
+| Conflicting evidence: never more than one event per incident | 2 / 2 (both disputed incidents produced 0 events) |
+| Malformed or refused responses | 0 of 16 calls; no corrective retry was needed |
 
-```
-TI_OPS_DRY_RUN=false TI_OPS_PER_TASK_LIMIT_USD=0.01 TI_OPS_DAILY_LIMIT_USD=0.10 TI_OPS_MONTHLY_LIMIT_USD=0.10 \
-  ANTHROPIC_API_KEY=... python3 scripts/ops_director.py eval-monitor
-```
-That is 16 calls, about $0.01 to $0.03 estimated. Scores are per case: relevance (the publish flag against
-the label, with firm and borderline counted separately), extraction (country, category, incident date,
-continuing impact, valid incident key), and conflicting evidence (at most one event per disputed
-incident).
+**Defect found and fixed.** The model wrote incident keys with spaces (for example
+`"lagos-ibadan expressway tanker explosion closure"`). The guard accepted only hyphenated keys, so 3 of the
+6 clearly relevant reports would have been dropped. `normalise_incident_key()` now lowercases the key and
+joins its words with hyphens before validation and duplicate matching. The prompt is unchanged, so the
+measurement above still describes the production prompt. Replaying the recorded live decisions through
+the fixed guards (no cost; `RecordedHaiku55` tests) gives:
+- 5 of 6 relevant reports published as attributed, LOW-confidence EARLY_REPORTs;
+- 0 of the 8 firm irrelevant ones;
+- 1 borderline item (Ohio);
+- at most one event per disputed incident.
+
+Remaining model behaviour, which the guards treat conservatively:
+- The Riyadh sandstorm headline was marked "not ongoing" and undated, so it goes to review instead of
+  being published.
+- The Gatwick headline's "since 19 October" was not extracted as a date. It is still published, because
+  the model marked it ongoing.
+
+A re-run of the same prompt, model and cases is recognised from the ledger and makes no call.
 
 Known limits, recorded rather than hidden:
 - The triage schema cannot express "conflicting reports". If the model gives contradictory headlines
@@ -385,8 +406,8 @@ redacted from stored URLs. Publication has an interface that refuses in every co
 ## Not built / limitations
 
 The seven functional-flow roles as queue workers; batch and caching paths; an invoice import for confirmed costs; ECB rate fetcher (use `fx-set`); notifications; multi-host queue;
-the queue on Actions (local-only by design); deployment; production verification; a measured Haiku 5.5
-quality result; reading the current `TI_MONITOR_PUBLISH` value. Spend made by any caller outside this
+the queue on Actions (local-only by design); deployment; production verification; reading the current
+`TI_MONITOR_PUBLISH` value. Spend made by any caller outside this
 workflow with the same API key (for example a local `eval-monitor` run without the git backend) is not
 in the shared ledger. Set a Console spend limit as well. Live checks from the build sandbox were blocked by its proxy
 (HTTP 403 on tunnel) for GDELT and ADSB.lol, so they prove nothing about those providers.

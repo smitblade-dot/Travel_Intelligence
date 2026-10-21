@@ -127,6 +127,15 @@ def ask_haiku(items, countries, existing, spend):
     return spend.triage(system, user, key, validator=decisions_valid, max_chars=80000)
 
 
+def normalise_incident_key(value):
+    """Lowercase words joined by single hyphens. The live Haiku 5.5 evaluation (21 Oct 2026) returned keys
+    such as 'lagos-ibadan expressway tanker explosion closure'; spaces are not a reason to drop a report."""
+    if not isinstance(value, str):
+        return None
+    key = re.sub(r"[^a-z0-9]+", "-", value.lower()).strip("-")
+    return key if re.fullmatch(r"[a-z0-9-]{8,100}", key) else None
+
+
 def publish(data, items, decisions):
     timestamp = now_utc().strftime("%Y-%m-%dT%H:%M:%SZ")
     date = timestamp[:10]
@@ -155,8 +164,8 @@ def publish(data, items, decisions):
         if incident_day is None and decision.get("continuingImpact") is not True:
             print("UNKNOWN_INCIDENT_DATE_REVIEW", idx)
             continue
-        incident_key = decision.get("incidentKey")
-        if not isinstance(incident_key, str) or not re.fullmatch(r"[a-z0-9-]{8,100}", incident_key):
+        incident_key = normalise_incident_key(decision.get("incidentKey"))
+        if incident_key is None:
             print("MISSING_INCIDENT_KEY_REVIEW", idx)
             continue
         if any(e.get("monitorIncidentKey") == cid + ":" + incident_key for e in data["events"]):

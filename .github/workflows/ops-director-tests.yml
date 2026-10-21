@@ -29,6 +29,12 @@ jobs:
           python -m unittest discover -s tests -p 'test_ti_ops_director*.py' -v
       - name: Fixture demonstration
         run: TI_OPS_DB_PATH="$RUNNER_TEMP/ops.sqlite3" python scripts/ops_director.py demo --mode fixture
+      - name: Live feed-health diagnostic (read-only probes, dry-run, no API key)
+        # Measured evidence for the operational report. Provider outages must not fail the PR.
+        continue-on-error: true
+        run: |
+          TI_OPS_DB_PATH="$RUNNER_TEMP/live.sqlite3" python scripts/ops_director.py run-once --mode live | tee "$RUNNER_TEMP/live.md"
+          cat "$RUNNER_TEMP/live.md" >> "$GITHUB_STEP_SUMMARY"
   docker-image:
     # Builds the NUC image and runs it with the compose hardening (read-only root, no capabilities).
     # No secrets, no paid call: fixture mode and dry-run only.

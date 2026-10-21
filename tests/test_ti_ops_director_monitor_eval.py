@@ -145,3 +145,36 @@ class EvalCommand(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class RecordedHaiku55(unittest.TestCase):
+    """RECORDED live Haiku 5.5 decisions (approved evaluation, 21 Oct 2026) replayed through today's guards."""
+    REC = json.loads((ROOT / "tests/fixtures/ops_director/monitor_recorded_haiku55.json").read_text())
+
+    def published(self, case_id, titles):
+        items = [{"title": t, "url": f"https://example.org/{case_id}/{i}", "date": ""} for i, t in enumerate(titles)]
+        data = monitor_eval._empty_data(DOC["countries"])
+        return monitor.publish(data, items, self.REC["decisions"][case_id]), data
+
+    def test_relevant_reports_survive_key_normalisation(self):
+        got = {c["id"]: self.published(c["id"], [c["title"]])[0] for c in DOC["relevance_extraction"]}
+        # Before the fix the space-separated keys of these two were dropped by the guard.
+        self.assertEqual((got["ng_expressway_explosion"], got["ng_advisory_change"]), (1, 1))
+        relevant = [c["id"] for c in DOC["relevance_extraction"] if c["labels"]["relevant"]]
+        self.assertEqual(sum(got[i] for i in relevant), 5)            # sa_sandstorm_delays: model said not ongoing
+        firm_irrelevant = [c["id"] for c in DOC["relevance_extraction"]
+                           if not c["labels"]["relevant"] and not c.get("borderline")]
+        self.assertEqual(sum(got[i] for i in firm_irrelevant), 0)
+        self.assertEqual(got["us_local_hazmat"], 1)                   # borderline: model chose to publish
+
+    def test_conflicting_reports_never_create_two_events(self):
+        for case in DOC["conflicting_evidence"]:
+            n, data = self.published(case["id"], case["titles"])
+            self.assertLessEqual(n, case["labels"]["max_events"], case["id"])
+            self.assertTrue(all(e["eventStatus"] == "EARLY_REPORT" and e["confidence"] == "LOW" for e in data["events"]))
+
+    def test_key_normalisation(self):
+        self.assertEqual(monitor.normalise_incident_key("Lagos-Ibadan expressway tanker  explosion"),
+                         "lagos-ibadan-expressway-tanker-explosion")
+        self.assertIsNone(monitor.normalise_incident_key("fire"))     # too short to be a stable key
+        self.assertIsNone(monitor.normalise_incident_key(None))
