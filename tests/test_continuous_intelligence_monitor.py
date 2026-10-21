@@ -13,7 +13,7 @@ spec.loader.exec_module(monitor)
 class MonitorTests(unittest.TestCase):
     def test_json_parser_accepts_single_object(self):
         self.assertEqual(monitor.parse_haiku_decisions('{"decisions": []}'), [])
-        self.assertEqual(monitor.parse_haiku_decisions('```json\\n{"decisions": []}\\n```'), [])
+        self.assertEqual(monitor.parse_haiku_decisions('```json\n{"decisions": []}\n```'), [])
 
     def test_json_parser_rejects_multiple_objects(self):
         with self.assertRaises(ValueError):
