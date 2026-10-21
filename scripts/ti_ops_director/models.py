@@ -5,6 +5,7 @@ import json
 import re
 from dataclasses import dataclass, field
 from typing import Callable, Optional
+from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
 from .budget import Budget, BudgetBlocked, conservative_input_tokens, cost_usd
@@ -19,6 +20,13 @@ SONNET_REASONS = {
 
 class ModelNotPermitted(Exception):
     pass
+
+
+class ProviderError(Exception):
+    """A provider failure with a short, secret-free code such as 'http_400:invalid_request_error'."""
+    def __init__(self, code):
+        super().__init__(code)
+        self.code = code
 
 
 @dataclass
@@ -64,8 +72,15 @@ class AnthropicProvider(Provider):
         req = Request("https://api.anthropic.com/v1/messages", data=json.dumps(body).encode(), method="POST",
                       headers={"x-api-key": self.api_key, "anthropic-version": "2023-06-01",
                                "content-type": "application/json"})
-        with urlopen(req, timeout=timeout) as r:
-            ans = json.loads(r.read(1_000_000))
+        try:
+            with urlopen(req, timeout=timeout) as r:
+                ans = json.loads(r.read(1_000_000))
+        except HTTPError as exc:
+            try:
+                kind = json.loads(exc.read(20_000) or b"{}").get("error", {}).get("type", "unknown")
+            except ValueError:
+                kind = "unparseable"
+            raise ProviderError(f"http_{exc.code}:{re.sub(r'[^a-z_]', '', str(kind))[:40]}") from None
         text = "".join(b.get("text", "") for b in ans.get("content", []) if b.get("type") == "text")
         u = ans.get("usage", {})
         return {"text": text, "input_tokens": int(u.get("input_tokens", 0)),
@@ -143,9 +158,10 @@ class ModelGateway:
                 raw = self.provider.complete(model=tier_now.model, system=system, user=user,
                                              max_tokens=max_out, timeout=cfg.model_timeout_seconds,
                                              options=cfg.model_options.get(tier_now.model, {}))
-            except Exception:
+            except Exception as exc:
                 self.budget.settle_unknown(rid)   # outcome unknown: charge the reservation conservatively
-                return GatewayResult("blocked", reason="provider_error", calls=calls + 1)
+                detail = exc.code if isinstance(exc, ProviderError) else type(exc).__name__
+                return GatewayResult("blocked", reason="provider_error:" + detail, calls=calls + 1)
             calls += 1
             self.budget.settle(rid, task_id, worker, tier_now.model, tier_now.tier,
                                raw["input_tokens"], raw["output_tokens"])

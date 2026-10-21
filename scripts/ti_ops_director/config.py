@@ -70,6 +70,8 @@ class Config:
     per_task_limit_usd: Optional[float] = None
     daily_limit_usd: Optional[float] = None
     monthly_limit_usd: Optional[float] = None
+    # Optional all-time cap for a bounded, separately approved activity (the quality evaluation). None = unused.
+    total_limit_usd: Optional[float] = None
     max_model_calls_per_task: int = 2
     max_output_tokens: int = 800
     model_timeout_seconds: int = 30
@@ -122,7 +124,8 @@ def load_config(path: Optional[str] = None, env=None) -> Config:
             cfg.config_warnings.append("TI_OPS_DRY_RUN has an unrecognised value; dry-run kept on")
     for attr, name in (("per_task_limit_usd", "TI_OPS_PER_TASK_LIMIT_USD"),
                        ("daily_limit_usd", "TI_OPS_DAILY_LIMIT_USD"),
-                       ("monthly_limit_usd", "TI_OPS_MONTHLY_LIMIT_USD")):
+                       ("monthly_limit_usd", "TI_OPS_MONTHLY_LIMIT_USD"),
+                       ("total_limit_usd", "TI_OPS_TOTAL_LIMIT_USD")):
         if env.get(name):
             setattr(cfg, attr, _num(env[name], name=name))
     if env.get("TI_HAIKU_MODEL"):             # the existing monitor's variable keeps working

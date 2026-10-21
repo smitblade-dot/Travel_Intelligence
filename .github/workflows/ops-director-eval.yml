@@ -1,0 +1,45 @@
+name: TI Ops Director Haiku evaluation (approved, bounded)
+# One bounded live evaluation under config/ops_director_eval_approval.json. The cap (EUR, converted with the
+# ECB reference rate fetched at run time) is enforced before every call, retries included, against the ledger
+# data/ops_director_eval_ledger.json on the PR branch. A re-run of the same prompt and cases makes no call.
+# Publication is disabled: the evaluation never writes data.json.
+on:
+  pull_request:
+    paths:
+      - "config/ops_director_eval_approval.json"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ti-ops-director-eval
+  cancel-in-progress: false
+
+jobs:
+  evaluate:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+          fetch-depth: 1
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Approved evaluation (refuses before any call without a verified rate, key or approval)
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TI_MONITOR_STATE_BACKEND: git
+          TI_MONITOR_STATE_BRANCH: ${{ github.head_ref || github.ref_name }}
+          TI_MONITOR_PUBLISH: "false"
+        run: |
+          test -f config/ops_director_eval_approval.json || { echo "No approval file: nothing to do."; exit 0; }
+          TI_OPS_DB_PATH="$RUNNER_TEMP/ops.sqlite3" python3 scripts/ops_director.py eval-monitor \
+            --approval config/ops_director_eval_approval.json > "$RUNNER_TEMP/eval.json"
+          python3 -c "import json,sys; r=json.load(open(sys.argv[1])); print(json.dumps({k: r.get(k) for k in ('usage','cap','ledger','skipped')}, indent=2))" "$RUNNER_TEMP/eval.json"
+      - name: Publication stayed off (data.json unchanged)
+        if: always()
+        run: git diff --exit-code -- data.json && git log -1 --format=%H -- data.json

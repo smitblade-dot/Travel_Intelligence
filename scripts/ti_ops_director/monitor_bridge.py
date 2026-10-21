@@ -44,6 +44,7 @@ def spend_section(state):
 def _fold(spend, day, month, usd):
     spend["daily"][day] = round(float(spend["daily"].get(day, 0) or 0) + usd, 6)
     spend["monthly"][month] = round(float(spend["monthly"].get(month, 0) or 0) + usd, 6)
+    spend["total"] = round(float(spend.get("total", 0) or 0) + usd, 6)
     spend["daily"] = dict(sorted(spend["daily"].items())[-7:])
     spend["monthly"] = dict(sorted(spend["monthly"].items())[-6:])
 
@@ -160,6 +161,9 @@ class MonitorSpend:
                 return None, "daily_allowance_insufficient"
             if m + amount > cfg.monthly_limit_usd + 1e-12:
                 return None, "monthly_allowance_insufficient"
+            total = float(spend.get("total", 0) or 0) + sum(float(r["usd"]) for r in spend["open"])
+            if cfg.total_limit_usd is not None and total + amount > cfg.total_limit_usd + 1e-12:
+                return None, "total_allowance_insufficient"
             spend["open"].append({"id": rid, "run": run, "at": self.store.now(), "day": day, "month": month,
                                   "usd": round(amount, 6), "model": model, "batch": batch})
             spend["updated"] = self.store.now()

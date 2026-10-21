@@ -26,6 +26,7 @@ def main(argv=None):
     ap.add_argument("--mode", choices=["live", "fixture"], default="live")
     ap.add_argument("--json", action="store_true")
     ap.add_argument("--rate"), ap.add_argument("--rate-date"), ap.add_argument("--rate-source")
+    ap.add_argument("--approval", help="eval-monitor: approval file for one bounded live evaluation")
     a = ap.parse_args(argv)
     cfg = load_config(a.config)
     store = Store(cfg.db_path)
@@ -67,6 +68,8 @@ def main(argv=None):
             ctl.tick()
             store.set_meta("heartbeat", store.now())
             time.sleep(30)
+    elif a.command == "eval-monitor" and a.approval:
+        return run_approved(a.approval)
     elif a.command == "eval-monitor":
         # Real-model quality check over manually labelled TI cases. Goes through the spending gateway: nothing
         # runs unless an allowance is configured, and the output says whether model quality was measured.
@@ -94,6 +97,36 @@ def main(argv=None):
             db.execute("INSERT OR REPLACE INTO fx_rates VALUES(?,?,?,?,?)",
                        (a.rate_date, "USD", "EUR", float(a.rate), a.rate_source))
         print("Stored dated USD->EUR rate.")
+    return 0
+
+
+EVAL_PATHS = {"state": "data/ops_director_eval_ledger.json", "results": "docs/evidence/ops_director_haiku_eval.json"}
+
+
+def run_approved(approval_path):
+    """Bounded live Haiku evaluation under a written approval. Exit 2 = refused before any call."""
+    import os
+    from datetime import datetime, timezone
+    from ti_ops_director.monitor_eval import (EvalRefused, fetch_ecb_rate, load_monitor, render_eval_summary,
+                                              run_approved_eval)
+    from ti_ops_director.monitor_state import make_backend
+    env = dict(os.environ)
+    try:
+        approval = json.loads(Path(approval_path).read_text())
+        rate = fetch_ecb_rate()
+        doc = json.loads((ROOT / "tests/fixtures/ops_director/monitor_labelled_cases.json").read_text())
+        backend = make_backend(env, ROOT, EVAL_PATHS)
+        with contextlib.redirect_stdout(sys.stderr):        # guard log lines must not mix with the JSON
+            report = run_approved_eval(approval, backend, env, load_monitor(ROOT), doc, rate,
+                                       datetime.now(timezone.utc).date().isoformat())
+    except EvalRefused as exc:
+        print(json.dumps({"refused": str(exc)}))
+        if env.get("GITHUB_STEP_SUMMARY"):
+            Path(env["GITHUB_STEP_SUMMARY"]).open("a").write(f"## Haiku quality evaluation\n\nRefused, no call made: {exc}\n")
+        return 2
+    print(json.dumps(report, indent=2))
+    if env.get("GITHUB_STEP_SUMMARY"):
+        Path(env["GITHUB_STEP_SUMMARY"]).open("a").write(render_eval_summary(report))
     return 0
 
 

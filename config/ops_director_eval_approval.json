@@ -1,0 +1,14 @@
+{
+  "approvalId": "03AA-04-haiku-eval-2026-10-21",
+  "approvedBy": "Marc",
+  "approvedAt": "2026-10-21",
+  "purpose": "haiku_quality_evaluation",
+  "scope": "One bounded Haiku quality evaluation of the continuous monitor's triage prompt over tests/fixtures/ops_director/monitor_labelled_cases.json, with publication disabled. Retries count within the cap. This is not ongoing paid operation and does not authorise the monitor's own paid triage.",
+  "capEur": 1.0,
+  "conversion": {
+    "rateSource": "European Central Bank euro foreign exchange reference rate (eurofxref-daily.xml), fetched at run time; the run refuses if it cannot be fetched or is more than 5 days old",
+    "margin": 0.10,
+    "absoluteUsdCeiling": 1.00
+  },
+  "model": "claude-haiku-5-5"
+}

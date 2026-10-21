@@ -230,7 +230,7 @@ PUBLISH_ENV = "TI_MONITOR_PUBLISH"
 STATE_REL, DATA_REL = "data/continuous_monitor_state.json", "data.json"
 MAX_CONSECUTIVE_FAILED = 4           # about an hour of failed triage turns the job red
 BUDGET_REASONS = {"daily_allowance_insufficient", "monthly_allowance_insufficient", "task_allowance_insufficient",
-                  "daily_token_cap"}
+                  "total_allowance_insufficient", "daily_token_cap"}
 CONFIG_REASONS = {"allowance_not_configured", "provider_not_configured", "api_key_missing"}
 EXIT_OK, EXIT_NOT_CONFIGURED, EXIT_FAILED = 0, 3, 4
 

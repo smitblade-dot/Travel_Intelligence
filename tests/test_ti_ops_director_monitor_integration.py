@@ -208,7 +208,7 @@ class PaidPath(MonitorHarness):
             def complete(self, **kw):
                 raise TimeoutError()
         prov, state = self.run_monitor(env=LIMITS, provider=Boom([], self.tmp))
-        self.assertEqual(state["lastTriageBlocked"]["reason"], "provider_error")
+        self.assertEqual(state["lastTriageBlocked"]["reason"], "provider_error:TimeoutError")
         self.assertEqual(state.get("seen", []), [])
         self.assertGreater(list(state["spend"]["daily"].values())[0], 0)
 

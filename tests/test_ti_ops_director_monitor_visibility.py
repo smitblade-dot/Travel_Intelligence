@@ -25,8 +25,10 @@ class PublicationFailsClosed(unittest.TestCase):
         """The repository variable reaches the monitor through exactly one env line; an unset variable is ''."""
         text = WORKFLOW.read_text()
         self.assertEqual(re.findall(r"TI_MONITOR_PUBLISH:.*", text), ["TI_MONITOR_PUBLISH: ${{ vars.TI_MONITOR_PUBLISH }}"])
-        others = [p.name for p in WORKFLOW.parent.glob("*.yml") if p != WORKFLOW and "TI_MONITOR_PUBLISH" in p.read_text()]
-        self.assertEqual(others, [])
+        for other in WORKFLOW.parent.glob("*.yml"):           # elsewhere it may only be pinned off
+            if other != WORKFLOW:
+                for line in re.findall(r"TI_MONITOR_PUBLISH:.*", other.read_text()):
+                    self.assertEqual(line, 'TI_MONITOR_PUBLISH: "false"', other.name)
         readers = [p.name for p in (ROOT / "scripts").rglob("*.py") if "TI_MONITOR_PUBLISH" in p.read_text()]
         self.assertEqual(readers, ["continuous_intelligence_monitor.py"])
         self.assertIn("publication_setting(env)", (ROOT / "scripts" / "continuous_intelligence_monitor.py").read_text())

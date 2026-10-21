@@ -185,7 +185,7 @@ class SpendTests(Base):
         gw, _, tid, store, cfg = self.gw([])
         gw.provider = Boom()
         r = self.run_gw(gw, tid)
-        self.assertEqual(r.reason, "provider_error")
+        self.assertTrue(r.reason.startswith("provider_error:"), r.reason)
         self.assertGreater(Budget(store, cfg).summary()["today_utc"]["committed_usd"], 0)
 
     def test_deterministic_work_continues_when_paid_work_blocked(self):

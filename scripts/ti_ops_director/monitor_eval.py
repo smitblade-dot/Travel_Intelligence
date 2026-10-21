@@ -152,3 +152,131 @@ def check_recorded(doc, monitor):
             "published_after_current_guards": published,
             "missing_current_schema_fields": sorted({f for d in rec["decisions"] for f in
                                                      ("incidentDate", "continuingImpact", "incidentKey") if f not in d})}
+
+
+# ---- separately approved live evaluation (bounded total cap) -------------------------------------------------
+ECB_URL = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml"
+MAX_RATE_AGE_DAYS = 5          # ECB publishes on TARGET working days; older than this is treated as stale
+
+
+class EvalRefused(RuntimeError):
+    """The approved evaluation must not make any call (no verified rate, bad approval, no key...)."""
+
+
+def parse_ecb(xml_text):
+    """(reference_date, usd_per_eur) from the ECB daily reference-rate XML."""
+    day = re.search(r"time=['\"](\d{4}-\d{2}-\d{2})['\"]", xml_text)
+    usd = re.search(r"currency=['\"]USD['\"]\s+rate=['\"]([0-9.]+)['\"]", xml_text)
+    if not day or not usd:
+        raise EvalRefused("ECB reference-rate XML not recognised")
+    return day.group(1), float(usd.group(1))
+
+
+def fetch_ecb_rate(fetch=None):
+    from urllib.request import Request, urlopen
+    fetch = fetch or (lambda url: urlopen(Request(url, headers={"User-Agent": "TI-Ops-Director/1.0"}), timeout=20)
+                      .read(200_000).decode("utf-8"))
+    try:
+        text = fetch(ECB_URL)
+    except Exception as exc:
+        raise EvalRefused(f"ECB rate unavailable ({type(exc).__name__}); no call made") from None
+    day, rate = parse_ecb(text)
+    return {"source": "European Central Bank euro foreign exchange reference rate", "url": ECB_URL,
+            "reference_date": day, "usd_per_eur": rate}
+
+
+def conservative_usd_cap(cap_eur, usd_per_eur, margin, ceiling_usd):
+    """EUR cap -> USD cap, rounded DOWN to the cent, reduced by ``margin`` and never above ``ceiling_usd``."""
+    import math
+    return min(math.floor(cap_eur * usd_per_eur * (1 - margin) * 100) / 100, ceiling_usd)
+
+
+def eval_fingerprint(doc, monitor, model):
+    from .store import fingerprint
+    system, _ = monitor.build_request([{"title": "x", "url": "https://example.org/x"}], doc["countries"], [])
+    return fingerprint([model, system, doc["relevance_extraction"], doc["conflicting_evidence"]])
+
+
+def run_approved_eval(approval, backend, env, monitor, doc, rate, today, provider=None):
+    """One bounded live run. Every reservation (first calls and corrective retries) is checked against the
+    shared ledger's all-time total before the call; a re-run of the same prompt and cases is not repeated."""
+    from datetime import date
+    from .monitor_bridge import MonitorSpend, spend_section
+    from .monitor_state import dump_state
+    if approval.get("approvedBy") != "Marc" or approval.get("purpose") != "haiku_quality_evaluation":
+        raise EvalRefused("approval file does not authorise this evaluation")
+    if (date.fromisoformat(today) - date.fromisoformat(rate["reference_date"])).days > MAX_RATE_AGE_DAYS:
+        raise EvalRefused(f"ECB rate dated {rate['reference_date']} is stale; no call made")
+    cap = conservative_usd_cap(approval["capEur"], rate["usd_per_eur"], approval["conversion"]["margin"],
+                               approval["conversion"]["absoluteUsdCeiling"])
+    if cap <= 0:
+        raise EvalRefused("computed USD cap is not positive")
+    if not env.get("ANTHROPIC_API_KEY") and provider is None:
+        raise EvalRefused("ANTHROPIC_API_KEY missing; no call made")
+    model = approval["model"]
+    fp = eval_fingerprint(doc, monitor, model)
+    state = backend.snapshot().state()
+    done = (state.get("completed") or {}).get(fp)
+    if done:
+        return {"skipped": "already evaluated with this prompt, model and case set", "result": done}
+    run_env = {"ANTHROPIC_API_KEY": env.get("ANTHROPIC_API_KEY", ""), "TI_OPS_DRY_RUN": "false",
+               "TI_HAIKU_MODEL": model, "TI_OPS_MAX_MODEL_CALLS_PER_TASK": "2",
+               **{k: str(cap) for k in ("TI_OPS_PER_TASK_LIMIT_USD", "TI_OPS_DAILY_LIMIT_USD",
+                                        "TI_OPS_MONTHLY_LIMIT_USD", "TI_OPS_TOTAL_LIMIT_USD")}}
+    spend = MonitorSpend.open(state, env=run_env, backend=backend, provider=provider)
+    labelled = evaluate_labelled(doc, spend, monitor)
+    usage = spend.store.query("SELECT model, input_tokens, output_tokens, gross_cost_usd FROM usage ORDER BY id")
+    charged = spend.store.query("SELECT COALESCE(SUM(actual_usd),0) c, COUNT(*) n FROM reservations "
+                                "WHERE task_id!='hydrated' AND state='settled'")[0]
+    actual_usd = round(sum(u["gross_cost_usd"] for u in usage), 6)
+    # Settled reservations without a usage record are calls whose outcome was unknown: charged at full amount.
+    unknown = {"n": charged["n"] - len(usage)}
+    charged_unknown = round(max(charged["c"] - actual_usd, 0), 6)
+    report = {
+        "approval_id": approval["approvalId"], "model": model, "run_at": spend.store.now(),
+        "exchange_rate": rate, "cap": {"eur": approval["capEur"], "usd": cap,
+                                       "rule": f"floor(EUR x rate x {1 - approval['conversion']['margin']:.2f}) to the cent,"
+                                               f" at most {approval['conversion']['absoluteUsdCeiling']} USD"},
+        "usage": {"calls_billed": len(usage), "input_tokens": sum(u["input_tokens"] for u in usage),
+                  "output_tokens": sum(u["output_tokens"] for u in usage), "actual_usd": actual_usd,
+                  "unknown_outcome_calls_charged_in_full": unknown["n"], "unknown_outcome_usd": charged_unknown,
+                  "amount_status": "estimated from API usage fields x list price; not invoice-confirmed"},
+        "publication": "disabled (evaluation writes no data.json; guards run on an empty in-memory dataset)",
+        "labelled": labelled, "recorded": check_recorded(doc, monitor),
+    }
+    report["usage"]["actual_eur"] = round(actual_usd / rate["usd_per_eur"], 6)
+
+    def finalise(snap):
+        st = snap.state()
+        spend.settle_into(st)
+        committed = round(float(spend_section(st).get("total", 0) or 0)
+                          + sum(float(r["usd"]) for r in spend_section(st)["open"]), 6)
+        report["ledger"] = {"total_committed_usd": committed, "remaining_usd": round(max(cap - committed, 0), 6),
+                            "cap_usd": cap}
+        st["approval"] = {k: approval[k] for k in ("approvalId", "approvedBy", "capEur")}
+        st["capUsd"] = cap
+        if labelled["measurement"].startswith(LIVE) and labelled["model_quality_measured"]:
+            st.setdefault("completed", {})[fp] = {"run_at": report["run_at"], "summary": {
+                k: labelled[k] for k in ("relevance", "extraction", "conflicting_evidence")}}
+        return {"state": dump_state(st), "results": json.dumps(report, indent=2) + "\n"}, None
+
+    backend.transact(finalise, message="Ops Director evaluation ledger and results")
+    return report
+
+
+def render_eval_summary(r):
+    if "skipped" in r:
+        return "## Haiku quality evaluation\n\nSkipped: " + r["skipped"] + ". No call made.\n"
+    lab, u = r["labelled"], r["usage"]
+    rel, ext, con = lab["relevance"], lab["extraction"], lab["conflicting_evidence"]
+    return "\n".join([
+        "## Haiku quality evaluation", "",
+        f"- Measurement: {lab['measurement']} (model quality measured: {lab['model_quality_measured']})",
+        f"- Relevance: {rel['correct_firm']}/{rel['firm']} firm cases, {rel['correct_borderline']}/{rel['borderline']} borderline",
+        f"- Extraction fields: {ext['fields_correct']}/{ext['fields_checked']}",
+        f"- Conflicting evidence within limit: {con['within_limit']}/{con['cases']}",
+        f"- Calls billed: {u['calls_billed']}; tokens in/out: {u['input_tokens']}/{u['output_tokens']}",
+        f"- Cost (estimated): {u['actual_usd']} USD = {u['actual_eur']} EUR at ECB {r['exchange_rate']['usd_per_eur']}"
+        f" ({r['exchange_rate']['reference_date']}); unknown-outcome charges {u['unknown_outcome_usd']} USD",
+        f"- Cap: EUR {r['cap']['eur']} -> {r['cap']['usd']} USD; ledger committed {r['ledger']['total_committed_usd']} USD",
+        f"- Publication: {r['publication']}", ""])
