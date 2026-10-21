@@ -50,7 +50,8 @@ class MonitorHarness(unittest.TestCase):
         self.tmp = Path(tempfile.mkdtemp())
         self.data_path, self.state_path = self.tmp / "data.json", self.tmp / "state.json"
         self.base = {"countries": [{"id": "gb", "name": "United Kingdom"}], "records": [], "sources": [], "locations": [],
-                     "events": [], "sourceObservations": [], "meta": {"counts": {}, "currentIntelligence": {}}}
+                     "events": [], "sourceObservations": [], "change_log": [], "oilGasSummary": {},
+                     "meta": {"schemaVersion": "2.0", "counts": {}, "currentIntelligence": {}}}
         self.data_path.write_text(json.dumps(self.base))
         self.items = [{"title": "Heathrow runway closed after incident", "url": "https://example.org/heathrow",
                        "date": formatdate(usegmt=True), "feed": "https://example.org/feed"}]
@@ -59,7 +60,7 @@ class MonitorHarness(unittest.TestCase):
         [p.start() for p in self.patches]
         self.addCleanup(lambda: [p.stop() for p in self.patches])
 
-    def run_monitor(self, env=None, replies=(), provider=None, state=None):
+    def run_monitor(self, env=None, replies=(), provider=None, state=None, expect_code=0):
         if state is not None:
             self.state_path.write_text(json.dumps(state))
         clean = {k: v for k, v in os.environ.items() if not k.startswith("TI_") and k != "ANTHROPIC_API_KEY"}
@@ -70,8 +71,10 @@ class MonitorHarness(unittest.TestCase):
                 mock.patch("ti_ops_director.monitor_bridge.AnthropicProvider", lambda key: provider), \
                 mock.patch("ti_ops_director.models.urlopen", side_effect=AssertionError("direct network call")), \
                 contextlib.redirect_stdout(out):
-            monitor.main()
+            self.last_code = monitor.main()
         self.last_out = out.getvalue()
+        if expect_code is not None:
+            self.assertEqual(self.last_code, expect_code, self.last_out)
         return provider, json.loads(self.state_path.read_text())
 
     def ledger(self, sql):
@@ -89,17 +92,17 @@ class BlockedPaths(MonitorHarness):
         self.assertEqual(prov.calls, [])
         self.assertEqual(state["lastTriageBlocked"]["reason"], "dry_run")
         self.assertEqual(state.get("seen", []), [])                  # cursor untouched: headlines kept
-        self.assertIn("Haiku triage not run", self.last_out)
+        self.assertIn("Haiku triage not completed (NOT_RUN_DRY_RUN)", self.last_out)
 
     def test_unset_limits_block_paid_execution(self):
-        prov, state = self.run_monitor(env={"TI_OPS_DRY_RUN": "false"}, replies=[GOOD])
+        prov, state = self.run_monitor(env={"TI_OPS_DRY_RUN": "false"}, replies=[GOOD], expect_code=3)
         self.assertEqual(prov.calls, [])
         self.assertEqual(state["lastTriageBlocked"]["reason"], "allowance_not_configured")
         self.assertEqual(state.get("seen", []), [])
 
     def test_partially_set_limits_still_block(self):
         env = dict(LIMITS); env.pop("TI_OPS_MONTHLY_LIMIT_USD")
-        prov, state = self.run_monitor(env=env, replies=[GOOD])
+        prov, state = self.run_monitor(env=env, replies=[GOOD], expect_code=3)
         self.assertEqual((prov.calls, state["lastTriageBlocked"]["reason"]), ([], "allowance_not_configured"))
 
     def test_exhausted_limit_blocks_using_persisted_spend(self):
@@ -110,7 +113,8 @@ class BlockedPaths(MonitorHarness):
         self.assertEqual(state["lastTriageBlocked"]["reason"], "daily_allowance_insufficient")
 
     def test_unverified_pricing_for_overridden_model_blocks(self):
-        prov, state = self.run_monitor(env=dict(LIMITS, TI_HAIKU_MODEL="claude-haiku-9-9"), replies=[GOOD])
+        prov, state = self.run_monitor(env=dict(LIMITS, TI_HAIKU_MODEL="claude-haiku-9-9"), replies=[GOOD],
+                                       expect_code=3)
         self.assertEqual(prov.calls, [])
         self.assertEqual(state["lastTriageBlocked"]["reason"], "pricing_unavailable:claude-haiku-9-9")
 
@@ -120,10 +124,13 @@ class BlockedPaths(MonitorHarness):
         self.assertEqual(before, self.data_path.read_text())
 
     def test_missing_key_with_allowance_fails_explicitly(self):
-        with self.assertRaises(RuntimeError):
-            clean = dict(LIMITS, RUNNER_TEMP=str(self.tmp))
-            with mock.patch.dict(os.environ, clean, clear=True):
-                monitor.main()
+        clean = dict(LIMITS, RUNNER_TEMP=str(self.tmp))
+        with mock.patch.dict(os.environ, clean, clear=True), contextlib.redirect_stdout(io.StringIO()):
+            code = monitor.main()
+        state = json.loads(self.state_path.read_text())
+        self.assertEqual(code, monitor.EXIT_NOT_CONFIGURED)              # a red job, not a silent pass
+        self.assertEqual(state["lastTriageBlocked"]["reason"], "api_key_missing")
+        self.assertEqual(state.get("seen", []), [])
 
 
 class PaidPath(MonitorHarness):

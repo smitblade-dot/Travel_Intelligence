@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import math
 import os
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -26,10 +27,32 @@ def default_model_options():
             "claude-haiku-4-5-20251001": {"temperature": 0}}
 
 
-def _num(value, default=None):
+class ConfigError(ValueError):
+    """A configuration value that cannot be interpreted. Callers fail closed: no paid call is made."""
+
+
+def _num(value, default=None, name="value"):
     if value in (None, ""):
         return default
-    return float(value)
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        raise ConfigError(f"{name} must be a decimal USD amount, got an invalid value") from None
+    if not math.isfinite(number):
+        raise ConfigError(f"{name} must be a finite decimal USD amount")
+    return number
+
+
+def parse_dry_run(raw):
+    """(dry_run, status). Only an explicit false/0/no turns dry-run off; anything unrecognised stays dry-run."""
+    value = (raw or "").strip().lower()
+    if not value:
+        return True, "unset"
+    if value in ("0", "false", "no"):
+        return False, "false"
+    if value in ("1", "true", "yes"):
+        return True, "true"
+    return True, "invalid"
 
 
 @dataclass
@@ -64,6 +87,7 @@ class Config:
     feed_max_bytes: int = 2_000_000
     freshness_max_hours: float = 36.0
     repo_root: str = str(ROOT)
+    config_warnings: list = field(default_factory=list)
 
     @property
     def paid_allowance_configured(self) -> bool:
@@ -88,14 +112,19 @@ def load_config(path: Optional[str] = None, env=None) -> Config:
     if env.get("TI_OPS_REPO_ROOT"):
         cfg.repo_root = env["TI_OPS_REPO_ROOT"]
     if env.get("TI_OPS_MAX_MODEL_CALLS_PER_TASK"):
-        cfg.max_model_calls_per_task = int(env["TI_OPS_MAX_MODEL_CALLS_PER_TASK"])
+        try:
+            cfg.max_model_calls_per_task = int(env["TI_OPS_MAX_MODEL_CALLS_PER_TASK"])
+        except ValueError:
+            raise ConfigError("TI_OPS_MAX_MODEL_CALLS_PER_TASK must be a whole number") from None
     if (env.get("TI_OPS_DRY_RUN") or "").strip():
-        cfg.dry_run = env["TI_OPS_DRY_RUN"].strip().lower() not in ("0", "false", "no")
+        cfg.dry_run, status = parse_dry_run(env["TI_OPS_DRY_RUN"])
+        if status == "invalid":
+            cfg.config_warnings.append("TI_OPS_DRY_RUN has an unrecognised value; dry-run kept on")
     for attr, name in (("per_task_limit_usd", "TI_OPS_PER_TASK_LIMIT_USD"),
                        ("daily_limit_usd", "TI_OPS_DAILY_LIMIT_USD"),
                        ("monthly_limit_usd", "TI_OPS_MONTHLY_LIMIT_USD")):
         if env.get(name):
-            setattr(cfg, attr, _num(env[name]))
+            setattr(cfg, attr, _num(env[name], name=name))
     if env.get("TI_HAIKU_MODEL"):             # the existing monitor's variable keeps working
         cfg.models["haiku"] = env["TI_HAIKU_MODEL"]
     for tier, name in (("haiku", "TI_OPS_MODEL_HAIKU"), ("sonnet", "TI_OPS_MODEL_SONNET"),

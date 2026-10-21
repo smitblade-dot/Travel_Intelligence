@@ -3,10 +3,42 @@ from __future__ import annotations
 
 import json
 from datetime import timedelta
+from pathlib import Path
 
 from . import AGENT_NAME, BUSINESS_APPLICATION, COMPANY, STREAM, SUBSTREAM
 from .budget import Budget, eur_view
 from .scheduling import display, next_daily_run
+
+
+MONITOR_STATE = Path("data") / "continuous_monitor_state.json"
+
+
+def monitor_status(repo_root, now):
+    """The GitHub Actions monitor, read from its committed state file (as fresh as this checkout)."""
+    from .monitor_bridge import committed, spend_section
+    path = Path(repo_root) / MONITOR_STATE
+    if not path.exists():
+        return {"available": False, "detail": f"{MONITOR_STATE} not found in this checkout"}
+    st = json.loads(path.read_text(encoding="utf-8"))
+    last = st.get("lastOutcome") or {}
+    spend = spend_section(json.loads(json.dumps(st)))
+    day, month = now.strftime("%Y-%m-%d"), now.strftime("%Y-%m")
+    d, m = committed(spend, day, month)
+    return {
+        "available": True, "last_run_utc": st.get("lastRun"),
+        "last_triage": last.get("triage") or ("unknown (state written before outcome tracking)" if st.get("lastRun") else None),
+        "last_triage_completed": bool(last.get("triageCompleted")), "last_reason": last.get("reason"),
+        "last_completed_triage_utc": st.get("lastTriageCompleted"),
+        "headlines_pending": (last.get("headlines") or {}).get("pending"),
+        "consecutive_untriaged": st.get("consecutiveUntriaged", 0),
+        "blocked": st.get("lastTriageBlocked"),
+        "publication": last.get("publication"),
+        "spend_committed_usd": {"today": round(d, 6), "month": round(m, 6)},
+        "open_reservations": len(spend["open"]), "expired_reservations_charged_in_full": len(spend.get("expired", [])),
+        "limits_at_last_run": (last.get("spend") or {}).get("limits"),
+        "mode_at_last_run": (last.get("spend") or {}).get("mode"),
+        "token_counter": st.get("budget"),
+    }
 
 
 def build_report(ctl):
@@ -59,6 +91,7 @@ def build_report(ctl):
                                   "next_daily_consolidation": display(next_daily_run(now, cfg.daily_consolidation_local, cfg.timezone), cfg.timezone),
                                   "monitor_interval_minutes": cfg.monitor_interval_minutes},
         "spend": spend, "spend_month_eur": spend_eur,
+        "actions_monitor": monitor_status(cfg.repo_root, now),
         "maturity": {
             "implemented": [w.name for w in ctl.registry.all() if w.implemented],
             "tested": test_run or "no recorded test run in this database",
@@ -106,7 +139,25 @@ def render_markdown(r):
     n = r["next_eligible_actions"]
     L += ["", "## Next eligible actions", "",
           f"- Pending tasks: {len(n['pending_tasks'])}", f"- Next daily consolidation slot: {n['next_daily_consolidation']}",
-          f"- Monitoring interval target: {n['monitor_interval_minutes']} minutes", "", "## API usage and expenditure", ""]
+          f"- Monitoring interval target: {n['monitor_interval_minutes']} minutes", ""]
+    mon = r.get("actions_monitor") or {}
+    L += ["## Haiku monitor on GitHub Actions (from the committed state file)", ""]
+    if not mon.get("available"):
+        L.append(f"- Not available: {mon.get('detail')}")
+    else:
+        verdict = "COMPLETED" if mon["last_triage_completed"] else "NOT COMPLETED"
+        L += [f"- Last run: {mon['last_run_utc'] or 'never'}. A run that executed is not the same as triage completed.",
+              f"- Last triage: {verdict} ({mon['last_triage']}); reason: {mon['last_reason'] or 'none'}",
+              f"- Last completed triage: {mon['last_completed_triage_utc'] or 'none recorded'}",
+              f"- New headlines left untriaged at last run: {mon['headlines_pending']}; consecutive runs untriaged: "
+              f"{mon['consecutive_untriaged']}",
+              f"- Gateway mode at last run: {mon['mode_at_last_run'] or 'not opened'}; limits: {mon['limits_at_last_run']}",
+              f"- Committed spend (USD, estimated, includes open reservations): today {mon['spend_committed_usd']['today']}, "
+              f"month {mon['spend_committed_usd']['month']}; open reservations {mon['open_reservations']}; "
+              f"abandoned reservations charged in full {mon['expired_reservations_charged_in_full']}",
+              f"- Publication at last run: {mon['publication'] or 'not recorded'}",
+              f"- Daily token counter (pre-gateway control, still enforced): {mon['token_counter'] or 'none'}", ""]
+    L += ["## API usage and expenditure (this database)", ""]
     s = r["spend"]
     L += [f"- Currency: {s['currency']} (provider currency). Source: {s['cost_source']}.",
           f"- Amounts: {s['amount_status']}.",

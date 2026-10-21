@@ -20,7 +20,9 @@ from urllib.request import Request, urlopen
 import xml.etree.ElementTree as ET
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from ti_ops_director.config import ConfigError  # noqa: E402
 from ti_ops_director.monitor_bridge import MonitorSpend  # noqa: E402  (spending gateway; see docs/TI_OPS_DIRECTOR.md)
+from ti_ops_director.monitor_state import StateSyncError, dump_data, dump_state, make_backend  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data.json"
@@ -224,9 +226,113 @@ def publish(data, items, decisions):
     return added
 
 
-def main():
-    data = json.loads(DATA.read_text(encoding="utf-8"))
-    state = json.loads(STATE.read_text()) if STATE.exists() else {"seen": []}
+PUBLISH_ENV = "TI_MONITOR_PUBLISH"
+STATE_REL, DATA_REL = "data/continuous_monitor_state.json", "data.json"
+MAX_CONSECUTIVE_FAILED = 4           # about an hour of failed triage turns the job red
+BUDGET_REASONS = {"daily_allowance_insufficient", "monthly_allowance_insufficient", "task_allowance_insufficient",
+                  "daily_token_cap"}
+CONFIG_REASONS = {"allowance_not_configured", "provider_not_configured", "api_key_missing"}
+EXIT_OK, EXIT_NOT_CONFIGURED, EXIT_FAILED = 0, 3, 4
+
+
+def publication_setting(env):
+    """(enabled, setting). Fails closed: only the value 'true' (any case, no padding) publishes."""
+    raw = env.get(PUBLISH_ENV)
+    if raw is None or raw == "":
+        return False, "unset"
+    if raw.lower() == "true":
+        return True, "true"
+    if raw.lower() == "false":
+        return False, "false"
+    return False, "invalid"
+
+
+def classify(status, reason):
+    """Triage outcome. Only COMPLETED means headlines were actually triaged."""
+    if status in ("ok", "cached"):
+        return "COMPLETED"
+    if status == "dry_run" or reason == "dry_run":
+        return "NOT_RUN_DRY_RUN"
+    if reason in BUDGET_REASONS:
+        return "NOT_RUN_BUDGET_EXHAUSTED"
+    if reason == "concurrent_run_in_progress":
+        return "NOT_RUN_CONCURRENT_RUN"
+    if reason in CONFIG_REASONS or str(reason).startswith(("pricing_", "config_error")):
+        return "NOT_RUN_NOT_CONFIGURED"
+    return "FAILED"
+
+
+def validate_data(data):
+    """Run the canonical validator on a candidate data.json before it is written or pushed."""
+    import contextlib as _ctx
+    import importlib.util
+    import io as _io
+    import tempfile
+    spec = importlib.util.spec_from_file_location("ti_validate", Path(__file__).resolve().parent / "validate_ti_data.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    with tempfile.TemporaryDirectory() as tmp:
+        mod.DATA = Path(tmp) / "data.json"
+        mod.DATA.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+        out = _io.StringIO()
+        with _ctx.redirect_stdout(out):
+            code = mod.main()
+    return code == 0, out.getvalue().strip()
+
+
+def render_summary(o):
+    """Markdown for $GITHUB_STEP_SUMMARY. Workflow success and triage completion are separate lines."""
+    done = o["triageCompleted"]
+    sp = o.get("spend") or {}
+    rows = [
+        ("Workflow run", "executed (this is not a statement about triage)"),
+        ("Triage", ("COMPLETED" if done else "NOT COMPLETED") + f": `{o['triage']}`"),
+        ("Reason", o.get("reason") or "none"),
+        ("Headlines", f"{o['headlines']['collected']} collected, {o['headlines']['new']} new, "
+                      f"{o['headlines']['pending']} kept untriaged for a later run"),
+        ("Consecutive runs with new headlines left untriaged", str(o["consecutiveUntriaged"])),
+        ("Consecutive failed triage runs (red at 4)", str(o.get("consecutiveFailed", 0))),
+        ("Model calls", f"{o.get('calls', 0)} ({o.get('model') or 'no model'})"),
+        ("Gateway mode", sp.get("mode", "not opened")),
+        ("Spend committed today / month (USD, estimated)",
+         f"{sp.get('committedToday', 'n/a')} / {sp.get('committedMonth', 'n/a')}"),
+        ("Limits per task / day / month (USD)", str(sp.get("limits", "not loaded"))),
+        ("Publication", f"setting `{o['publication']['setting']}`, enabled {o['publication']['enabled']}, "
+                        f"events published {o['publication']['published']}"),
+        ("State persisted", f"{o['persisted']} (backend {o['stateBackend']})"),
+    ]
+    lines = ["## Continuous intelligence monitor", "",
+             ("Triage completed for this run's new headlines." if done else
+              "**Triage did NOT complete. No intelligence processing happened for the new headlines; "
+              "they are kept for a later run.**" if o["headlines"]["pending"] else
+              "No triage was needed or possible in this run."), "",
+             "| Item | Value |", "|---|---|"]
+    lines += [f"| {k} | {v} |" for k, v in rows]
+    return "\n".join(lines) + "\n"
+
+
+def annotate(o):
+    if o["triage"] == "COMPLETED":
+        return f"::notice title=Haiku triage completed::{o['headlines']['new']} headlines triaged"
+    if o["triage"] == "NO_NEW_HEADLINES":
+        return None
+    level = "error" if o["triage"] in ("NOT_RUN_NOT_CONFIGURED", "FAILED") else "warning"
+    return (f"::{level} title=Haiku triage not completed ({o['triage']})::{o.get('reason')} "
+            f"({o['headlines']['pending']} new headlines kept for a later run)")
+
+
+def main(env=None):
+    env = os.environ if env is None else env
+    git_mode = (env.get("TI_MONITOR_STATE_BACKEND") or "").strip().lower() == "git"
+    backend = make_backend(env, ROOT, {"state": STATE_REL, "data": DATA_REL} if git_mode
+                           else {"state": STATE, "data": DATA})
+    snap = backend.snapshot()
+    data, state = snap.data(), snap.state() or {"seen": []}
+    if data is None:
+        raise RuntimeError("data.json not found in the state backend")
+    publish_on, publish_status = publication_setting(env)
+    if publish_status == "invalid":
+        print(f"::warning title=Publication disabled::{PUBLISH_ENV} has an unrecognised value; treated as false")
     discovered, errors = discover()
     seen = set(state.get("seen", []))
     fresh = []
@@ -245,61 +351,132 @@ def main():
         if len(fresh) >= MAX_ITEMS:
             break
     print("DISCOVERY", json.dumps({"collected": len(discovered), "new": len(fresh), "errors": errors}))
+    outcome = {"at": now_utc().isoformat(timespec="seconds"), "workflowExecuted": True,
+               "triage": "NO_NEW_HEADLINES", "triageCompleted": False, "reason": None,
+               "headlines": {"collected": len(discovered), "new": len(fresh), "pending": 0},
+               "calls": 0, "model": None, "estimatedUsd": 0.0,
+               "publication": {"setting": publish_status, "enabled": publish_on, "published": 0},
+               "stateBackend": backend.name, "persisted": False}
+    today = now_utc().date().isoformat()
+    decisions, spend, tokens = [], None, (0, 0)
     if fresh:
-        countries = [{"id": c["id"], "name": c.get("name", "")} for c in data["countries"]]
-        existing = [{"id": e["id"], "countryId": e.get("countryId"), "title": e.get("title", "")}
-                    for e in data["events"]][-150:]
-        today = now_utc().date().isoformat()
         budget = state.get("budget", {})
         if budget.get("date") != today:
             budget = {"date": today, "input": 0, "output": 0}
+        status, reason = None, None
         if budget["input"] >= MAX_DAILY_INPUT_TOKENS or budget["output"] >= MAX_DAILY_OUTPUT_TOKENS:
             print("BUDGET_PAUSE", json.dumps(budget))
-            fresh = []
-        triaged = False
-        decisions = []
-        if fresh:
-            spend = MonitorSpend.open(state)
-            if not spend.cfg.dry_run and spend.cfg.paid_allowance_configured and not os.getenv("ANTHROPIC_API_KEY"):
-                raise RuntimeError("ANTHROPIC_API_KEY missing; no intelligence publication attempted")
-            result = ask_haiku(fresh, countries, existing, spend)
-            spend.export(state)
-            print("TRIAGE_GATEWAY", json.dumps({"status": result.status, "reason": result.reason,
-                                                 "model": result.model, "calls": result.calls,
-                                                 "estimated_usd": round(result.estimated_usd, 6)}))
-            if result.status in ("ok", "cached"):
-                triaged = True
-                decisions = result.output["decisions"]
-                budget["input"] += result.input_tokens
-                budget["output"] += result.output_tokens
-                state["budget"] = budget
-                state.pop("lastTriageBlocked", None)
-            else:
-                # Not run (dry-run, limits unset or exhausted, provider error): keep the cursor so nothing is lost.
-                state["lastTriageBlocked"] = {"status": result.status, "reason": result.reason, "at": now_utc().isoformat()}
-                print("::warning title=Haiku triage not run::" + str(result.reason) + " (" + str(len(fresh)) + " new headlines kept for a later run)")
+            status, reason = "blocked", "daily_token_cap"
+        else:
+            try:
+                spend = MonitorSpend.open(state, env=env, backend=backend)
+            except ConfigError as exc:
+                status, reason = "blocked", "config_error: " + str(exc)
+            if spend is not None:
+                for warning in spend.cfg.config_warnings:
+                    print("::warning title=Configuration::" + warning)
+                if not spend.cfg.dry_run and spend.cfg.paid_allowance_configured and not env.get("ANTHROPIC_API_KEY"):
+                    status, reason = "blocked", "api_key_missing"
+                else:
+                    countries = [{"id": c["id"], "name": c.get("name", "")} for c in data["countries"]]
+                    existing = [{"id": e["id"], "countryId": e.get("countryId"), "title": e.get("title", "")}
+                                for e in data["events"]][-150:]
+                    result = ask_haiku(fresh, countries, existing, spend)
+                    try:
+                        spend.checkpoint()   # settlement + cache entry reach the shared state before publication
+                    except StateSyncError as exc:
+                        print("::error title=Spend settlement not persisted::" + str(exc)[:200])
+                    status, reason = result.status, result.reason
+                    outcome.update(calls=result.calls, model=result.model,
+                                   estimatedUsd=round(result.estimated_usd, 6))
+                    print("TRIAGE_GATEWAY", json.dumps({"status": result.status, "reason": result.reason,
+                                                         "model": result.model, "calls": result.calls,
+                                                         "estimated_usd": round(result.estimated_usd, 6)}))
+                    if result.status in ("ok", "cached"):
+                        decisions = result.output["decisions"]
+                        tokens = (result.input_tokens, result.output_tokens)
+        outcome["triage"], outcome["reason"] = classify(status, reason), reason
+        outcome["triageCompleted"] = outcome["triage"] == "COMPLETED"
         if not isinstance(decisions, list):
             raise ValueError("Haiku decisions must be a list")
-        if not triaged:
+        if not outcome["triageCompleted"]:
+            outcome["headlines"]["pending"] = len(fresh)
             fresh = []           # nothing was triaged: publish nothing and leave the cursor untouched
-        elif os.getenv("TI_MONITOR_PUBLISH", "false").lower() == "true":
-            added = publish(data, fresh, decisions)
-            if added:
-                DATA.write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
-            print("PUBLISHED", added)
-        else:
+        elif not publish_on:
             print("DRY_RUN_DECISIONS", json.dumps(decisions)[:6000])
-        seen.update(stable_id("seen", x["url"]) for x in fresh)
-    state["seen"] = list(sorted(seen))[-10000:]
-    state["lastRun"] = now_utc().isoformat()
-    state["sourceErrors"] = errors
-    STATE.parent.mkdir(exist_ok=True)
-    STATE.write_text(json.dumps(state, indent=2) + "\n", encoding="utf-8")
+    seen_new = {stable_id("seen", x["url"]) for x in fresh}
+
+    def finalise(snap2):
+        st = snap2.state() or {}
+        st["seen"] = list(sorted(set(st.get("seen", [])) | seen_new))[-10000:]
+        if spend is not None:
+            spend.settle_into(st)
+            d, m = spend.committed_now(st)
+            outcome["spend"] = {"mode": "dry_run" if spend.cfg.dry_run else "live",
+                                "committedToday": round(d, 6), "committedMonth": round(m, 6),
+                                "limits": {"perTask": spend.cfg.per_task_limit_usd, "daily": spend.cfg.daily_limit_usd,
+                                           "monthly": spend.cfg.monthly_limit_usd}}
+        if outcome["triageCompleted"]:
+            b = st.get("budget", {})
+            if b.get("date") != today:
+                b = {"date": today, "input": 0, "output": 0}
+            b["input"], b["output"] = b["input"] + tokens[0], b["output"] + tokens[1]
+            st["budget"] = b
+            st.pop("lastTriageBlocked", None)
+            st["lastTriageCompleted"] = outcome["at"]
+            st["consecutiveUntriaged"] = st["consecutiveFailed"] = 0
+        elif outcome["headlines"]["pending"]:
+            st["lastTriageBlocked"] = {"status": outcome["triage"], "reason": outcome["reason"], "at": outcome["at"]}
+            st["consecutiveUntriaged"] = int(st.get("consecutiveUntriaged", 0)) + 1
+            st["consecutiveFailed"] = int(st.get("consecutiveFailed", 0)) + 1 if outcome["triage"] == "FAILED" else 0
+        outcome["consecutiveUntriaged"] = int(st.get("consecutiveUntriaged", 0))
+        outcome["consecutiveFailed"] = int(st.get("consecutiveFailed", 0))
+        writes, added = {}, 0
+        if outcome["triageCompleted"] and publish_on:
+            candidate = snap2.data()
+            added = publish(candidate, fresh, decisions)
+            if added:
+                ok, message = validate_data(candidate)
+                if not ok:
+                    raise RuntimeError("published data failed validation: " + message)
+                writes["data"] = dump_data(candidate)
+        outcome["publication"]["published"] = added
+        st["lastRun"] = now_utc().isoformat()
+        st["sourceErrors"] = errors
+        st["lastOutcome"] = {k: v for k, v in outcome.items() if k != "persisted"}
+        writes["state"] = dump_state(st)
+        return writes, added
+
+    try:
+        _, added = backend.transact(finalise, message="Continuous intelligence monitor: " + outcome["at"])
+        outcome["persisted"] = True
+    except StateSyncError as exc:
+        print("::error title=Monitor state not persisted::" + str(exc)[:300])
+        added = 0
+    if outcome["triageCompleted"] and publish_on:
+        print("PUBLISHED", added)
+    outcome.setdefault("consecutiveUntriaged", int(state.get("consecutiveUntriaged", 0)))
+    outcome.setdefault("consecutiveFailed", int(state.get("consecutiveFailed", 0)))
+    print("OUTCOME", json.dumps(outcome))
+    note = annotate(outcome)
+    if note:
+        print(note)
+    if env.get("GITHUB_STEP_SUMMARY"):
+        with open(env["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as fh:
+            fh.write(render_summary(outcome))
+    if outcome["triage"] == "NOT_RUN_NOT_CONFIGURED":
+        return EXIT_NOT_CONFIGURED
+    if not outcome["persisted"] or outcome["reason"] == "state_sync_failed":
+        return EXIT_FAILED
+    if outcome["triage"] == "FAILED" and outcome["consecutiveFailed"] >= MAX_CONSECUTIVE_FAILED:
+        print(f"::error title=Triage stalled::triage failed in {outcome['consecutiveFailed']} consecutive runs")
+        return EXIT_FAILED
+    return EXIT_OK
 
 
 if __name__ == "__main__":
     try:
-        main()
+        sys.exit(main())
     except Exception as exc:
         print("MONITOR_FAILED", type(exc).__name__, str(exc), file=sys.stderr)
         sys.exit(1)
