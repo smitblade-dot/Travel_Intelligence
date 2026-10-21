@@ -7,6 +7,8 @@ on:
       - "config/ops_director_pricing.json"
       - "tests/test_ti_ops_director*.py"
       - "tests/test_continuous_intelligence_monitor.py"
+      - "tests/fixtures/ops_director/**"
+      - "tests/ops_support.py"
       - ".github/workflows/continuous-intelligence-monitor.yml"
   workflow_dispatch: {}
 permissions:

@@ -8,6 +8,9 @@ on:
       - "tests/ops_support.py"
       - "tests/fixtures/ops_director/**"
       - "config/ops_director.example.json"
+      - "config/ops_director_pricing.json"
+      - "deploy/ops_director/**"
+      - "scripts/continuous_intelligence_monitor.py"
       - ".github/workflows/ops-director-tests.yml"
   workflow_dispatch: {}
 permissions:
@@ -26,3 +29,19 @@ jobs:
           python -m unittest discover -s tests -p 'test_ti_ops_director*.py' -v
       - name: Fixture demonstration
         run: TI_OPS_DB_PATH="$RUNNER_TEMP/ops.sqlite3" python scripts/ops_director.py demo --mode fixture
+  docker-image:
+    # Builds the NUC image and runs it with the compose hardening (read-only root, no capabilities).
+    # No secrets, no paid call: fixture mode and dry-run only.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Build image
+        run: docker build -f deploy/ops_director/Dockerfile -t ti-ops-director:ci .
+      - name: Smoke test (fixture mode, dry-run)
+        run: |
+          docker volume create ti_ops_ci
+          run="docker run --rm --read-only --cap-drop ALL --security-opt no-new-privileges -v ti_ops_ci:/data -v $PWD:/repo:ro ti-ops-director:ci"
+          $run init
+          $run run-once --mode fixture | tee report.md
+          grep -q "Mode: DRY-RUN" report.md
+          $run status | python3 -c "import json,sys; d=json.load(sys.stdin); assert d['task_counts']['completed'] >= 1, d['task_counts']"

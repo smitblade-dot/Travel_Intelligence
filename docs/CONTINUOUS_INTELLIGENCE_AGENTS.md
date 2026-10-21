@@ -17,8 +17,9 @@
 3. Optionally set Actions variable `TI_HAIKU_MODEL`; default is
    `claude-haiku-4-5-20251001`. Check the model ID available in your API account.
 3a. Spending gateway: set Actions variables `TI_OPS_DRY_RUN=false` and `TI_OPS_PER_TASK_LIMIT_USD`,
-   `TI_OPS_DAILY_LIMIT_USD`, `TI_OPS_MONTHLY_LIMIT_USD`. Without all of them the monitor makes no model
-   call (see docs/TI_OPS_DIRECTOR.md). The default model is now `claude-haiku-5-5`.
+   `TI_OPS_DAILY_LIMIT_USD`, `TI_OPS_MONTHLY_LIMIT_USD` BEFORE merging the gateway change. Without all of
+   them the monitor makes no model call; see "Production transition" in docs/TI_OPS_DIRECTOR.md. The
+   default model is now `claude-haiku-5-5`. A green job is not a completed triage: read the job summary.
 4. Leave `TI_MONITOR_PUBLISH` unset or `false` initially. This is **dry-run**:
    Haiku classifications and token counts appear in workflow logs, but no event is published.
 5. After source quality and classification QA, set `TI_MONITOR_PUBLISH=true` to
@@ -38,14 +39,15 @@
   not automatically promoted to CONFIRMED.
 - The first pass is a *foundation*, not full 24/7 source coverage. It does not
   monitor private social media or guarantee 15-minute delivery (Actions can be late).
-- Monitoring writes to main only after canonical validation. A concurrent daily
-  refresh can cause a git rebase conflict; the job fails rather than force-pushing.
+- Monitoring writes to main only after canonical validation, as compare-and-swap commits made by the
+  monitor itself (docs/TI_OPS_DIRECTOR.md, "Persistent state on GitHub Actions"). A concurrent daily
+  refresh makes the push non-fast-forward; the monitor re-reads and re-applies, never force-pushes.
 - A successful GitHub Actions job does not prove GitHub Pages has deployed. Public
   rendering and event counts require separate post-deployment verification.
 - RSS items are untrusted text. Haiku is instructed not to follow instructions in
   headlines. Structured output is checked for valid indices and known country IDs.
-- Automated event follow-up, legal-sensitive review routing, monitoring budget
-  enforcement and source-specific social connectors remain follow-on work.
+- Automated event follow-up, legal-sensitive review routing and source-specific social
+  connectors remain follow-on work. Budget enforcement is in the spending gateway.
 
 ## Agent responsibilities
 1. **Collector (Python):** bounded RSS discovery and feed health.

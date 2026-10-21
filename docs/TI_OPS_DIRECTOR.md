@@ -68,17 +68,130 @@ Kept as before: URL dedupe via the `seen` cursor, the 36-hour freshness window, 
 the daily token caps, the 2,200 output-token cap, the 90 s timeout, the publish guards and the
 instruction text.
 
-**Behaviour change on merge (read before merging).** The gateway defaults to dry-run and has no limits, so
-after merging, Haiku triage will not run until these repository variables are set: `TI_OPS_DRY_RUN=false`,
-`TI_OPS_PER_TASK_LIMIT_USD`, `TI_OPS_DAILY_LIMIT_USD`, `TI_OPS_MONTHLY_LIMIT_USD` (all USD, all three
-required). Until then each run discovers headlines, makes no model call, leaves the cursor where it is so
-no headline is lost, records `lastTriageBlocked` in the state file and prints a workflow warning. The job
-stays green, so watch the warning. A missing `ANTHROPIC_API_KEY` still fails the job when an allowance is set.
-
-**Authoritative spend record on Actions** is `data/continuous_monitor_state.json` (`spend`, committed
-each run by the single-writer workflow). Each run hydrates a throwaway SQLite ledger from it, so
-reservations are still transactional within a run, then writes the totals back. Spend made before this
+**Authoritative spend record on Actions** is `data/continuous_monitor_state.json` on `main` (`spend`). See
+"Persistent state on GitHub Actions" below for how it stays correct across runs. Spend made before this
 change is not in the ledger. Amounts are estimates from API usage fields and list prices.
+
+### Production transition (do this before merging)
+
+After merge the gateway refuses every paid call until it is explicitly configured, so the existing Haiku
+triage **stops** unless these repository variables (Settings > Secrets and variables > Actions > Variables)
+are set first. Nothing below is set by this PR; the values are recommendations for Marc to decide.
+
+| Variable | Unit / format | Default when unset | Effect | Recommended start |
+|---|---|---|---|---|
+| `TI_OPS_DRY_RUN` | `false` / `0` / `no` turns dry-run off; `true` / `1` / `yes` keeps it on | dry-run **on** | Off is the only way a model is called. Any other value keeps dry-run on and logs a warning. | `false` |
+| `TI_OPS_PER_TASK_LIMIT_USD` | decimal USD > 0, finite | not configured: **paid call blocked** | Cap on reservations for one triage task (first call + corrective retry). | `0.01` |
+| `TI_OPS_DAILY_LIMIT_USD` | decimal USD > 0, per UTC day | not configured: **paid call blocked** | Cap on committed spend (settled + open reservations) per UTC day, across all runs. | `0.50` |
+| `TI_OPS_MONTHLY_LIMIT_USD` | decimal USD > 0, per UTC calendar month | not configured: **paid call blocked** | Same, per UTC month. | `12.00` |
+| `TI_OPS_MAX_MODEL_CALLS_PER_TASK` | whole number | `2` | 2 = Haiku + one corrective retry. 3 allows one logged Sonnet escalation. | leave unset |
+| `TI_HAIKU_MODEL` | model ID | `claude-haiku-5-5` | Rollback: `claude-haiku-4-5-20251001` (repriced automatically). | leave unset |
+| `TI_MONITOR_PUBLISH` | exactly `true` (any case, no spaces) | publication **off** | See "Publication control". | leave unset |
+| `ANTHROPIC_API_KEY` (secret) | Console API key | job fails | Already set (production runs used it). | unchanged |
+
+All three limits must be positive numbers or nothing is paid for. A non-numeric, infinite or NaN value is a
+configuration error: the run makes no model call, records `NOT_RUN_NOT_CONFIGURED` and the job fails
+(exit 3) so it cannot pass silently. Zero or a negative value is "not configured", with the same result.
+
+Basis for the recommendations (estimates, not invoices). The current `data.json` (52 countries, last 150
+event titles) plus 12 maximum-length headlines is about 19,000 characters, which the gateway prices
+pessimistically at 8,414 input tokens. A reservation is therefore about $0.0019 at Haiku 5.5 rates, and a
+task with its corrective retry about $0.0039, so $0.01 per task leaves room for prompt growth. The worst
+case (all 96 runs a day with new headlines, each needing a retry) is about $0.37 a day and $11.56 a month.
+The one measured Haiku 4.5 run used 5,936 input and 950 output tokens. With about 30 percent more tokens on
+Haiku 5.5 that is about $0.0014 a call, or about $4.13 a month if every run triaged.
+
+The existing daily token caps still apply and are not repository variables: `TI_MAX_DAILY_INPUT_TOKENS`
+(250,000) and `TI_MAX_DAILY_OUTPUT_TOKENS` (50,000) are code defaults because the workflow does not pass
+them. At roughly 7,700 Haiku 5.5 input tokens a call, that is about 32 triage calls a day. After that, runs
+record `NOT_RUN_BUDGET_EXHAUSTED` (`daily_token_cap`) until the UTC day changes. Raise these only by
+changing the workflow, deliberately.
+
+Sequence:
+1. Set the three limits and `TI_OPS_DRY_RUN=false` (leave `TI_MONITOR_PUBLISH` unset).
+2. Merge. The first run's job summary must say `Triage: COMPLETED`. If it says `NOT_RUN_NOT_CONFIGURED`
+   the job is red. Fix the named variable.
+3. If you want an observation period first, leave `TI_OPS_DRY_RUN` unset. Every run then reports
+   `NOT_RUN_DRY_RUN` and keeps the headlines. That is **not** intelligence processing. The summary,
+   the warning annotation and `consecutiveUntriaged` in the report say so on every run. Dry-run never
+   turns the job red on its own.
+4. Rollback: set `TI_OPS_DRY_RUN` back to `true` (no paid calls) or revert the PR.
+
+### Operational visibility
+
+A green job means **the workflow executed**. It does not mean that triage happened. Every run writes
+`lastOutcome` to the state file and a job summary table with separate rows for "Workflow run" and
+"Triage", and emits one annotation. `consecutiveUntriaged` counts runs in a row that had new headlines but
+did not triage them, whatever the reason. `consecutiveFailed` counts only `FAILED` runs.
+
+| Triage outcome | Meaning | Annotation | Job |
+|---|---|---|---|
+| `COMPLETED` | New headlines triaged (or served from the unchanged-input cache) | notice | green |
+| `NO_NEW_HEADLINES` | Nothing new to triage | none | green |
+| `NOT_RUN_DRY_RUN` | Gateway in dry-run; headlines kept | warning | green |
+| `NOT_RUN_BUDGET_EXHAUSTED` | Daily/monthly/per-task allowance or daily token cap reached; headlines kept | warning | green |
+| `NOT_RUN_CONCURRENT_RUN` | Another run holds a reservation for the same headlines | warning | green |
+| `NOT_RUN_NOT_CONFIGURED` | Limits missing/invalid, pricing unverified, API key missing | error | **red (exit 3)** |
+| `FAILED` | Provider error, invalid output after the retry, call cap, oversized input, state sync failure | error | green, then **red (exit 4)** from the 4th consecutive `FAILED` run |
+
+The job is also red (exit 4) whenever the state could not be persisted. `python3 scripts/ops_director.py report`
+includes a "Haiku monitor on GitHub Actions" section built from the same state file, as fresh as the
+checkout it reads.
+
+### Persistent state on GitHub Actions
+
+The state file holds the discovery cursor (`seen`), the daily token counter, `spend` (`daily`, `monthly`,
+`open` reservations, `expired`), the unchanged-input cache (`triageCache`) and the outcome fields.
+`TI_MONITOR_STATE_BACKEND=git` (set in the workflow) makes every change a compare-and-swap commit to
+`main` (`scripts/ti_ops_director/monitor_state.py`). The monitor reads the file at the current tip and
+pushes a commit whose parent is that tip. If another run pushed in between, GitHub rejects the push as
+non-fast-forward and the monitor re-reads and re-applies (up to 5 times, then it fails closed).
+
+- **Before every paid call** a reservation (pessimistic input estimate plus the full output cap) is
+  checked against the daily and monthly limits **in the shared state**, including other runs' open
+  reservations, and pushed. If the push fails, no call is made (`state_sync_failed`).
+- **Straight after the call** the settlement (actual usage at list price) and the result-cache entry are
+  pushed. The final commit then adds the cursor, outcome and, when publication is on, `data.json`
+  (re-applied to the latest `data.json` and validated before the push).
+- **Killed run, cancelled job or "Re-run failed jobs"**: an unsettled reservation stays on `main`. It
+  counts against the limits, and after 60 minutes it is charged **in full** (`expired`). Spend can be
+  over-counted this way, never under-counted.
+- **Concurrent runs**: the workflow concurrency group already serialises scheduled runs. The
+  compare-and-swap also covers a second writer that is outside the group, and two runs that pick up the
+  same headlines cannot both pay for them (`NOT_RUN_CONCURRENT_RUN`).
+- **Unchanged-input detection**: headline URLs already triaged are skipped via `seen` (merged as a union,
+  so a concurrent run's cursor is never lost). An identical prompt seen within 48 hours (up to 20 entries)
+  is answered from `triageCache` with no model call, including after a run whose final write failed.
+- A paid run makes 3 commits to `main` (reservation, settlement, final state). An unpaid run makes 1. The
+  previous workflow made 1 commit per run.
+
+Locally (and in tests) `TI_MONITOR_STATE_BACKEND` is unset and the same contract runs on the local files
+under an exclusive lock. That is correct for several processes on **one host** only.
+
+### Diagnostic task queue: local only, not supported on Actions
+
+The Director's task queue (`store.py`, SQLite, WAL) is **local-only**. It is authoritative only on one
+host's persistent disk (the NUC `/data` volume). It is **not** supported on GitHub Actions: runner disks
+are ephemeral, so tasks, leases, deduplication windows and the queue's own spend ledger would vanish
+after each job. Actions runs only the offline tests, the fixture demonstration and the Docker image build.
+The monitor's per-run SQLite ledger is throwaway by design and authoritative nowhere; its totals come
+from and go back to the shared state file.
+
+### Publication control (traced)
+
+`vars.TI_MONITOR_PUBLISH` (repository variable) → workflow step env `TI_MONITOR_PUBLISH` (the only
+place it is set; an unset variable renders as an empty string) → `publication_setting()` in
+`scripts/continuous_intelligence_monitor.py` (the only reader). Only `true` (any case, no padding)
+enables publication. Unset, empty, `false` and any other value (`yes`, `1`, `" true"`, `on`) disable it,
+and an unrecognised value is flagged with a warning. Publication also needs a `COMPLETED` triage and a
+`data.json` that passes `validate_ti_data.py`. Tests: `tests/test_ti_ops_director_monitor_visibility.py`.
+The Director's own `PublicationGateway` refuses in every configuration.
+
+**Actual production setting:** the variable's value cannot be read with the access available in this
+session. Indirect evidence comes from the public Actions logs of the production runs on 21 October 2026
+(39558803018 at 06:58 UTC and 39562356978 at 07:29 UTC): the step environment showed
+`TI_MONITOR_PUBLISH:` empty, and run 39558803018 printed `DRY_RUN_DECISIONS`. Publication was therefore
+off **at those times**. The current value is **unverified**.
 
 **Escalation.** Default `TI_OPS_MAX_MODEL_CALLS_PER_TASK` is 2 (Haiku plus one corrective retry), so
 Sonnet is never reached by default; a failed batch is retried on the next run. Setting it to 3 allows one
@@ -95,12 +208,41 @@ refused above 60,000 estimated tokens so the 100k tier is never entered, and a r
 80 percent of the threshold at the long rates. Prices are keyed by model ID, so setting `TI_HAIKU_MODEL`
 back to the old ID reprices correctly and restores `temperature: 0`. Rollback is that one variable.
 
-**Output quality on Haiku 5.5 is not measured.** No paid testing was authorised. `eval-monitor` plus
-`tests/fixtures/ops_director/monitor_eval_cases.json` is a replay harness whose cases and "model
-outputs" are synthetic: the tests prove the harness and the code guards, not the model. Run
-`eval-monitor` once with a small allowance before turning `TI_MONITOR_PUBLISH` on. One known limit is
-recorded in the fixture: if a model wrongly returns `publish: true` for an injected headline, only the
-existing code guards stand between it and an attributed, LOW-confidence EARLY_REPORT.
+### Model compatibility evaluation
+
+**Haiku 5.5 output quality has NOT been measured.** No paid testing was authorised. What exists:
+
+| Evidence | Source | What it shows |
+|---|---|---|
+| 14 labelled relevance/extraction cases (3 borderline), 2 conflicting-evidence batches | `tests/fixtures/ops_director/monitor_labelled_cases.json`, headlines written by hand, labels assigned manually | The scorer, prompt path, gateway and guards work. With **mocked** outputs this says nothing about the model. |
+| 12 malformed-response cases | same file; `extra_object` reproduces the class of the failed production run 39562356978 (`JSONDecodeError: Extra data`), whose actual text was not logged | The strict parser rejects trailing objects, prose, truncation and refusals, and accepts one fenced object. One corrective retry, then blocked. |
+| 12 recorded decisions | verbatim from run 39558803018 (Haiku **4.5**, prompt before PR #25); the inputs were not logged and are not reconstructed | The validator accepts the real output shape. Today's guards publish **none** of its two `publish: true` decisions, because that prompt had no `incidentKey`. |
+
+Mocked integration tests (`tests/test_ti_ops_director_monitor_eval.py`, `..._monitor_integration.py`)
+are labelled `MOCKED_OUTPUTS`. `eval-monitor` labels its result `LIVE_MODEL:<model>` only with the real
+provider outside dry-run, and sets `model_quality_measured: true` only if every case ran. Run it once with
+a small allowance before `TI_MONITOR_PUBLISH` is turned on:
+
+```
+TI_OPS_DRY_RUN=false TI_OPS_PER_TASK_LIMIT_USD=0.01 TI_OPS_DAILY_LIMIT_USD=0.10 TI_OPS_MONTHLY_LIMIT_USD=0.10 \
+  ANTHROPIC_API_KEY=... python3 scripts/ops_director.py eval-monitor
+```
+That is 16 calls, about $0.01 to $0.03 estimated. Scores are per case: relevance (the publish flag against
+the label, with firm and borderline counted separately), extraction (country, category, incident date,
+continuing impact, valid incident key), and conflicting evidence (at most one event per disputed
+incident).
+
+Known limits, recorded rather than hidden:
+- The triage schema cannot express "conflicting reports". If the model gives contradictory headlines
+  about one incident *different* incident keys, the code guard creates one event per key. The test
+  `test_known_limit_conflicting_reports_with_different_keys_create_several_events` demonstrates this.
+  Monitor-created events always carry `conflictingInformation: false`.
+- If a model wrongly returns `publish: true` for an injected headline, only the code guards stand between
+  it and an attributed, LOW-confidence EARLY_REPORT.
+- Parser overlap with draft PR #26: this branch applies the same strict rule (exactly one JSON object,
+  optional fence, nothing before or after it) inside the gateway. PR #26 edits the pre-gateway
+  `ask_haiku`, which this branch replaces, so the two will conflict in that function. If #26 merges first,
+  resolve the conflict by keeping this branch's version.
 
 ## Architecture
 
@@ -220,8 +362,18 @@ Set `TI_OPS_DB_PATH` to keep the database out of the checkout (default `var/`, g
 dropped capabilities, `/data` volume, restart `unless-stopped`, heartbeat healthcheck. The repository
 checkout is mounted read-only at `/repo` and must be refreshed (`git pull`) by the host, or the
 snapshot goes stale; the report then shows the staleness. Secrets belong in an env file outside Git
-(`TI_OPS_ENV_FILE`). **The image has not been built** (no Docker daemon in the build environment);
-`docker compose config` validates the file. Ubuntu Server 24.04 on an ASUS NUC 15 Pro is untested.
+(`TI_OPS_ENV_FILE`).
+
+**Image built and smoke-tested** (21 October 2026, Docker 29.9.1, base `python:3.12-slim` pulled through
+`mirror.gcr.io` because Docker Hub returned HTTP 429). It ran with `--read-only --cap-drop ALL
+--security-opt no-new-privileges` as uid 10001. `init`, `run-once --mode fixture` (2 completed, 2 blocked
+diagnostics) and `status` worked. `healthcheck` returned 1 without a daemon heartbeat, as designed. The
+build found two defects, both fixed: the pricing file was not copied into the image (every paid call would
+have been blocked with `pricing_unavailable`), and fixture mode looked for fixtures inside the image
+instead of the mounted `/repo`. `run-once --mode live` from that container had no DNS, so every probe
+returned `unknown_cause`, which proves nothing about the providers. The `docker-image` job in
+`ops-director-tests.yml` repeats the build and smoke test on GitHub. **Not deployed.** Ubuntu Server
+24.04 on an ASUS NUC 15 Pro is untested.
 
 ## Security
 
@@ -233,5 +385,8 @@ redacted from stored URLs. Publication has an interface that refuses in every co
 ## Not built / limitations
 
 The seven functional-flow roles as queue workers; batch and caching paths; an invoice import for confirmed costs; ECB rate fetcher (use `fx-set`); notifications; multi-host queue;
-deployment; production verification. Live checks from the build sandbox were blocked by its proxy
+the queue on Actions (local-only by design); deployment; production verification; a measured Haiku 5.5
+quality result; reading the current `TI_MONITOR_PUBLISH` value. Spend made by any caller outside this
+workflow with the same API key (for example a local `eval-monitor` run without the git backend) is not
+in the shared ledger. Set a Console spend limit as well. Live checks from the build sandbox were blocked by its proxy
 (HTTP 403 on tunnel) for GDELT and ADSB.lol, so they prove nothing about those providers.
