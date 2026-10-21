@@ -20,7 +20,7 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--config")
     ap.add_argument("command", choices=["init", "scan", "tick", "run-once", "report", "status", "pause", "resume",
-                                        "stop", "cancel", "daemon", "selftest", "fx-set", "demo", "healthcheck"])
+                                        "stop", "cancel", "daemon", "selftest", "fx-set", "demo", "healthcheck", "eval-monitor"])
     ap.add_argument("arg", nargs="?")
     ap.add_argument("--mode", choices=["live", "fixture"], default="live")
     ap.add_argument("--json", action="store_true")
@@ -66,6 +66,13 @@ def main(argv=None):
             ctl.tick()
             store.set_meta("heartbeat", store.now())
             time.sleep(30)
+    elif a.command == "eval-monitor":
+        # Real-model quality check. Goes through the spending gateway: blocked unless an allowance is configured.
+        from ti_ops_director.monitor_bridge import MonitorSpend
+        from ti_ops_director.monitor_eval import evaluate, load_monitor
+        cases = json.loads((ROOT / "tests/fixtures/ops_director/monitor_eval_cases.json").read_text())
+        spend = MonitorSpend.open({})
+        print(json.dumps(evaluate(cases, spend, load_monitor(ROOT)), indent=2))
     elif a.command == "healthcheck":
         from datetime import datetime
         hb = store.get_meta("heartbeat")

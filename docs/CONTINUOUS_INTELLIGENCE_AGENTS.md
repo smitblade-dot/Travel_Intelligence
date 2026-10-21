@@ -16,6 +16,9 @@
    credentials (not the Claude Code OAuth token). Never commit API keys.
 3. Optionally set Actions variable `TI_HAIKU_MODEL`; default is
    `claude-haiku-4-5-20251001`. Check the model ID available in your API account.
+3a. Spending gateway: set Actions variables `TI_OPS_DRY_RUN=false` and `TI_OPS_PER_TASK_LIMIT_USD`,
+   `TI_OPS_DAILY_LIMIT_USD`, `TI_OPS_MONTHLY_LIMIT_USD`. Without all of them the monitor makes no model
+   call (see docs/TI_OPS_DIRECTOR.md). The default model is now `claude-haiku-5-5`.
 4. Leave `TI_MONITOR_PUBLISH` unset or `false` initially. This is **dry-run**:
    Haiku classifications and token counts appear in workflow logs, but no event is published.
 5. After source quality and classification QA, set `TI_MONITOR_PUBLISH=true` to

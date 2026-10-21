@@ -28,6 +28,12 @@ jobs:
           TI_HAIKU_MODEL: ${{ vars.TI_HAIKU_MODEL }}
           TI_MONITOR_PUBLISH: ${{ vars.TI_MONITOR_PUBLISH }}
           TI_MONITOR_FEEDS: ${{ vars.TI_MONITOR_FEEDS }}
+          # Spending gateway (docs/TI_OPS_DIRECTOR.md). Paid triage stays OFF until all of these are set.
+          TI_OPS_DRY_RUN: ${{ vars.TI_OPS_DRY_RUN }}
+          TI_OPS_PER_TASK_LIMIT_USD: ${{ vars.TI_OPS_PER_TASK_LIMIT_USD }}
+          TI_OPS_DAILY_LIMIT_USD: ${{ vars.TI_OPS_DAILY_LIMIT_USD }}
+          TI_OPS_MONTHLY_LIMIT_USD: ${{ vars.TI_OPS_MONTHLY_LIMIT_USD }}
+          TI_OPS_MAX_MODEL_CALLS_PER_TASK: ${{ vars.TI_OPS_MAX_MODEL_CALLS_PER_TASK }}
         run: |
           if [ -z "$ANTHROPIC_API_KEY" ]; then
             echo "::error::Missing ANTHROPIC_API_KEY. Monitoring cannot run."

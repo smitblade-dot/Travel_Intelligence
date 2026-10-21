@@ -19,18 +19,29 @@ class BudgetBlocked(Exception):
 
 
 def price_for(cfg, tier):
-    p = (cfg.pricing or {}).get(tier)
+    """Rates for the model currently configured for this tier. Pricing is keyed by model ID."""
+    model = cfg.models.get(tier)
+    p = (cfg.pricing or {}).get(model)
     if not p or not p.get("input_per_mtok") or not p.get("output_per_mtok"):
-        raise BudgetBlocked(f"pricing_unavailable:{tier}")
+        raise BudgetBlocked(f"pricing_unavailable:{model}")
     if not p.get("verified_at") or not p.get("source_url"):
-        raise BudgetBlocked(f"pricing_unverified:{tier}")
+        raise BudgetBlocked(f"pricing_unverified:{model}")
     return p
 
 
-def cost_usd(cfg, tier, input_tokens, output_tokens, batch=False):
+def cost_usd(cfg, tier, input_tokens, output_tokens, batch=False, conservative=False):
+    """Cost of one request. A prompt over the model's long-context threshold is billed at the long rates.
+
+    With conservative=True (reservations) the long rates apply from 80 percent of the threshold, so an
+    underestimated prompt can never be reserved at the cheap rate.
+    """
     p = price_for(cfg, tier)
-    factor = 0.5 if batch else 1.0
-    return factor * (input_tokens * p["input_per_mtok"] + output_tokens * p["output_per_mtok"]) / 1_000_000
+    rin, rout = p["input_per_mtok"], p["output_per_mtok"]
+    threshold = p.get("long_context_threshold_tokens")
+    if threshold and input_tokens > (threshold * 0.8 if conservative else threshold):
+        rin, rout = p.get("long_input_per_mtok", rin), p.get("long_output_per_mtok", rout)
+    factor = (1 - p.get("batch_discount", 0.5)) if batch else 1.0
+    return factor * (input_tokens * rin + output_tokens * rout) / 1_000_000
 
 
 def conservative_input_tokens(text: str) -> int:
@@ -58,7 +69,7 @@ class Budget:
         cfg = self.cfg
         if not cfg.paid_allowance_configured:
             raise BudgetBlocked("allowance_not_configured")
-        amount = cost_usd(cfg, tier, est_input_tokens, max_output_tokens)
+        amount = cost_usd(cfg, tier, est_input_tokens, max_output_tokens, conservative=True)
         day, month = self._periods()
         with self.store.tx() as db:
             checks = (("task", cfg.per_task_limit_usd, self._committed(db, "task_id", task_id)),
@@ -98,6 +109,12 @@ class Budget:
                                  usage_record={"model": model, "in": input_tokens, "out": output_tokens,
                                                "usd": round(actual, 6), "status": "estimated"})
         return actual
+
+    def totals(self):
+        """(committed today, committed this month) in USD, counting open reservations at full value."""
+        day, month = self._periods()
+        with self.store.tx() as db:
+            return self._committed(db, "day", day), self._committed(db, "month", month)
 
     # ---- reporting ---------------------------------------------------------
     def summary(self):

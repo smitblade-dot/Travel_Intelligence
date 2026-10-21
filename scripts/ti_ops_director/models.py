@@ -57,9 +57,10 @@ class AnthropicProvider(Provider):
     def __init__(self, api_key):
         self.api_key = api_key
 
-    def complete(self, *, model, system, user, max_tokens, timeout=30):
+    def complete(self, *, model, system, user, max_tokens, timeout=30, options=None):
         body = {"model": model, "max_tokens": max_tokens, "system": system,
                 "messages": [{"role": "user", "content": user}]}
+        body.update(options or {})        # per-model compatibility settings from configuration
         req = Request("https://api.anthropic.com/v1/messages", data=json.dumps(body).encode(), method="POST",
                       headers={"x-api-key": self.api_key, "anthropic-version": "2023-06-01",
                                "content-type": "application/json"})
@@ -67,7 +68,8 @@ class AnthropicProvider(Provider):
             ans = json.loads(r.read(1_000_000))
         text = "".join(b.get("text", "") for b in ans.get("content", []) if b.get("type") == "text")
         u = ans.get("usage", {})
-        return {"text": text, "input_tokens": int(u.get("input_tokens", 0)), "output_tokens": int(u.get("output_tokens", 0))}
+        return {"text": text, "input_tokens": int(u.get("input_tokens", 0)),
+                "output_tokens": int(u.get("output_tokens", 0)), "stop_reason": ans.get("stop_reason")}
 
 
 @dataclass
@@ -78,6 +80,8 @@ class GatewayResult:
     model: Optional[str] = None
     estimated_usd: float = 0.0
     calls: int = 0
+    input_tokens: int = 0
+    output_tokens: int = 0
 
 
 class ModelGateway:
@@ -89,13 +93,17 @@ class ModelGateway:
         return self.store.query("SELECT COUNT(*) n FROM reservations WHERE task_id=? AND state!='released'", (task_id,))[0]["n"]
 
     def _estimate(self, tier, text, max_out):
-        return cost_usd(self.cfg, tier, conservative_input_tokens(text), max_out)
+        return cost_usd(self.cfg, tier, conservative_input_tokens(text), max_out, conservative=True)
 
     def run(self, *, task_id, worker, task_type, system, user, validator: Callable[[dict], bool],
-            escalation_reason=None, want_tier="haiku") -> GatewayResult:
+            escalation_reason=None, want_tier="haiku", max_chars=20000, max_output_tokens=None) -> GatewayResult:
         cfg, store = self.cfg, self.store
-        user = clean_text(user, 20000)
-        max_out = cfg.max_output_tokens
+        if len(user) > max_chars:      # refuse rather than silently truncating structured input
+            return GatewayResult("blocked", reason="input_too_large")
+        user = clean_text(user, max_chars)
+        max_out = min(max_output_tokens or cfg.max_output_tokens, cfg.max_output_tokens)
+        if conservative_input_tokens(system + user) > cfg.max_input_tokens_per_call:
+            return GatewayResult("blocked", reason="input_too_large")
         # Reuse valid previous result for identical content: no new work, no model call.
         fp = fingerprint([task_type, system, user])
         cached = store.query("SELECT result FROM results_cache WHERE fingerprint=?", (fp,))
@@ -115,7 +123,7 @@ class ModelGateway:
             return GatewayResult("dry_run", reason="dry_run", model=decision.model, estimated_usd=est)
         if self.provider is None:
             return GatewayResult("blocked", reason="provider_not_configured")
-        calls = 0
+        calls = tok_in = tok_out = 0
         tier_now, escalation_now, corrective_used = decision, escalation_reason, False
         while True:
             if self._calls_used(task_id) >= cfg.max_model_calls_per_task:
@@ -133,19 +141,22 @@ class ModelGateway:
                 return GatewayResult("blocked", reason=exc.reason, calls=calls)
             try:
                 raw = self.provider.complete(model=tier_now.model, system=system, user=user,
-                                             max_tokens=max_out, timeout=30)
+                                             max_tokens=max_out, timeout=cfg.model_timeout_seconds,
+                                             options=cfg.model_options.get(tier_now.model, {}))
             except Exception:
                 self.budget.settle_unknown(rid)   # outcome unknown: charge the reservation conservatively
                 return GatewayResult("blocked", reason="provider_error", calls=calls + 1)
             calls += 1
             self.budget.settle(rid, task_id, worker, tier_now.model, tier_now.tier,
                                raw["input_tokens"], raw["output_tokens"])
-            parsed = _parse_json(raw["text"])
+            tok_in, tok_out = tok_in + raw["input_tokens"], tok_out + raw["output_tokens"]
+            parsed = _parse_json(raw["text"]) if raw.get("stop_reason") not in ("refusal", "max_tokens") else None
             if parsed is not None and validator(parsed):
                 with store.tx() as db:
                     db.execute("INSERT OR REPLACE INTO results_cache VALUES(?,?,?)",
                                (fp, json.dumps(parsed), store.now()))
-                return GatewayResult("ok", parsed, model=tier_now.model, estimated_usd=est, calls=calls)
+                return GatewayResult("ok", parsed, model=tier_now.model, estimated_usd=est, calls=calls,
+                                     input_tokens=tok_in, output_tokens=tok_out)
             # invalid output: one corrective retry on the same tier, then escalate (if allowed) or block
             if not corrective_used:
                 corrective_used = True

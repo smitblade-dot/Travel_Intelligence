@@ -219,7 +219,9 @@ class FeedHealthWorker(Worker):
         if approval_needed:
             return ("approval_required", "blocked",
                     f"{source['name']} needs a provider-approved application name in "
-                    f"{source.get('appnameEnvironment')}; none configured. No application will be submitted by this agent.")
+                    f"{source.get('appnameEnvironment')}; none configured. No application will be submitted by this agent. "
+                    "Before anyone applies, check whether an application is already pending or approved "
+                    "(provider account and e-mail); do not submit a duplicate.")
         if resp is None:
             return "unknown_cause", "unknown", "No response evidence was collected"
         s = resp.status

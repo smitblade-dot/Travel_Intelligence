@@ -15,11 +15,11 @@ from ti_ops_director.store import Store                        # noqa: E402
 from ti_ops_director.workers import PlannedWorker, Registry, WorkResult, Worker, default_registry  # noqa: E402
 
 PRICING = {
-    "haiku": {"input_per_mtok": 0.10, "output_per_mtok": 0.50, "verified_at": "2026-10-21",
+    "claude-haiku-5-5": {"input_per_mtok": 0.10, "output_per_mtok": 0.50, "verified_at": "2026-10-21",
               "source_url": "https://platform.claude.com/docs/en/about-claude/pricing"},
-    "sonnet": {"input_per_mtok": 2.0, "output_per_mtok": 10.0, "verified_at": "2026-10-21",
+    "claude-sonnet-5-5": {"input_per_mtok": 2.0, "output_per_mtok": 10.0, "verified_at": "2026-10-21",
                "source_url": "https://platform.claude.com/docs/en/about-claude/pricing"},
-    "opus": {"input_per_mtok": 4.0, "output_per_mtok": 20.0, "verified_at": "2026-10-21",
+    "claude-opus-5-5": {"input_per_mtok": 4.0, "output_per_mtok": 20.0, "verified_at": "2026-10-21",
              "source_url": "https://platform.claude.com/docs/en/about-claude/pricing"},
 }
 

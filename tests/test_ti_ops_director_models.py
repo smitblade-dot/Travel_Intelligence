@@ -17,7 +17,7 @@ class FakeProvider(Provider):
     def __init__(self, replies):
         self.replies, self.calls = list(replies), []
 
-    def complete(self, *, model, system, user, max_tokens, timeout=30):
+    def complete(self, *, model, system, user, max_tokens, timeout=30, options=None):
         self.calls.append(model)
         text = self.replies.pop(0)
         return {"text": text, "input_tokens": 1000, "output_tokens": 100}
@@ -105,6 +105,30 @@ class RoutingTests(Base):
         self.assertGreater(r.estimated_usd, 0)
 
 
+class PricingTierTests(Base):
+    def test_long_context_tier_and_conservative_reservation(self):
+        cfg = paid_cfg(self.tmp, pricing={"claude-haiku-5-5": dict(PRICING["claude-haiku-5-5"], long_context_threshold_tokens=100000,
+                                                                 long_input_per_mtok=0.50, long_output_per_mtok=2.50)})
+        self.assertAlmostEqual(cost_usd(cfg, "haiku", 50_000, 1000), 0.0055)          # standard tier
+        self.assertAlmostEqual(cost_usd(cfg, "haiku", 150_000, 1000), 0.0775)         # whole request at long rates
+        self.assertAlmostEqual(cost_usd(cfg, "haiku", 85_000, 1000, conservative=True), 0.0450)   # reserved at long rates
+        self.assertAlmostEqual(cost_usd(cfg, "haiku", 85_000, 1000), 0.0090)
+
+    def test_oversized_prompt_is_refused_not_priced_up(self):
+        gw, prov, tid, *_ = self.gw([GOOD])
+        r = gw.run(task_id=tid, worker="w", task_type="classification", system="s", user="x" * 200_000,
+                   validator=valid, max_chars=300_000)
+        self.assertEqual((r.status, r.reason, prov.calls), ("blocked", "input_too_large", []))
+
+    def test_default_pricing_file_is_verified_and_model_keyed(self):
+        from ti_ops_director.config import Config
+        c = Config()
+        for model in (c.models["haiku"], c.models["sonnet"], c.models["opus"]):
+            self.assertIn(model, c.pricing)
+            self.assertTrue(c.pricing[model]["verified_at"] and c.pricing[model]["source_url"])
+        self.assertEqual(c.pricing["claude-haiku-5-5"]["long_input_per_mtok"], 0.50)
+
+
 class SpendTests(Base):
     def test_unconfigured_allowance_blocks_paid_calls(self):
         gw, prov, tid, *_ = self.gw([GOOD], daily_limit_usd=None)
@@ -113,10 +137,10 @@ class SpendTests(Base):
 
     def test_missing_or_unverified_pricing_blocks(self):
         gw, prov, tid, *_ = self.gw([GOOD], pricing={})
-        self.assertEqual(self.run_gw(gw, tid).reason, "pricing_unavailable:haiku")
-        bad = {"haiku": {"input_per_mtok": 1, "output_per_mtok": 1}}
+        self.assertEqual(self.run_gw(gw, tid).reason, "pricing_unavailable:claude-haiku-5-5")
+        bad = {"claude-haiku-5-5": {"input_per_mtok": 1, "output_per_mtok": 1}}
         gw, prov, tid, *_ = self.gw([GOOD], pricing=bad)
-        self.assertEqual(self.run_gw(gw, tid).reason, "pricing_unverified:haiku")
+        self.assertEqual(self.run_gw(gw, tid).reason, "pricing_unverified:claude-haiku-5-5")
         self.assertEqual(prov.calls, [])
 
     def test_exhausted_allowance_blocks(self):
