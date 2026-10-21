@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """CLI for 03AA-04_Master_Agent_TI_Ops_Director. Dry-run by default; no paid call without an allowance."""
 import argparse
+import contextlib
 import json
 import subprocess
 import sys
@@ -39,7 +40,7 @@ def main(argv=None):
     elif a.command in ("run-once", "demo"):
         fx = None
         if a.mode == "fixture" or a.command == "demo" and a.mode == "fixture":
-            fx = json.loads((ROOT / "tests/fixtures/ops_director/fixture_responses.json").read_text())
+            fx = json.loads((Path(cfg.repo_root) / "tests/fixtures/ops_director/fixture_responses.json").read_text())
         result = None
         ctl.run_due(mode=a.mode, fixtures=fx, env_override={} if fx else None)
         for _ in range(10):
@@ -67,12 +68,16 @@ def main(argv=None):
             store.set_meta("heartbeat", store.now())
             time.sleep(30)
     elif a.command == "eval-monitor":
-        # Real-model quality check. Goes through the spending gateway: blocked unless an allowance is configured.
+        # Real-model quality check over manually labelled TI cases. Goes through the spending gateway: nothing
+        # runs unless an allowance is configured, and the output says whether model quality was measured.
         from ti_ops_director.monitor_bridge import MonitorSpend
-        from ti_ops_director.monitor_eval import evaluate, load_monitor
-        cases = json.loads((ROOT / "tests/fixtures/ops_director/monitor_eval_cases.json").read_text())
-        spend = MonitorSpend.open({})
-        print(json.dumps(evaluate(cases, spend, load_monitor(ROOT)), indent=2))
+        from ti_ops_director.monitor_eval import check_recorded, evaluate_labelled, load_monitor
+        doc = json.loads((ROOT / "tests/fixtures/ops_director/monitor_labelled_cases.json").read_text())
+        monitor = load_monitor(ROOT)
+        with contextlib.redirect_stdout(sys.stderr):        # guard log lines must not mix with the JSON
+            report = {"labelled": evaluate_labelled(doc, MonitorSpend.open({}), monitor),
+                      "recorded": check_recorded(doc, monitor)}
+        print(json.dumps(report, indent=2))
     elif a.command == "healthcheck":
         from datetime import datetime
         hb = store.get_meta("heartbeat")

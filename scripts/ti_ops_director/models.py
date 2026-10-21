@@ -171,12 +171,25 @@ class ModelGateway:
             return GatewayResult("blocked", reason="invalid_model_output", calls=calls)
 
 
+FENCE = re.compile(r"^`{3}(?:json)?\s*(.*?)\s*`{3}$", re.S)
+
+
 def _parse_json(text):
-    m = re.search(r"\{.*\}", text or "", re.S)
-    if not m:
+    """Exactly one JSON object, optionally inside one code fence. Leading or trailing content is rejected.
+
+    Same rule as the strict parser proposed for the pre-gateway monitor (draft PR #26): the failed
+    production run of 21 October 2026 returned a second object after the first ("Extra data").
+    """
+    text = (text or "").strip()
+    fenced = FENCE.match(text)
+    if fenced:
+        text = fenced.group(1).strip()
+    if not text.startswith("{"):
         return None
     try:
-        v = json.loads(m.group(0))
-        return v if isinstance(v, dict) else None
+        value, end = json.JSONDecoder().raw_decode(text)
     except ValueError:
         return None
+    if text[end:].strip() or not isinstance(value, dict):
+        return None
+    return value
