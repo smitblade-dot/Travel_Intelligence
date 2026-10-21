@@ -73,7 +73,9 @@ PLANNED = [
     ("investigation_content", ("investigation", "content_building"), "Investigation and content building"),
     ("verification", ("verification",), "Verification"),
     ("publication", ("publication",), "Publication (automatic publication disabled)"),
-    ("production_verification", ("production_verification",), "Production verification after deployment"),
+    ("production_recovery", ("production_diagnostic", "production_recovery"),
+     "Production exceptions found by the production controller. Operator action; the only automatic recovery is "
+     "a bounded workflow dispatch on GitHub Actions, off unless Marc enables it."),
     ("daily_consolidation", ("daily_consolidation",),
      "Daily consolidation. The existing GitHub Actions 21:00 Europe/Nicosia refresh remains the consolidator."),
 ]
@@ -107,8 +109,10 @@ class Registry:
 
 def default_registry():
     from .feed_health import FeedHealthWorker
+    from .production_worker import ProductionVerificationWorker
     reg = Registry()
     reg.register(FeedHealthWorker())
+    reg.register(ProductionVerificationWorker())
     for name, types, desc in PLANNED:
         reg.register(PlannedWorker(name, types, desc))
     return reg

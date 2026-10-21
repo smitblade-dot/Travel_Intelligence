@@ -41,6 +41,21 @@ def monitor_status(repo_root, now):
     }
 
 
+def production_status(repo_root):
+    """The production controller's ledger as seen from this host (local file backend), if present."""
+    import os
+    base = Path(os.environ.get("TI_PC_STATE_DIR") or Path(repo_root) / "var" / "production_controller")
+    path = base / "production_controller_state.json"
+    if not path.exists():
+        return {"available": False, "detail": "no local controller state; on GitHub Actions the ledger and the "
+                "latest report are on the branch named by TI_PC_STATE_BRANCH"}
+    st = json.loads(path.read_text(encoding="utf-8"))
+    open_ = [t for t in st.get("tasks") or [] if t["state"] == "blocked"]
+    return {"available": True, "last_run_utc": st.get("lastRun"), "verdict": ((st.get("runs") or [{}])[-1]).get("verdict"),
+            "open": [{"severity": t["severity"], "summary": t["summary"], "since": t["first_seen_utc"],
+                      "action": t["blocking_reason"]} for t in open_]}
+
+
 def build_report(ctl):
     store, cfg = ctl.store, ctl.cfg
     now = store.clock()
@@ -92,6 +107,7 @@ def build_report(ctl):
                                   "monitor_interval_minutes": cfg.monitor_interval_minutes},
         "spend": spend, "spend_month_eur": spend_eur,
         "actions_monitor": monitor_status(cfg.repo_root, now),
+        "production": production_status(cfg.repo_root),
         "maturity": {
             "implemented": [w.name for w in ctl.registry.all() if w.implemented],
             "tested": test_run or "no recorded test run in this database",
@@ -157,6 +173,14 @@ def render_markdown(r):
               f"abandoned reservations charged in full {mon['expired_reservations_charged_in_full']}",
               f"- Publication at last run: {mon['publication'] or 'not recorded'}",
               f"- Daily token counter (pre-gateway control, still enforced): {mon['token_counter'] or 'none'}", ""]
+    pc = r.get("production") or {}
+    L += ["## Production controller (03AA-04_Production_Controller_TI)", ""]
+    if not pc.get("available"):
+        L += [f"- Not available here: {pc.get('detail')}", ""]
+    else:
+        L += [f"- Last run: {pc['last_run_utc']}; verdict: {pc['verdict']}; open exceptions: {len(pc['open'])}"]
+        L += [f"- {o['severity'].upper()} since {o['since']}: {o['summary']} Action: {o['action']}" for o in pc["open"]]
+        L.append("")
     L += ["## API usage and expenditure (this database)", ""]
     s = r["spend"]
     L += [f"- Currency: {s['currency']} (provider currency). Source: {s['cost_source']}.",

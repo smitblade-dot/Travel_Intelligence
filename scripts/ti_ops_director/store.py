@@ -65,6 +65,11 @@ def fingerprint(obj) -> str:
     return hashlib.sha256(json.dumps(obj, sort_keys=True, default=str).encode()).hexdigest()[:32]
 
 
+def task_dedupe_key(task_type, subject, input_fingerprint, time_bucket=None, application="Travel Intelligence"):
+    """The single deduplication key format for the queue (application, type, subject, inputs, window)."""
+    return "|".join([application, task_type, subject, input_fingerprint, str(time_bucket or "")])
+
+
 class Store:
     def __init__(self, path, clock=utc_now):
         self.path = str(path)

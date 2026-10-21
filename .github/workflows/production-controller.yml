@@ -1,0 +1,70 @@
+name: TI production controller
+# 03AA-04_Production_Controller_TI (docs/TI_PRODUCTION_CONTROLLER.md). Detects delayed, missed and failed
+# production work, checks data.json and the public release, keeps deduplicated tasks on TI_PC_STATE_BRANCH.
+# Inert until the repository variable TI_PC_MODE is observe or active. A manual run with TI_PC_MODE unset makes
+# one read-only observation. No model call, no spend, never writes main or data.json.
+on:
+  schedule:
+    - cron: "7 * * * *"
+  workflow_run:
+    # Check straight after the refresh and the baseline build, without waiting for the hourly slot.
+    workflows: ["Daily travel intelligence data refresh", "TI baseline intelligence build"]
+    types: [completed]
+  workflow_dispatch: {}
+
+permissions: {}
+
+concurrency:
+  group: ti-production-controller
+  cancel-in-progress: false
+
+jobs:
+  check:
+    if: github.event_name == 'workflow_dispatch' || vars.TI_PC_MODE == 'observe' || vars.TI_PC_MODE == 'active'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write   # the state branch only (TI_PC_STATE_BRANCH, never main); unused in observe mode
+      actions: read
+      pages: read
+    outputs:
+      dispatches: ${{ steps.pc.outputs.dispatches }}
+      verdict: ${{ steps.pc.outputs.verdict }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 1
+      - id: pc
+        name: Production checks
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TI_PC_EVENT: ${{ github.event_name }}
+          TI_PC_MODE: ${{ vars.TI_PC_MODE }}
+          TI_PC_STATE_BRANCH: ${{ vars.TI_PC_STATE_BRANCH }}
+          TI_PC_SITE_URL: ${{ vars.TI_PC_SITE_URL }}
+          TI_PC_RECOVERY_WORKFLOWS: ${{ vars.TI_PC_RECOVERY_WORKFLOWS }}
+          TI_PC_MAX_DISPATCHES_PER_DAY: ${{ vars.TI_PC_MAX_DISPATCHES_PER_DAY }}
+        # Exit 1: a new or escalated critical exception (active mode). 3: configuration. 4: state not persisted.
+        run: python3 scripts/ops_director.py production-check
+
+  recover:
+    # Bounded recovery. Runs only for workflows Marc listed in TI_PC_RECOVERY_WORKFLOWS; each dispatch was
+    # recorded on the state branch (counted against the daily cap) before this job starts.
+    needs: check
+    if: always() && needs.check.outputs.dispatches != '' && needs.check.outputs.dispatches != '[]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: write
+    steps:
+      - name: Dispatch recovery runs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DISPATCHES: ${{ needs.check.outputs.dispatches }}
+        run: |
+          echo "$DISPATCHES" | python3 -c "import json,sys; [print(d['workflow'], d['ref']) for d in json.load(sys.stdin)]" |
+          while read -r workflow ref; do
+            echo "Dispatching $workflow on $ref"
+            gh workflow run "$workflow" --repo "$GITHUB_REPOSITORY" --ref "$ref"
+          done

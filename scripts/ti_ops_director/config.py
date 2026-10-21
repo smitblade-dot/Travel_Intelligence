@@ -64,6 +64,9 @@ class Config:
     max_attempts: int = 3
     recheck_after_hours: float = 6.0
     monitor_interval_minutes: int = 15
+    # Production controller as a queue responsibility (local or NUC daemon). None = not scheduled by the queue;
+    # on GitHub Actions the controller has its own workflow (docs/TI_PRODUCTION_CONTROLLER.md).
+    production_check_interval_minutes: Optional[int] = None
     daily_consolidation_local: str = "21:00"
     timezone: str = "Europe/Nicosia"
     # Spending limits in provider currency (USD). None means NOT configured: paid work blocked.

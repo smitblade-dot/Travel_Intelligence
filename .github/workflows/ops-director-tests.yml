@@ -9,6 +9,8 @@ on:
       - "tests/fixtures/ops_director/**"
       - "config/ops_director.example.json"
       - "config/ops_director_pricing.json"
+      - "config/production_controller.json"
+      - ".github/workflows/production-controller.yml"
       - "deploy/ops_director/**"
       - "scripts/continuous_intelligence_monitor.py"
       - ".github/workflows/ops-director-tests.yml"
@@ -35,6 +37,26 @@ jobs:
         run: |
           TI_OPS_DB_PATH="$RUNNER_TEMP/live.sqlite3" python scripts/ops_director.py run-once --mode live | tee "$RUNNER_TEMP/live.md"
           cat "$RUNNER_TEMP/live.md" >> "$GITHUB_STEP_SUMMARY"
+  production-observe:
+    # 03AA-04_Production_Controller_TI against real production, read-only: this PR's code, main's outputs.
+    # observe mode writes no state and dispatches nothing. Exceptions it finds must not fail the PR.
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+      pages: read
+    steps:
+      - uses: actions/checkout@v6
+      - name: Check out main's outputs beside the PR code
+        run: |
+          git fetch --depth=1 origin main
+          git worktree add "$RUNNER_TEMP/main" FETCH_HEAD
+      - name: Live production observation (no writes, no dispatch, no API cost)
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TI_PC_MODE: observe
+        run: python3 scripts/ops_director.py production-check --data-root "$RUNNER_TEMP/main"
   docker-image:
     # Builds the NUC image and runs it with the compose hardening (read-only root, no capabilities).
     # No secrets, no paid call: fixture mode and dry-run only.
