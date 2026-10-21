@@ -124,7 +124,20 @@ def ask_haiku(items, countries, existing):
     output = "".join(blocks).strip()
     if output.startswith("```"):
         output = re.sub(r"^\x60{3}(?:json)?\s*|\s*\x60{3}$", "", output).strip()
-    decisions = json.loads(output)["decisions"]
+    # Claude may append explanation after a complete JSON object. Decode
+    # the first object, but reject any additional JSON object or executable
+    # instructions in the remainder rather than silently accepting them.
+    decoder = json.JSONDecoder()
+    start = output.find("{")
+    if start < 0:
+        raise ValueError("Haiku returned no JSON object")
+    parsed, consumed = decoder.raw_decode(output[start:])
+    remainder = output[start + consumed:].strip()
+    if remainder and not (remainder.startswith("Note:") or remainder.startswith("Explanation:")):
+        raise ValueError("Haiku returned unexpected content after JSON object")
+    if not isinstance(parsed, dict) or not isinstance(parsed.get("decisions"), list):
+        raise ValueError("Haiku JSON missing decisions array")
+    decisions = parsed["decisions"]
     usage = answer.get("usage", {})
     print("HAIKU_USAGE", json.dumps({"model": answer.get("model"), "input_tokens": usage.get("input_tokens", 0),
                                      "output_tokens": usage.get("output_tokens", 0)}))
