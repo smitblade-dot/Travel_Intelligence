@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generated": "2026-10-20T21:23:56.159908+00:00",
+  "generated": "2026-10-21T12:33:32.552771+00:00",
   "purpose": "Deterministic relationship graph for travel-impact resolution; not a source of truth.",
   "nodes": [
     {
@@ -712,6 +712,30 @@
     {
       "eventId": "ru-sochi-aframax-rio-2026-10-06",
       "infrastructure": "AFRAMAX_RIO",
+      "locationId": null,
+      "countryId": "ru",
+      "status": "EXPLICIT_EVENT_RELATIONSHIP",
+      "resolvedLocation": false
+    },
+    {
+      "eventId": "ru-ryazan-refinery-drone-2026-10-15",
+      "infrastructure": "ENERGY",
+      "locationId": null,
+      "countryId": "ru",
+      "status": "EXPLICIT_EVENT_RELATIONSHIP",
+      "resolvedLocation": false
+    },
+    {
+      "eventId": "ru-stpetersburg-oilterminal-drone-2026-10-18",
+      "infrastructure": "ENERGY",
+      "locationId": null,
+      "countryId": "ru",
+      "status": "EXPLICIT_EVENT_RELATIONSHIP",
+      "resolvedLocation": false
+    },
+    {
+      "eventId": "ru-stpetersburg-oilterminal-drone-2026-10-18",
+      "infrastructure": "AVIATION",
       "locationId": null,
       "countryId": "ru",
       "status": "EXPLICIT_EVENT_RELATIONSHIP",

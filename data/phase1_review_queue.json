@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generated": "2026-10-20T21:23:56.102738+00:00",
+  "generated": "2026-10-21T12:33:32.504469+00:00",
   "purpose": "Review queue only; no item is a published TI event.",
   "items": [
     {
@@ -11,7 +11,7 @@
       "candidateCategories": [],
       "claim": "Usable source response collected; specialist geographic/event resolver required.",
       "status": "READY_FOR_RESOLUTION",
-      "generatedAt": "2026-10-20T21:23:56.102738+00:00"
+      "generatedAt": "2026-10-21T12:33:32.504469+00:00"
     },
     {
       "id": "sig-gdacs-alerts",
@@ -21,7 +21,7 @@
       "candidateCategories": [],
       "claim": "Usable source response collected; specialist geographic/event resolver required.",
       "status": "READY_FOR_RESOLUTION",
-      "generatedAt": "2026-10-20T21:23:56.102738+00:00"
+      "generatedAt": "2026-10-21T12:33:32.504469+00:00"
     },
     {
       "id": "sig-adsblol-aircraft",
@@ -31,7 +31,17 @@
       "candidateCategories": [],
       "claim": "Usable source response collected; specialist geographic/event resolver required.",
       "status": "READY_FOR_RESOLUTION",
-      "generatedAt": "2026-10-20T21:23:56.102738+00:00"
+      "generatedAt": "2026-10-21T12:33:32.504469+00:00"
+    },
+    {
+      "id": "sig-reliefweb-disasters",
+      "sourceId": "reliefweb-disasters",
+      "discoveryType": "MACHINE_SIGNAL",
+      "countryIds": [],
+      "candidateCategories": [],
+      "claim": "Usable source response collected; specialist geographic/event resolver required.",
+      "status": "READY_FOR_RESOLUTION",
+      "generatedAt": "2026-10-21T12:33:32.504469+00:00"
     },
     {
       "id": "sig-nasa-firms",
@@ -41,7 +51,7 @@
       "candidateCategories": [],
       "claim": "Usable source response collected; specialist geographic/event resolver required.",
       "status": "READY_FOR_RESOLUTION",
-      "generatedAt": "2026-10-20T21:23:56.102738+00:00"
+      "generatedAt": "2026-10-21T12:33:32.504469+00:00"
     }
   ]
 }
