@@ -1,0 +1,51 @@
+name: Continuous intelligence monitoring (Haiku)
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+# Prevent simultaneous monitor writers; the 21:00 consolidation remains separate.
+concurrency:
+  group: ti-continuous-monitor
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 1
+      - name: Run discovery and Haiku triage
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TI_HAIKU_MODEL: ${{ vars.TI_HAIKU_MODEL }}
+          TI_MONITOR_PUBLISH: ${{ vars.TI_MONITOR_PUBLISH }}
+          TI_MONITOR_FEEDS: ${{ vars.TI_MONITOR_FEEDS }}
+        run: |
+          if [ -z "$ANTHROPIC_API_KEY" ]; then
+            echo "::error::Missing ANTHROPIC_API_KEY. Monitoring cannot run."
+            exit 1
+          fi
+          python3 scripts/continuous_intelligence_monitor.py
+      - name: Validate canonical intelligence data
+        run: python3 scripts/validate_ti_data.py
+      - name: Commit monitored intelligence and cursor
+        run: |
+          if [ -z "$(git status --porcelain -- data.json data/continuous_monitor_state.json)" ]; then
+            echo "No new monitoring state."
+            exit 0
+          fi
+          git config user.name "Travel Intelligence Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data.json data/continuous_monitor_state.json
+          git commit -m "Continuous intelligence monitor: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          # Fail closed if another job updated main. Never force-push data.
+          git pull --rebase origin main
+          git push origin HEAD:main
