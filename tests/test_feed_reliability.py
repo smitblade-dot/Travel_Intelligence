@@ -94,6 +94,22 @@ class FeedRecoveryTests(unittest.TestCase):
             self.assertIn('/v2/reports?', fetch.call_args.args[0])
             self.assertIn('appname=approved-test', fetch.call_args.args[0])
 
+    def test_reliefweb_denial_is_blocked_but_outage_is_unavailable(self):
+        for error, expected in [('HTTP 401', 'blocked'), ('HTTP 403', 'blocked'),
+                                ('HTTP 503', 'unavailable')]:
+            with self.subTest(error=error), patch.dict(os.environ, {'RELIEFWEB_APPNAME': 'private-app'}), patch.object(collector, 'fetch', side_effect=RuntimeError(error)):
+                result = collector.collect_reliefweb()
+                self.assertFalse(result['ok'])
+                self.assertEqual(result['status'], expected)
+                self.assertNotIn('private-app', json.dumps(result))
+
+    def test_gdelt_outage_remains_unavailable_and_query_is_bounded(self):
+        with patch.object(collector, 'fetch', side_effect=RuntimeError('HTTP 503')) as fetch:
+            result = collector.collect_gdelt()
+            self.assertEqual(result['status'], 'unavailable')
+            self.assertFalse(result['ok'])
+            self.assertIn('timespan=24h', fetch.call_args.args[0])
+
     def test_adsb_is_explicit_geographic_sample_and_partial_is_degraded(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

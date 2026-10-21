@@ -40,3 +40,13 @@ jobs:
       - name: Audit live provider coverage
         if: always()
         run: python3 scripts/audit_feed_health.py
+      - name: Retain discovery evidence even when coverage audit fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: discovery-probe-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            data/phase1_signals.json
+            data/transport_network.json
+          retention-days: 7
+          if-no-files-found: warn

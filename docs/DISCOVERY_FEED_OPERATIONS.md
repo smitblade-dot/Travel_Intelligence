@@ -89,3 +89,54 @@ GDELT remained HTTP 503 after bounded retries. ReliefWeb rejected the previously
 configured `travel-intelligence` appname with HTTP 403 and an explicit request
 for provider approval. The health audit returned 1, correctly reporting those
 two coverage gaps instead of declaring the entire refresh healthy.
+
+## Post-merge follow-up — 20 October 2026
+
+[Read-only main-branch probe 39377032375](https://github.com/smitblade-dot/Travel_Intelligence/actions/runs/39377032375)
+at commit `45f9bef6420ca5d01bf918953d61fbb770aa0a03` completed collection
+at 05:51 UTC. GDELT was healthy at 05:50:40 UTC; the earlier HTTP 503 was
+therefore transient, not evidence of a continuing outage. Keep the existing
+bounded retries, Retry-After handling and 24-hour query. No alternate endpoint,
+unbounded retry or cached-success substitution is justified by this evidence.
+
+OurAirports, GDACS, NASA FIRMS and all 52 ADS-B sample areas also passed;
+3,926 airport nodes were built. ReliefWeb alone was blocked because the Actions
+variable was empty. The final audit correctly exited 1. Offline regression
+checks passed. This was not a production intelligence refresh and published
+no intelligence; a successful Pages deployment is likewise not proof of a
+successful daily intelligence refresh.
+
+At that follow-up, approval correspondence had not been located. This was a
+historical evidence gap, superseded by the approval recorded below. HTTP
+401/403 is explicitly blocked; transient outages remain unavailable.
+
+Live probes retain discovery JSON and transport reference artifacts for seven
+days, including on audit failure, so source URLs, observation timestamps and
+sampling limitations can be inspected independently. Artifacts are diagnostic
+evidence, not verified TI events or authority to publish. Existing independent
+PR QA, source verification and publication controls remain mandatory.
+
+
+## Approved application configuration - 21 October 2026
+
+FORGEDTITANIUM received ReliefWeb approval at 01:00 UTC on 21 October 2026.
+Marc verified the approved application name directly from the original email.
+The exact approved value is now configured as the repository Actions variable
+`RELIEFWEB_APPNAME`; the existing daily refresh and read-only probe consume
+that variable. Approval is no longer outstanding. Do not replace it with a
+guessed name or submit a duplicate application.
+
+The 20 October production run
+[39499702808](https://github.com/smitblade-dot/Travel_Intelligence/actions/runs/39499702808)
+passed TI model validation and the foundation audit, and saved the validated
+update before failing the strict discovery-health audit. This establishes
+validation and a saved update, not a fully healthy discovery refresh.
+
+Verification has three separate acceptance points: the read-only probe must
+show successful live ReliefWeb access and retain provenance; regression checks
+and independent PR QA must pass on the integrated head; and a complete
+production refresh must pass collection, data validation, foundation audit,
+validated commit/push and the strict discovery-health audit. Confirm Pages
+deployment separately where publication occurs. Provider approval or a Pages
+deployment alone does not prove those other stages succeeded. Do not weaken
+publication safeguards to satisfy discovery coverage.

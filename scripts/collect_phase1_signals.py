@@ -100,6 +100,8 @@ def collect_reliefweb():
     result = safe_json(url, 'data')
     if result.get('ok'):
         result['sourceUrl'] = config['endpoint']
+    elif result.get('error') in ('HTTP 401', 'HTTP 403'):
+        return failure('ReliefWeb denied access; verify provider approval and RELIEFWEB_APPNAME configuration', 'blocked')
     return result
 
 
