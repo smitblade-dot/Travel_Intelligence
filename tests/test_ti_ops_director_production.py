@@ -323,10 +323,12 @@ class OutputTests(Harness):
         cfg = cfg_for(root)
         return pc.check_outputs(root, cfg, NOW, baseline=(state or {}).get("outputBaseline"), validator=validator)
 
-    def test_current_production_data_has_only_the_known_baseline_gap(self):
+    def test_the_real_validator_accepts_the_repository_data(self):
+        # Only validity is asserted: other findings depend on the daily-refreshed data and must not gate CI.
         root = make_root(self.tmp)
-        res = pc.check_outputs(root, cfg_for(root), NOW)          # the real validator on the real data
-        self.assertEqual({f["key"] for f in res.findings if f["severity"] != "info"}, {"output:baseline_gaps"})
+        res = pc.check_outputs(root, cfg_for(root), NOW)
+        self.assertNotIn("output:invalid", self.keys(res))
+        self.assertIn("counts", res.facts)
 
     def test_invalid_data_is_critical(self):
         res = self.outputs(validator=lambda root: (False, "INVALID: x"))
@@ -689,6 +691,16 @@ class StateBranchTests(unittest.TestCase):
         self.assertEqual(sorted(files), sorted(STATE_PATHS.values()))
         self.assertFalse((self.work / STATE_PATHS["state"]).exists())     # nothing mirrored into main's checkout
 
+
+    def test_active_with_a_configuration_error_never_creates_the_branch(self):
+        cfg = load_pc_config({"TI_PC_MODE": "active", "TI_PC_STATE_BRANCH": "ti-ops-state",
+                              "TI_PC_SITE_URL": "http://insecure.example"}, ROOT)
+        self.assertTrue(cfg.errors)
+        b = pc.make_pc_backend({}, self.work, cfg)
+        self.assertEqual(b.snapshot().state(), {})
+        heads = subprocess.run(["git", "ls-remote", "--heads", str(self.tmp / "remote.git")],
+                               capture_output=True, text=True).stdout
+        self.assertNotIn("ti-ops-state", heads)
 
     def test_observe_backend_never_creates_or_writes_the_branch(self):
         cfg = load_pc_config({"TI_PC_MODE": "observe", "TI_PC_STATE_BRANCH": "ti-ops-state"}, ROOT)

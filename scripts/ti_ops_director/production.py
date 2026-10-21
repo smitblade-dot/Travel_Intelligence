@@ -750,7 +750,7 @@ def make_pc_backend(env, root, cfg):
     if not cfg.state_branch:
         return None
     return BranchStateBackend(root, STATE_PATHS, branch=cfg.state_branch, mirror_worktree=False,
-                              create=cfg.mode == "active")
+                              create=cfg.mode == "active" and not cfg.errors)
 
 
 def _summary(env, text):

@@ -52,6 +52,8 @@ jobs:
           git fetch --depth=1 origin main
           git worktree add "$RUNNER_TEMP/main" FETCH_HEAD
       - name: Live production observation (no writes, no dispatch, no API cost)
+        # Same-repository PRs only: PR code never receives a token on a fork PR.
+        if: github.event.pull_request.head.repo.full_name == github.repository
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

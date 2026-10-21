@@ -143,16 +143,17 @@ repeated hourly.
 
 ## Verification performed
 
-- 60 offline tests (`tests/test_ti_ops_director_production.py`): every check and threshold, DST, the
+- Offline tests in `tests/test_ti_ops_director_production.py`: every check and threshold, DST, the
   measured 21 October patterns, deduplication, escalation, resolution and reopening, UNVERIFIED handling,
   bounded dispatch, exit codes, the real-git state branch against a local bare remote (main untouched), the
   queue worker through the Director controller, capability refusal, and the workflow's permissions. The
-  existing 179 tests still pass; the fixture demonstration is unchanged.
+  existing tests still pass; the fixture demonstration is unchanged.
 - Live read-only observation from the build sandbox against production (21 Oct, 17:54 and 17:58 UTC):
   workflow and output checks ran on real data; the Pages API and the public site were not reachable from
   the sandbox, so the release check reported UNVERIFIED as designed.
 - The `production-observe` job in "TI Ops Director tests" runs the same observation on GitHub with a token
-  on every relevant PR, including the release check against `travelintelligence22.com`.
+  on every relevant same-repository PR (never on a fork PR), including the release check against
+  `travelintelligence22.com`.
 
 ## Not built / limitations
 
