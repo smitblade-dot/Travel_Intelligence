@@ -788,6 +788,44 @@ def run(env=None, root=None, data_root=None, now=None, api=None, http=http_reque
     return exit_code(cfg, new_state, delta)
 
 
+def dispatch_commands(dispatches_json, cfg):
+    """Turn the check job's planned dispatches into ``gh`` commands. Re-checks the allow-list and the branch,
+    so a malformed or tampered output can only ever dispatch an allow-listed workflow on the production branch."""
+    try:
+        planned = json.loads(dispatches_json or "[]")
+    except ValueError:
+        raise ValueError("dispatches output is not JSON") from None
+    if not isinstance(planned, list):
+        raise ValueError("dispatches output must be a list")
+    dispatchable = {w["file"] for w in cfg.workflows if w.get("dispatchable")}
+    cmds = []
+    for d in planned:
+        wf, ref = (d or {}).get("workflow"), (d or {}).get("ref")
+        if wf not in dispatchable or wf not in cfg.recovery_workflows or ref != cfg.branch:
+            raise ValueError(f"refused dispatch of {wf!r} on {ref!r}: not allow-listed for {cfg.branch}")
+        cmds.append(["gh", "workflow", "run", wf, "--repo", cfg.repository, "--ref", ref])
+    return cmds
+
+
+def run_dispatch(env=None, root=None, runner=subprocess.run, out=print):
+    """Recovery job entry point. Exit 0 when every planned dispatch was accepted; 3 when one was refused."""
+    env = os.environ if env is None else env
+    cfg = load_pc_config(dict(env, TI_PC_MODE="active", TI_PC_STATE_BACKEND="file"),
+                         root or Path(__file__).resolve().parents[2])
+    try:
+        cmds = dispatch_commands(env.get("TI_PC_DISPATCHES"), cfg)
+    except ValueError as exc:
+        out(f"::error title=Production recovery refused::{exc}")
+        return EXIT_CONFIG
+    failed = 0
+    for cmd in cmds:
+        out(f"Dispatching {cmd[3]} on {cmd[-1]}")
+        if runner(cmd).returncode != 0:
+            failed += 1
+            out(f"::error title=Production recovery dispatch failed::{cmd[3]}")
+    return EXIT_STATE if failed else EXIT_OK
+
+
 # ---- Master Agent queue integration ------------------------------------------------------------------------
 def sync_queue(store, state, delta):
     """Mirror the ledger into the Ops Director queue: one blocked task per open exception, cancelled on resolution."""

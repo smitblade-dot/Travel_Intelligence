@@ -535,6 +535,53 @@ class DispatchTests(Harness):
         self.assertEqual(self.go(**env)[4], [])
 
 
+class RecoveryJobTests(Harness):
+    ALLOW = {"TI_PC_RECOVERY_WORKFLOWS": "continuous-intelligence-monitor.yml"}
+
+    def go(self, dispatches, **env):
+        calls, lines = [], []
+        runner = lambda cmd: calls.append(cmd) or subprocess.CompletedProcess(cmd, 0)  # noqa: E731
+        code = pc.run_dispatch(env=dict(self.ALLOW, TI_PC_DISPATCHES=dispatches, **env), root=make_root(self.tmp),
+                               runner=runner, out=lines.append)
+        return code, calls, lines
+
+    def test_round_trip_from_the_check_jobs_output(self):
+        root = make_root(self.tmp)
+        env = {"TI_PC_MODE": "active", "TI_PC_STATE_BACKEND": "file", "TI_PC_STATE_DIR": str(Path(self.tmp) / "s"),
+               "GITHUB_OUTPUT": str(Path(self.tmp) / "out"), **self.ALLOW}
+        r = healthy_runs()
+        r["continuous-intelligence-monitor.yml"] = [run(1, NOW - timedelta(minutes=300))]
+        pc.run(env=env, root=root, api=FakeAPI(runs=r, files=site_for(root)[1]), http=site_for(root)[0],
+               validator=ok_validator, now=NOW, out=lambda *_: None)
+        emitted = next(l for l in (Path(self.tmp) / "out").read_text().splitlines() if l.startswith("dispatches="))
+        code, calls, _ = self.go(emitted.split("=", 1)[1])
+        self.assertEqual(code, EXIT_OK)
+        self.assertEqual(calls, [["gh", "workflow", "run", "continuous-intelligence-monitor.yml", "--repo",
+                                  "smitblade-dot/Travel_Intelligence", "--ref", "main"]])
+
+    def test_empty_plan_dispatches_nothing(self):
+        self.assertEqual(self.go("[]")[:2], (EXIT_OK, []))
+        self.assertEqual(self.go("")[:2], (EXIT_OK, []))
+
+    def test_refuses_anything_not_allow_listed_or_off_main(self):
+        for bad in ('[{"workflow": "baseline-population.yml", "ref": "main"}]',
+                    '[{"workflow": "daily-data-refresh.yml", "ref": "main"}]',
+                    '[{"workflow": "continuous-intelligence-monitor.yml", "ref": "ti-ops-state"}]',
+                    '[{"workflow": "x.yml; rm -rf /", "ref": "main"}]', '{"workflow": 1}', 'not json', '[null]'):
+            with self.subTest(bad=bad):
+                code, calls, lines = self.go(bad)
+                self.assertEqual((code, calls), (EXIT_CONFIG, []))
+                self.assertTrue(lines[0].startswith("::error title=Production recovery refused"))
+
+    def test_a_failed_dispatch_turns_the_job_red(self):
+        lines = []
+        code = pc.run_dispatch(env=dict(self.ALLOW, TI_PC_DISPATCHES='[{"workflow": '
+                                        '"continuous-intelligence-monitor.yml", "ref": "main"}]'),
+                               root=make_root(self.tmp), runner=lambda cmd: subprocess.CompletedProcess(cmd, 1),
+                               out=lines.append)
+        self.assertEqual(code, pc.EXIT_STATE)
+
+
 class EntryPointTests(Harness):
     def env(self, **kw):
         out = Path(self.tmp) / "out"
@@ -723,7 +770,8 @@ class WorkflowContractTests(unittest.TestCase):
         self.assertIn("actions: read", check)
         self.assertNotIn("actions: write", check)
         self.assertIn("actions: write", recover)
-        self.assertNotIn("contents:", recover)
+        self.assertNotIn("contents: write", recover)
+        self.assertIn("python3 scripts/ops_director.py production-dispatch", recover)
         self.assertIn("python3 scripts/ops_director.py production-check", check)
         self.assertNotIn("git push", t)
         self.assertIn("cancel-in-progress: false", t)

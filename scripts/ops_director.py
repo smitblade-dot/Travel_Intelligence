@@ -22,7 +22,7 @@ def main(argv=None):
     ap.add_argument("--config")
     ap.add_argument("command", choices=["init", "scan", "tick", "run-once", "report", "status", "pause", "resume",
                                         "stop", "cancel", "daemon", "selftest", "fx-set", "demo", "healthcheck", "eval-monitor",
-                                        "production-check"])
+                                        "production-check", "production-dispatch"])
     ap.add_argument("arg", nargs="?")
     ap.add_argument("--mode", choices=["live", "fixture"], default="live")
     ap.add_argument("--json", action="store_true")
@@ -34,6 +34,9 @@ def main(argv=None):
         # 03AA-04_Production_Controller_TI on GitHub Actions. Mode, state branch and recovery come from TI_PC_*.
         from ti_ops_director.production import run
         return run(data_root=a.data_root)
+    if a.command == "production-dispatch":
+        from ti_ops_director.production import run_dispatch
+        return run_dispatch()
     cfg = load_config(a.config)
     store = Store(cfg.db_path)
     ctl = Controller(cfg, store)

@@ -97,7 +97,8 @@ registered as a planned worker: its tasks are blocked for Marc, never faked.
 baseline build); the exception is critical and of a re-runnable kind (missed, failed before output, gate
 skipped); no run of that workflow is in progress; at most `TI_PC_MAX_DISPATCHES_PER_DAY` (default 1, hard
 ceiling 3) per workflow per UTC day. The dispatch is recorded on the state branch **before** a separate job
-with `actions: write` performs it, so a failed dispatch is over-counted, never repeated without limit. A
+with `actions: write` performs it, so a failed dispatch is over-counted, never repeated without limit. That job (`ops_director.py production-dispatch`) re-checks every planned dispatch against the
+allow-list and the production branch before calling `gh workflow run`, and refuses anything else. A
 post-output failure is never re-dispatched: the data is already published and a re-run would repeat the
 Claude refresh for nothing.
 

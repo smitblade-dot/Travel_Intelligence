@@ -57,14 +57,16 @@ jobs:
     timeout-minutes: 5
     permissions:
       actions: write
+      contents: read
     steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 1
       - name: Dispatch recovery runs
+        # Parsing and the allow-list re-check are in tested Python (production.dispatch_commands).
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DISPATCHES: ${{ needs.check.outputs.dispatches }}
-        run: |
-          echo "$DISPATCHES" | python3 -c "import json,sys; [print(d['workflow'], d['ref']) for d in json.load(sys.stdin)]" |
-          while read -r workflow ref; do
-            echo "Dispatching $workflow on $ref"
-            gh workflow run "$workflow" --repo "$GITHUB_REPOSITORY" --ref "$ref"
-          done
+          TI_PC_DISPATCHES: ${{ needs.check.outputs.dispatches }}
+          TI_PC_RECOVERY_WORKFLOWS: ${{ vars.TI_PC_RECOVERY_WORKFLOWS }}
+        run: python3 scripts/ops_director.py production-dispatch
