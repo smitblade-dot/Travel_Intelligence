@@ -142,10 +142,20 @@
         "usd": 0.001184,
         "model": "claude-haiku-5-5",
         "batch": "dabd19eb2821e9a8"
+      },
+      {
+        "id": "res-48efab50cf6643f5",
+        "run": "39595259197-24657102",
+        "at": "2026-10-21T11:53:53+00:00",
+        "day": "2026-10-21",
+        "month": "2026-10",
+        "usd": 0.001197,
+        "model": "claude-haiku-5-5",
+        "batch": "4418f6375d5fd3a5"
       }
     ],
     "currency": "USD",
     "status": "estimated from API usage fields x configured list prices; not invoice-confirmed",
-    "updated": "2026-10-21T11:53:50+00:00"
+    "updated": "2026-10-21T11:53:53+00:00"
   }
 }
