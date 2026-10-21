@@ -6,7 +6,7 @@ RUN useradd --system --uid 10001 --home-dir /nonexistent --shell /usr/sbin/nolog
  && mkdir -p /data /app && chown opsdirector /data
 WORKDIR /app
 COPY scripts/ /app/scripts/
-COPY config/ops_director.example.json config/ops_director_pricing.json /app/config/
+COPY config/ops_director.example.json config/ops_director_pricing.json config/production_controller.json /app/config/
 # /repo is a read-only checkout of Travel_Intelligence (feed evidence and source config); see docs.
 USER opsdirector
 VOLUME ["/data"]

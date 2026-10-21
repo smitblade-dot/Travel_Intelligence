@@ -1,0 +1,71 @@
+{
+  "_comment": "03AA-04_Production_Controller_TI. Thresholds and monitored work (no secrets). Operational switches are repository variables (TI_PC_*), see docs/TI_PRODUCTION_CONTROLLER.md. Values marked PROPOSED await Marc's confirmation; the controller is inert while TI_PC_MODE is unset.",
+  "repository": "smitblade-dot/Travel_Intelligence",
+  "branch": "main",
+  "timezone": "Europe/Nicosia",
+  "workflows": [
+    {
+      "id": "daily_refresh",
+      "file": "daily-data-refresh.yml",
+      "label": "Daily travel intelligence data refresh",
+      "schedule": {"kind": "daily", "local_time": "21:00", "timezone": "Europe/Nicosia"},
+      "required_job": "refresh",
+      "output_step": "Safety-net commit and push",
+      "start_late_minutes": 60,
+      "missed_after_minutes": 180,
+      "max_runtime_minutes": 75,
+      "dispatchable": true
+    },
+    {
+      "id": "monitor",
+      "file": "continuous-intelligence-monitor.yml",
+      "label": "Continuous intelligence monitoring (Haiku)",
+      "schedule": {"kind": "interval", "minutes": 15},
+      "late_after_minutes": 60,
+      "missed_after_minutes": 180,
+      "max_runtime_minutes": 15,
+      "coverage_window_hours": 24,
+      "coverage_warning_ratio": 0.5,
+      "dispatchable": true
+    },
+    {
+      "id": "baseline_build",
+      "file": "baseline-population.yml",
+      "label": "TI baseline intelligence build",
+      "schedule": {"kind": "daily", "local_time": "20:30", "timezone": "UTC"},
+      "start_late_minutes": 240,
+      "missed_after_minutes": 360,
+      "max_runtime_minutes": 120,
+      "dispatchable": false
+    }
+  ],
+  "output": {
+    "stale_warning_hours": 27,
+    "stale_critical_hours": 51,
+    "discovery_stale_hours": 30,
+    "shrink_critical_ratio": 0.10,
+    "minimum_counts": {"countries": 52},
+    "monitor_untriaged_runs_info": 1,
+    "monitor_failed_runs_critical": 2,
+    "abandoned_reservation_minutes": 60
+  },
+  "release": {
+    "site_url": "https://travelintelligence22.com/",
+    "files": ["data.json", "index.html"],
+    "deploy_grace_minutes": 20,
+    "propagation_grace_minutes": 15,
+    "required_text": {
+      "index.html": [
+        "FORGEDTITANIUM LTD a Company Registered in the Republic of Cyprus,",
+        "Reg No: HE 490451"
+      ]
+    }
+  },
+  "controller": {
+    "expected_interval_minutes": 60,
+    "self_gap_warning_minutes": 180,
+    "retention_days": 30,
+    "run_history": 200,
+    "max_dispatches_per_workflow_per_day": 1
+  }
+}

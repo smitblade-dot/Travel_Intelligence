@@ -15,7 +15,7 @@ from .feed_health import allowed_hosts, http_get as live_http_get
 from .models import ModelGateway
 from .sanitise import clean_text
 from .scheduling import interval_slot, last_daily_slot
-from .store import Store, fingerprint
+from .store import Store, fingerprint, task_dedupe_key
 from .workers import CapabilityError, Registry, WorkContext, default_registry
 
 SCHEDULER_LOCK = "ops_director_scheduler"
@@ -35,7 +35,7 @@ class Controller:
                 time_bucket=None):
         worker = self.registry.for_type(task_type)
         fp = fingerprint(inputs)
-        key = "|".join([BUSINESS_APPLICATION, task_type, dedupe_subject, fp, str(time_bucket or "")])
+        key = task_dedupe_key(task_type, dedupe_subject, fp, time_bucket, BUSINESS_APPLICATION)
         return self.store.create_task(
             worker=worker.name if worker else "unregistered", task_type=task_type, inputs=inputs,
             dedupe_key=key, business_application=BUSINESS_APPLICATION, substream=SUBSTREAM, priority=priority,
@@ -134,7 +134,10 @@ class Controller:
         worker = self.registry.get(task["worker"])
         inputs = json.loads(task["inputs"])
         task["inputs"] = inputs
-        hosts = allowed_hosts(inputs["source"]) if "source" in inputs else frozenset()
+        if hasattr(worker, "hosts_for"):
+            hosts = worker.hosts_for(inputs, self.cfg)
+        else:
+            hosts = allowed_hosts(inputs["source"]) if "source" in inputs else frozenset()
         ctx = WorkContext(self.cfg, self.store, self.gateway, worker, task["id"], self.owner,
                           http=self.http or live_http_get, allowed_hosts=hosts)
         try:
@@ -170,6 +173,14 @@ class Controller:
                     self.store.release_lock("responsibility:feed_health_scan", self.owner)
             else:
                 done["feed_health_scan"] = "overlap_skipped"
+        every = self.cfg.production_check_interval_minutes
+        if every and mode == "live":
+            pslot = interval_slot(now, every).isoformat()
+            if self.store.get_meta("last_slot:production_verification") != pslot:
+                tid, created = self.enqueue(task_type="production_verification", inputs={"slot_utc": pslot},
+                                            dedupe_subject=pslot, priority=70)
+                self.store.set_meta("last_slot:production_verification", pslot)
+                done["production_verification"] = {"task": tid, "created": created}
         dslot = last_daily_slot(now, self.cfg.daily_consolidation_local, self.cfg.timezone)
         if self.store.get_meta("last_slot:daily_consolidation") != dslot.isoformat():
             tid, created = self.enqueue(task_type="daily_consolidation", inputs={"slot_utc": dslot.isoformat()},

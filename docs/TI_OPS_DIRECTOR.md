@@ -29,11 +29,12 @@ publication are disabled (no `TI_OPS_*` limits, `TI_OPS_DRY_RUN` and `TI_MONITOR
 This work package delivers the **controller foundation, one working diagnostic worker, and (second
 package) routing of the existing Haiku monitor through the spending gateway**. It is not the agent team.
 
-**Workers, stated once.** Eight workers are registered. **One is implemented:** `feed_health_diagnostic`
-(a diagnostic, not one of the seven flow roles). **The seven functional-flow roles are all unimplemented
-as queue workers:** discovery, triage, investigation_content, verification, publication,
-production_verification, daily_consolidation. Any task for them is blocked with
-`worker_not_implemented:<name>`, never faked. Earlier handover text that said "six" was wrong. Some roles
+**Workers, stated once.** Nine workers are registered. **Two are implemented:** `feed_health_diagnostic`
+(a diagnostic, not one of the seven flow roles) and, since the production controller work package,
+`production_verification` (`docs/TI_PRODUCTION_CONTROLLER.md`). **Six functional-flow roles remain
+unimplemented as queue workers:** discovery, triage, investigation_content, verification, publication,
+daily_consolidation, plus the planned `production_recovery` role whose tasks wait for Marc. Any task for
+them is blocked, never faked. Some roles
 have partial work outside the queue: the Python collectors (discovery), the Haiku monitor (triage, now
 spend-gated but still not a queue worker), and the Actions refresh (daily consolidation). The existing Python monitor and the GitHub
 Actions refresh remain the working pipeline and are not replaced or duplicated.

@@ -21,13 +21,22 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--config")
     ap.add_argument("command", choices=["init", "scan", "tick", "run-once", "report", "status", "pause", "resume",
-                                        "stop", "cancel", "daemon", "selftest", "fx-set", "demo", "healthcheck", "eval-monitor"])
+                                        "stop", "cancel", "daemon", "selftest", "fx-set", "demo", "healthcheck", "eval-monitor",
+                                        "production-check", "production-dispatch"])
     ap.add_argument("arg", nargs="?")
     ap.add_argument("--mode", choices=["live", "fixture"], default="live")
     ap.add_argument("--json", action="store_true")
     ap.add_argument("--rate"), ap.add_argument("--rate-date"), ap.add_argument("--rate-source")
     ap.add_argument("--approval", help="eval-monitor: approval file for one bounded live evaluation")
+    ap.add_argument("--data-root", help="production-check: checkout of main whose outputs are checked")
     a = ap.parse_args(argv)
+    if a.command == "production-check":
+        # 03AA-04_Production_Controller_TI on GitHub Actions. Mode, state branch and recovery come from TI_PC_*.
+        from ti_ops_director.production import run
+        return run(data_root=a.data_root)
+    if a.command == "production-dispatch":
+        from ti_ops_director.production import run_dispatch
+        return run_dispatch()
     cfg = load_config(a.config)
     store = Store(cfg.db_path)
     ctl = Controller(cfg, store)
