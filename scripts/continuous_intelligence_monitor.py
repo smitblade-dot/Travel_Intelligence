@@ -87,6 +87,22 @@ def discover():
     return list(items.values()), errors
 
 
+def parse_haiku_decisions(output):
+    """Require exactly one valid JSON object; never accept trailing content."""
+    text = output.strip()
+    if text.startswith("```"):
+        text = re.sub(r"^\\x60{3}(?:json)?\\s*|\\s*\\x60{3}$", "", text).strip()
+    start = text.find("{")
+    if start < 0 or text[:start].strip():
+        raise ValueError("Haiku response must begin with a JSON object")
+    parsed, consumed = json.JSONDecoder().raw_decode(text)
+    if text[consumed:].strip():
+        raise ValueError("Haiku returned unexpected content after JSON object")
+    if not isinstance(parsed, dict) or not isinstance(parsed.get("decisions"), list):
+        raise ValueError("Haiku JSON missing decisions array")
+    return parsed["decisions"]
+
+
 def ask_haiku(items, countries, existing):
     api_key = os.getenv("ANTHROPIC_API_KEY")
     if not api_key:
@@ -124,7 +140,8 @@ def ask_haiku(items, countries, existing):
     output = "".join(blocks).strip()
     if output.startswith("```"):
         output = re.sub(r"^\x60{3}(?:json)?\s*|\s*\x60{3}$", "", output).strip()
-    decisions = json.loads(output)["decisions"]
+    # Decode one complete JSON object; reject any trailing response text.
+    decisions = parse_haiku_decisions(output)
     usage = answer.get("usage", {})
     print("HAIKU_USAGE", json.dumps({"model": answer.get("model"), "input_tokens": usage.get("input_tokens", 0),
                                      "output_tokens": usage.get("output_tokens", 0)}))
