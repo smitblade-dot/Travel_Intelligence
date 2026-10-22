@@ -496,7 +496,21 @@
       "occurrences": 3
     }
   },
-  "publications": {},
+  "publications": {
+    "pub-20261022T142741Z-1dfa3c": {
+      "id": "pub-20261022T142741Z-1dfa3c",
+      "at": "2026-10-22T14:27:41+00:00",
+      "state": "PENDING",
+      "records": [
+        "gh-environment-flooding-natural-hazards",
+        "gh-transport-road-travel",
+        "gh-transport-taxis-and-public-transport",
+        "gh-transport-air-travel-and-gateways",
+        "gh-equipment-clothing",
+        "gh-equipment-mosquito"
+      ]
+    }
+  },
   "pending": {},
   "spend": {
     "daily": {},
