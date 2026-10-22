@@ -28,6 +28,8 @@ ACTIONS = {
     "confidence_below_publishable": ("Evidence was not strong enough for MEDIUM confidence.", False),
     "no_publishable_claim": ("No sentence passed all rules.", False),
     "unsupported_by_source": ("The claim is not supported by a retrieved source.", False),
+    "source_unavailable_preserving_last_known_good": ("A source behind the published record could not be retrieved this run, so the record was left exactly as it was "
+                                                      "(a source failure never shrinks or replaces published content). Retried automatically.", False),
 }
 
 
@@ -36,7 +38,8 @@ def source_exceptions(inputs, evidence):
     for e in evidence:
         if e["status"] in ("RETRIEVED",):
             continue
-        human = e["status"] in ("BLOCKED_BY_ROBOTS", "PARSE_FAILED")
+        transient = e["status"] == "BLOCKED_BY_ROBOTS" and "could not be read" in str(e.get("error"))      # robots.txt unreachable, not a disallow
+        human = e["status"] in ("BLOCKED_BY_ROBOTS", "PARSE_FAILED") and not transient
         out.append({"key": f"{inputs['countryId']}:{inputs['category']}:source:{e['sourceKey']}:{e['status']}", "scope": "source",
                     "countryId": inputs["countryId"], "category": inputs["category"], "topic": None, "reasons": ["source_" + e["status"].lower()],
                     "detail": f"{e['sourceKey']}: {e.get('error') or e['status']}",
@@ -127,6 +130,16 @@ def build_items(builder, inputs, country, evidence, passages, per_topic, topics,
     return items, missing
 
 
+def lost_source_for_existing(data, record_id, evidence):
+    """True when this builder's published record rests on a source that could not be retrieved this run. Replacing the record from
+    the sources that did respond would silently drop what the missing one established, so the published record is left alone."""
+    rec = next((r for r in data["records"] if r["id"] == record_id and (r.get("provenance") or {}).get("builder")), None)
+    if not rec:
+        return False
+    backed = {o.get("sourceId") for o in data.get("sourceObservations", []) if o.get("recordId") == record_id}
+    return any(e["sourceId"] in backed and e["status"] in ("UNAVAILABLE", "BLOCKED_BY_ROBOTS", "PARSE_FAILED") for e in evidence)
+
+
 def assess_all(builder, items, evidence, data, inputs, today, pub_id):
     """Run the publication rules over every item. -> (assessments, publication_items)."""
     cfg = builder.cfg
@@ -144,6 +157,8 @@ def assess_all(builder, items, evidence, data, inputs, today, pub_id):
         own_id = f"{inputs['countryId']}-{inputs['category'].lower()}-" + it["topic"].lower().replace("_", "-")
         others = [r for r in existing if r["id"] != own_id]
         a = assess_item(it, evidence, cfg.sources, registry, pub_cfg, today, others, inputs["countryId"], inputs["category"])
+        if a["decision"] == "PUBLISH" and lost_source_for_existing(data, own_id, evidence):
+            a = a | {"decision": "HOLD", "claims": [], "confidence": None, "reasons": ["source_unavailable_preserving_last_known_good"]}
         assessments.append(a)
         if a["decision"] == "PUBLISH":
             pub_items.append(build_publication_item(inputs["countryId"], inputs["category"], it["topic"], topics[it["topic"]], a,
