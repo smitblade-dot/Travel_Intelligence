@@ -296,6 +296,12 @@ class FailureAndRollback(unittest.TestCase):
             st = ledger(h)
             self.assertEqual(sorted(p["state"] for p in st["publications"].values()), ["VERIFIED"])
             self.assertIn("gh-transport-road-travel", records(h))
+            h.git(h.work, "fetch", "--quiet", "origin", "main")                       # a new run checks out the current main
+            h.git(h.work, "reset", "--quiet", "--hard", "FETCH_HEAD")
+            b3 = h.builder(categories=["TRANSPORT"], ledger=ledger_backend)           # a verified publication is final
+            b3.run()
+            self.assertIn("reopened 0", "\n".join(b3.captured))
+            self.assertEqual(sorted(p["state"] for p in ledger(h)["publications"].values()), ["VERIFIED"])
 
     def test_rechecks_are_bounded_and_an_unresolved_publication_is_escalated_not_deleted(self):
         with tempfile.TemporaryDirectory() as tmp:

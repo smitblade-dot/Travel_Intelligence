@@ -442,7 +442,10 @@ class Builder:
         pub = st["publications"].get(d.get("publicationId") or "", {})
         if pub.get("state") in ("VERIFICATION_PENDING", "ROLLBACK_PENDING"):
             return False                      # on main with verification pending: rechecked by the ledger, never republished
-        return (not d.get("settled")) or d.get("rules") != self.rules_fingerprint(inp["category"])
+        changed_rules = d.get("rules") != self.rules_fingerprint(inp["category"])
+        if pub.get("state") in ("VERIFIED", "NO_CHANGE") and d.get("published"):
+            return changed_rules              # published and verified (possibly by a later recheck): final unless the rules changed
+        return (not d.get("settled")) or changed_rules
 
     def _publish_phase(self, results, now):
         """Publish every item that passed the rules, verify the live site, roll back if it does not serve them."""
