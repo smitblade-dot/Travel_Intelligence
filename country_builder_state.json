@@ -20,12 +20,16 @@
         },
         "existingRecordIds": []
       },
-      "state": "running",
+      "state": "blocked",
       "attempts": 1,
       "created_at": "2026-10-22T05:45:42+00:00",
       "updated_at": "2026-10-22T05:45:42+00:00",
-      "lease_owner": "runnervmxehtw-2391-cc2344",
-      "lease_expires": "2026-10-22T06:05:42+00:00"
+      "lease_owner": null,
+      "lease_expires": null,
+      "outcome": "awaiting_paid_authorisation",
+      "cost_usd": 0.0,
+      "blockingReason": "awaiting_paid_authorisation",
+      "error": null
     },
     "Travel Intelligence|country_content_draft|gh:TRANSPORT:MISSING|cfbb29ccdb58436d53d137f9d07961ac|W42": {
       "id": "cbt-b3d109558799",
@@ -41,12 +45,16 @@
         },
         "existingRecordIds": []
       },
-      "state": "running",
+      "state": "blocked",
       "attempts": 1,
       "created_at": "2026-10-22T05:45:42+00:00",
       "updated_at": "2026-10-22T05:45:42+00:00",
-      "lease_owner": "runnervmxehtw-2391-cc2344",
-      "lease_expires": "2026-10-22T06:05:42+00:00"
+      "lease_owner": null,
+      "lease_expires": null,
+      "outcome": "awaiting_paid_authorisation",
+      "cost_usd": 0.0,
+      "blockingReason": "awaiting_paid_authorisation",
+      "error": null
     },
     "Travel Intelligence|country_content_draft|gh:EQUIPMENT:MISSING|1b1ea479b4bf2ebbb9dc5502bbb1b9e9|W42": {
       "id": "cbt-4074717e5a71",
@@ -62,15 +70,57 @@
         },
         "existingRecordIds": []
       },
-      "state": "running",
+      "state": "blocked",
       "attempts": 1,
       "created_at": "2026-10-22T05:45:42+00:00",
       "updated_at": "2026-10-22T05:45:42+00:00",
-      "lease_owner": "runnervmxehtw-2391-cc2344",
-      "lease_expires": "2026-10-22T06:05:42+00:00"
+      "lease_owner": null,
+      "lease_expires": null,
+      "outcome": "awaiting_paid_authorisation",
+      "cost_usd": 0.0,
+      "blockingReason": "awaiting_paid_authorisation",
+      "error": null,
+      "draftId": "cib-gh-equipment-588e789666"
     }
   },
-  "drafts": {},
-  "runs": [],
-  "runs_pending": null
+  "drafts": {
+    "cib-gh-equipment-588e789666": {
+      "draftId": "cib-gh-equipment-588e789666",
+      "path": "drafts/gh/EQUIPMENT/cib-gh-equipment-588e789666.json",
+      "countryId": "gh",
+      "category": "EQUIPMENT",
+      "evidenceFingerprint": "588e7896661e3436326d719fe9115af3",
+      "modelStatus": "NOT_RUN",
+      "reviewStatus": "DRAFT_PENDING_REVIEW",
+      "createdAt": "2026-10-22T05:45:42+00:00",
+      "costUsd": 0.0,
+      "claims": 1
+    }
+  },
+  "runs": [
+    {
+      "at": "2026-10-22T05:45:42+00:00",
+      "mode": "draft",
+      "tasksRun": 3,
+      "created": 3,
+      "duplicatesSuppressed": 0,
+      "recovered": [],
+      "outcomes": {
+        "Travel Intelligence|country_content_draft|gh:ENVIRONMENT:MISSING|89289d18c5f66290275665f64e9406a9|W42": "awaiting_paid_authorisation",
+        "Travel Intelligence|country_content_draft|gh:TRANSPORT:MISSING|cfbb29ccdb58436d53d137f9d07961ac|W42": "awaiting_paid_authorisation",
+        "Travel Intelligence|country_content_draft|gh:EQUIPMENT:MISSING|1b1ea479b4bf2ebbb9dc5502bbb1b9e9|W42": "awaiting_paid_authorisation"
+      }
+    }
+  ],
+  "runs_pending": null,
+  "spend": {
+    "daily": {},
+    "monthly": {},
+    "open": [],
+    "currency": "USD",
+    "status": "estimated from API usage fields x configured list prices; not invoice-confirmed",
+    "mode": "dry_run",
+    "updated": "2026-10-22T05:45:46+00:00"
+  },
+  "triageCache": {}
 }
