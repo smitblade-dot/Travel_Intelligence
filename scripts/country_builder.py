@@ -1,15 +1,18 @@
 #!/usr/bin/env python3
 """CLI for 03AA-04_Country_Intelligence_Builder_TI.
 
-  run        one pass in the configured mode (observe or draft); the workflow calls this
+  run        one pass in the configured mode (observe, draft or publish); the workflow calls this
   plan       show the gaps and the tasks they would create (read-only); --queue adds them to the Master Agent queue
   status     ledger summary from the state backend
   pause / resume / stop   operator controls stored in the ledger (draft mode backend)
-  review     record a human review decision on a draft (never publishes)
+  review     record an operator note/decision on a draft or held item (never publishes or unpublishes)
+  route-exceptions  mirror the ledger's held exceptions into the Master Agent queue (TI_OPS_DB_PATH)
+  rollback   <publicationId>: remove/restore exactly what that automatic publication changed (main, compare-and-swap)
   eval       quality evaluation against manually assessed cases: --approval FILE for the one capped live run;
              without it, scripted replies check the scorer only and Haiku quality is reported as NOT MEASURED
 
-No command writes data.json. Paid execution needs TI_CB_DRY_RUN=false and all three spending limits.
+Only `run` in publish mode from a scheduled or manual run on main (and `rollback`) writes data.json, and only through the
+compare-and-swap path with canonical validation. Paid model use needs TI_CB_DRY_RUN=false and all three spending limits.
 """
 import argparse
 import json
@@ -39,7 +42,7 @@ def _backend(env, cfg, create):
 def main(argv=None, env=None):
     env = os.environ if env is None else env
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("command", choices=["run", "plan", "status", "pause", "resume", "stop", "review", "eval"])
+    ap.add_argument("command", choices=["run", "plan", "status", "pause", "resume", "stop", "review", "eval", "route-exceptions", "rollback"])
     ap.add_argument("arg", nargs="?")
     ap.add_argument("--queue", action="store_true", help="plan: add the tasks to the Master Agent queue (TI_OPS_DB_PATH)")
     ap.add_argument("--approval", help="eval: written approval file for one bounded live Haiku evaluation")
@@ -74,7 +77,7 @@ def main(argv=None, env=None):
         return EXIT_OK
     if a.command == "eval":
         return run_eval(a, cfg, env)
-    backend = _backend(env, cfg, create=a.command != "status")
+    backend = _backend(env, cfg, create=a.command not in ("status", "route-exceptions"))
     try:
         if a.command == "status":
             st = _sections(backend.snapshot().state() or empty_state())
@@ -83,6 +86,22 @@ def main(argv=None, env=None):
                      for v in st["tasks"].values()}
             print(json.dumps({"controls": st["controls"], "tasks": tasks, "drafts": st["drafts"], "lastRuns": st["runs"][-3:],
                               "spend": st.get("spend", {}).get("total", 0)}, indent=2))
+            return EXIT_OK
+        if a.command == "route-exceptions":
+            from ti_ops_director.config import load_config
+            from ti_ops_director.country_worker import mirror_exceptions
+            from ti_ops_director.store import Store
+            st = _sections(backend.snapshot().state() or empty_state())
+            mcfg = load_config()
+            print(json.dumps(mirror_exceptions(Store(mcfg.db_path), st["exceptions"])))
+            return EXIT_OK
+        if a.command == "rollback":
+            from ti_ops_director.country_publish import make_main_backend, rollback_publication
+            if not a.arg or not a.by:
+                print("rollback needs: <publicationId> --by NAME")
+                return EXIT_CONFIG
+            summary = rollback_publication(make_main_backend(ROOT), a.arg, datetime.now(timezone.utc))
+            print(json.dumps(summary))
             return EXIT_OK
         if a.command in ("pause", "resume", "stop"):
             def fn(snap):
@@ -108,7 +127,6 @@ def main(argv=None, env=None):
                                  "at": datetime.now(timezone.utc).isoformat(timespec="seconds")}
                 doc["reviewStatus"] = {"accepted": "REVIEWED_ACCEPTED", "rejected": "REVIEWED_REJECTED",
                                        "needs_changes": "REVIEWED_NEEDS_CHANGES"}[a.decision]
-                doc["publicationStatus"] = "DRAFT"      # review never publishes
                 d["reviewStatus"] = doc["reviewStatus"]
                 return {path: json.dumps(doc, indent=2, ensure_ascii=False) + "\n", "state": dump_state(st)}, doc["reviewStatus"]
             _, status = backend.transact(fn, message=f"Country builder: review {a.arg}")

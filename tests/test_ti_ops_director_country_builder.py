@@ -45,8 +45,9 @@ def draft_doc(b, st=None):
 class Config(unittest.TestCase):
     def test_committed_defaults_are_safe(self):
         cfg = load_builder_config({}, ROOT)
-        self.assertEqual((cfg.mode, cfg.dry_run, cfg.errors), ("observe", True, []))
-        self.assertFalse(cfg.paid_allowance_configured)
+        self.assertEqual((cfg.mode, cfg.dry_run, cfg.errors), ("publish", True, []))
+        self.assertTrue(cfg.publication_enabled)
+        self.assertFalse(cfg.paid_allowance_configured)          # no paid model use is authorised
         self.assertEqual(cfg.countries, ["gh"])
         self.assertEqual(cfg.categories, ["ENVIRONMENT", "TRANSPORT", "EQUIPMENT"])
 
@@ -81,14 +82,20 @@ class Config(unittest.TestCase):
         raw.raw["spending"]["sonnet_escalation_enabled"] = True
         self.assertEqual(raw.gateway_config().max_model_calls_per_task, 3)
 
-    def test_publication_flag_is_refused(self):
-        cfg = load_builder_config({}, ROOT)
-        raw = copy.deepcopy(cfg.raw)
-        raw["review"]["auto_publish"] = True
+    def test_publication_guards_fail_closed(self):
+        self.assertFalse(load_builder_config({"TI_CB_PUBLISH": "false"}, ROOT).publication_enabled)
+        self.assertFalse(load_builder_config({"TI_CB_MODE": "draft"}, ROOT).publication_enabled)
+        self.assertFalse(load_builder_config({"TI_CB_MODE": "observe"}, ROOT).publication_enabled)
+        raw = copy.deepcopy(load_builder_config({}, ROOT).raw)
         with tempfile.TemporaryDirectory() as tmp:
             p = Path(tmp) / "c.json"
+            raw["publication"]["target_branch"] = "develop"
             p.write_text(json.dumps(raw))
-            self.assertTrue(any("auto_publish" in e for e in load_builder_config({}, ROOT, p).errors))
+            self.assertTrue(any("main" in e for e in load_builder_config({}, ROOT, p).errors))
+            raw["publication"]["target_branch"] = "main"
+            raw["publication"]["enabled"] = False
+            p.write_text(json.dumps(raw))
+            self.assertTrue(any("publication.enabled" in e for e in load_builder_config({}, ROOT, p).errors))
 
 
 class Gaps(unittest.TestCase):
@@ -185,7 +192,7 @@ class Evidence(unittest.TestCase):
         self.assertEqual([e for e in ev if e["sourceKey"] == "nasa_power"][0]["status"], "PARSE_FAILED")
 
     def test_stale_source_is_marked_and_excluded_from_passages(self):
-        old = (cs.FX / "fcdo_safety.html").read_text().replace("2026-07-02", "2025-01-02")
+        old = (cs.FX / "fcdo_safety.html").read_text().replace("2026-07-02", "2025-01-02").replace("2026-10-19", "2025-01-03")
         ev = self.collect("TRANSPORT", FakeNet(overrides={"safety-and-security": old}))
         fs = [e for e in ev if e["sourceKey"] == "fcdo_safety"][0]
         self.assertEqual(fs["status"], "STALE")
@@ -301,8 +308,8 @@ class EndToEnd(unittest.TestCase):
             self.assertEqual(len(st["drafts"]), 3)
             env = [d for d in st["drafts"].values() if d["category"] == "ENVIRONMENT"][0]
             d = json.loads(b.backend.snapshot().text("file:" + env["path"]))
-            self.assertEqual((d["reviewStatus"], d["publicationStatus"], d["publishable"], d["modelStatus"]),
-                             ("DRAFT_PENDING_REVIEW", "DRAFT", False, "DRAFTED"))
+            self.assertEqual((d["reviewStatus"], d["publicationStatus"], d["modelStatus"]), ("HELD_EXCEPTIONS_ROUTED", "NOTHING_TO_PUBLISH", "DRAFTED"))
+            self.assertIn("model_claim_unverified", json.dumps(d["assessment"]))      # unverified model text never publishes
             self.assertTrue(d["validation"]["candidateBatchMergesCleanly"], d["validation"])
             topics = {i["topic"]: i for i in d["items"]}
             self.assertEqual(set(topics), {"CLIMATE_SEASONAL", "FLOODING_NATURAL_HAZARDS"})
@@ -415,7 +422,7 @@ class EndToEnd(unittest.TestCase):
             b.run(now=cs.NOW + timedelta(days=8))
             st = load_state(b)
             self.assertEqual((prov.calls, len(st["drafts"]), len(st["tasks"])), (1, 1, 2))
-            self.assertEqual(sorted(t["outcome"] for t in st["tasks"].values()), ["drafted", "unchanged_evidence"])
+            self.assertEqual(sorted(t["outcome"] for t in st["tasks"].values()), ["assessed", "unchanged_evidence"])
 
 
 NASA_ROBOTS = "User-agent: *\nAllow: /api/pages/\nDisallow: /api/\nDisallow: /beta/\n\nUser-agent: GPTBot\nDisallow: /\n"
@@ -553,7 +560,7 @@ class FailureModes(unittest.TestCase):
 
     def test_stale_only_evidence_means_no_model_call(self):
         with tempfile.TemporaryDirectory() as tmp:
-            old = (cs.FX / "fcdo_safety.html").read_text().replace("2026-07-02", "2024-01-02")
+            old = (cs.FX / "fcdo_safety.html").read_text().replace("2026-07-02", "2024-01-02").replace("2026-10-19", "2024-01-03")
             old_cdc = (cs.FX / "cdc_travel.html").read_text().replace("August 25, 2026", "August 25, 2024")
             prov = Replies(reply_for("TRANSPORT"))
             net = FakeNet(overrides={"safety-and-security": old, "cdc.gov": old_cdc})
@@ -678,7 +685,7 @@ class Controls(unittest.TestCase):
             self.assertEqual(b.run(), EXIT_CONFIG)
             self.assertEqual(b.net.calls, [])
 
-    def test_review_records_a_decision_but_never_publishes(self):
+    def test_review_records_a_decision_but_never_changes_publication(self):
         with tempfile.TemporaryDirectory() as tmp:
             sys.path.insert(0, str(ROOT / "scripts"))
             import country_builder as cli
@@ -689,7 +696,7 @@ class Controls(unittest.TestCase):
             env = {"TI_CB_STATE_BACKEND": "file", "TI_CB_STATE_DIR": str(Path(tmp) / "state"), "TI_CB_MODE": "draft"}
             self.assertEqual(cli.main(["review", did, "--decision", "accepted", "--by", "Marc"], env), 0)
             d = draft_doc(b)
-            self.assertEqual((d["reviewStatus"], d["publicationStatus"], d["publishable"]), ("REVIEWED_ACCEPTED", "DRAFT", False))
+            self.assertEqual((d["reviewStatus"], d["publicationStatus"]), ("REVIEWED_ACCEPTED", "NOTHING_TO_PUBLISH"))
             self.assertEqual(d["review"]["by"], "Marc")
             self.assertEqual(load_state(b)["drafts"][did]["reviewStatus"], "REVIEWED_ACCEPTED")
 
@@ -799,11 +806,11 @@ class GitBranchPersistence(unittest.TestCase):
         self.assertEqual(len(draft), 1)
         self.assertNotIn("data.json", files)
         doc = json.loads(self.git(self.work, "show", "FETCH_HEAD:" + draft[0]))
-        self.assertEqual((doc["publicationStatus"], doc["modelStatus"]), ("DRAFT", "DRAFTED"))
+        self.assertEqual((doc["publicationStatus"], doc["modelStatus"]), ("NOT_PUBLISHED", "NOT_NEEDED"))   # extractive path: no model needed
         # a fresh process (new checkout state, new Builder) sees the ledger: no duplicate task, no second call
         b2 = self.builder("draft", prov)
         b2.run()
-        self.assertEqual(prov.calls, 1)
+        self.assertEqual(prov.calls, 0)
         self.git(self.work, "fetch", "origin", "ti-country-drafts")
         st = json.loads(self.git(self.work, "show", "FETCH_HEAD:country_builder_state.json"))
         self.assertEqual((len(st["tasks"]), len(st["drafts"]), len(st["runs"])), (1, 1, 2))
@@ -870,13 +877,15 @@ class MasterAgentIntegration(unittest.TestCase):
                 self.assertTrue(made["tasks"][0]["created"])
                 self.assertFalse(again["tasks"][0]["created"])               # duplicate protection in the Director's store
                 ctl.tick()
-            t = ctl.store.list_tasks()[0]
+            tasks = ctl.store.list_tasks()
+            t = [x for x in tasks if x["task_type"] == "country_content_draft"][0]
+            exc = [x for x in tasks if x["task_type"] == "country_publication_exception"]
+            self.assertTrue(exc and all(x["state"] == "blocked" for x in exc))      # held exceptions are routed through the Master Agent queue
             self.assertEqual(t["worker"], "country_content_builder")
-            self.assertEqual(t["state"], "blocked")                          # dry-run: awaiting paid authorisation
-            self.assertIn("awaiting_paid_authorisation", t["blocking_reason"])
-            self.assertTrue(t["requires_human"])
+            self.assertEqual(t["state"], "completed")                       # extractive path needs no model; publication is off in draft mode
             outputs = json.loads(t["outputs"] or "{}")
             self.assertTrue(outputs.get("draftId", "").startswith("cib-gh-environment-"))
+            self.assertEqual(outputs["published"], [])                      # draft mode never publishes
             self.assertTrue((Path(tmp) / "country_builder" / "country_builder_state.json").exists())
 
     def test_worker_blocks_in_observe_mode_and_refuses_unlisted_hosts(self):
@@ -914,18 +923,18 @@ class MasterAgentIntegration(unittest.TestCase):
 
 
 class WorkflowFile(unittest.TestCase):
-    def test_workflow_is_least_privilege_and_cannot_touch_main(self):
-        p = ROOT / ".github" / "workflows" / "country-intelligence-builder.yml"
-        text = p.read_text()
+    def test_workflow_cannot_publish_from_a_pull_request_or_give_one_the_model_key(self):
+        text = (ROOT / ".github" / "workflows" / "country-intelligence-builder.yml").read_text()
         self.assertIn("permissions: {}", text)
         self.assertIn("vars.TI_CB_MODE != 'off'", text)
-        self.assertNotIn("git push", text)
-        self.assertIn("github.event_name != 'pull_request' && secrets.ANTHROPIC_API_KEY || ''", text)    # no key on PRs ('' is falsy: never write `== && '' ||`)
+        self.assertNotIn("git push", text)                                    # all writes go through the tested compare-and-swap code
+        self.assertIn("github.event_name != 'pull_request' && secrets.ANTHROPIC_API_KEY || ''", text)
         self.assertNotIn("&& '' ||", text)
-        self.assertIn("github.event_name == 'pull_request' && 'true' || vars.TI_CB_DRY_RUN", text)      # dry-run forced on PRs
-        self.assertIn("git diff --exit-code -- data.json", text)
+        self.assertIn("github.event_name == 'pull_request' && 'draft' || vars.TI_CB_MODE", text)
+        self.assertIn("github.event_name == 'pull_request' && 'true' || vars.TI_CB_DRY_RUN", text)
         import re
         self.assertEqual(re.findall(r"contents: (\w+)", text), ["write"])
+        self.assertIn("ref: ${{ github.event_name == 'pull_request' && github.sha || 'main' }}", text)
 
 
 if __name__ == "__main__":

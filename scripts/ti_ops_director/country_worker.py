@@ -18,10 +18,12 @@ from .country_evidence import http_get, resolve_url
 from .country_gaps import TASK_TYPE, recheck_bucket, task_for
 from .workers import CapabilityError, WorkResult, Worker
 
+EXC_TASK_TYPE = "country_publication_exception"
+
 
 class CountryContentWorker(Worker):
     name = "country_content_builder"
-    task_types = (TASK_TYPE,)
+    task_types = (TASK_TYPE, EXC_TASK_TYPE)
     capabilities = frozenset({"network_read"})
     description = ("Country content builder: finds a missing or stale country/category, collects permitted evidence and "
                    "writes a source-checked DRAFT (never published) (03AA-04_Country_Intelligence_Builder_TI).")
@@ -67,15 +69,40 @@ class CountryContentWorker(Worker):
                                   {"coverage": {"covered": 0, "combinations": 0, "missing": 0}, "gaps": []})
         if code != 0:
             return WorkResult("failed", error=f"builder exit code {code}")
-        t = backend.snapshot().state()["tasks"].get(planned[0]["dedupe_key"], {})
+        ledger = backend.snapshot().state()
+        t = ledger["tasks"].get(planned[0]["dedupe_key"], {})
+        routed = mirror_exceptions(ctx.store, ledger.get("exceptions", {}))
         out = {"ledgerTask": t.get("id"), "ledgerState": t.get("state"), "draftId": t.get("draftId"), "reason": t.get("outcome"),
-               "costUsd": t.get("cost_usd", 0)}
+               "costUsd": t.get("cost_usd", 0), "published": t.get("published", []), "held": t.get("held", []), "exceptionsRouted": routed}
         if t.get("state") == "completed":
             return WorkResult("completed", outputs=out)
         if t.get("state") in ("blocked", "pending"):
             return WorkResult("blocked", outputs=out, blocking_reason=t.get("blockingReason") or t.get("error") or "pending",
                               requires_human=(t.get("blockingReason") or "").startswith("awaiting_paid"))
         return WorkResult("failed", outputs=out, error=t.get("error") or "failed")
+
+
+def mirror_exceptions(store, exceptions):
+    """Route the builder's held exceptions through the Master Agent: one blocked task per open exception (deduplicated by
+    key), cancelled when the exception resolves. Returns {'opened': n, 'resolved': n}."""
+    from . import BUSINESS_APPLICATION, SUBSTREAM
+    opened = resolved = 0
+    for e in exceptions.values():
+        key = f"{BUSINESS_APPLICATION}|{EXC_TASK_TYPE}|{e['key']}||"
+        active = store.query("SELECT id FROM tasks WHERE dedupe_key=? AND state IN ('pending','running','blocked','completed')", (key,))
+        if e["state"] == "HELD":
+            if active:
+                continue
+            tid, created = store.create_task(worker="country_content_builder", task_type=EXC_TASK_TYPE, inputs={k: e.get(k) for k in (
+                "countryId", "category", "topic", "reasons", "detail", "scope")}, dedupe_key=key, business_application=BUSINESS_APPLICATION,
+                substream=SUBSTREAM, priority=60, max_attempts=1)
+            if created:
+                store.set_blocked(tid, e["action"][:300], requires_human=bool(e.get("requiresHuman")))
+                opened += 1
+        elif active:
+            store.cancel(active[0]["id"], "exception resolved by a later run")
+            resolved += 1
+    return {"opened": opened, "resolved": resolved}
 
 
 def enqueue_gaps(ctl, now=None):

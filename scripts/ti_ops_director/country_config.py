@@ -14,7 +14,7 @@ from .config import ROOT, Config, ConfigError, _num, parse_dry_run
 
 CONFIG_PATH = ROOT / "config" / "country_builder.json"
 AGENT_NAME = "03AA-04_Country_Intelligence_Builder_TI"
-MODES = ("off", "observe", "draft")
+MODES = ("off", "observe", "draft", "publish")
 CATEGORIES = ("SECURITY", "ENTRY", "HEALTH", "EMERGENCY", "TRANSPORT", "ENVIRONMENT", "INSURANCE", "LAWS_CULTURE",
               "COMMUNICATIONS", "FINANCE", "LANGUAGE", "ACCOMMODATION", "EQUIPMENT", "TRAINING")
 BRANCH = re.compile(r"^[A-Za-z0-9._/-]{1,100}$")
@@ -34,6 +34,16 @@ class BuilderConfig:
     dry_run_source: str = "committed"
     limits: dict = field(default_factory=dict)
     errors: list = field(default_factory=list)
+    publication_setting: str = "unset"
+
+    @property
+    def publication_cfg(self):
+        return self.raw.get("publication", {})
+
+    @property
+    def publication_enabled(self):
+        """Fails closed: mode publish, publication.enabled true, and TI_CB_PUBLISH not 'false'."""
+        return self.mode == "publish" and bool(self.publication_cfg.get("enabled")) and self.publication_setting != "false"
 
     @property
     def sources(self):
@@ -63,7 +73,8 @@ class BuilderConfig:
         cfg.total_limit_usd = self.limits.get("total_limit_usd")
         cfg.max_output_tokens = int(spend["max_output_tokens"])
         cfg.model_timeout_seconds = int(spend["model_timeout_seconds"])
-        # Calls per task: first answer, one corrective retry, and a Sonnet call only if escalation is enabled.
+        # Calls per task: first answer, one corrective retry, one independent verification, and one Sonnet call only if
+        # escalation is enabled.
         cfg.max_model_calls_per_task = 3 if spend.get("sonnet_escalation_enabled") else 2
         cfg.opus_approval = None            # Opus stays disabled
         return cfg
@@ -115,8 +126,16 @@ def load_builder_config(env=None, root=ROOT, path=None) -> BuilderConfig:
         except ConfigError as exc:
             err.append(str(exc))
             cfg.limits[key] = None
-    if raw.get("review", {}).get("auto_publish"):
-        err.append("review.auto_publish must stay false: this agent has no publication path")
+    pub = raw.get("publication", {})
+    cfg.publication_setting = (env.get("TI_CB_PUBLISH") or "").strip().lower() or "unset"
+    if cfg.mode == "publish" and not pub.get("enabled"):
+        err.append("mode publish needs publication.enabled true")
+    if pub.get("enabled"):
+        for k in ("registry", "quality", "verification", "update_policy", "max_records_per_run", "duplicate_similarity"):
+            if k not in pub:
+                err.append(f"publication.{k} is required when publication is enabled")
+        if pub.get("target_branch") != "main" or pub.get("required_ref") != "refs/heads/main":
+            err.append("publication must target main from refs/heads/main only")
     for cat, cdef in raw["categories"].items():
         for tname, t in cdef["topics"].items():
             if t["kind"] not in TOPIC_KINDS:

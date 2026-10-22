@@ -196,7 +196,7 @@ def passages_from_blocks(blocks, code, limit=600, max_passages=120):
             if pending and (loc != pending_loc or len(pending) + 1 + len(chunk) > limit):
                 flush()
             pending_loc = loc
-            pending = (pending + " " + chunk).strip()
+            pending = (pending + "\n" + chunk).strip()
     flush()
     return passages[:max_passages]
 
@@ -364,6 +364,9 @@ def collect_source(source_key, src, params, cc, http, now, limits, robots, data_
             doc["pageTitle"] = clean_text(title, 160)
             if meta.get("govuk:updated-at"):
                 doc["pageUpdatedAt"] = meta["govuk:updated-at"][:25]
+            if pub:
+                # Currency: the later of the stated dates. Publication date stays the last substantive update (attribution).
+                doc["currencyDate"] = max(pub, (meta.get("govuk:updated-at") or "")[:10] or pub)
         if not passages:
             raise ValueError("no passages extracted")
     except (ValueError, KeyError, TypeError, json.JSONDecodeError) as exc:
@@ -374,7 +377,7 @@ def collect_source(source_key, src, params, cc, http, now, limits, robots, data_
     doc["bytes"] = len(res.body)
     doc["status"] = "RETRIEVED"
     if doc["publicationDate"]:
-        age = (now.date() - datetime.fromisoformat(doc["publicationDate"]).date()).days
+        age = (now.date() - datetime.fromisoformat(doc.get("currencyDate") or doc["publicationDate"]).date()).days
         doc["publicationAgeDays"] = age
         if age > src["stale_after_days"]:
             doc["status"] = "STALE"

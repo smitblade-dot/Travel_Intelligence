@@ -57,7 +57,7 @@ def base_data():
             "locations": [], "events": [], "sourceObservations": [], "change_log": [], "oilGasSummary": {}}
 
 
-def setup(tmp, mode="draft", dry_run=True, limits=None, env=None, data=None, sonnet=False):
+def setup(tmp, mode="draft", dry_run=True, limits=None, env=None, data=None, sonnet=False, extractive=False):
     tmp = Path(tmp)
     (tmp / "data.json").write_text(json.dumps(data or base_data()), encoding="utf-8")
     e = {"TI_CB_MODE": mode, "TI_CB_STATE_BACKEND": "file", "TI_CB_STATE_DIR": str(tmp / "state"),
@@ -69,7 +69,16 @@ def setup(tmp, mode="draft", dry_run=True, limits=None, env=None, data=None, son
     cfg = load_builder_config(e, ROOT)
     if sonnet:
         cfg.raw["spending"]["sonnet_escalation_enabled"] = True
+    if not extractive:                      # model-path tests: make the ordinary-code extractive path find nothing
+        no_extractive(cfg)
     return cfg, e
+
+
+def no_extractive(cfg):
+    for cdef in cfg.raw["categories"].values():
+        for t in cdef["topics"].values():
+            if t["kind"] == "model":
+                t["heading_patterns"] = ["(?!)x"]
 
 
 def make_builder(tmp, provider=None, net=None, clock=None, **kw):
@@ -130,7 +139,7 @@ def reply_for(category, net=None, **tweak):
                 c("Avoid travelling by road outside the main towns after dark",
                   "FCDO advises avoiding road travel outside the main towns after dark."),
                 c("You can drive in Ghana using the 1949 version of the international driving permit (IDP) or a Ghanaian driving licence.",
-                  "Driving is allowed on a 1949-version international driving permit or a Ghanaian licence.")],
+                  "You can drive in Ghana on a 1949-version international driving permit or a Ghanaian licence.")],
              "uncertainty": "Road conditions on specific routes are not described by the sources."},
             {"topic": "TAXIS_AND_PUBLIC_TRANSPORT", "title": "Taxis and public transport", "claims": [
                 c("Safety standards of taxi services in Ghana are low.", "FCDO says safety standards of taxi services in Ghana are low."),
@@ -159,3 +168,80 @@ def reply_for(category, net=None, **tweak):
     for fn in tweak.values():
         fn(out)
     return json.dumps(out)
+
+
+# ---- publication harness: a real bare git remote for main, a clone, and a fake public site ---------------------
+import os                                                    # noqa: E402
+import subprocess                                            # noqa: E402
+from ti_ops_director.country_publish import make_main_backend  # noqa: E402
+from ti_ops_director.production import HttpReply             # noqa: E402
+
+
+class FakeSite:
+    """Serves the public data.json from the remote's main (what GitHub Pages would publish).
+    mode: live | stale (never updates) | down | lag (stale for ``lag`` requests, then live)."""
+    def __init__(self, bare, mode="live", lag=0):
+        self.bare, self.mode, self.lag, self.calls = bare, mode, lag, 0
+        self.initial = self.show("main")
+
+    def show(self, ref):
+        return subprocess.run(["git", "--git-dir", str(self.bare), "show", f"{ref}:data.json"], capture_output=True, check=True).stdout
+
+    def __call__(self, url, *, headers=None, timeout=20, **kw):
+        self.calls += 1
+        if self.mode == "down":
+            return HttpReply(503, b"", "http_error")
+        if self.mode == "stale" or (self.mode == "lag" and self.calls <= self.lag):
+            return HttpReply(200, self.initial, None)
+        return HttpReply(200, self.show("main"), None)
+
+
+class PublishHarness:
+    ENV = {"GITHUB_EVENT_NAME": "workflow_dispatch", "GITHUB_REF": "refs/heads/main"}
+
+    def __init__(self, tmp, **kw):
+        self.tmp = Path(tmp)
+        self.bare, self.work = self.tmp / "remote.git", self.tmp / "work"
+        subprocess.run(["git", "init", "--bare", "-b", "main", str(self.bare)], capture_output=True, check=True)
+        subprocess.run(["git", "clone", str(self.bare), str(self.work)], capture_output=True, check=True)
+        data = kw.pop("data", None) or base_data()
+        (self.work / "data.json").write_text(json.dumps(data), encoding="utf-8")
+        self.git(self.work, "add", "-A")
+        self.git(self.work, "commit", "-m", "main")
+        self.git(self.work, "push", "origin", "HEAD:main")
+        self.site = FakeSite(self.bare, kw.pop("site_mode", "live"), kw.pop("lag", 0))
+        self.kw = kw
+
+    def git(self, cwd, *args):
+        env = dict(os.environ, GIT_AUTHOR_NAME="t", GIT_AUTHOR_EMAIL="t@t", GIT_COMMITTER_NAME="t", GIT_COMMITTER_EMAIL="t@t")
+        return subprocess.run(["git", "-C", str(cwd), *args], capture_output=True, text=True, env=env, check=True).stdout.strip()
+
+    def builder(self, provider=None, net=None, mode="publish", extractive=True, env=None, dry_run=True, limits=None, sonnet=False,
+                categories=None, ledger=None):
+        e = {"TI_CB_MODE": mode, "TI_CB_STATE_BACKEND": "file", "TI_CB_STATE_DIR": str(self.tmp / "ledger"),
+             "TI_CB_DRY_RUN": "true" if dry_run else "false", **self.ENV}
+        if limits:
+            e.update({"TI_CB_PER_TASK_LIMIT_USD": str(limits[0]), "TI_CB_DAILY_LIMIT_USD": str(limits[1]), "TI_CB_MONTHLY_LIMIT_USD": str(limits[2])})
+        e.update(env or {})
+        cfg = load_builder_config(e, ROOT)
+        if not extractive:
+            no_extractive(cfg)
+        if sonnet:
+            cfg.raw["spending"]["sonnet_escalation_enabled"] = True
+        if categories:
+            cfg.categories = categories
+        out = []
+        b = Builder(cfg, self.work, ledger or LocalBackend(self.tmp / "ledger"), http=net or FakeNet(), provider=provider, clock=lambda: NOW,
+                    env=e, out=out.append, workdir=self.tmp / "w", data_path=self.work / "data.json",
+                    main_backend=make_main_backend(self.work), site_http=self.site, sleep=lambda s: None)
+        b.captured = out
+        return b
+
+    def main_data(self):
+        return json.loads(self.site.show("main"))
+
+    def main_sha(self):
+        return self.git(self.work, "ls-remote", "origin", "refs/heads/main").split()[0]
+
+    def sync(self):
+        self.git(self.work, "pull", "--quiet", "origin", "main")

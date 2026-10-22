@@ -1,18 +1,43 @@
 {
-  "_comment": "03AA-04_Country_Intelligence_Builder_TI. Committed operating configuration (no secrets). Repository variables TI_CB_* override these values when set. TI_CB_MODE=off or disabling the workflow stops the agent. See docs/TI_COUNTRY_INTELLIGENCE_BUILDER.md.",
+  "_comment": "03AA-04_Country_Intelligence_Builder_TI. Committed operating configuration (no secrets). Repository variables TI_CB_* override these values when set. TI_CB_MODE=off or disabling the workflow stops the agent. Operating model (supersedes the draft-only design, Marc 22 Oct 2026): content that passes the publication rules is published automatically through a compare-and-swap commit to main and verified on the live site; only exceptions are held and routed through the Master Agent. See docs/TI_COUNTRY_INTELLIGENCE_BUILDER.md.",
   "agent": "03AA-04_Country_Intelligence_Builder_TI",
   "operation": {
-    "_approval": "PROPOSED, NOT YET CONFIRMED BY MARC. Defaults are the safest working values: observe mode (reads and plans, writes nothing, no model call), paid execution unset.",
-    "mode": "observe",
+    "_approval": "Operating model corrected by Marc on 22 Oct 2026: automatic publication of content that passes the rules; exceptions only are held. Publication is enabled in the same change that adds the rules, the tests and the live-site verification.",
+    "mode": "publish",
     "state_branch": "ti-country-drafts"
   },
   "scope": {
-    "_approval": "Proposed initial scope, to be confirmed by Marc. Chosen from the actual coverage gaps in data.json: Ghana has no ENVIRONMENT, TRANSPORT or EQUIPMENT record.",
-    "countries": ["gh"],
-    "categories": ["ENVIRONMENT", "TRANSPORT", "EQUIPMENT"],
-    "batch_size_tasks_per_run": 1,
-    "gap_types": ["MISSING", "STALE"],
-    "stale_after_days_since_checked": 365
+    "_approval": "Validation scope: Ghana and three categories (ENVIRONMENT, TRANSPORT, EQUIPMENT), all three processed in one run. Expansion beyond this is automatic only when the proof gate below is met AND scope.expansion.enabled is true; enabling it is a separate confirmation of coverage and budget.",
+    "countries": [
+      "gh"
+    ],
+    "categories": [
+      "ENVIRONMENT",
+      "TRANSPORT",
+      "EQUIPMENT"
+    ],
+    "batch_size_tasks_per_run": 3,
+    "gap_types": [
+      "MISSING",
+      "STALE"
+    ],
+    "stale_after_days_since_checked": 365,
+    "expansion": {
+      "enabled": false,
+      "countries": "all_active",
+      "categories": [
+        "ENVIRONMENT",
+        "TRANSPORT",
+        "EQUIPMENT"
+      ],
+      "max_new_countries_per_run": 1,
+      "gate": {
+        "min_published_records": 3,
+        "min_verified_on_live_site": 3,
+        "max_rollbacks": 0,
+        "min_clean_publication_runs": 2
+      }
+    }
   },
   "schedule": {
     "_note": "Trigger for the GitHub Actions workflow (.github/workflows/country-intelligence-builder.yml). GitHub may delay scheduled runs.",
@@ -41,7 +66,7 @@
     "max_quote_chars": 400
   },
   "spending": {
-    "_approval": "UNSET. No paid execution is authorised. These are the proposed limits; they take effect only when Marc confirms them (the agent reads the numbers from here or from the TI_CB_* variables). Earlier allowances for the Ops Director and the monitor do not transfer.",
+    "_approval": "UNSET. No paid model call is authorised yet. The ordinary-code (extractive) path needs no model and costs nothing. Model drafting is only used for topics the ordinary-code path cannot cover, and each model-written claim is independently verified before it can publish. Proposed limits are in docs/TI_COUNTRY_INTELLIGENCE_BUILDER.md.",
     "dry_run": true,
     "per_task_limit_usd": null,
     "daily_limit_usd": null,
@@ -50,13 +75,12 @@
     "max_output_tokens": 2000,
     "model_timeout_seconds": 60,
     "sonnet_escalation_enabled": false,
-    "opus_enabled": false
+    "opus_enabled": false,
+    "verifier_enabled": true
   },
   "review": {
-    "required": true,
-    "reviewers_required": 1,
-    "auto_publish": false,
-    "initial_review_status": "DRAFT_PENDING_REVIEW"
+    "human_review": "exceptions_only",
+    "note": "Nothing waits for review by default. An item that fails a rule is held with its reasons and routed through the Master Agent."
   },
   "country_params": {
     "gh": {
@@ -64,101 +88,416 @@
       "fcdo": "ghana",
       "travelhealthpro": "89/ghana",
       "cdc": "ghana",
-      "location": {"name": "Accra", "lat": 5.60, "lon": -0.19}
+      "location": {
+        "name": "Accra",
+        "lat": 5.6,
+        "lon": -0.19
+      }
     }
   },
   "sources": {
     "fcdo_safety": {
-      "code": "FS", "publisher": "UK Foreign, Commonwealth & Development Office", "jurisdiction": "UK", "tier": "A",
+      "code": "FS",
+      "publisher": "UK Foreign, Commonwealth & Development Office",
+      "jurisdiction": "UK",
+      "tier": "A",
       "title": "Foreign travel advice: safety and security",
       "url": "https://www.gov.uk/foreign-travel-advice/{fcdo}/safety-and-security",
-      "parser": "govuk", "existing_source_id": "{cc}-fcdo-security", "independence_group": "uk-fcdo",
-      "content_rights": "GOVERNMENT_OPEN", "access_method": "WEB_PAGE", "automation_permission": "PERMITTED",
-      "original_language": "en", "stale_after_days": 120, "current_capable": true
+      "parser": "govuk",
+      "existing_source_id": "{cc}-fcdo-security",
+      "independence_group": "uk-fcdo",
+      "content_rights": "GOVERNMENT_OPEN",
+      "access_method": "WEB_PAGE",
+      "automation_permission": "PERMITTED",
+      "original_language": "en",
+      "stale_after_days": 120,
+      "current_capable": true,
+      "registry_id": "fcdos",
+      "attribution_label": "UK FCDO travel advice",
+      "date_verb": "last updated"
     },
     "fcdo_health": {
-      "code": "FH", "publisher": "UK Foreign, Commonwealth & Development Office", "jurisdiction": "UK", "tier": "A",
+      "code": "FH",
+      "publisher": "UK Foreign, Commonwealth & Development Office",
+      "jurisdiction": "UK",
+      "tier": "A",
       "title": "Foreign travel advice: health",
       "url": "https://www.gov.uk/foreign-travel-advice/{fcdo}/health",
-      "parser": "govuk", "existing_source_id": "{cc}-fcdo-health", "independence_group": "uk-fcdo",
-      "content_rights": "GOVERNMENT_OPEN", "access_method": "WEB_PAGE", "automation_permission": "PERMITTED",
-      "original_language": "en", "stale_after_days": 120, "current_capable": true
+      "parser": "govuk",
+      "existing_source_id": "{cc}-fcdo-health",
+      "independence_group": "uk-fcdo",
+      "content_rights": "GOVERNMENT_OPEN",
+      "access_method": "WEB_PAGE",
+      "automation_permission": "PERMITTED",
+      "original_language": "en",
+      "stale_after_days": 120,
+      "current_capable": true,
+      "registry_id": "fcdos",
+      "attribution_label": "UK FCDO travel advice",
+      "date_verb": "last updated"
     },
     "travelhealthpro": {
-      "code": "TH", "publisher": "TravelHealthPro (UK Health Security Agency / NaTHNaC)", "jurisdiction": "UK", "tier": "A",
+      "code": "TH",
+      "publisher": "TravelHealthPro (UK Health Security Agency / NaTHNaC)",
+      "jurisdiction": "UK",
+      "tier": "A",
       "title": "TravelHealthPro country information",
       "url": "https://travelhealthpro.org.uk/country/{travelhealthpro}",
-      "parser": "html", "existing_source_id": null, "independence_group": "uk-ukhsa-nathnac",
-      "content_rights": "UNKNOWN", "access_method": "WEB_PAGE", "automation_permission": "UNKNOWN",
-      "original_language": "en", "stale_after_days": 180, "current_capable": false,
-      "_note": "Rights and automation permission unverified: short verbatim quotes only, robots.txt checked on every run."
+      "parser": "html",
+      "existing_source_id": null,
+      "independence_group": "uk-ukhsa-nathnac",
+      "content_rights": "UNKNOWN",
+      "access_method": "WEB_PAGE",
+      "automation_permission": "UNKNOWN",
+      "original_language": "en",
+      "stale_after_days": 180,
+      "current_capable": false,
+      "_note": "Rights and automation permission unverified: short verbatim quotes only, robots.txt checked on every run.",
+      "registry_id": null,
+      "attribution_label": "TravelHealthPro (UKHSA/NaTHNaC)",
+      "date_verb": "page date not stated"
     },
     "cdc_travel": {
-      "code": "CD", "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)", "jurisdiction": "US", "tier": "A",
+      "code": "CD",
+      "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+      "jurisdiction": "US",
+      "tier": "A",
       "title": "CDC Travelers' Health: traveler view",
       "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/{cdc}",
-      "parser": "cdc", "existing_source_id": null, "independence_group": "us-cdc",
-      "content_rights": "GOVERNMENT_OPEN", "access_method": "WEB_PAGE", "automation_permission": "UNKNOWN",
-      "original_language": "en", "stale_after_days": 365, "current_capable": false
+      "parser": "cdc",
+      "existing_source_id": null,
+      "independence_group": "us-cdc",
+      "content_rights": "GOVERNMENT_OPEN",
+      "access_method": "WEB_PAGE",
+      "automation_permission": "UNKNOWN",
+      "original_language": "en",
+      "stale_after_days": 365,
+      "current_capable": false,
+      "registry_id": null,
+      "attribution_label": "US CDC Travelers' Health",
+      "date_verb": "page last reviewed"
     },
     "nasa_power": {
-      "code": "NP", "publisher": "NASA Langley Research Center POWER Project", "jurisdiction": "US", "tier": "A",
+      "code": "NP",
+      "publisher": "NASA Langley Research Center POWER Project",
+      "jurisdiction": "US",
+      "tier": "A",
       "title": "NASA POWER monthly climatology (MERRA-2)",
       "url": "https://power.larc.nasa.gov/api/temporal/climatology/point?parameters=T2M,PRECTOTCORR&community=RE&longitude={lon}&latitude={lat}&format=JSON",
-      "parser": "nasa_power", "existing_source_id": null, "independence_group": "us-nasa-power",
-      "content_rights": "OPEN_LICENCE", "access_method": "API", "automation_permission": "PERMITTED",
-      "original_language": "en", "stale_after_days": 800, "current_capable": false,
-      "robots_exception": {"approved_by": null, "approved_on": null, "scope": "this API URL only, one request per run",
-        "_note": "https://power.larc.nasa.gov/robots.txt says Disallow: /api/ for generic agents (checked 22 Oct 2026), so the builder does not call this API. POWER documents the API for programmatic use, but using it against robots.txt needs Marc's written decision: set approved_by to Marc and approved_on to the date."}
+      "parser": "nasa_power",
+      "existing_source_id": null,
+      "independence_group": "us-nasa-power",
+      "content_rights": "OPEN_LICENCE",
+      "access_method": "API",
+      "automation_permission": "PERMITTED",
+      "original_language": "en",
+      "stale_after_days": 800,
+      "current_capable": false,
+      "robots_exception": {
+        "approved_by": null,
+        "approved_on": null,
+        "scope": "this API URL only, one request per run",
+        "_note": "https://power.larc.nasa.gov/robots.txt says Disallow: /api/ for generic agents (checked 22 Oct 2026), so the builder does not call this API. POWER documents the API for programmatic use, but using it against robots.txt needs Marc's written decision: set approved_by to Marc and approved_on to the date."
+      },
+      "registry_id": null,
+      "attribution_label": "NASA POWER climatology",
+      "date_verb": "data period"
     },
     "worldbank_cckp": {
-      "code": "WB", "publisher": "World Bank Group, Climate Change Knowledge Portal", "jurisdiction": "INTERNATIONAL", "tier": "A",
+      "code": "WB",
+      "publisher": "World Bank Group, Climate Change Knowledge Portal",
+      "jurisdiction": "INTERNATIONAL",
+      "tier": "A",
       "title": "World Bank CCKP monthly climatology (CRU TS 4.07, 1991-2020)",
       "url": "https://cckpapi.worldbank.org/cckp/v1/cru-x0.5_climatology_tas,pr_climatology_monthly_1991-2020_mean_historical_cru_ts4.07_mean/{iso3}?_format=json",
-      "parser": "worldbank_cckp", "existing_source_id": null, "independence_group": "wb-cckp-cru",
-      "content_rights": "OPEN_LICENCE", "access_method": "API", "automation_permission": "PERMITTED",
-      "original_language": "en", "stale_after_days": 1500, "current_capable": false,
-      "robots_exception": {"approved_by": null, "approved_on": null, "scope": "this API URL only, one request per run",
-        "_note": "https://cckpapi.worldbank.org/robots.txt answered with an error (HTTP 5xx with a 404 page) on 22 Oct 2026, so the builder treats the API as not permitted (RFC 9309). The API is publicly documented under CC BY 4.0. Using it needs Marc's written decision: set approved_by to Marc and approved_on to the date."},
-      "_note": "Data under CC BY 4.0: attribute the World Bank Climate Change Knowledge Portal and the CRU TS dataset. National mean, so regional contrast is not shown."
+      "parser": "worldbank_cckp",
+      "existing_source_id": null,
+      "independence_group": "wb-cckp-cru",
+      "content_rights": "OPEN_LICENCE",
+      "access_method": "API",
+      "automation_permission": "PERMITTED",
+      "original_language": "en",
+      "stale_after_days": 1500,
+      "current_capable": false,
+      "robots_exception": {
+        "approved_by": null,
+        "approved_on": null,
+        "scope": "this API URL only, one request per run",
+        "_note": "https://cckpapi.worldbank.org/robots.txt answered with an error (HTTP 5xx with a 404 page) on 22 Oct 2026, so the builder treats the API as not permitted (RFC 9309). The API is publicly documented under CC BY 4.0. Using it needs Marc's written decision: set approved_by to Marc and approved_on to the date."
+      },
+      "_note": "Data under CC BY 4.0: attribute the World Bank Climate Change Knowledge Portal and the CRU TS dataset. National mean, so regional contrast is not shown.",
+      "registry_id": null,
+      "attribution_label": "World Bank CCKP climatology",
+      "date_verb": "data period"
     }
   },
   "categories": {
     "ENVIRONMENT": {
       "brief": "Climate and seasons, regional variation, natural hazards and operational implications. Include month/season context where useful.",
-      "sources": ["nasa_power", "worldbank_cckp", "fcdo_safety"],
+      "sources": [
+        "nasa_power",
+        "worldbank_cckp",
+        "fcdo_safety"
+      ],
       "topics": {
-        "CLIMATE_SEASONAL": {"kind": "deterministic", "subcategory": "Climate and seasons", "data_type": "FACT", "sources": ["nasa_power", "worldbank_cckp"], "freshness": "STABLE",
-          "_note": "First retrievable source in this order is used."},
-        "FLOODING_NATURAL_HAZARDS": {"kind": "model", "subcategory": "Flooding and natural hazards", "data_type": "CONSIDERATION", "sources": ["fcdo_safety"], "freshness": "STABLE",
-          "keywords": ["flood", "rainy season", "earthquake", "tremor", "cyclone", "extreme weather", "rainfall", "natural hazard"]},
-        "OUTLOOK_4_6_WEEKS": {"kind": "outlook", "subcategory": "Next 4-6 weeks", "data_type": "CONSIDERATION", "sources": [], "freshness": "CURRENT",
-          "_note": "Needs an approved current seasonal-outlook source. None is configured, so this is always reported as missing evidence rather than drafted."}
+        "CLIMATE_SEASONAL": {
+          "kind": "deterministic",
+          "subcategory": "Climate and seasons",
+          "data_type": "FACT",
+          "sources": [
+            "nasa_power",
+            "worldbank_cckp"
+          ],
+          "freshness": "STABLE",
+          "_note": "First retrievable source in this order is used."
+        },
+        "FLOODING_NATURAL_HAZARDS": {
+          "kind": "model",
+          "subcategory": "Flooding and natural hazards",
+          "data_type": "CONSIDERATION",
+          "sources": [
+            "fcdo_safety"
+          ],
+          "freshness": "STABLE",
+          "keywords": [
+            "flood",
+            "rainy season",
+            "earthquake",
+            "tremor",
+            "cyclone",
+            "extreme weather",
+            "rainfall",
+            "natural hazard"
+          ],
+          "heading_patterns": [
+            "Flooding",
+            "Earthquakes"
+          ]
+        },
+        "OUTLOOK_4_6_WEEKS": {
+          "kind": "outlook",
+          "subcategory": "Next 4-6 weeks",
+          "data_type": "CONSIDERATION",
+          "sources": [],
+          "freshness": "CURRENT",
+          "_note": "Needs an approved current seasonal-outlook source. None is configured, so this is always reported as missing evidence rather than drafted."
+        }
       }
     },
     "TRANSPORT": {
       "brief": "Principal international gateways, road/ground transport conditions, internal movement and material seasonal/access constraints.",
-      "sources": ["fcdo_safety", "cdc_travel"],
+      "sources": [
+        "fcdo_safety",
+        "cdc_travel"
+      ],
       "topics": {
-        "ROAD_TRAVEL": {"kind": "model", "subcategory": "Road travel", "data_type": "CONSIDERATION", "sources": ["fcdo_safety", "cdc_travel"], "freshness": "STABLE",
-          "keywords": ["road", "driving", "driver", "vehicle", "night", "checkpoint", "driving permit", "licence", "street lighting", "convoy", "seatbelt"]},
-        "TAXIS_AND_PUBLIC_TRANSPORT": {"kind": "model", "subcategory": "Taxis and public transport", "data_type": "CONSIDERATION", "sources": ["fcdo_safety", "cdc_travel"], "freshness": "STABLE",
-          "keywords": ["taxi", "tro-tro", "tro tro", "minibus", "app-based", "public transportation", "motorbike", "buses"]},
-        "AIR_TRAVEL_AND_GATEWAYS": {"kind": "model", "subcategory": "Air travel and gateways", "data_type": "CONSIDERATION", "sources": ["fcdo_safety", "cdc_travel"], "freshness": "STABLE",
-          "keywords": ["airport", "flying", "flight", "aircraft", "kotoka", "arrivals"]}
+        "ROAD_TRAVEL": {
+          "kind": "model",
+          "subcategory": "Road travel",
+          "data_type": "CONSIDERATION",
+          "sources": [
+            "fcdo_safety",
+            "cdc_travel"
+          ],
+          "freshness": "STABLE",
+          "keywords": [
+            "road",
+            "driving",
+            "driver",
+            "vehicle",
+            "night",
+            "checkpoint",
+            "driving permit",
+            "licence",
+            "street lighting",
+            "convoy",
+            "seatbelt",
+            "drive"
+          ],
+          "heading_patterns": [
+            "Road travel",
+            "Driving standards",
+            "Select safe transportation"
+          ],
+          "exclude_keywords": [
+            "taxi",
+            "tro-tro",
+            "tro tro",
+            "minibus",
+            "airport",
+            "aircraft",
+            "flying"
+          ]
+        },
+        "TAXIS_AND_PUBLIC_TRANSPORT": {
+          "kind": "model",
+          "subcategory": "Taxis and public transport",
+          "data_type": "CONSIDERATION",
+          "sources": [
+            "fcdo_safety",
+            "cdc_travel"
+          ],
+          "freshness": "STABLE",
+          "keywords": [
+            "taxi",
+            "tro-tro",
+            "tro tro",
+            "minibus",
+            "app-based",
+            "public transportation",
+            "motorbike",
+            "buses"
+          ],
+          "heading_patterns": [
+            "Driving standards",
+            "Vehicle crime",
+            "Select safe transportation"
+          ]
+        },
+        "AIR_TRAVEL_AND_GATEWAYS": {
+          "kind": "model",
+          "subcategory": "Air travel and gateways",
+          "data_type": "CONSIDERATION",
+          "sources": [
+            "fcdo_safety",
+            "cdc_travel"
+          ],
+          "freshness": "STABLE",
+          "keywords": [
+            "airport",
+            "flying",
+            "flight",
+            "aircraft",
+            "kotoka",
+            "arrivals"
+          ],
+          "heading_patterns": [
+            "Safety at airports",
+            "Select safe transportation"
+          ],
+          "exclude_keywords": [
+            "taxi",
+            "tro-tro"
+          ]
+        }
       }
     },
     "EQUIPMENT": {
       "brief": "Country/environment-specific personal and operational equipment considerations, including seasonal needs: clothing, mosquito protection and electrical plugs.",
-      "sources": ["cdc_travel", "travelhealthpro", "fcdo_health", "fcdo_safety"],
+      "sources": [
+        "cdc_travel",
+        "travelhealthpro",
+        "fcdo_health",
+        "fcdo_safety"
+      ],
       "topics": {
-        "CLOTHING": {"kind": "model", "subcategory": "Clothing", "data_type": "CONSIDERATION", "sources": ["cdc_travel", "fcdo_safety"], "freshness": "STABLE",
-          "keywords": ["clothing", "clothes", "dress", "camouflage", "lightweight", "sunscreen", "hats", "long-sleeved", "shoes"]},
-        "MOSQUITO": {"kind": "model", "subcategory": "Mosquito protection", "data_type": "CONSIDERATION", "sources": ["cdc_travel", "travelhealthpro", "fcdo_health"], "freshness": "STABLE",
-          "keywords": ["mosquito", "bite", "repellent", "malaria", "yellow fever", "dengue", "bed net", "permethrin", "deet", "screened"]},
-        "PLUGS": {"kind": "reference", "subcategory": "Electrical plugs and supply", "data_type": "FACT", "sources": [], "freshness": "STABLE",
-          "_note": "Taken from the TI country reference fields (plugTypes, voltage, frequency). No external source is retrieved, so the draft says so and is marked unverified."}
+        "CLOTHING": {
+          "kind": "model",
+          "subcategory": "Clothing",
+          "data_type": "CONSIDERATION",
+          "sources": [
+            "cdc_travel",
+            "fcdo_safety"
+          ],
+          "freshness": "STABLE",
+          "keywords": [
+            "clothing",
+            "clothes",
+            "dress",
+            "camouflage",
+            "lightweight",
+            "sunscreen",
+            "hats",
+            "long-sleeved",
+            "shoes"
+          ],
+          "heading_patterns": [
+            "Dress code",
+            "Stay safe outdoors"
+          ]
+        },
+        "MOSQUITO": {
+          "kind": "model",
+          "subcategory": "Mosquito protection",
+          "data_type": "CONSIDERATION",
+          "sources": [
+            "cdc_travel",
+            "travelhealthpro",
+            "fcdo_health"
+          ],
+          "freshness": "STABLE",
+          "keywords": [
+            "mosquito",
+            "bite",
+            "repellent",
+            "malaria",
+            "yellow fever",
+            "dengue",
+            "bed net",
+            "permethrin",
+            "deet",
+            "screened"
+          ],
+          "heading_patterns": [
+            "Prevent bug bites",
+            "Malaria",
+            "Yellow fever",
+            "Dengue",
+            "Vaccine recommendations and health risks"
+          ]
+        },
+        "PLUGS": {
+          "kind": "reference",
+          "subcategory": "Electrical plugs and supply",
+          "data_type": "FACT",
+          "sources": [],
+          "freshness": "STABLE",
+          "_note": "Taken from the TI country reference fields (plugTypes, voltage, frequency). No external source is retrieved, so the draft says so and is marked unverified."
+        }
       }
     }
+  },
+  "publication": {
+    "enabled": true,
+    "allowed_events": [
+      "schedule",
+      "workflow_dispatch"
+    ],
+    "required_ref": "refs/heads/main",
+    "target_branch": "main",
+    "max_records_per_run": 8,
+    "min_claims_per_record": 1,
+    "max_claims_per_record": 8,
+    "duplicate_similarity": 0.85,
+    "review_days": 90,
+    "registry": {
+      "file": "config/source_registry.json",
+      "allowed_tiers": [
+        "TIER_1"
+      ],
+      "allowed_status": [
+        "ACTIVE",
+        "INTEGRATION_READY"
+      ],
+      "allowed_automation": [
+        "YES",
+        "REVIEWED"
+      ]
+    },
+    "quality": {
+      "min_words": 4,
+      "max_words": 90
+    },
+    "update_policy": {
+      "replace_only_builder_published": true,
+      "keep_existing_when_replacement_fails": true
+    },
+    "verification": {
+      "site_url_from": "config/production_controller.json",
+      "timeout_seconds": 900,
+      "interval_seconds": 20,
+      "rollback_on_failure": true
+    },
+    "refresh_days": 7
   }
 }

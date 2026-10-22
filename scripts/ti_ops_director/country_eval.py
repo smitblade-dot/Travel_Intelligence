@@ -95,6 +95,10 @@ def score_case(case, outcome):
 
 
 def evaluate(cfg: BuilderConfig, root, cases_doc, spend_factory, provider_label=None):
+    for cdef in cfg.raw["categories"].values():          # the evaluation measures the model path, not the extractive one
+        for t in cdef["topics"].values():
+            if t["kind"] == "model":
+                t["heading_patterns"] = ["(?!)x"]
     rows = []
     for case in cases_doc["cases"]:
         net = FixtureNet(case.get("pages"))
