@@ -25,7 +25,6 @@
     "drop_stale_sources": true
   },
   "retention": {
-    "evidence_days": 90,
     "superseded_drafts_keep": 3,
     "run_history_keep": 100,
     "closed_task_days": 60

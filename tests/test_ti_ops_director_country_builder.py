@@ -62,6 +62,12 @@ class Config(unittest.TestCase):
         self.assertTrue(load_builder_config({"TI_CB_COUNTRIES": "zz"}, ROOT).errors)
         self.assertTrue(load_builder_config({"TI_CB_DRY_RUN": "maybe"}, ROOT).dry_run)       # unrecognised stays dry-run
 
+    def test_batch_size_override_is_bounded(self):
+        self.assertEqual(load_builder_config({"TI_CB_BATCH_SIZE": "3"}, ROOT).tasks_per_run, 3)
+        self.assertEqual(load_builder_config({"TI_CB_BATCH_SIZE": "99"}, ROOT).tasks_per_run, 5)
+        self.assertEqual(load_builder_config({"TI_CB_BATCH_SIZE": "0"}, ROOT).tasks_per_run, 1)
+        self.assertTrue(load_builder_config({"TI_CB_BATCH_SIZE": "many"}, ROOT).errors)
+
     def test_operations_director_limits_do_not_transfer(self):
         env = {"TI_OPS_PER_TASK_LIMIT_USD": "9", "TI_OPS_DAILY_LIMIT_USD": "9", "TI_OPS_MONTHLY_LIMIT_USD": "9", "TI_OPS_DRY_RUN": "false"}
         cfg = load_builder_config(env, ROOT)
@@ -794,6 +800,40 @@ class GitBranchPersistence(unittest.TestCase):
         self.git(self.work, "fetch", "origin", "ti-country-drafts")
         st = json.loads(self.git(self.work, "show", "FETCH_HEAD:country_builder_state.json"))
         self.assertEqual((len(st["tasks"]), len(st["drafts"]), len(st["runs"])), (1, 1, 2))
+
+
+class Retention(unittest.TestCase):
+    def test_old_closed_tasks_are_pruned_but_drafts_are_kept(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            prov = Replies(reply_for("ENVIRONMENT"))
+            b = make_builder(tmp, provider=prov, **PAID)
+            b.cfg.categories = ["ENVIRONMENT"]
+            b.run()
+            first = list(load_state(b)["drafts"])
+            self.assertEqual(len(load_state(b)["tasks"]), 1)
+            later = cs.NOW + timedelta(days=70)       # the FCDO page is also past its 120-day limit by then, so evidence changes
+            b.clock = lambda: later
+            b.run(now=later)
+            st = load_state(b)
+            self.assertTrue(set(first) <= set(st["drafts"]))                    # the earlier draft is kept (superseded), not pruned
+            self.assertEqual([t["created_at"] >= later.isoformat()[:10] for t in st["tasks"].values()], [True])
+
+    def test_transient_provider_failure_is_retried_a_bounded_number_of_times(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            class Flaky:
+                calls = 0
+                def complete(self, **kw):
+                    Flaky.calls += 1
+                    if Flaky.calls == 1:
+                        raise TimeoutError("slow")
+                    return {"text": reply_for("TRANSPORT"), "input_tokens": 1800, "output_tokens": 500, "stop_reason": "end_turn"}
+            b = make_builder(tmp, provider=Flaky(), **PAID)
+            b.cfg.categories = ["TRANSPORT"]
+            b.run()
+            self.assertIn("provider_error", list(load_state(b)["tasks"].values())[0]["blockingReason"])
+            b.run(now=cs.NOW + timedelta(minutes=30))
+            t = list(load_state(b)["tasks"].values())[0]
+            self.assertEqual((t["state"], t["attempts"], Flaky.calls), ("completed", 2, 2))
 
 
 class MasterAgentIntegration(unittest.TestCase):

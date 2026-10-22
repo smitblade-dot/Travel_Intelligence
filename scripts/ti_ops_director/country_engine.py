@@ -31,7 +31,7 @@ LEASE_MINUTES = 20
 SCHEMA = 1
 REPO_URL = "https://github.com/smitblade-dot/Travel_Intelligence"
 SPEND_NOTE = "estimated from API usage fields x configured list prices; not invoice-confirmed"
-RETRY_BLOCKS = ("awaiting_paid_authorisation", "budget:", "insufficient_evidence_temporary")
+RETRY_BLOCKS = ("awaiting_paid_authorisation", "budget:", "insufficient_evidence_temporary", "gateway:provider_error")
 
 
 # ---- storage -------------------------------------------------------------------------------------------------
@@ -341,9 +341,16 @@ class Builder:
                                     "inputs": t["inputs"], "state": "pending", "attempts": 0, "created_at": iso(now),
                                     "updated_at": iso(now), "lease_owner": None, "lease_expires": None}
                 stats["created"] += 1
-            eligible = [t for t in st["tasks"].values() if t["state"] == "pending" or
-                        (t["state"] == "blocked" and any((t.get("blockingReason") or "").startswith(p) for p in RETRY_BLOCKS)
-                         and (self.model_allowed()[0] or not (t.get("blockingReason") or "").startswith(("awaiting", "budget"))))]
+            def retryable(t):
+                r = t.get("blockingReason") or ""
+                if t["state"] != "blocked" or not any(r.startswith(p) for p in RETRY_BLOCKS):
+                    return False
+                if r.startswith(("awaiting", "budget")):
+                    return self.model_allowed()[0]                      # only once paid drafting is actually possible
+                if r.startswith("gateway:provider_error"):
+                    return t["attempts"] < cfg.raw.get("max_attempts", 3)   # transient provider failure: bounded retries
+                return True
+            eligible = [t for t in st["tasks"].values() if t["state"] == "pending" or retryable(t)]
             eligible = [t for t in eligible if t["dedupe_key"] in {p["dedupe_key"] for p in planned}]
             order = {c: i for i, c in enumerate(cfg.categories)}
             eligible.sort(key=lambda t: (order.get(t["inputs"]["category"], 99), t["inputs"]["countryId"], t["created_at"], t["id"]))
@@ -437,6 +444,10 @@ class Builder:
         return report
 
     def _prune(self, st, writes):
+        days = self.cfg.raw["retention"]["closed_task_days"]
+        cutoff = iso(self.clock() - timedelta(days=days))
+        for key in [k for k, t in st["tasks"].items() if t["state"] in ("completed", "failed", "cancelled") and t["updated_at"] < cutoff]:
+            del st["tasks"][key]
         keep = self.cfg.raw["retention"]["superseded_drafts_keep"]
         superseded = sorted((d for d in st["drafts"].values() if d.get("supersededBy")), key=lambda d: d["createdAt"])
         for d in superseded[:-keep] if keep else superseded:

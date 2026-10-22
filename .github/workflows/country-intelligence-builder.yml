@@ -50,6 +50,8 @@ jobs:
           TI_CB_STATE_BRANCH: ${{ vars.TI_CB_STATE_BRANCH }}
           TI_CB_COUNTRIES: ${{ vars.TI_CB_COUNTRIES }}
           TI_CB_CATEGORIES: ${{ vars.TI_CB_CATEGORIES }}
+          # The pull-request trial walks all three configured categories in one pass (still no spend).
+          TI_CB_BATCH_SIZE: ${{ github.event_name == 'pull_request' && '3' || vars.TI_CB_BATCH_SIZE }}
           TI_CB_PER_TASK_LIMIT_USD: ${{ vars.TI_CB_PER_TASK_LIMIT_USD }}
           TI_CB_DAILY_LIMIT_USD: ${{ vars.TI_CB_DAILY_LIMIT_USD }}
           TI_CB_MONTHLY_LIMIT_USD: ${{ vars.TI_CB_MONTHLY_LIMIT_USD }}

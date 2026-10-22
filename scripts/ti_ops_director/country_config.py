@@ -102,9 +102,9 @@ def load_builder_config(env=None, root=ROOT, path=None) -> BuilderConfig:
         if cc not in raw.get("country_params", {}):
             err.append(f"country {cc} has no country_params (source identifiers, location)")
     try:
-        cfg.tasks_per_run = max(1, min(int(scope.get("batch_size_tasks_per_run", 1)), 5))
+        cfg.tasks_per_run = max(1, min(int((env.get("TI_CB_BATCH_SIZE") or "").strip() or scope.get("batch_size_tasks_per_run", 1)), 5))
     except (TypeError, ValueError):
-        err.append("batch_size_tasks_per_run must be a whole number")
+        err.append("batch size (batch_size_tasks_per_run / TI_CB_BATCH_SIZE) must be a whole number")
     spend = raw.get("spending", {})
     dry, dstatus = parse_dry_run(env.get("TI_CB_DRY_RUN")) if (env.get("TI_CB_DRY_RUN") or "").strip() else (bool(spend.get("dry_run", True)), "committed")
     cfg.dry_run, cfg.dry_run_source = dry, ("TI_CB_DRY_RUN" if dstatus != "committed" else "config/country_builder.json")
