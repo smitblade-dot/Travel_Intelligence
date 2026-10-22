@@ -152,6 +152,17 @@
         "Travel Intelligence|country_content_draft|gh:TRANSPORT:MISSING|cfbb29ccdb58436d53d137f9d07961ac|W42": "assessed",
         "Travel Intelligence|country_content_draft|gh:EQUIPMENT:MISSING|1b1ea479b4bf2ebbb9dc5502bbb1b9e9|W42": "assessed"
       }
+    },
+    {
+      "at": "2026-10-22T11:13:13+00:00",
+      "mode": "draft",
+      "tasksRun": 0,
+      "created": 0,
+      "duplicatesSuppressed": 3,
+      "recovered": [],
+      "published": [],
+      "publicationFailures": [],
+      "outcomes": {}
     }
   ],
   "exceptions": {
