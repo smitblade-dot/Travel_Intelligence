@@ -241,6 +241,17 @@ class DraftTrialThenPublish(unittest.TestCase):
             self.assertIn("gh-transport-road-travel", records(h))
 
 
+    def test_settled_work_with_unchanged_rules_is_not_reopened_the_next_day(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            h = PublishHarness(tmp)
+            shared = LocalBackend(Path(tmp) / "ledger")
+            run_all(h.builder(ledger=shared))
+            calls = h.site.calls
+            b = h.builder(ledger=shared, now=cs.NOW + timedelta(days=1))
+            b.run()
+            self.assertIn("reopened 0", "\n".join(b.captured))
+
+
 class FailureAndRollback(unittest.TestCase):
     @staticmethod
     def _short_window(b, timeout=3):
