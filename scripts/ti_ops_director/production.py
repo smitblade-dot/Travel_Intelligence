@@ -16,6 +16,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import re
 import subprocess
 import sys
 from dataclasses import dataclass, field
@@ -26,7 +27,7 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import quote, urlsplit
 from urllib.request import Request, urlopen
 
-from . import BUSINESS_APPLICATION, SUBSTREAM
+from . import BUSINESS_APPLICATION, SUBSTREAM, refresh_slot
 from .monitor_state import FileStateBackend, GitStateBackend, Snapshot, StateSyncError, dump_state
 from .sanitise import clean_text, redact_text
 from .scheduling import display, last_daily_slot
@@ -310,8 +311,21 @@ def check_workflow(api, spec, now):
     return res.done()
 
 
+def _off_slot_schedule(run, spec):
+    """A scheduled run whose gate intentionally skips work: the other UTC cron of a dual-cron daily slot.
+
+    The cron that fired is read from the run name (``[0 19 * * *]``); runs without one are always judged.
+    """
+    crons = spec["schedule"].get("utc_crons")
+    m = re.search(r"\[([^\]]+)\]\s*$", run.get("display_title") or "")
+    if not crons or run.get("event") != "schedule" or not m or m.group(1) not in crons:
+        return False
+    return not refresh_slot.is_refresh_slot(m.group(1), parse_ts(run["created_at"]))
+
+
 def _check_daily(api, spec, runs, now, add, res):
     sched = spec["schedule"]
+    runs = [r for r in runs if not _off_slot_schedule(r, spec)]
     slot = last_daily_slot(now, sched["local_time"], sched["timezone"])
     window = lambda s: [r for r in runs if s - timedelta(minutes=10) <= parse_ts(r["created_at"])  # noqa: E731
                         < s + timedelta(days=1) - timedelta(minutes=10)]

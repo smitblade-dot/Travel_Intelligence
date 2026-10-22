@@ -1,11 +1,15 @@
 name: Daily travel intelligence data refresh
 
+run-name: "Daily travel intelligence data refresh${{ github.event_name == 'schedule' && format(' [{0}]', github.event.schedule) || '' }}"
+
 on:
   schedule:
-    # GitHub resolves the local schedule, including Cyprus DST transitions.
-    # Runner queue delays must never decide whether the refresh is allowed.
-    - cron: "0 21 * * *"
-      timezone: "Europe/Nicosia"
+    # 21:00 Europe/Nicosia year-round: 18:00 UTC in summer (EEST), 19:00 UTC
+    # in winter (EET). GitHub's `timezone:` key fired at 21:00 UTC instead
+    # (20-21 Oct 2026), so both UTC hours are scheduled and the gate keeps the
+    # one that is 21:00 in Cyprus. Queue delay must never decide the outcome.
+    - cron: "0 18 * * *"
+    - cron: "0 19 * * *"
   workflow_dispatch: {}
 
 permissions:
@@ -18,20 +22,20 @@ jobs:
     outputs:
       should_run: ${{ steps.gate.outputs.should_run }}
     steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+          sparse-checkout: scripts/ti_ops_director/refresh_slot.py
+          sparse-checkout-cone-mode: false
+
       - id: gate
         env:
           EVENT_NAME: ${{ github.event_name }}
           SCHEDULED_CRON: ${{ github.event.schedule }}
+        # Decides from the cron entry that fired; the clock only selects which
+        # day's instance of that entry this is, so any delay under 24 h is inert.
         run: |
-          if [ "$EVENT_NAME" = "workflow_dispatch" ] || {
-            [ "$EVENT_NAME" = "schedule" ] && [ "$SCHEDULED_CRON" = "0 21 * * *" ];
-          }; then
-            echo "should_run=true" >> "$GITHUB_OUTPUT"
-            echo "Refresh allowed: $EVENT_NAME / $SCHEDULED_CRON (21:00 Europe/Nicosia)."
-          else
-            echo "should_run=false" >> "$GITHUB_OUTPUT"
-            echo "Unexpected trigger: $EVENT_NAME / $SCHEDULED_CRON."
-          fi
+          GATE_NOW_EPOCH="$(date -u +%s)" python3 scripts/ti_ops_director/refresh_slot.py
 
   refresh:
     needs: schedule_gate
