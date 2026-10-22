@@ -97,13 +97,18 @@ def load_pc_config(env=None, root=None, path=None):
                    output=raw["output"], release=raw["release"], controller=raw["controller"])
     cfg.max_dispatches_per_day = int(raw["controller"].get("max_dispatches_per_workflow_per_day", 1))
 
+    op = raw.get("operation") or {}
     mode = (env.get("TI_PC_MODE") or "").strip().lower()
+    if not mode and (op.get("mode") or "").strip():
+        mode, from_config = op["mode"].strip().lower(), True    # Marc's confirmed setting, committed in the repo
+    else:
+        from_config = False
     if not mode:
         # A manual run with no mode set is one read-only observation; schedules stay inert.
         cfg.mode, cfg.mode_source = ("observe", "manual_default") if env.get("TI_PC_EVENT") == "workflow_dispatch" \
             else ("off", "unset")
     elif mode in MODES:
-        cfg.mode, cfg.mode_source = mode, "TI_PC_MODE"
+        cfg.mode, cfg.mode_source = mode, "config/production_controller.json" if from_config else "TI_PC_MODE"
     else:
         cfg.mode, cfg.mode_source = "off", "invalid"
         cfg.errors.append("TI_PC_MODE must be off, observe or active; the controller stays off")
@@ -112,7 +117,7 @@ def load_pc_config(env=None, root=None, path=None):
         cfg.release = dict(cfg.release, site_url=env["TI_PC_SITE_URL"].strip())
     if urlsplit(cfg.site_url).scheme != "https":
         cfg.errors.append("release.site_url must be an https URL")
-    cfg.state_branch = (env.get("TI_PC_STATE_BRANCH") or "").strip() or None
+    cfg.state_branch = (env.get("TI_PC_STATE_BRANCH") or "").strip() or (op.get("state_branch") or "").strip() or None
     if cfg.state_branch in ("main", cfg.branch):
         cfg.errors.append("TI_PC_STATE_BRANCH must not be the production branch (every push would redeploy Pages)")
         cfg.state_branch = None
@@ -780,8 +785,12 @@ def run(env=None, root=None, data_root=None, now=None, api=None, http=http_reque
     try:
         state = backend.snapshot().state() if backend else {}
     except StateSyncError as exc:
-        out(f"::error title=Production controller state::{exc}")
-        return EXIT_STATE
+        if cfg.mode == "active":
+            out(f"::error title=Production controller state::{exc}")
+            return EXIT_STATE
+        # Observe records nothing, so an unreadable ledger only limits the comparison; the checks still run.
+        cfg.warnings.append(f"persisted ledger could not be read ({clean_text(exc, 160)}); compared against nothing")
+        state = {}
     results = run_checks(cfg, api, data_root or root, now, state, http, validator)
     if cfg.mode == "active" and not cfg.errors:
         def fn(snap):

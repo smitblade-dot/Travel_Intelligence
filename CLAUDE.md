@@ -248,3 +248,18 @@ Gas/LNG imports must preserve Unknown (unverified / presumed) independently
 from disruption. The operating_summary and operating_evidence fields retain
 coverage gaps even when worst_status indicates an actual restriction elsewhere.
 Never treat source_generated as asset verification or Unknown as normal.
+
+## Agent development (03AA-04)
+
+Every agent built in this repository must meet `docs/AGENT_BUILD_STANDARD.md` in full. These are mandatory
+acceptance criteria, applied without Marc having to ask:
+
+- establish the exact configuration before implementing, and apply confirmed settings wherever access
+  permits (commit non-secret operating values to the agent's config when repository variables cannot be set);
+- where access prevents configuration, give Marc one concise list of exact names, values and settings location;
+- verify the agent in its intended operating mode, including at least one automatic run on `main`;
+- show a real output and a direct report link;
+- explain plainly what it does, when it runs, what it costs and what Marc must do;
+- state built, tested, merged, configured and operational separately;
+- issue your own concise completion handover ending COMPLETE or NOT COMPLETE, never calling it complete while
+  configuration or verification is outstanding.

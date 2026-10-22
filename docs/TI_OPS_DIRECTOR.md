@@ -4,6 +4,7 @@ FORGEDTITANIUM LTD, Cyprus. Stream: 03 Agents & Automation. Substream: 03AA-04 I
 Automation Agents. Business application: Travel Intelligence. Agent development, IP and costs belong
 under 03AA-04. No agent number, organisational code, cost code or document number has been invented:
 the cost code field is intentionally absent until the FT register supplies it.
+Acceptance standard for this and every 03AA-04 agent: `docs/AGENT_BUILD_STANDARD.md`.
 
 ## Completion record (21 October 2026)
 

@@ -155,16 +155,49 @@ class Harness(unittest.TestCase):
 
 
 class ConfigTests(Harness):
-    def test_unset_mode_is_off_and_makes_no_call(self):
+    def without_operation(self):
         root = make_root(self.tmp)
+        p = root / "config/production_controller.json"
+        raw = json.loads(p.read_text())
+        raw.pop("operation", None)
+        p.write_text(json.dumps(raw))
+        return root
+
+    def test_no_mode_anywhere_is_off_and_makes_no_call(self):
+        root = self.without_operation()
         api, out = FakeAPI(down={"all"}), []
         code = pc.run(env={}, root=root, api=api, out=out.append)
         self.assertEqual(code, EXIT_OK)
         self.assertIn("OFF (unset)", out[0])
 
-    def test_manual_run_without_mode_is_one_read_only_observation(self):
-        cfg = load_pc_config({"TI_PC_EVENT": "workflow_dispatch"}, make_root(self.tmp))
+    def test_manual_run_without_any_mode_is_one_read_only_observation(self):
+        cfg = load_pc_config({"TI_PC_EVENT": "workflow_dispatch"}, self.without_operation())
         self.assertEqual((cfg.mode, cfg.mode_source), ("observe", "manual_default"))
+
+    def test_committed_configuration_is_marcs_confirmed_setting(self):
+        raw = json.loads((ROOT / "config/production_controller.json").read_text())
+        self.assertEqual(raw["operation"]["mode"], "observe")
+        self.assertEqual(raw["release"]["site_url"], "https://travelintelligence22.com/")
+        self.assertEqual(raw["controller"]["max_dispatches_per_workflow_per_day"], 1)
+        cfg = load_pc_config({}, ROOT)
+        self.assertEqual((cfg.mode, cfg.mode_source, cfg.state_branch, cfg.recovery_workflows, cfg.errors),
+                         ("observe", "config/production_controller.json", "ti-ops-state", (), []))
+
+    def test_repository_variables_override_the_committed_configuration(self):
+        self.assertEqual(load_pc_config({"TI_PC_MODE": "off"}, ROOT).mode, "off")
+        cfg = load_pc_config({"TI_PC_MODE": "active", "TI_PC_STATE_BRANCH": "other-state"}, ROOT)
+        self.assertEqual((cfg.mode, cfg.mode_source, cfg.state_branch), ("active", "TI_PC_MODE", "other-state"))
+
+    def test_observe_continues_when_the_ledger_cannot_be_read(self):
+        root = make_root(self.tmp)                       # not a git repository: the ledger read fails
+        site, files = site_for(root)
+        lines = []
+        code = pc.run(env={"TI_PC_MODE": "observe", "TI_PC_STATE_BRANCH": "ti-ops-state"}, root=root,
+                      api=FakeAPI(runs=healthy_runs(), files=files), http=site, validator=ok_validator, now=NOW,
+                      out=lines.append)
+        self.assertEqual(code, EXIT_OK)
+        self.assertIn("persisted ledger could not be read", "\n".join(lines))
+        self.assertIn("## Verdict:", lines[0])
 
     def test_invalid_mode_fails_closed(self):
         root = make_root(self.tmp)
@@ -173,7 +206,7 @@ class ConfigTests(Harness):
         self.assertIn("stays off", out[0])
 
     def test_active_needs_a_state_branch_and_never_main(self):
-        root = make_root(self.tmp)
+        root = self.without_operation()
         self.assertTrue(load_pc_config({"TI_PC_MODE": "active"}, root).errors)
         cfg = load_pc_config({"TI_PC_MODE": "active", "TI_PC_STATE_BRANCH": "main"}, root)
         self.assertIsNone(cfg.state_branch)
@@ -812,10 +845,9 @@ class WorkflowContractTests(unittest.TestCase):
     """Text checks (PyYAML is not installed in this test job)."""
     TEXT = (ROOT / ".github/workflows/production-controller.yml").read_text()
 
-    def test_inert_until_mode_is_set_and_least_privilege(self):
+    def test_stoppable_by_variable_and_least_privilege(self):
         t = self.TEXT
-        self.assertIn("if: github.event_name == 'workflow_dispatch' || vars.TI_PC_MODE == 'observe' || "
-                      "vars.TI_PC_MODE == 'active'", t)
+        self.assertIn("if: vars.TI_PC_MODE != 'off'", t)
         self.assertIn("permissions: {}", t)
         check, recover = t.split("\n  recover:")
         self.assertIn("actions: read", check)
