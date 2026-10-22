@@ -1037,6 +1037,16 @@
         "served_sha256": "fa09dc55053078c7987843cc38b1a81fb0c277624eff86ed13119a632205c496",
         "url": "https://travelintelligence22.com/"
       }
+    },
+    "pub-20261022T202028Z-a48d6e": {
+      "id": "pub-20261022T202028Z-a48d6e",
+      "at": "2026-10-22T20:20:28+00:00",
+      "state": "PENDING",
+      "records": [
+        "gh-equipment-clothing",
+        "gh-equipment-mosquito",
+        "gh-equipment-plugs"
+      ]
     }
   },
   "pending": {},
