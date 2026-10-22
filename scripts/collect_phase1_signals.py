@@ -18,9 +18,14 @@ def failure(error, status='unavailable'):
     return {'ok': False, 'status': status, 'error': str(error)}
 
 
-def safe_json(url, field, attempts=3):
+def safe_json(url, field, attempts=3, deadline=None):
     try:
-        data = json.loads(fetch(url, attempts=attempts))
+        raw = fetch(url, attempts=attempts, **({'deadline': deadline} if deadline is not None else {}))
+        try:
+            data = json.loads(raw)
+        except (ValueError, UnicodeDecodeError):
+            # Fixed diagnostic only: never retain an error page or echoed URL/key.
+            return {**failure('Provider returned a non-JSON response'), 'errorKind': 'invalid_json'}
         if not isinstance(data, dict) or not isinstance(data.get(field), list):
             raise ValueError(f'Response lacks expected {field} array')
         return {'ok': True, 'status': 'healthy', 'sourceUrl': url, 'data': data}
@@ -42,7 +47,16 @@ def collect_gdelt():
     # Bound the query to the recent refresh window, not the default long search.
     url = ('https://api.gdeltproject.org/api/v2/doc/doc?query=' + quote(query) +
            '&mode=artlist&format=json&maxrecords=50&sort=datedesc&timespan=24h')
-    return safe_json(url, 'articles')
+    result = safe_json(url, 'articles')
+    # GDELT sometimes returns a temporary HTML/plain-text error with HTTP 200.
+    # HTTP retries already happen in fetch(); only malformed successful replies
+    # receive up to two further, spaced requests. No alternate endpoint or cache.
+    for _ in range(2):
+        if result.get('errorKind') != 'invalid_json':
+            break
+        time.sleep(15)
+        result = safe_json(url, 'articles', attempts=1)
+    return result
 
 
 def collect_gdacs():
@@ -74,9 +88,13 @@ def collect_adsblol():
             areas.append({**point, 'ok': False, 'error': 'Sampling time budget exhausted; not requested'})
             continue
         if index:
-            time.sleep(1)  # Free community service: no concurrent/burst requests.
+            # The provider publishes dynamic limits. One-second pacing produced
+            # 30 HTTP 429s in the overnight run; use a slower, serial schedule.
+            time.sleep(3)
         url = config['endpoint'].format(lat=point['lat'], lon=point['lon'], radius=config['radiusNm'])
-        result = safe_json(url, 'ac', attempts=1)
+        # Honour Retry-After via fetch(), with one bounded retry on transient
+        # errors. Permanent denials are never retried. Keep partial coverage.
+        result = safe_json(url, 'ac', attempts=2, deadline=deadline)
         areas.append({**point, 'sourceUrl': url, 'ok': result['ok'], 'error': result.get('error')})
         if result['ok']:
             for item in result['data']['ac']:

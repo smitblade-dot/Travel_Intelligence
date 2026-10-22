@@ -140,3 +140,42 @@ validated commit/push and the strict discovery-health audit. Confirm Pages
 deployment separately where publication occurs. Provider approval or a Pages
 deployment alone does not prove those other stages succeeded. Do not weaken
 publication safeguards to satisfy discovery coverage.
+
+## Rate limits and completed reviews - 22 October 2026
+
+Production run 39678231653 retained healthy ReliefWeb access but failed strict
+coverage: GDELT returned HTTP 429 and 30 of 52 ADS-B area requests returned
+HTTP 429. The review action again exited while background researchers were
+still running. A successful action process is not evidence of completed work.
+
+ADSB.lol documents dynamic limits, not a guaranteed one-request-per-second
+allowance (https://github.com/adsblol/api#rate-limits). Sampling now waits
+three seconds between areas and allows one transient retry through the existing
+Retry-After-aware transport. Requests, retry waits and socket timeouts share the
+ten-minute budget. Failed/unrequested areas remain explicit; partial coverage
+still fails the strict audit. No concurrency, alternate identity or rate-limit
+bypass is used. Persistent limits require a later run or provider agreement,
+not an invented healthy result.
+
+GDELT transport errors retain bounded retries. HTTP-200 HTML/plain-text replies
+now receive a fixed non-JSON diagnostic without retaining the response body,
+and up to two further requests spaced by 15 seconds. The initial transport
+can make three requests; the two content retries make one each. Schema errors,
+access denials and persistent outages remain failures. The 24-hour query and
+its security, transport and maritime scope are preserved.
+
+The daily reviewer is restricted to direct tools and must return structured
+completion evidence for the current run. Before metadata changes or the
+safety-net commit, `scripts/refresh_review.py` requires a successful terminal
+result, live research calls, all tracked country IDs, the continuing Fairford
+and Sochi topics, source URLs, review outcomes and zero pending tasks. Missing,
+partial, unverified, stale-run or delegated/background reviews stop publication.
+A completed no-material-change review is valid; data edits are not forced.
+This validates completion evidence, not the truth of claims: source provenance,
+SourceObservation requirements and TI data/foundation checks remain necessary.
+
+The action's structured-output and restricted-tool interfaces are documented at
+https://github.com/anthropics/claude-code-action/blob/main/action.yml and
+https://code.claude.com/docs/en/cli-reference. Production refreshes now retain
+discovery/reference snapshots and completed review evidence for seven days even
+if a later audit fails. Raw SDK execution logs are not uploaded as artifacts.
