@@ -23,7 +23,7 @@ from .country_draft import (PROMPT_VERSION, SYSTEM_PROMPT, build_candidate_batch
 from .country_evidence import collect_category, evidence_fingerprint, http_get, select_passages
 from .country_gaps import TASK_TYPE, coverage_summary, find_gaps, task_for
 from .country_pipeline import assess_all, build_items, source_exceptions, topic_exceptions, unique_exceptions, verify_model_claims
-from .country_publish import (PublishRefused, make_main_backend, publish_items, rollback_publication, served_matches, served_without,
+from .country_publish import (PublishRefused, make_main_backend, publish_items, rollback_publication, release_is_ours, served_matches, served_without,
                               site_url_for, verify_live)
 from .models import AnthropicProvider
 from .monitor_bridge import MonitorSpend, spend_section
@@ -32,7 +32,7 @@ from .production import http_request
 from .sanitise import clean_text
 from .store import fingerprint, iso, utc_now
 
-EXIT_OK, EXIT_CONFIG, EXIT_STATE = 0, 3, 4
+EXIT_OK, EXIT_CONFIG, EXIT_STATE, EXIT_PUBLICATION = 0, 3, 4, 5
 LEASE_MINUTES = 20
 SCHEMA = 1
 REPO_URL = "https://github.com/smitblade-dot/Travel_Intelligence"
@@ -400,7 +400,10 @@ class Builder:
                 retry = task["attempts"] < cfg.raw.get("max_attempts", 3)
                 outcome = _failed("pending" if retry else "failed", f"{type(exc).__name__}: {clean_text(exc, 160)}")
             results.append((key, outcome, spend))
+        rechecks = self.recheck_pending(now) if (cfg.mode == "publish" and self.publication_allowed()[0]) else []
         publication = self._publish_phase(results, now)
+        publication["rechecks"] = rechecks
+        publication.setdefault("failures", []).extend(f for r in rechecks for f in r.get("failures", []))
         try:
             report = self._persist(results, now, summary, stats, publication)
         except StateSyncError as exc:
@@ -408,6 +411,10 @@ class Builder:
             return EXIT_STATE
         out(report)
         self._step_summary(report)
+        bad = [f["reason"] for f in publication.get("failures", []) if f["reason"] in ALARM_REASONS]
+        if bad:
+            out(f"::error title=Country builder publication::{', '.join(sorted(set(bad)))}: see the report; main or the live site may need attention")
+            return EXIT_PUBLICATION
         return EXIT_OK
 
     # -- publication --
@@ -456,19 +463,71 @@ class Builder:
             self._ledger(lambda st: st["publications"][pub_id].update(state="VERIFIED", commit=summary.get("commit"), verifiedAt=iso(self.clock()),
                                                                      summary=summary, served=v))
             return res
-        res["failures"].append({"reason": "live_verification_failed", "detail": v.get("detail")})
-        if ver.get("rollback_on_failure"):
-            try:
-                rb = rollback_publication(backend, pub_id, self.clock())
-                res["rollback"] = rb
-                v2 = verify_live(url, self.site_http, lambda served: served_without(served, rb["removed"]) if rb["removed"] else (True, []),
-                                 ver["timeout_seconds"], ver["interval_seconds"], sleep=self.sleep)
-                res["rollback"]["verification"] = v2
-            except (PublishRefused, StateSyncError) as exc:
-                res["failures"].append({"reason": "rollback_failed", "detail": str(exc)[:300]})
-        self._ledger(lambda st: st["publications"][pub_id].update(state="ROLLED_BACK" if "rollback" in res else "VERIFICATION_FAILED",
-                                                                 detail=v.get("detail"), commit=summary.get("commit")))
+        # The site did not serve the content inside the window. A late deployment is not bad content: only a site that is
+        # demonstrably serving a release at or after ours, yet not our content, is treated as incorrect and rolled back.
+        verify_items = [{"recordId": i["recordId"], "record": {"content": i["record"]["content"]}, "contentHash": i["contentHash"],
+                         "needsSources": i["needsSources"], "observations": [{"id": o["id"]} for o in i["observations"]]} for i in changed]
+        base = {"commit": summary.get("commit"), "generated": summary.get("generated"), "verifyItems": verify_items,
+                "firstCheckedAt": iso(self.clock()), "rechecks": 0, "lastDetail": v.get("detail"), "servedGenerated": v.get("served_generated")}
+        if release_is_ours(v, summary.get("generated")) and ver.get("rollback_on_incorrect_content"):
+            res["failures"].append({"reason": "published_content_incorrect", "detail": v.get("detail")})
+            self._rollback(res, backend, pub_id, url, ver, base)
+            return res
+        res["pending"] = True
+        res["published"] = [i["recordId"] for i in changed]          # on main; the site has not served it yet
+        res["verification_pending"] = {"records": [i["recordId"] for i in changed], "detail": v.get("detail")}
+        self._ledger(lambda st: st["publications"][pub_id].update(state="VERIFICATION_PENDING", pending=base, summary=summary))
         return res
+
+    def _rollback(self, res, backend, pub_id, url, ver, base):
+        try:
+            rb = rollback_publication(backend, pub_id, self.clock())
+            res["rollback"] = rb
+            v2 = verify_live(url, self.site_http, lambda served: served_without(served, rb["removed"]) if rb["removed"] else (True, []),
+                             ver["timeout_seconds"], ver["interval_seconds"], sleep=self.sleep)
+            res["rollback"]["verification"] = v2
+            if not v2["ok"]:
+                res["failures"].append({"reason": "rollback_not_yet_served", "detail": v2.get("detail")})
+        except (PublishRefused, StateSyncError) as exc:
+            res["failures"].append({"reason": "rollback_failed", "detail": str(exc)[:300]})
+        self._ledger(lambda st: st["publications"][pub_id].update(state="ROLLED_BACK" if "rollback" in res else "VERIFICATION_FAILED",
+                                                                 detail=base.get("lastDetail"), commit=base.get("commit")))
+
+    def recheck_pending(self, now):
+        """Bounded rechecks of publications whose verification is pending. Never deletes content for a slow deployment."""
+        ver = self.cfg.publication_cfg["verification"]
+        report = []
+        try:
+            st = _sections(self.backend.snapshot().state() or empty_state())
+        except StateSyncError:
+            return report
+        for pub_id, p in list(st["publications"].items()):
+            if p.get("state") != "VERIFICATION_PENDING":
+                continue
+            pend = p["pending"]
+            url = site_url_for(self.root, self.cfg.publication_cfg)
+            items = pend["verifyItems"]
+            v = verify_live(url, self.site_http, lambda served: served_matches(served, items), ver.get("recheck_timeout_seconds", 120),
+                            ver["interval_seconds"], sleep=self.sleep)
+            if v["ok"]:
+                self._ledger(lambda s2: s2["publications"][pub_id].update(state="VERIFIED", verifiedAt=iso(self.clock()), served=v, pending=None))
+                report.append({"publicationId": pub_id, "result": "verified", "records": p["records"], "verification": v})
+                continue
+            n = pend["rechecks"] + 1
+            pend.update(rechecks=n, lastDetail=v.get("detail"), servedGenerated=v.get("served_generated"), lastCheckedAt=iso(self.clock()))
+            res = {"failures": []}
+            if release_is_ours(v, pend.get("generated")) and ver.get("rollback_on_incorrect_content"):
+                res["failures"].append({"reason": "published_content_incorrect", "detail": v.get("detail")})
+                self._rollback(res, self.main_backend or make_main_backend(self.root, self.cfg.publication_cfg["target_branch"]), pub_id, url, ver, pend)
+                report.append({"publicationId": pub_id, "result": "rolled_back_incorrect_content", "failures": res["failures"]})
+            elif n >= ver.get("max_rechecks", 6):
+                self._ledger(lambda s2: s2["publications"][pub_id].update(state="VERIFICATION_FAILED", pending=pend))
+                report.append({"publicationId": pub_id, "result": "unresolved_after_rechecks", "detail": v.get("detail"),
+                               "failures": [{"reason": "verification_unresolved", "detail": v.get("detail")}]})
+            else:
+                self._ledger(lambda s2: s2["publications"][pub_id].update(pending=pend))
+                report.append({"publicationId": pub_id, "result": "still_pending", "rechecks": n, "detail": v.get("detail")})
+        return report
 
     def _ledger(self, mutate):
         def fn(snap):
@@ -650,11 +709,17 @@ class Builder:
         if pub.get("skipped"):
             return ["## Publication", "", f"- NOT published: {pub['skipped']}. Would publish: {', '.join(pub['preview'])}.", ""]
         out = ["## Publication", ""]
-        if pub.get("published"):
+        if pub.get("published") and pub["verification"]["ok"]:
             v = pub["verification"]
             out += [f"- PUBLISHED and verified on the live site: {', '.join(pub['published'])}",
                     f"- Commit: {REPO_URL}/commit/{pub['summary'].get('commit')} | live check: {v['url']}data.json served the new content after {v['attempts']} check(s); "
                     f"served data generated {v.get('served_generated')}"]
+        if pub.get("verification_pending"):
+            vp = pub["verification_pending"]
+            out.append(f"- PUBLISHED to main, live verification PENDING (deployment not yet visible; content not judged wrong, nothing removed): "
+                       f"{', '.join(vp['records'])} | {vp['detail']}")
+        for r in pub.get("rechecks", []):
+            out.append(f"- Recheck of {r['publicationId']}: {r['result']}" + (f" ({r.get('detail')})" if r.get("detail") else ""))
         for f in pub.get("failures", []):
             out.append(f"- FAILED: {f['reason']}: {f.get('detail')}")
         if pub.get("rollback"):
@@ -675,10 +740,14 @@ class Builder:
                 fh.write(text + "\n")
 
 
+ALARM_REASONS = {"published_content_incorrect", "rollback_failed", "rollback_not_yet_served", "verification_unresolved",
+                 "publication_push_failed", "publication_refused"}
 ACTION_FOR = {
+    "published_content_incorrect": "The site is serving a release at least as new as the publication but not its content; it was rolled back.",
+    "rollback_not_yet_served": "The rollback was committed but the site has not served it yet; recheck the site.",
+    "verification_unresolved": "The site still does not serve the published content after the bounded rechecks. Nothing was deleted; check the GitHub Pages deployment.",
     "publication_refused": "The candidate failed canonical validation or a guard; nothing was pushed. Investigate the detail.",
     "publication_push_failed": "Pushing to main failed; retried next run.",
-    "live_verification_failed": "The public site did not serve the published content in time; the publication was rolled back. Check GitHub Pages.",
     "rollback_failed": "Rollback failed. Investigate main immediately.",
     "existing_record_not_owned": "A hand-written or earlier record already uses this id; it was not touched.",
     "max_records_per_run": "Per-run publication limit reached; the rest publish next run.",

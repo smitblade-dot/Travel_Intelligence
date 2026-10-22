@@ -179,7 +179,7 @@ from ti_ops_director.production import HttpReply             # noqa: E402
 
 class FakeSite:
     """Serves the public data.json from the remote's main (what GitHub Pages would publish).
-    mode: live | stale (never updates) | down | lag (stale for ``lag`` requests, then live)."""
+    mode: live | newer | stale (never updates) | down | lag (stale for ``lag`` requests, then live)."""
     def __init__(self, bare, mode="live", lag=0):
         self.bare, self.mode, self.lag, self.calls = bare, mode, lag, 0
         self.initial = self.show("main")
@@ -191,6 +191,10 @@ class FakeSite:
         self.calls += 1
         if self.mode == "down":
             return HttpReply(503, b"", "http_error")
+        if self.mode == "newer":                 # a release at least as new as ours that lacks our content
+            d = json.loads(self.initial)
+            d["meta"]["generated"] = "2099-01-01T00:00:00+00:00"
+            return HttpReply(200, json.dumps(d).encode(), None)
         if self.mode == "stale" or (self.mode == "lag" and self.calls <= self.lag):
             return HttpReply(200, self.initial, None)
         return HttpReply(200, self.show("main"), None)
@@ -217,13 +221,16 @@ class PublishHarness:
         return subprocess.run(["git", "-C", str(cwd), *args], capture_output=True, text=True, env=env, check=True).stdout.strip()
 
     def builder(self, provider=None, net=None, mode="publish", extractive=True, env=None, dry_run=True, limits=None, sonnet=False,
-                categories=None, ledger=None):
+                categories=None, ledger=None, registered=False):
         e = {"TI_CB_MODE": mode, "TI_CB_STATE_BACKEND": "file", "TI_CB_STATE_DIR": str(self.tmp / "ledger"),
              "TI_CB_DRY_RUN": "true" if dry_run else "false", **self.ENV}
         if limits:
             e.update({"TI_CB_PER_TASK_LIMIT_USD": str(limits[0]), "TI_CB_DAILY_LIMIT_USD": str(limits[1]), "TI_CB_MONTHLY_LIMIT_USD": str(limits[2])})
         e.update(env or {})
         cfg = load_builder_config(e, ROOT)
+        if not registered:                      # the pre-registration scenarios: CDC and TravelHealthPro cannot establish a claim
+            for k in ("cdc_travel", "travelhealthpro"):
+                cfg.raw["sources"][k]["registry_id"] = None
         if not extractive:
             no_extractive(cfg)
         if sonnet:

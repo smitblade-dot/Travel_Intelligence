@@ -73,7 +73,7 @@ def build_publication_item(cc, category, tname, tdef, assessed, evidence, source
             s = sources_cfg[sk]
             new_sources[e["sourceId"]] = {
                 "id": e["sourceId"], "countryId": cc, "sourceName": s["title"], "organisation": s["publisher"], "sourceType": "GOVERNMENT",
-                "url": e["url"], "jurisdiction": s["jurisdiction"], "confidence": "HIGH", "active": True, "accessMethod": s["access_method"],
+                "url": e["url"], "jurisdiction": s["jurisdiction"], "confidence": SOURCE_CONFIDENCE.get(s.get("tier"), "MEDIUM"), "active": True, "accessMethod": s["access_method"],
                 "contentRights": s["content_rights"], "automationPermission": s["automation_permission"],
                 "originalLanguage": s["original_language"], "geographicScope": "NATIONAL", "dateChecked": today.isoformat(),
                 "reviewFrequency": "Every 3-6 months, or on any change"}
@@ -92,6 +92,9 @@ def build_publication_item(cc, category, tname, tdef, assessed, evidence, source
 
 
 # ---- applying to data.json ----------------------------------------------------------------------------------
+SOURCE_CONFIDENCE = {"A": "HIGH", "B": "MEDIUM", "C": "MEDIUM", "D": "LOW"}
+
+
 def owned(record):
     return (record.get("provenance") or {}).get("builder") == AGENT_NAME
 
@@ -162,6 +165,7 @@ def apply_items(data, items, pub_id, now, max_records, refresh_days=7):
     if summary["added"] or summary["updated"] or summary["refreshed"]:
         _counts(d)
         d["meta"]["generated"] = ts
+        summary["generated"] = ts
     return d, summary
 
 
@@ -239,6 +243,13 @@ def rollback_publication(backend, pub_id, now):
     return summary
 
 
+def release_is_ours(v, published_generated):
+    """True when the site is demonstrably serving a release at or after ours yet not our content (so the content, not the
+    deployment, is wrong). A site that is merely behind, unreachable or unreadable proves nothing about the content."""
+    served = v.get("served_generated")
+    return bool(served and published_generated and served >= published_generated)
+
+
 # ---- live verification --------------------------------------------------------------------------------------
 def served_matches(served, items):
     """Does the public data.json serve exactly the published records, sources and observations?"""
@@ -265,7 +276,7 @@ def served_without(served, record_ids):
 
 def verify_live(site_url, http, check, timeout, interval, sleep=time.sleep, clock=time.monotonic):
     """Poll the public site until ``check(served_json)`` -> (ok, detail) is true or the deadline passes."""
-    deadline, attempts, last = clock() + timeout, 0, "no response"
+    deadline, attempts, last, last_generated = clock() + timeout, 0, "no response", None
     while True:
         attempts += 1
         url = f"{site_url.rstrip('/')}/data.json?ti-verify={int(time.time())}-{attempts}"
@@ -274,6 +285,7 @@ def verify_live(site_url, http, check, timeout, interval, sleep=time.sleep, cloc
         if status == 200:
             try:
                 served = json.loads(res.body.decode("utf-8"))
+                last_generated = (served.get("meta") or {}).get("generated")
                 ok, detail = check(served)
                 if ok:
                     return {"ok": True, "attempts": attempts, "served_generated": (served.get("meta") or {}).get("generated"),
@@ -284,7 +296,7 @@ def verify_live(site_url, http, check, timeout, interval, sleep=time.sleep, cloc
         else:
             last = f"HTTP {status or getattr(res, 'error_kind', 'no response')}"
         if clock() >= deadline:
-            return {"ok": False, "attempts": attempts, "detail": last, "url": site_url}
+            return {"ok": False, "attempts": attempts, "detail": last, "url": site_url, "served_generated": last_generated}
         sleep(interval)
 
 

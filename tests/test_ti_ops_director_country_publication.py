@@ -14,10 +14,10 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import country_support as cs                                             # noqa: E402
-from country_support import ROOT, FakeNet, PublishHarness, Replies       # noqa: E402
+from country_support import ROOT, FakeNet, LocalBackend, PublishHarness, Replies       # noqa: E402
 
 from ti_ops_director.country_config import AGENT_NAME, load_builder_config  # noqa: E402
-from ti_ops_director.country_engine import EXIT_OK, _sections, scope_gate  # noqa: E402
+from ti_ops_director.country_engine import EXIT_OK, EXIT_PUBLICATION, _sections, scope_gate  # noqa: E402
 from ti_ops_director.country_publish import apply_items, rollback_items   # noqa: E402
 from ti_ops_director.country_rules import (opposite_polarity, qualifier_loss, quality_problem, source_backing, load_registry)  # noqa: E402
 
@@ -46,7 +46,9 @@ class Rules(unittest.TestCase):
     def test_only_registry_backed_sources_can_establish_a_claim(self):
         ok, why = source_backing(self.cfg.sources["fcdo_safety"], self.reg, self.pub)
         self.assertEqual((ok, why), (True, None))
-        for key in ("cdc_travel", "travelhealthpro", "nasa_power", "worldbank_cckp"):
+        for key in ("cdc_travel", "travelhealthpro"):          # registered 22 Oct 2026 after robots and licence checks
+            self.assertEqual(source_backing(self.cfg.sources[key], self.reg, self.pub), (True, None), key)
+        for key in ("nasa_power", "worldbank_cckp"):
             self.assertEqual(source_backing(self.cfg.sources[key], self.reg, self.pub), (False, "source_not_in_registry"), key)
         src = dict(self.cfg.sources["fcdo_safety"], automation_permission="DENIED")
         self.assertEqual(source_backing(src, self.reg, self.pub), (False, "automation_not_permitted"))
@@ -212,31 +214,96 @@ class AutomaticPublication(unittest.TestCase):
             self.assertEqual(h.main_sha(), sha)
 
 
+class RegisteredHealthSources(unittest.TestCase):
+    def test_registered_cdc_can_establish_mosquito_advice_with_its_review_date_and_thp_only_corroborates(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            h = PublishHarness(tmp)
+            b = h.builder(registered=True, categories=["EQUIPMENT"])
+            run_all(b)
+            r = records(h).get("gh-equipment-mosquito")
+            self.assertIsNotNone(r)
+            self.assertIn("US CDC Travelers' Health (page last reviewed 25 Aug 2026)", r["content"])
+            self.assertEqual(r["sourcePublicationDate"], "2026-08-25")
+            srcs = {o["sourceId"] for o in h.main_data()["sourceObservations"] if o.get("recordId") == r["id"]}
+            self.assertTrue(any("cdc" in x or x.startswith("cb-gh-") for x in srcs))
+
+
 class FailureAndRollback(unittest.TestCase):
-    def test_a_site_that_never_serves_the_content_triggers_rollback_and_a_held_exception(self):
+    @staticmethod
+    def _short_window(b, timeout=3):
+        import ti_ops_director.country_engine as eng
+        import ti_ops_director.country_publish as cp
+        b.cfg.raw["publication"]["verification"].update(timeout_seconds=timeout, interval_seconds=1, recheck_timeout_seconds=timeout)
+        clock = {"t": 0.0}
+        orig = cp.verify_live
+        eng.verify_live = lambda *a, **k: orig(*a, **{**k, "clock": lambda: clock.__setitem__("t", clock["t"] + 1) or clock["t"]})
+        return lambda: setattr(eng, "verify_live", orig)
+
+    def test_a_slow_deployment_leaves_the_records_pending_and_never_deletes_them(self):
         with tempfile.TemporaryDirectory() as tmp:
             h = PublishHarness(tmp, site_mode="stale")
-            b = h.builder()
-            b.cfg.raw["publication"]["verification"].update(timeout_seconds=3, interval_seconds=1)
-            b.cfg.categories = ["TRANSPORT"]
-            clock = {"t": 0.0}
-            import ti_ops_director.country_publish as cp
-            orig = cp.verify_live
-            b_verify = lambda *a, **k: orig(*a, **{**k, "clock": lambda: clock.__setitem__("t", clock["t"] + 1) or clock["t"]})
-            cp_engine = sys.modules["ti_ops_director.country_engine"]
-            cp_engine.verify_live = b_verify
+            b = h.builder(categories=["TRANSPORT"])
+            restore = self._short_window(b)
+            try:
+                code = b.run()
+            finally:
+                restore()
+            self.assertEqual(code, EXIT_OK)                                        # a delay is not a failure
+            self.assertIn("gh-transport-road-travel", records(h))                  # still on main
+            self.assertFalse(any(c.get("rollbackOf") for c in h.main_data()["change_log"]))
+            st = ledger(h)
+            self.assertEqual([p["state"] for p in st["publications"].values()], ["VERIFICATION_PENDING"])
+            self.assertIn("verification PENDING", "\n".join(b.captured))
+            self.assertFalse([e for e in st["exceptions"].values() if "published_content_incorrect" in e["reasons"]])
+
+    def test_a_pending_publication_is_verified_by_a_later_bounded_recheck(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            h = PublishHarness(tmp, site_mode="stale")
+            ledger_backend = LocalBackend(Path(tmp) / "ledger")
+            b = h.builder(categories=["TRANSPORT"], ledger=ledger_backend)
+            restore = self._short_window(b)
             try:
                 b.run()
             finally:
-                cp_engine.verify_live = orig
-            self.assertFalse([r for r in h.main_data()["records"] if r["id"].startswith("gh-transport")])      # rolled back off main
-            data = h.main_data()
-            self.assertTrue(any(c.get("rollbackOf") for c in data["change_log"]))
+                restore()
+            h.site.mode = "live"                                                   # the deployment catches up
+            b2 = h.builder(categories=["TRANSPORT"], ledger=ledger_backend)
+            b2.run()
             st = ledger(h)
-            self.assertEqual([p["state"] for p in st["publications"].values()], ["ROLLED_BACK"])
-            ex = [e for e in st["exceptions"].values() if "live_verification_failed" in e["reasons"]]
-            self.assertTrue(ex and ex[0]["requiresHuman"] and ex[0]["state"] == "HELD")
-            self.assertIn("Rolled back", "\n".join(b.captured))
+            self.assertEqual(sorted(p["state"] for p in st["publications"].values()), ["VERIFIED"])
+            self.assertIn("gh-transport-road-travel", records(h))
+
+    def test_rechecks_are_bounded_and_an_unresolved_publication_is_escalated_not_deleted(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            h = PublishHarness(tmp, site_mode="stale")
+            ledger_backend = LocalBackend(Path(tmp) / "ledger")
+            codes = []
+            for _ in range(3):
+                b = h.builder(categories=["TRANSPORT"], ledger=ledger_backend)
+                b.cfg.raw["publication"]["verification"]["max_rechecks"] = 2
+                restore = self._short_window(b)
+                try:
+                    codes.append(b.run())
+                finally:
+                    restore()
+            self.assertEqual(codes[0], EXIT_OK)
+            self.assertEqual(codes[-1], EXIT_PUBLICATION)
+            self.assertIn("gh-transport-road-travel", records(h))                  # nothing deleted
+            self.assertEqual([p["state"] for p in ledger(h)["publications"].values()], ["VERIFICATION_FAILED"])
+
+    def test_a_current_release_that_lacks_the_content_is_demonstrably_incorrect_and_rolls_back(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            h = PublishHarness(tmp, site_mode="newer")
+            b = h.builder(categories=["TRANSPORT"])
+            restore = self._short_window(b)
+            try:
+                code = b.run()
+            finally:
+                restore()
+            self.assertEqual(code, EXIT_PUBLICATION)
+            self.assertFalse([r for r in h.main_data()["records"] if r["id"].startswith("gh-transport")])      # rolled back off main
+            self.assertTrue(any(c.get("rollbackOf") for c in h.main_data()["change_log"]))
+            self.assertEqual([p["state"] for p in ledger(h)["publications"].values()], ["ROLLED_BACK"])
 
     def test_pages_lag_is_tolerated_within_the_timeout(self):
         with tempfile.TemporaryDirectory() as tmp:

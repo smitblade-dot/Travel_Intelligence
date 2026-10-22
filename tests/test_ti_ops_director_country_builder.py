@@ -149,7 +149,7 @@ class Evidence(unittest.TestCase):
     def test_undated_source_is_not_given_a_date(self):
         th = [e for e in self.collect("EQUIPMENT") if e["sourceKey"] == "travelhealthpro"][0]
         self.assertEqual((th["publicationDate"], th["publicationDateStatus"]), (None, "NOT_STATED"))
-        self.assertEqual(th["contentRights"], "UNKNOWN")
+        self.assertEqual(th["contentRights"], "OPEN_LICENCE")
 
     def test_nasa_climatology_parsed_and_checked(self):
         ev = [e for e in self.collect("ENVIRONMENT") if e["sourceKey"] == "nasa_power"][0]

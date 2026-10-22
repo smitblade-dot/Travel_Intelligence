@@ -52,11 +52,14 @@ default and Sonnet only as a second opinion on a PARTIAL verdict, only if `sonne
 6. **Safe updates:** only records this agent published are replaced, and the previous version is stored in the `change_log` entry.
    Hand-written and grandfathered records are never touched. A replacement that fails any rule leaves the existing record as
    it was, with its original `dateChecked`, so its age on the site stays honest.
-7. **Live verification:** the public `data.json` (cache-busting) is polled until it serves exactly the published records,
-   sources and observations (15 min limit; GitHub Pages usually takes 1-3).
-8. **Rollback:** if the site does not serve the content in time the publication is rolled back by record id (not `git revert`,
-   which cannot work on a one-line `data.json`), verified again, and recorded as an exception. Anything edited by someone
-   else since is left alone. Manual rollback: `python3 scripts/country_builder.py rollback <publicationId> --by NAME`.
+7. **Live verification:** the public `data.json` (cache-busting) is polled for 15 minutes. If the site is merely slow, the
+   publication is recorded as `VERIFICATION_PENDING` and nothing is removed: later runs recheck it (bounded: `max_rechecks`,
+   default 6, 2 minutes each) and mark it `VERIFIED`. A pending state never exits non-zero.
+8. **Rollback is reserved for demonstrated error:** the site is serving a release at least as new as the publication
+   (`meta.generated` not older) yet not its content, or a person asks for it. Rollback is by record id (not `git revert`, which
+   cannot work on a one-line `data.json`), verified again; anything edited by someone else since is left alone. If rechecks
+   run out, the publication is `VERIFICATION_FAILED`, kept on main, escalated as an exception, and the run exits 5 so CI shows
+   it. Manual rollback: `python3 scripts/country_builder.py rollback <publicationId> --by NAME`.
 
 ## Exceptions
 
@@ -96,9 +99,14 @@ schedule or a manual dispatch on main.
 
 ## Known limits
 
-- CDC Travelers' Health, TravelHealthPro, NASA POWER and the World Bank climate API are not in the source register, so they
-  cannot yet establish a claim; mosquito and climate content therefore stays held until the register is extended.
-  NASA POWER's robots.txt disallows its API and the World Bank API's robots.txt errors, so they are not fetched regardless.
+- CDC Travelers' Health and TravelHealthPro were registered on 22 Oct 2026 (robots.txt allows the paths; CDC Crawl-delay 20 is
+  respected by the one-page-per-run fetch; TravelHealthPro states OGL v3.0). TravelHealthPro pages carry no stated date, so they
+  corroborate but cannot establish freshness.
+- Climate: NASA POWER's robots.txt disallows its API and the World Bank API's robots.txt errors, so neither is fetched. The WMO
+  World Weather Information Service (robots.txt allows `/en/`) is the permitted alternative but is script-rendered, so it needs a
+  parser and a Ghana city id before it can be used; climate stays held with that reason.
+- Plugs and voltage: no per-country page with a permitted, authoritative, dated source was found (IEC World Plugs has no
+  Ghana page at the URL tried), so the item stays held as `no_external_source_for_reference_value`.
 - The model path (writer, verifier, Sonnet second opinion) is proven only with scripted replies. Haiku's quality is not
   measured; see `scripts/country_builder.py eval`.
 - Only English government pages are used; no translation is performed.

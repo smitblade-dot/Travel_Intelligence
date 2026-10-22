@@ -146,14 +146,14 @@
       "parser": "html",
       "existing_source_id": null,
       "independence_group": "uk-ukhsa-nathnac",
-      "content_rights": "UNKNOWN",
+      "content_rights": "OPEN_LICENCE",
       "access_method": "WEB_PAGE",
-      "automation_permission": "UNKNOWN",
+      "automation_permission": "PERMITTED",
       "original_language": "en",
       "stale_after_days": 180,
       "current_capable": false,
-      "_note": "Rights and automation permission unverified: short verbatim quotes only, robots.txt checked on every run.",
-      "registry_id": null,
+      "_note": "Registered 22 Oct 2026 under the Open Government Licence v3.0 (site statement). Undated pages corroborate but never establish freshness.",
+      "registry_id": "travelhealthpro",
       "attribution_label": "TravelHealthPro (UKHSA/NaTHNaC)",
       "date_verb": "page date not stated"
     },
@@ -169,11 +169,11 @@
       "independence_group": "us-cdc",
       "content_rights": "GOVERNMENT_OPEN",
       "access_method": "WEB_PAGE",
-      "automation_permission": "UNKNOWN",
+      "automation_permission": "PERMITTED",
       "original_language": "en",
       "stale_after_days": 365,
       "current_capable": false,
-      "registry_id": null,
+      "registry_id": "cdc-travelers-health",
       "attribution_label": "US CDC Travelers' Health",
       "date_verb": "page last reviewed"
     },
@@ -496,7 +496,9 @@
       "site_url_from": "config/production_controller.json",
       "timeout_seconds": 900,
       "interval_seconds": 20,
-      "rollback_on_failure": true
+      "rollback_on_incorrect_content": true,
+      "max_rechecks": 6,
+      "recheck_timeout_seconds": 120
     },
     "refresh_days": 7
   }
