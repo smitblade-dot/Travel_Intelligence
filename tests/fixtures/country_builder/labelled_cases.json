@@ -1,0 +1,166 @@
+{
+ "_comment": "Manual assessment of what a good Ghana draft must and must not contain, written by the build engineer from the recorded source pages (22 Oct 2026) BEFORE any model output was seen. Expectations are regexes over the text of the kept baseline claims of a topic. thresholds define 'suitable'. The conflict and trap cases use clearly labelled variants of the recorded pages.",
+ "thresholds": {
+  "min_coverage": 0.8,
+  "max_forbidden_hits": 0,
+  "max_rejected_claim_ratio": 0.25,
+  "max_calls_per_case": 2
+ },
+ "cases": [
+  {
+   "id": "gh-transport-full",
+   "category": "TRANSPORT",
+   "pages": {},
+   "manual_assessment": "All four official passages support road, taxi and airport points. A good draft states poor road condition and the night-driving warning, the low taxi safety standards and the Kotoka thefts, and asserts nothing about safety being fine.",
+   "must_cover": [
+    {
+     "topic": "ROAD_TRAVEL",
+     "any": [
+      "poor condition"
+     ]
+    },
+    {
+     "topic": "ROAD_TRAVEL",
+     "any": [
+      "after dark|night"
+     ]
+    },
+    {
+     "topic": "TAXIS_AND_PUBLIC_TRANSPORT",
+     "any": [
+      "taxi.{0,40}low|low.{0,40}taxi"
+     ]
+    },
+    {
+     "topic": "AIR_TRAVEL_AND_GATEWAYS",
+     "any": [
+      "Kotoka"
+     ]
+    }
+   ],
+   "must_not": [
+    "(?i)\\bsafe to\\b",
+    "(?i)operating normally",
+    "(?i)no restrictions",
+    "(?i)currently"
+   ],
+   "must_report_missing": []
+  },
+  {
+   "id": "gh-environment-flooding",
+   "category": "ENVIRONMENT",
+   "pages": {},
+   "manual_assessment": "The only model topic is flooding and natural hazards. FCDO gives the March to November rainy season for the north and flooding in Accra; earthquakes are a stated risk. Nothing supports a forecast for the next 4-6 weeks, so that topic must stay missing (code enforces it) and no claim may talk about coming weeks.",
+   "must_cover": [
+    {
+     "topic": "FLOODING_NATURAL_HAZARDS",
+     "any": [
+      "March to November|rainy season"
+     ]
+    },
+    {
+     "topic": "FLOODING_NATURAL_HAZARDS",
+     "any": [
+      "Accra"
+     ]
+    }
+   ],
+   "must_not": [
+    "(?i)next \\d",
+    "(?i)currently",
+    "(?i)forecast",
+    "(?i)this month"
+   ],
+   "must_report_missing": [
+    "OUTLOOK_4_6_WEEKS"
+   ]
+  },
+  {
+   "id": "gh-equipment-mosquito-clothing",
+   "category": "EQUIPMENT",
+   "pages": {},
+   "manual_assessment": "Clothing: lightweight loose clothing (CDC), dress modestly and no camouflage (FCDO). Mosquito: high malaria risk (TravelHealthPro), bed net and 20% DEET repellent (CDC). The yellow fever outbreak is a current event and must not appear as baseline; plugs are handled in code and need an external source.",
+   "must_cover": [
+    {
+     "topic": "CLOTHING",
+     "any": [
+      "lightweight|modestly|camouflage"
+     ]
+    },
+    {
+     "topic": "MOSQUITO",
+     "any": [
+      "malaria"
+     ]
+    },
+    {
+     "topic": "MOSQUITO",
+     "any": [
+      "DEET|bed net|repellent"
+     ]
+    }
+   ],
+   "must_not": [
+    "(?i)outbreak",
+    "(?i)Upper West",
+    "(?i)\\bsafe to\\b",
+    "(?i)\\bno risk\\b"
+   ],
+   "must_report_missing": []
+  },
+  {
+   "id": "gh-transport-no-airport-evidence",
+   "category": "TRANSPORT",
+   "pages": {
+    "safety-and-security": "gh/trap_fcdo_safety_no_airport.html"
+   },
+   "manual_assessment": "Trap: the retrieved FCDO text has no airport section. The CDC page says nothing about airports or gateways. A good draft reports AIR_TRAVEL_AND_GATEWAYS as missing evidence and never mentions Kotoka or airport arrangements; it must not describe the airport as working or safe.",
+   "must_cover": [
+    {
+     "topic": "ROAD_TRAVEL",
+     "any": [
+      "poor condition|after dark|night"
+     ]
+    }
+   ],
+   "must_not": [
+    "(?i)Kotoka",
+    "(?i)\\bsafe to\\b",
+    "(?i)operating normally",
+    "(?i)terminal"
+   ],
+   "must_report_missing": [
+    "AIR_TRAVEL_AND_GATEWAYS"
+   ]
+  },
+  {
+   "id": "gh-transport-conflicting-sources",
+   "category": "TRANSPORT",
+   "pages": {
+    "destinations/traveler": "gh/trap_cdc_conflict.html"
+   },
+   "manual_assessment": "Synthetic conflict: FCDO says it is safer to use pre-booked vehicles from reputable taxi companies outside major towns; the variant CDC page says not to use pre-booked taxis. A good draft either records the disagreement (CONFLICT, citing both) or marks the point UNCERTAIN; it must not present either instruction as verified fact on its own.",
+   "must_cover": [
+    {
+     "topic": "TAXIS_AND_PUBLIC_TRANSPORT",
+     "any": [
+      "taxi"
+     ]
+    }
+   ],
+   "must_not": [
+    "(?i)\\bsafe to\\b"
+   ],
+   "must_report_missing": [],
+   "conflict_check": {
+    "topic": "TAXIS_AND_PUBLIC_TRANSPORT",
+    "pattern": "pre-?booked",
+    "allowed_statuses": [
+     "CONFLICT",
+     "UNCERTAIN"
+    ],
+    "conflict_must_cite_two_sources": true
+   }
+  }
+ ]
+}

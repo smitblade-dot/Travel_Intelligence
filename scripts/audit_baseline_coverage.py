@@ -20,7 +20,9 @@ def main():
         for cat in CATEGORIES:
             if (cid,cat) not in covered:
                 missing.append((cid,c["name"],cat))
-    print(f"BASELINE COVERAGE: {len(countries)*len(CATEGORIES)-len(missing)}/{len(countries)*len(CATEGORIES)} ({100*(len(countries)*len(CATEGORIES)-len(missing))/(len(countries)*len(CATEGORIES):.1f}%)")
+    total=len(countries)*len(CATEGORIES)
+    covered_n=total-len(missing)
+    print(f"BASELINE COVERAGE: {covered_n}/{total} ({100*covered_n/total:.1f}%)")
     if missing:
         print(f"MISSING COMBINATIONS: {len(missing)}")
         for cid,name,cat in missing:

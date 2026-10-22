@@ -109,10 +109,12 @@ class Registry:
 
 def default_registry():
     from .feed_health import FeedHealthWorker
+    from .country_worker import CountryContentWorker
     from .production_worker import ProductionVerificationWorker
     reg = Registry()
     reg.register(FeedHealthWorker())
     reg.register(ProductionVerificationWorker())
+    reg.register(CountryContentWorker())
     for name, types, desc in PLANNED:
         reg.register(PlannedWorker(name, types, desc))
     return reg

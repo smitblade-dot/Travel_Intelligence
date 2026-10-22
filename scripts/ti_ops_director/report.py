@@ -56,6 +56,24 @@ def production_status(repo_root):
                       "action": t["blocking_reason"]} for t in open_]}
 
 
+def country_builder_status(repo_root):
+    """The country builder's ledger as seen from this host (queue worker's file backend), if present."""
+    import os
+    base = Path(os.environ.get("TI_CB_STATE_DIR") or Path(repo_root) / "var" / "country_builder")
+    path = base / "country_builder_state.json"
+    if not path.exists():
+        return {"available": False, "detail": "no local builder state; on GitHub Actions the ledger and the latest report are on "
+                "the branch named by TI_CB_STATE_BRANCH (default ti-country-drafts)"}
+    st = json.loads(path.read_text(encoding="utf-8"))
+    tasks = list((st.get("tasks") or {}).values())
+    counts = {}
+    for t in tasks:
+        counts[t["state"]] = counts.get(t["state"], 0) + 1
+    return {"available": True, "controls": st.get("controls"), "task_counts": counts, "drafts": len(st.get("drafts") or {}),
+            "spend_usd": (st.get("spend") or {}).get("total", 0),
+            "last_run_utc": ((st.get("runs") or [{}])[-1]).get("at")}
+
+
 def build_report(ctl):
     store, cfg = ctl.store, ctl.cfg
     now = store.clock()
@@ -108,6 +126,7 @@ def build_report(ctl):
         "spend": spend, "spend_month_eur": spend_eur,
         "actions_monitor": monitor_status(cfg.repo_root, now),
         "production": production_status(cfg.repo_root),
+        "country_builder": country_builder_status(cfg.repo_root),
         "maturity": {
             "implemented": [w.name for w in ctl.registry.all() if w.implemented],
             "tested": test_run or "no recorded test run in this database",
@@ -181,6 +200,13 @@ def render_markdown(r):
         L += [f"- Last run: {pc['last_run_utc']}; verdict: {pc['verdict']}; open exceptions: {len(pc['open'])}"]
         L += [f"- {o['severity'].upper()} since {o['since']}: {o['summary']} Action: {o['action']}" for o in pc["open"]]
         L.append("")
+    cb = r.get("country_builder") or {}
+    L += ["## Country intelligence builder (03AA-04_Country_Intelligence_Builder_TI)", ""]
+    if not cb.get("available"):
+        L += [f"- Not available here: {cb.get('detail')}", ""]
+    else:
+        L += [f"- Last run: {cb['last_run_utc']}; tasks: {cb['task_counts']}; drafts and assessments recorded (publication state per run in its report): {cb['drafts']}; "
+              f"controls: {cb['controls']}; spend recorded: {cb['spend_usd']} USD (estimated)", ""]
     L += ["## API usage and expenditure (this database)", ""]
     s = r["spend"]
     L += [f"- Currency: {s['currency']} (provider currency). Source: {s['cost_source']}.",

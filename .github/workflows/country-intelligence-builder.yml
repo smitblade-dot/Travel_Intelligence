@@ -1,0 +1,66 @@
+name: TI country intelligence builder
+# 03AA-04_Country_Intelligence_Builder_TI (docs/TI_COUNTRY_INTELLIGENCE_BUILDER.md).
+# Finds a missing or stale country/category, collects permitted evidence, applies the TI publication rules and, on a
+# scheduled or manual run on main, publishes what passes through a compare-and-swap commit to main, then verifies that
+# the public site serves it (rolling back if it does not). Anything that fails a rule is held with its reason and routed
+# through the Master Agent. Drafts, the ledger and the report live on TI_CB_STATE_BRANCH (default ti-country-drafts).
+# Operating mode comes from config/country_builder.json; the repository variable TI_CB_MODE overrides it, TI_CB_PUBLISH=false
+# switches publication off, and TI_CB_MODE=off (or disabling this workflow) stops every run.
+# Paid model use needs TI_CB_DRY_RUN=false AND all three spending limits AND ANTHROPIC_API_KEY. The ordinary-code
+# extractive path needs none of them. Pull requests get no model key and cannot publish: the code refuses to write main
+# unless the event is a schedule or a manual dispatch and the ref is refs/heads/main.
+on:
+  schedule:
+    - cron: "41 5 * * *"
+  workflow_dispatch: {}
+  pull_request:
+    paths:
+      - "scripts/ti_ops_director/country_*.py"
+      - "scripts/country_builder.py"
+      - "config/country_builder.json"
+      - ".github/workflows/country-intelligence-builder.yml"
+
+permissions: {}
+
+concurrency:
+  group: ti-country-intelligence-builder
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: vars.TI_CB_MODE != 'off' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write   # main (publication, compare-and-swap) and the drafts branch; the code refuses to write main on a pull request
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event_name == 'pull_request' && github.sha || 'main' }}
+          fetch-depth: 1
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Configure git identity
+        run: |
+          git config --global user.name "Travel Intelligence Bot"
+          git config --global user.email "actions@users.noreply.github.com"
+      - name: Country builder pass
+        id: cb
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # No model key on pull requests (an empty string is falsy, so guard with != rather than an empty-string fallback).
+          ANTHROPIC_API_KEY: ${{ github.event_name != 'pull_request' && secrets.ANTHROPIC_API_KEY || '' }}
+          # The pull-request trial assesses real evidence against the rules and reports what would publish; it cannot publish.
+          TI_CB_MODE: ${{ github.event_name == 'pull_request' && 'draft' || vars.TI_CB_MODE }}
+          TI_CB_PUBLISH: ${{ vars.TI_CB_PUBLISH }}
+          TI_CB_DRY_RUN: ${{ github.event_name == 'pull_request' && 'true' || vars.TI_CB_DRY_RUN }}
+          TI_CB_STATE_BRANCH: ${{ vars.TI_CB_STATE_BRANCH }}
+          TI_CB_COUNTRIES: ${{ vars.TI_CB_COUNTRIES }}
+          TI_CB_CATEGORIES: ${{ vars.TI_CB_CATEGORIES }}
+          TI_CB_BATCH_SIZE: ${{ vars.TI_CB_BATCH_SIZE }}
+          TI_CB_PER_TASK_LIMIT_USD: ${{ vars.TI_CB_PER_TASK_LIMIT_USD }}
+          TI_CB_DAILY_LIMIT_USD: ${{ vars.TI_CB_DAILY_LIMIT_USD }}
+          TI_CB_MONTHLY_LIMIT_USD: ${{ vars.TI_CB_MONTHLY_LIMIT_USD }}
+        # Exit 3: configuration error. 4: state could not be persisted. 5: a publication needs attention (push/validation refused, content demonstrably incorrect, rollback failed, or verification unresolved after bounded rechecks). A merely pending deployment and held exceptions exit 0.
+        run: python3 scripts/country_builder.py run

@@ -13,6 +13,12 @@ on:
       - ".github/workflows/production-controller.yml"
       - "deploy/ops_director/**"
       - "scripts/continuous_intelligence_monitor.py"
+      - "scripts/country_builder.py"
+      - "scripts/audit_baseline_coverage.py"
+      - "config/country_builder.json"
+      - "tests/country_support.py"
+      - "tests/fixtures/country_builder/**"
+      - ".github/workflows/country-intelligence-builder.yml"
       - ".github/workflows/ops-director-tests.yml"
   workflow_dispatch: {}
 permissions:

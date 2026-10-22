@@ -1,0 +1,43 @@
+name: TI country builder Haiku evaluation (approved, bounded)
+# One bounded live evaluation of the country builder's drafting prompt over the manually assessed cases in
+# tests/fixtures/country_builder/labelled_cases.json, under config/country_builder_eval_approval.json (written
+# approval from Marc, EUR cap converted with the ECB rate fetched at run time). Without that file this workflow
+# does nothing. It uses recorded pages (no live retrieval), writes no draft and never touches data.json.
+# A re-run with the same prompt, model and cases makes no call. This is not ongoing paid operation.
+on:
+  pull_request:
+    paths:
+      - "config/country_builder_eval_approval.json"
+  workflow_dispatch: {}
+
+permissions: {}
+
+concurrency:
+  group: ti-country-builder-eval
+  cancel-in-progress: false
+
+jobs:
+  evaluate:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write   # the drafts branch's separate evaluation ledger only
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+          fetch-depth: 1
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Approved evaluation (refuses before any call without a verified rate, key or approval)
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TI_CB_STATE_BRANCH: ${{ vars.TI_CB_STATE_BRANCH }}
+        run: |
+          test -f config/country_builder_eval_approval.json || { echo "No approval file: nothing to do."; exit 0; }
+          python3 scripts/country_builder.py eval --approval config/country_builder_eval_approval.json
+      - name: data.json untouched
+        if: always()
+        run: git diff --exit-code -- data.json
