@@ -704,17 +704,15 @@ class SiblingRecordsDoNotRaiseFalseConflicts(unittest.TestCase):
             b.run()
             self.assertNotIn("conflicts_with_existing_record", "\n".join(b.captured))
 
-    def test_a_builder_record_from_a_different_source_is_still_compared_for_reversed_advice(self):
+    def test_builder_records_are_compared_only_for_the_same_topic_and_hand_written_ones_always(self):
         from ti_ops_director.country_rules import polarity_for
         cfg = load_builder_config({}, ROOT)
-        claim = {"evidence": [{"sourceKey": "cdc_travel"}]}
-        mine = {"content": "UK FCDO travel advice (last updated 2 Jul 2026): It is safer to use pre-booked vehicles.", "provenance": {"builder": AGENT_NAME}}
-        same_source = {"content": "US CDC Travelers' Health (page last reviewed 25 Aug 2026): Use a bed net.", "provenance": {"builder": AGENT_NAME}}
+        claim = {"evidence": [{"sourceKey": "travelhealthpro"}]}
+        clothing = {"content": "US CDC: wear loose clothing.", "provenance": {"builder": AGENT_NAME, "topic": "CLOTHING"}}
+        mosquito = {"content": "US CDC: use a bed net.", "provenance": {"builder": AGENT_NAME, "topic": "MOSQUITO"}}
         hand = {"content": "Hand-written note.", "provenance": {}}
-        got = polarity_for(claim, [mine, same_source, hand], cfg.sources)
-        self.assertEqual(got, [mine["content"], hand["content"]])
-        corroborated = {"content": "Electricity Company of Ghana technical information (page date not stated): standard voltages are 230 volts.", "provenance": {"builder": AGENT_NAME}}
-        self.assertEqual(polarity_for({"evidence": [{"sourceKey": "ecg_technical"}]}, [corroborated], cfg.sources), [corroborated["content"]])   # a corroborator is not lineage
+        self.assertEqual(polarity_for([clothing, mosquito, hand], "MOSQUITO"), [mosquito["content"], hand["content"]])
+        self.assertEqual(polarity_for([clothing, mosquito, hand], None), [hand["content"]])
 
     def test_hand_written_records_are_still_compared_for_reversed_advice(self):
         from ti_ops_director.country_rules import check_claim
