@@ -28,7 +28,7 @@ EVAL_NOW = datetime(2026, 10, 22, 6, 0, tzinfo=timezone.utc)      # the recorded
 LIVE, MOCKED = "LIVE_MODEL", "MOCKED_OUTPUTS"
 DEFAULT_PAGES = [("safety-and-security", "gh/fcdo_safety.html"), ("/health", "gh/fcdo_health.html"),
                  ("travelhealthpro", "gh/travelhealthpro.html"), ("destinations/traveler", "gh/cdc_travel.html"),
-                 ("power.larc.nasa.gov", "gh/nasa_power.json")]
+                 ("power.larc.nasa.gov", "gh/nasa_power.json"), ("cckpapi", "gh/worldbank_cckp.json")]
 PURPOSE = "country_builder_haiku_evaluation"
 EVAL_PATHS = {"state": "country_builder_eval_ledger.json"}
 RESULTS_KEY = "file:eval/country_builder_haiku_eval.json"

@@ -405,6 +405,71 @@ class EndToEnd(unittest.TestCase):
             self.assertEqual(sorted(t["outcome"] for t in st["tasks"].values()), ["drafted", "unchanged_evidence"])
 
 
+NASA_ROBOTS = "User-agent: *\nAllow: /api/pages/\nDisallow: /api/\nDisallow: /beta/\n\nUser-agent: GPTBot\nDisallow: /\n"
+
+
+class ClimateSources(unittest.TestCase):
+    """Found live on 22 Oct 2026: NASA POWER's robots.txt disallows /api/ for generic agents."""
+    def evidence(self, net, cfg=None):
+        cfg = cfg or load_builder_config({}, ROOT)
+        return collect_category(cfg, "gh", "ENVIRONMENT", net, cs.NOW, cs.base_data()["sources"]), cfg
+
+    def test_nasa_api_is_blocked_by_its_robots_txt_and_the_world_bank_series_is_used(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            net = FakeNet(robots={"power.larc.nasa.gov": NASA_ROBOTS})
+            ev, _ = self.evidence(net)
+            st = {e["sourceKey"]: e["status"] for e in ev}
+            self.assertEqual((st["nasa_power"], st["worldbank_cckp"]), ("BLOCKED_BY_ROBOTS", "RETRIEVED"))
+            self.assertFalse([u for u in net.calls if "power.larc.nasa.gov/api" in u])        # never requested
+            b = make_builder(tmp, provider=Replies(reply_for("ENVIRONMENT", net=net)), net=net, **PAID)
+            b.cfg.categories = ["ENVIRONMENT"]
+            b.run()
+            clim = [i for i in draft_doc(b)["items"] if i["topic"] == "CLIMATE_SEASONAL"][0]
+            self.assertIn("national mean", clim["title"])
+            self.assertIn("25.65 C in AUG to 30.18 C in MAR", clim["content"])
+            self.assertIn("JUN (170.19 mm/month)", clim["content"])
+            self.assertIn("national mean over the whole country", clim["uncertainty"])
+            self.assertEqual(clim["claims"][0]["evidence"][0]["sourceKey"], "worldbank_cckp")
+            batch = draft_doc(b)["candidateBatch"]
+            self.assertIn("cb-gh-worldbank-cckp", {s["id"] for s in batch["sources"]})
+
+    def test_both_climate_sources_blocked_means_climate_is_missing_not_guessed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            net = FakeNet(robots={"power.larc.nasa.gov": NASA_ROBOTS, "cckpapi.worldbank.org": "User-agent: *\nDisallow: /"})
+            b = make_builder(tmp, provider=Replies(reply_for("ENVIRONMENT", net=net)), net=net, **PAID)
+            b.cfg.categories = ["ENVIRONMENT"]
+            b.run()
+            d = draft_doc(b)
+            self.assertNotIn("CLIMATE_SEASONAL", {i["topic"] for i in d["items"]})
+            self.assertIn("CLIMATE_SEASONAL", {m["topic"] for m in d["missingEvidence"]})
+
+    def test_robots_exception_only_counts_with_marcs_written_approval(self):
+        net = FakeNet(robots={"power.larc.nasa.gov": NASA_ROBOTS})
+        cfg = load_builder_config({}, ROOT)
+        cfg.raw["sources"]["nasa_power"]["robots_exception"] = {"approved_by": "Someone", "approved_on": "2026-10-22"}
+        ev, _ = self.evidence(net, cfg)
+        self.assertEqual({e["sourceKey"]: e["status"] for e in ev}["nasa_power"], "BLOCKED_BY_ROBOTS")
+        cfg.raw["sources"]["nasa_power"]["robots_exception"] = {"approved_by": "Marc", "approved_on": "2026-10-22", "scope": "x"}
+        ev, _ = self.evidence(net, cfg)
+        nasa = [e for e in ev if e["sourceKey"] == "nasa_power"][0]
+        self.assertEqual((nasa["status"], nasa["robotsException"]["approvedBy"]), ("RETRIEVED", "Marc"))
+
+    def test_committed_config_has_no_robots_exception(self):
+        self.assertIsNone(load_builder_config({}, ROOT).raw["sources"]["nasa_power"]["robots_exception"]["approved_by"])
+
+    def test_cckp_response_is_validated(self):
+        from ti_ops_director.country_evidence import parse_cckp
+        body = (cs.FX / "worldbank_cckp.json").read_bytes()
+        st, ps = parse_cckp(body, "GHA")
+        self.assertEqual((st["temperature_c"]["MAR"], st["precipitation"]["JUN"], len(ps)), (30.18, 170.19, 4))
+        bad = json.loads(body)
+        del bad["data"]["tas"]["GHA"]["1991-05"]
+        with self.assertRaises(ValueError):
+            parse_cckp(json.dumps(bad).encode(), "GHA")
+        with self.assertRaises(KeyError):
+            parse_cckp(body, "XXX")
+
+
 class FailureModes(unittest.TestCase):
     def test_malformed_output_twice_blocks_without_sonnet(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -780,7 +845,7 @@ class MasterAgentIntegration(unittest.TestCase):
             self.assertIn("mode_observe", t["blocking_reason"])
             w = CountryContentWorker()
             self.assertEqual(w.hosts_for({"countryId": "gh", "category": "ENVIRONMENT"}, cfg),
-                             frozenset({"power.larc.nasa.gov", "www.gov.uk"}))
+                             frozenset({"power.larc.nasa.gov", "cckpapi.worldbank.org", "www.gov.uk"}))
             ctx = mock.Mock(allowed_hosts=frozenset({"www.gov.uk"}))
             with self.assertRaises(CapabilityError):
                 w._guarded(ctx)("https://evil.example/x")
@@ -808,7 +873,8 @@ class WorkflowFile(unittest.TestCase):
         self.assertIn("permissions: {}", text)
         self.assertIn("vars.TI_CB_MODE != 'off'", text)
         self.assertNotIn("git push", text)
-        self.assertIn("github.event_name == 'pull_request' && '' || secrets.ANTHROPIC_API_KEY", text)   # no key on PRs
+        self.assertIn("github.event_name != 'pull_request' && secrets.ANTHROPIC_API_KEY || ''", text)    # no key on PRs ('' is falsy: never write `== && '' ||`)
+        self.assertNotIn("&& '' ||", text)
         self.assertIn("github.event_name == 'pull_request' && 'true' || vars.TI_CB_DRY_RUN", text)      # dry-run forced on PRs
         self.assertIn("git diff --exit-code -- data.json", text)
         import re

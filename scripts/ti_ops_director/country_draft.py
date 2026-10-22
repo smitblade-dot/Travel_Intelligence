@@ -163,22 +163,21 @@ def _claim_problem(c, by_id, ev_by_code, lo, hi):
 
 # ---- deterministic items ------------------------------------------------------------------------------------
 def climate_item(evidence, tdef, today):
-    """Climate and seasons from the NASA POWER climatology, computed in code. No model."""
-    e = next((x for x in evidence if x["sourceKey"] == "nasa_power" and x["status"] == "RETRIEVED"), None)
+    """Climate and seasons from the first retrievable climatology source (config order), computed in code. No model."""
+    order = {k: i for i, k in enumerate(tdef.get("sources", []))}
+    e = next(iter(sorted((x for x in evidence if x["sourceKey"] in order and x["status"] == "RETRIEVED" and x.get("structured")),
+                         key=lambda x: order[x["sourceKey"]])), None)
     if not e:
         return None
     s = e["structured"]
-    T, P = s["temperature_c"], s["precipitation_mm_per_day"]
-    pas = {m: p for p in e["passages"] for m in ("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC")
-           if p["text"].startswith(f"{m}:") or f"; {m}:" in p["text"]}
-
-    def seg(m):
-        text = pas[m]["text"]
-        part = next(x for x in text.split("; ") if x.startswith(m + ":"))
-        return pas[m]["id"], part
+    T, P, unit = s["temperature_c"], s["precipitation"], s["precip_unit"]
+    pas = {}
+    for p in e["passages"]:
+        for part in p["text"].split("; "):
+            pas[part.split(":")[0]] = (p["id"], part)
 
     def ev(m):
-        pid, part = seg(m)
+        pid, part = pas[m]
         return {"passageId": pid, "sourceKey": e["sourceKey"], "sourceId": e["sourceId"], "url": e["url"],
                 "publisher": e["publisher"], "quote": part, "retrievedAt": e["retrievedAt"],
                 "publicationDate": e["publicationDate"], "independenceGroupId": e["independenceGroupId"]}
@@ -189,16 +188,18 @@ def climate_item(evidence, tdef, today):
     claims = [
         {"text": f"Mean monthly 2 m air temperature ranges from {T[cold]} C in {cold} to {T[hot]} C in {hot}.",
          "evidence": [ev(cold), ev(hot)]},
-        {"text": f"Highest mean precipitation is in {wet[0]} ({P[wet[0]]} mm/day) and {wet[1]} ({P[wet[1]]} mm/day).",
+        {"text": f"Highest mean precipitation is in {wet[0]} ({P[wet[0]]} {unit}) and {wet[1]} ({P[wet[1]]} {unit}).",
          "evidence": [ev(wet[0]), ev(wet[1])]},
-        {"text": f"Lowest mean precipitation is in {dry[0]} ({P[dry[0]]} mm/day) and {dry[1]} ({P[dry[1]]} mm/day).",
+        {"text": f"Lowest mean precipitation is in {dry[0]} ({P[dry[0]]} {unit}) and {dry[1]} ({P[dry[1]]} {unit}).",
          "evidence": [ev(dry[0]), ev(dry[1])]},
     ]
     for c in claims:
         c.update(status="VERIFIED", temporal="STABLE", independentSources=1, note="computed from the source's published monthly values")
-    return {"topic": "CLIMATE_SEASONAL", "title": f"Climate and seasons ({s['lat']}, {s['lon']} grid point)", "claims": claims,
-            "uncertainty": f"One grid point near the capital ({s['lat']}, {s['lon']}); {s['model']} reanalysis climatology, {s['period'].split('(')[-1].rstrip(')')}. "
-                           "Regional variation and year-to-year variability are not covered. This is not a forecast.",
+    where = s["area"]
+    scope = ("One grid point near the capital; " if s.get("lat") is not None else "A national mean over the whole country; ")
+    return {"topic": "CLIMATE_SEASONAL", "title": f"Climate and seasons ({where})", "claims": claims,
+            "uncertainty": f"{scope}{s['model']} {s['period'].split('(')[-1].rstrip(')') if s.get('lat') is not None else s['period']}. "
+                           "Regional variation and year-to-year variability are not covered. This is a long-term average, not a forecast.",
             "derivation": "COMPUTED_FROM_SOURCE_DATA"}
 
 

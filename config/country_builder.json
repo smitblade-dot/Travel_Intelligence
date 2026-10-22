@@ -61,6 +61,7 @@
   },
   "country_params": {
     "gh": {
+      "iso3": "GHA",
       "fcdo": "ghana",
       "travelhealthpro": "89/ghana",
       "cdc": "ghana",
@@ -107,15 +108,27 @@
       "url": "https://power.larc.nasa.gov/api/temporal/climatology/point?parameters=T2M,PRECTOTCORR&community=RE&longitude={lon}&latitude={lat}&format=JSON",
       "parser": "nasa_power", "existing_source_id": null, "independence_group": "us-nasa-power",
       "content_rights": "OPEN_LICENCE", "access_method": "API", "automation_permission": "PERMITTED",
-      "original_language": "en", "stale_after_days": 800, "current_capable": false
+      "original_language": "en", "stale_after_days": 800, "current_capable": false,
+      "robots_exception": {"approved_by": null, "approved_on": null, "scope": "this API URL only, one request per run",
+        "_note": "https://power.larc.nasa.gov/robots.txt says Disallow: /api/ for generic agents (checked 22 Oct 2026), so the builder does not call this API. POWER documents the API for programmatic use, but using it against robots.txt needs Marc's written decision: set approved_by to Marc and approved_on to the date."}
+    },
+    "worldbank_cckp": {
+      "code": "WB", "publisher": "World Bank Group, Climate Change Knowledge Portal", "jurisdiction": "INTERNATIONAL", "tier": "A",
+      "title": "World Bank CCKP monthly climatology (CRU TS 4.07, 1991-2020)",
+      "url": "https://cckpapi.worldbank.org/cckp/v1/cru-x0.5_climatology_tas,pr_climatology_monthly_1991-2020_mean_historical_cru_ts4.07_mean/{iso3}?_format=json",
+      "parser": "worldbank_cckp", "existing_source_id": null, "independence_group": "wb-cckp-cru",
+      "content_rights": "OPEN_LICENCE", "access_method": "API", "automation_permission": "PERMITTED",
+      "original_language": "en", "stale_after_days": 1500, "current_capable": false,
+      "_note": "Data under CC BY 4.0: attribute the World Bank Climate Change Knowledge Portal and the CRU TS dataset. National mean, so regional contrast is not shown."
     }
   },
   "categories": {
     "ENVIRONMENT": {
       "brief": "Climate and seasons, regional variation, natural hazards and operational implications. Include month/season context where useful.",
-      "sources": ["nasa_power", "fcdo_safety"],
+      "sources": ["nasa_power", "worldbank_cckp", "fcdo_safety"],
       "topics": {
-        "CLIMATE_SEASONAL": {"kind": "deterministic", "subcategory": "Climate and seasons", "data_type": "FACT", "sources": ["nasa_power"], "freshness": "STABLE"},
+        "CLIMATE_SEASONAL": {"kind": "deterministic", "subcategory": "Climate and seasons", "data_type": "FACT", "sources": ["nasa_power", "worldbank_cckp"], "freshness": "STABLE",
+          "_note": "First retrievable source in this order is used."},
         "FLOODING_NATURAL_HAZARDS": {"kind": "model", "subcategory": "Flooding and natural hazards", "data_type": "CONSIDERATION", "sources": ["fcdo_safety"], "freshness": "STABLE",
           "keywords": ["flood", "rainy season", "earthquake", "tremor", "cyclone", "extreme weather", "rainfall", "natural hazard"]},
         "OUTLOOK_4_6_WEEKS": {"kind": "outlook", "subcategory": "Next 4-6 weeks", "data_type": "CONSIDERATION", "sources": [], "freshness": "CURRENT",

@@ -43,7 +43,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # No model key on pull requests: PR code can plan and collect, never spend.
-          ANTHROPIC_API_KEY: ${{ github.event_name == 'pull_request' && '' || secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ github.event_name != 'pull_request' && secrets.ANTHROPIC_API_KEY || '' }}
           # The pull-request trial writes a no-spend draft to the drafts branch so persistence can be inspected.
           TI_CB_MODE: ${{ github.event_name == 'pull_request' && 'draft' || vars.TI_CB_MODE }}
           TI_CB_DRY_RUN: ${{ github.event_name == 'pull_request' && 'true' || vars.TI_CB_DRY_RUN }}

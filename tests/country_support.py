@@ -18,7 +18,7 @@ FX = ROOT / "tests" / "fixtures" / "country_builder" / "gh"
 NOW = datetime(2026, 10, 22, 6, 0, tzinfo=timezone.utc)
 
 PAGES = [("safety-and-security", "fcdo_safety.html"), ("/health", "fcdo_health.html"), ("travelhealthpro", "travelhealthpro.html"),
-         ("cdc.gov", "cdc_travel.html"), ("nasa.gov", "nasa_power.json")]
+         ("cdc.gov", "cdc_travel.html"), ("nasa.gov", "nasa_power.json"), ("cckpapi", "worldbank_cckp.json")]
 
 
 class FakeNet:

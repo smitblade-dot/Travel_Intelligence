@@ -236,15 +236,41 @@ def parse_nasa(body, expect_lat, expect_lon):
     if abs(lat - expect_lat) > 0.01 or abs(lon - expect_lon) > 0.01:
         raise ValueError("coordinates differ from the request")
     period = doc.get("header", {}).get("range", "")
-    structured = {"temperature_c": {m: t2m[m] for m in MONTHS}, "precipitation_mm_per_day": {m: pre[m] for m in MONTHS},
+    structured = {"temperature_c": {m: t2m[m] for m in MONTHS}, "precipitation": {m: pre[m] for m in MONTHS}, "precip_unit": "mm/day",
                   "period": period, "model": ",".join(doc.get("header", {}).get("sources", [])),
-                  "lat": lat, "lon": lon, "api_version": doc.get("header", {}).get("api", {}).get("version")}
-    passages, code = [], "NP"
+                  "lat": lat, "lon": lon, "area": f"grid point {lat}, {lon}", "api_version": doc.get("header", {}).get("api", {}).get("version")}
+    return structured, climate_passages(structured, "NP")
+
+
+def climate_passages(st, code):
+    T, P, unit = st["temperature_c"], st["precipitation"], st["precip_unit"]
+    out = []
     for i in range(0, 12, 3):
         ms = MONTHS[i:i + 3]
-        text = "; ".join(f"{m}: mean 2 m temperature {t2m[m]} C, precipitation {pre[m]} mm/day" for m in ms)
-        passages.append({"id": f"{code}.{len(passages) + 1:02d}", "locator": "Monthly climatology", "text": text})
-    return structured, passages
+        text = "; ".join(f"{m}: mean 2 m temperature {T[m]} C, precipitation {P[m]} {unit}" for m in ms)
+        out.append({"id": f"{code}.{len(out) + 1:02d}", "locator": "Monthly climatology", "text": text})
+    return out
+
+
+def parse_cckp(body, iso3):
+    """World Bank Climate Change Knowledge Portal: CRU TS 4.07 monthly climatology 1991-2020, national mean."""
+    doc = json.loads(body.decode("utf-8"))
+    if doc.get("metadata", {}).get("status") != "success":
+        raise ValueError("API did not report success")
+    tas, pr = doc["data"]["tas"][iso3], doc["data"]["pr"][iso3]
+    T, P = {}, {}
+    for key, name in ((tas, T), (pr, P)):
+        for label, v in key.items():
+            m = MONTHS[int(label[-2:]) - 1]
+            if not isinstance(v, (int, float)):
+                raise ValueError("non-numeric value")
+            name[m] = v
+    if set(T) != set(MONTHS) or set(P) != set(MONTHS):
+        raise ValueError("not all twelve months present")
+    structured = {"temperature_c": T, "precipitation": P, "precip_unit": "mm/month", "lat": None, "lon": None,
+                  "period": "monthly climatology 1991-2020 (CRU TS 4.07), national mean", "model": "CRU TS 4.07",
+                  "area": f"{iso3} national mean"}
+    return structured, climate_passages(structured, "WB")
 
 
 # ---- robots.txt ----------------------------------------------------------------------------------------------
@@ -275,7 +301,7 @@ class Robots:
 
 # ---- collection ----------------------------------------------------------------------------------------------
 def resolve_url(src, params, cc):
-    fields = {"cc": cc, "fcdo": params.get("fcdo", ""), "travelhealthpro": params.get("travelhealthpro", ""),
+    fields = {"cc": cc, "iso3": params.get("iso3", ""), "fcdo": params.get("fcdo", ""), "travelhealthpro": params.get("travelhealthpro", ""),
               "cdc": params.get("cdc", ""), "lat": params.get("location", {}).get("lat", ""),
               "lon": params.get("location", {}).get("lon", "")}
     return src["url"].format(**fields)
@@ -302,6 +328,10 @@ def collect_source(source_key, src, params, cc, http, now, limits, robots, data_
            "staleAfterDays": src["stale_after_days"], "publicationDate": None, "publicationDateStatus": "NOT_STATED",
            "status": "UNAVAILABLE", "error": None, "httpStatus": None, "passages": [], "contentSha256": None}
     allowed, why = robots.allowed(url)
+    exc = src.get("robots_exception") or {}
+    if not allowed and exc.get("approved_by") == "Marc" and exc.get("approved_on"):
+        doc["robotsException"] = {"approvedBy": exc["approved_by"], "approvedOn": exc["approved_on"], "scope": exc.get("scope")}
+        allowed = True
     if not allowed:
         doc.update(status="BLOCKED_BY_ROBOTS", error=why)
         return doc
@@ -312,9 +342,12 @@ def collect_source(source_key, src, params, cc, http, now, limits, robots, data_
         doc["error"] = (getattr(res, "error_kind", None) or "empty") + (f":{res.status}" if res and res.status else "")
         return doc
     try:
-        if src["parser"] == "nasa_power":
-            loc = params["location"]
-            structured, passages = parse_nasa(res.body, loc["lat"], loc["lon"])
+        if src["parser"] in ("nasa_power", "worldbank_cckp"):
+            if src["parser"] == "nasa_power":
+                loc = params["location"]
+                structured, passages = parse_nasa(res.body, loc["lat"], loc["lon"])
+            else:
+                structured, passages = parse_cckp(res.body, params["iso3"])
             doc["structured"] = structured
             doc["dataPeriod"] = structured["period"]
             text = json.dumps(structured, sort_keys=True)
