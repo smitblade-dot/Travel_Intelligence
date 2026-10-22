@@ -102,8 +102,10 @@ two coverage gaps instead of declaring the entire refresh healthy.
 [Read-only main-branch probe 39377032375](https://github.com/smitblade-dot/Travel_Intelligence/actions/runs/39377032375)
 at commit `45f9bef6420ca5d01bf918953d61fbb770aa0a03` completed collection
 at 05:51 UTC. GDELT was healthy at 05:50:40 UTC; the earlier HTTP 503 was
-therefore transient, not evidence of a continuing outage. Keep the existing
-bounded retries, Retry-After handling and 24-hour query. No alternate endpoint,
+therefore transient, not evidence of a continuing outage. At that time the
+recommendation was to keep bounded retries and Retry-After handling; this is
+superseded by the 22 October one-request policy in the source guidance above.
+The 24-hour query is retained. No alternate endpoint,
 unbounded retry or cached-success substitution is justified by this evidence.
 
 OurAirports, GDACS, NASA FIRMS and all 52 ADS-B sample areas also passed;
