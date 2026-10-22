@@ -3,6 +3,7 @@
 FORGEDTITANIUM LTD, Cyprus. Stream: 03 Agents & Automation. Substream: 03AA-04 Intelligence Automation
 Agents. Business application: Travel Intelligence. Development, associated IP and agent costs belong under
 03AA-04. No agent number, organisational code, cost code or document number has been invented.
+Acceptance standard for this and every 03AA-04 agent: `docs/AGENT_BUILD_STANDARD.md`.
 
 ## What it is
 
@@ -120,11 +121,30 @@ resolves. The queue worker is read-only (GET only, hosts `api.github.com` and th
 dispatches. Queue scheduling is off unless `production_check_interval_minutes` is set in the Director config.
 `python3 scripts/ops_director.py report` has a "Production controller" section.
 
+## Operating configuration (applied)
+
+Marc confirmed the operating choices on 21 October 2026. They are **committed** in
+`config/production_controller.json` → `operation`, so they apply without any repository variable:
+
+| Setting | Applied value | Where |
+|---|---|---|
+| Mode | `observe` (read-only: detects and reports, writes nothing) | `operation.mode` |
+| State branch | `ti-ops-state` (used only once Marc approves `active`) | `operation.state_branch` |
+| Automatic recovery | disabled (no workflow allow-listed) | `TI_PC_RECOVERY_WORKFLOWS` unset |
+| Dispatch cap | 1 per workflow per UTC day (dormant while recovery is disabled) | `controller.max_dispatches_per_workflow_per_day` |
+| Public site | `https://travelintelligence22.com/` | `release.site_url` |
+| Thresholds and retention | as proposed (tables above) | `workflows`, `output`, `release`, `controller` |
+| Paid triage and publication | unchanged; not touched by this agent | `TI_OPS_*`, `TI_MONITOR_PUBLISH` |
+
+A repository variable with the same meaning (`TI_PC_MODE`, `TI_PC_STATE_BRANCH`, `TI_PC_SITE_URL`,
+`TI_PC_RECOVERY_WORKFLOWS`, `TI_PC_MAX_DISPATCHES_PER_DAY`; Settings › Secrets and variables › Actions ›
+Variables) overrides the committed value when set. None is needed. Moving to `active` is Marc's decision.
+
 ## Controls and exit codes
 
-| Mode (`TI_PC_MODE`) | Scheduled runs | Writes | Alerts | Dispatch |
+| Mode | Scheduled runs | Writes | Alerts | Dispatch |
 |---|---|---|---|---|
-| unset / `off` | job skipped | none | none | none |
+| `off` (repository variable `TI_PC_MODE=off`) | job skipped | none | none | none |
 | `observe` | checks and job summary | **none**: never creates or writes the state branch; reads it only if it already exists | annotations marked "detected, not recorded"; job stays green | none |
 | `active` | checks, summary, state branch | state branch only | job red (exit 1) only when an exception is **newly opened or escalated to critical** | only if allow-listed |
 
@@ -135,8 +155,10 @@ If a persisted ledger already exists (from earlier active runs), each detection 
 holds it as an open task, and the report says what an active run would have opened or resolved, without
 changing the ledger. Only active runs open, escalate or resolve tasks.
 
-A manual run with the mode unset is one read-only observation. Pause = `observe`. Stop = `off`, or disable
-the workflow in the Actions tab (immediate, overrides everything). Exit 3 = configuration error (invalid
+Pause = `observe` (the applied setting). Stop = repository variable `TI_PC_MODE=off`, or disable the workflow
+in the Actions tab (immediate, overrides everything). If no mode is configured anywhere, scheduled runs do
+nothing and a manual run is one read-only observation. In observe mode an unreadable ledger is reported as
+a warning and the checks still run; in active mode it stops the run (exit 4). Exit 3 = configuration error (invalid
 mode, active without a state branch, bad numbers): nothing runs. Exit 4 = state could not be persisted.
 A standing fault is reported every run but turns the job red once, so GitHub's failure e-mail is not
 repeated hourly.
