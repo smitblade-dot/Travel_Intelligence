@@ -167,10 +167,20 @@ its security, transport and maritime scope are preserved.
 The daily reviewer is restricted to direct tools and must return structured
 completion evidence for the current run. Before metadata changes or the
 safety-net commit, `scripts/refresh_review.py` requires a successful terminal
-result, live research calls, all tracked country IDs, the continuing Fairford
-and Sochi topics, source URLs, review outcomes and zero pending tasks. Missing,
+result, live research calls, all tracked country IDs, active Hot Topic IDs captured before the review,
+source URLs, review outcomes and zero pending tasks. Missing,
 partial, unverified, stale-run or delegated/background reviews stop publication.
 A completed no-material-change review is valid; data edits are not forced.
+Attempted edits are always retained as `ti-refresh-candidate.json`, labelled
+unapproved in the validation report and never served by Pages. A failed review
+also retains the parseable completion report and a fixed diagnostic reason,
+including when the action exhausts its turn budget. Recovering a candidate
+requires source review and the usual validation; it is not permission to publish.
+The completion gate uses the pre-review country/topic inventory so accidental
+country removal cannot reduce required coverage. New active topics are included;
+a topic resolved during the run still needs its closing review. Bash background
+syntax is checked heuristically as well as the SDK background flag; this is an
+accidental-work detection measure, not a shell sandbox.
 This validates completion evidence, not the truth of claims: source provenance,
 SourceObservation requirements and TI data/foundation checks remain necessary.
 

@@ -70,7 +70,7 @@ jobs:
 
       - name: Prepare review completion contract
         id: review_contract
-        run: echo "schema=$(python3 scripts/refresh_review.py schema)" >> "$GITHUB_OUTPUT"
+        run: python3 scripts/refresh_review.py prepare >> "$GITHUB_OUTPUT"
 
       - uses: anthropics/claude-code-action@v1
         id: intelligence_review
@@ -87,8 +87,8 @@ jobs:
             ${{ github.run_id }}, pendingTasks 0 and status COMPLETE only after
             actually reviewing every tracked country and both continuing Hot
             Topics. countryReviews must include each data.json country.id
-            exactly once. hotTopicReviews must include the exact Fairford and
-            Sochi event IDs from scripts/refresh_review.py. Each review needs
+            exactly once. Read ${{ runner.temp }}/ti-refresh-input.json for the
+            exact country and active Hot Topic IDs required. Each review needs
             the actual sourceUrls checked, an outcome and a concise note.
             If a review cannot be completed, report INCOMPLETE and unverified;
             never manufacture evidence or mark a country reviewed merely
@@ -123,7 +123,12 @@ jobs:
             --json-schema '${{ steps.review_contract.outputs.schema }}'
             --max-turns 120
 
+      - name: Preserve unapproved candidate for recovery
+        if: always()
+        run: cp data.json "$RUNNER_TEMP/ti-refresh-candidate.json"
+
       - name: Verify intelligence review completed
+        if: always()
         env:
           REVIEW_OUTPUT: ${{ steps.intelligence_review.outputs.structured_output }}
           EXECUTION_FILE: ${{ steps.intelligence_review.outputs.execution_file }}
@@ -195,5 +200,7 @@ jobs:
             data/phase1_signals.json
             data/transport_network.json
             ${{ runner.temp }}/ti-refresh-review.json
+            ${{ runner.temp }}/ti-refresh-input.json
+            ${{ runner.temp }}/ti-refresh-candidate.json
           retention-days: 7
           if-no-files-found: warn
