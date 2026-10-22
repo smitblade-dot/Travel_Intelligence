@@ -220,8 +220,6 @@ def wmo_climate_item(evidence, tdef):
 
 def climate_item(evidence, tdef, today):
     """Climate and seasons from the first retrievable climatology source (config order), computed in code. No model."""
-    if any(k.startswith("wmo_") for k in tdef.get("sources", [])):
-        return wmo_climate_item(evidence, tdef)[0]
     order = {k: i for i, k in enumerate(tdef.get("sources", []))}
     e = next(iter(sorted((x for x in evidence if x["sourceKey"] in order and x["status"] == "RETRIEVED" and x.get("structured")),
                          key=lambda x: order[x["sourceKey"]])), None)

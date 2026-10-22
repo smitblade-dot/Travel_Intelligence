@@ -246,6 +246,22 @@ def check_claim(claim, evidence_by_key, sources_cfg, registry, pub_cfg, today, e
     return list(dict.fromkeys(reasons))
 
 
+def polarity_for(claim, records, sources_cfg):
+    """Texts a claim is compared against for reversed advice: every hand-written record, and builder-published records that do NOT
+    share a source with the claim. A sibling topic built from the same verified source cannot contradict it (the keyword heuristic
+    only raised false alarms there), but a builder-written record from a different source still can."""
+    cited = {x["sourceKey"] for x in claim["evidence"]}
+    out = []
+    for r in records:
+        if (r.get("provenance") or {}).get("builder") != AGENT_NAME:
+            out.append(r["content"])
+            continue
+        labels = {k for k, c in sources_cfg.items() if c.get("attribution_label") and c["attribution_label"] in r["content"]}
+        if not (labels & cited):
+            out.append(r["content"])
+    return out
+
+
 def qualifier_loss(claim):
     """Hedges, negations and place names in the quote that the model-written claim dropped."""
     quote = " ".join(x["quote"] for x in claim["evidence"])
@@ -310,10 +326,9 @@ def assess_item(item, evidence, sources_cfg, registry, pub_cfg, today, existing_
     ev_by_key = {e["sourceKey"]: e for e in evidence}
     same = [r for r in existing_records if r.get("countryId") == country_id and r.get("category") == category]
     existing_texts = [r["content"] for r in same]
-    polarity_texts = [r["content"] for r in same if (r.get("provenance") or {}).get("builder") != AGENT_NAME]
     keep, excluded, held_reasons = [], list(item.get("excluded", [])), []
     for c in item["claims"]:
-        reasons = check_claim(c, ev_by_key, sources_cfg, registry, pub_cfg, today, existing_texts, polarity_texts)
+        reasons = check_claim(c, ev_by_key, sources_cfg, registry, pub_cfg, today, existing_texts, polarity_for(c, same, sources_cfg))
         if not reasons:
             keep.append(c)
         else:

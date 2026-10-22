@@ -704,6 +704,16 @@ class SiblingRecordsDoNotRaiseFalseConflicts(unittest.TestCase):
             b.run()
             self.assertNotIn("conflicts_with_existing_record", "\n".join(b.captured))
 
+    def test_a_builder_record_from_a_different_source_is_still_compared_for_reversed_advice(self):
+        from ti_ops_director.country_rules import polarity_for
+        cfg = load_builder_config({}, ROOT)
+        claim = {"evidence": [{"sourceKey": "cdc_travel"}]}
+        mine = {"content": "UK FCDO travel advice (last updated 2 Jul 2026): It is safer to use pre-booked vehicles.", "provenance": {"builder": AGENT_NAME}}
+        same_source = {"content": "US CDC Travelers' Health (page last reviewed 25 Aug 2026): Use a bed net.", "provenance": {"builder": AGENT_NAME}}
+        hand = {"content": "Hand-written note.", "provenance": {}}
+        got = polarity_for(claim, [mine, same_source, hand], cfg.sources)
+        self.assertEqual(got, [mine["content"], hand["content"]])
+
     def test_hand_written_records_are_still_compared_for_reversed_advice(self):
         from ti_ops_director.country_rules import check_claim
         cfg = load_builder_config({}, ROOT)
@@ -755,7 +765,7 @@ class WmoClimateAndElectricalSupply(unittest.TestCase):
             self.assertEqual((src["sourceType"], src["confidence"]), ("INTERNATIONAL_ORGANISATION", "HIGH"))
             obs = [o for o in d["sourceObservations"] if o.get("recordId") == r["id"]]
             self.assertEqual({o["sourceId"] for o in obs}, {"cb-gh-wmo-wwis-accra", "cb-gh-wmo-wwis-kumasi", "cb-gh-wmo-wwis-wa"})
-            self.assertTrue(all(o["legalReviewStatus"] == "NOT_REQUIRED" for o in obs))
+            self.assertTrue(all(o["legalReviewStatus"] == "REVIEW_RECOMMENDED" for o in obs))      # rights not a clear licence: a person confirms
 
     def test_one_missing_station_holds_the_whole_climate_record_rather_than_describing_the_country_from_less(self):
         with tempfile.TemporaryDirectory() as tmp:

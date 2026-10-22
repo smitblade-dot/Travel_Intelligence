@@ -118,6 +118,7 @@ schedule or a manual dispatch on main.
   with the reason. Type D is listed in TI's reference fields but no official source states it, so it is not published. These are
   text PDFs read with pypdf (pinned in the workflows); an unreadable PDF is a recorded parse failure, not a crash. Instruments may
   have been amended since the date shown and the record says so.
+- Observations built from sources whose rights are not a clear open licence (the WMO terms, and the Ghana standards, regulator and grid-code documents) carry `legalReviewStatus: REVIEW_RECOMMENDED` until a person confirms the rights reading; clear licences (government open, OGL, public domain) are `NOT_REQUIRED`. This is recorded, not a publication block.
 - Reports show times in Cyprus local time (Europe/Nicosia); stored ledger and data timestamps remain UTC.
 - The model path (writer, verifier, Sonnet second opinion) is proven only with scripted replies. Haiku's quality is not
   measured; see `scripts/country_builder.py eval`.

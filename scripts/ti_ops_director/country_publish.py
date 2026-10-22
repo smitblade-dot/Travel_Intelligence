@@ -94,14 +94,14 @@ def build_publication_item(cc, category, tname, tdef, assessed, evidence, source
             "retrievedAt": e["retrievedAt"], "publicationDate": e.get("publicationDate"),
             "publicationDateStatus": e["publicationDateStatus"], "contentRights": e["contentRights"], "rightsStatus": e["contentRights"],
             "accessMethod": e["accessMethod"], "automationPermission": e["automationPermission"], "publisherName": e["publisher"],
-            "legalReviewStatus": "NOT_REQUIRED" if e["contentRights"] in OPEN_RIGHTS else "REQUIRED", "publicationId": pub_id})
+            "legalReviewStatus": "NOT_REQUIRED" if e["contentRights"] in OPEN_RIGHTS else "REVIEW_RECOMMENDED", "publicationId": pub_id})
     needed = {record["sourceId"]} | {o["sourceId"] for o in observations}
     return {"recordId": rid, "record": record, "sources": list(new_sources.values()), "observations": observations,
             "contentHash": chash, "topic": tname, "countryId": cc, "category": category, "needsSources": sorted(needed)}
 
 
 # ---- applying to data.json ----------------------------------------------------------------------------------
-OPEN_RIGHTS = ("GOVERNMENT_OPEN", "OPEN_LICENCE", "PUBLIC_DOMAIN", "ATTRIBUTION_REQUIRED", "FACTUAL_SUMMARY_ONLY")
+OPEN_RIGHTS = ("GOVERNMENT_OPEN", "OPEN_LICENCE", "PUBLIC_DOMAIN")      # a clear licence; anything else is flagged for a person to confirm
 SOURCE_CONFIDENCE = {"A": "HIGH", "B": "MEDIUM", "C": "MEDIUM", "D": "LOW", "E": "LOW", "F": "LOW"}
 
 
