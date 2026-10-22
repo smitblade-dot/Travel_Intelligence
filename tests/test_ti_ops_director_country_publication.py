@@ -738,6 +738,29 @@ class RuleChangesReassessHeldItems(unittest.TestCase):
                 self.assertNotEqual(before, b.rules_fingerprint("EQUIPMENT"))
             self.assertEqual(before, b.rules_fingerprint("EQUIPMENT"))
 
+    def test_held_work_is_reassessed_after_a_rules_change_even_with_no_gap(self):
+        from unittest import mock
+        import ti_ops_director.country_rules as rules
+        with tempfile.TemporaryDirectory() as tmp:
+            h = PublishHarness(tmp)
+            shared = LocalBackend(Path(tmp) / "ledger")
+            run_all(h.builder(registered=True, categories=["EQUIPMENT"], ledger=shared))
+            h.git(h.work, "fetch", "--quiet", "origin", "main")
+            h.git(h.work, "reset", "--quiet", "--hard", "FETCH_HEAD")
+            b = h.builder(registered=True, categories=["EQUIPMENT"], ledger=shared)
+            b.cfg.raw["scope"]["gap_types"] = ["MISSING", "STALE", "TOPIC_MISSING", "RECHECK_HELD"]
+            st = _sections(shared.snapshot().state())
+            # a hand-made open exception, as a held item would leave
+            st["exceptions"]["gh:EQUIPMENT:MOSQUITO:x"] = {"key": "gh:EQUIPMENT:MOSQUITO:x", "scope": "topic", "countryId": "gh", "category": "EQUIPMENT",
+                                                          "state": "HELD", "reasons": ["x"], "topic": "MOSQUITO"}
+            data = json.loads((h.work / "data.json").read_text())
+            gaps, _ = b.plan(data, cs.NOW.date(), st)
+            self.assertEqual([g["gap"]["type"] for g in gaps], [])                       # same rules: nothing to redo
+            with mock.patch.object(rules, "RULES_VERSION", "newer"):
+                gaps, planned = b.plan(data, cs.NOW.date(), st)
+                self.assertEqual([g["gap"]["type"] for g in gaps], ["RECHECK_HELD"])
+                self.assertEqual(len(planned), 1)
+
     def test_a_pending_publication_verified_by_recheck_keeps_its_commit(self):
         with tempfile.TemporaryDirectory() as tmp:
             h = PublishHarness(tmp, site_mode="stale")

@@ -152,7 +152,27 @@ class Builder:
         topics = {c: [(t, d["subcategory"]) for t, d in self.cfg.category_defs[c]["topics"].items() if d["kind"] in ("deterministic", "model")]
                   for c in self.cfg.categories}
         gaps = find_gaps(data, countries, self.cfg.categories, today, scope["stale_after_days_since_checked"], tuple(scope["gap_types"]), topics)
+        gaps += self._held_under_old_rules(data, countries, state, {(g["countryId"], g["category"]) for g in gaps}, tuple(scope["gap_types"]))
         return gaps, [task_for(g, today, self.cfg.raw["schedule"]["recheck_after_days"]) | {"gap": g} for g in gaps]
+
+    def _held_under_old_rules(self, data, countries, state, already, gap_types):
+        """Work that is still held (an open non-publication exception) but was last assessed under older rules or register entries is
+        looked at again even when its country/category has no gap, so a corrected rule clears a wrongly held item and its exception."""
+        if "RECHECK_HELD" not in gap_types or not state:
+            return []
+        names = {str(c["id"]).lower(): c for c in data.get("countries", [])}
+        out = []
+        for cc, cat in sorted({(e["countryId"], e["category"]) for e in state["exceptions"].values()
+                               if e["state"] == "HELD" and e["scope"] != "publication" and e.get("countryId") and e.get("category")}):
+            if cc not in countries or cat not in self.cfg.categories or (cc, cat) in already or cc not in names:
+                continue
+            drafts = [d for d in state["drafts"].values() if d["countryId"] == cc and d["category"] == cat and not d.get("supersededBy")]
+            if drafts and max(drafts, key=lambda d: d["createdAt"]).get("rules") == self.rules_fingerprint(cat):
+                continue
+            ids = sorted(r["id"] for r in data["records"] if r.get("countryId") == cc and r.get("category") == cat and r.get("status", "ACTIVE") == "ACTIVE")
+            out.append({"countryId": cc, "country": names[cc]["name"], "category": cat, "existingRecordIds": ids,
+                        "gap": {"type": "RECHECK_HELD", "detail": f"Held {cat} items for {names[cc]['name']} were assessed under earlier rules; assessed again."}})
+        return out
 
     # -- model and publication preconditions --
     def model_allowed(self):

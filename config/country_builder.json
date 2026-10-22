@@ -20,7 +20,8 @@
     "gap_types": [
       "MISSING",
       "STALE",
-      "TOPIC_MISSING"
+      "TOPIC_MISSING",
+      "RECHECK_HELD"
     ],
     "stale_after_days_since_checked": 365,
     "expansion": {
