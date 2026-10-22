@@ -1,6 +1,6 @@
 # 03AA-04_Country_Intelligence_Builder_TI
 
-Run: 22 Oct 2026 20:47 Cyprus time | mode: draft | automatic publication: OFF (publication_off (mode draft, TI_CB_PUBLISH unset)) | paid model use: OFF (awaiting_paid_authorisation)
+Run: 22 Oct 2026 20:55 Cyprus time | mode: draft | automatic publication: OFF (publication_off (mode draft, TI_CB_PUBLISH unset)) | paid model use: OFF (awaiting_paid_authorisation)
 
 Coverage (whole product): 187/728 combinations; gaps in scope: 2. Tasks this run: 2; new 0; reopened 2; duplicates suppressed 0; interrupted tasks recovered 0.
 
@@ -8,7 +8,7 @@ Spend recorded (all time, USD): 0 (estimated from API usage fields x configured 
 
 ## Publication
 
-- NOT published: publication_off (mode draft, TI_CB_PUBLISH unset). Would publish: gh-environment-climate-seasonal, gh-environment-flooding-natural-hazards, gh-equipment-clothing, gh-equipment-mosquito, gh-equipment-plugs.
+- NOT published: publication_off (mode draft, TI_CB_PUBLISH unset). Would publish: gh-environment-climate-seasonal, gh-environment-flooding-natural-hazards, gh-equipment-clothing, gh-equipment-plugs.
 
 ## Ghana / ENVIRONMENT: COMPLETED (assessed)
 
@@ -44,7 +44,7 @@ Missing evidence:
 - Evidence: cdc_travel=RETRIEVED, travelhealthpro=RETRIEVED, fcdo_health=RETRIEVED, fcdo_safety=RETRIEVED, gsa_plugs=RETRIEVED, li_1935=RETRIEVED, grid_code=RETRIEVED, ecg_technical=RETRIEVED
 - Cost this task: $0.00 (no model call)
 - CLOTHING: **PUBLISH**, confidence MEDIUM, 7 claim(s)
-- MOSQUITO: **PUBLISH**, confidence MEDIUM, 8 claim(s)
+- MOSQUITO: **HOLD** (conflicts_with_existing_record)
 - PLUGS: **PUBLISH**, confidence MEDIUM, 3 claim(s)
 - Draft: cib-gh-equipment-e087b56a8f | status **AWAITING_PUBLICATION_DECISION** | publication NOT_PUBLISHED | model: NOT_NEEDED
 - Link: https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-e087b56a8f.json
@@ -59,15 +59,15 @@ Missing evidence:
 - PUBLISHABLE: Wearing military clothing including camouflage is illegal.  _[UK Foreign, Commonwealth & Development Office (FS.21)]_
 - Uncertainty: Wording is the source's own. Other nationalities' governments may advise differently.
 
-### Mosquito protection  [MOSQUITO] PUBLISH
-- PUBLISHABLE: Bugs (like mosquitoes, ticks, and fleas) can spread a number of diseases in Ghana. Many of these diseases cannot be prevented with a vaccine or medicine. You can reduce your risk by taking steps to prevent bug bites.  _[US Centers for Disease Control and Prevention (CD.40)]_
-- PUBLISHABLE: Use permethrin-treated clothing and gear (such as boots, pants, socks, and tents). Do not use permethrin directly on skin.  _[US Centers for Disease Control and Prevention (CD.41)]_
-- PUBLISHABLE: Stay and sleep in air-conditioned or screened rooms.  _[US Centers for Disease Control and Prevention (CD.41)]_
-- PUBLISHABLE: Use a bed net if the area where you are sleeping is exposed to the outdoors.  _[US Centers for Disease Control and Prevention (CD.41)]_
-- PUBLISHABLE: FOR PROTECTION AGAINST TICKS AND MOSQUITOES: Use a repellent that contains 20% or more DEET for protection that lasts up to several hours.  _[US Centers for Disease Control and Prevention (CD.42)]_
-- PUBLISHABLE: Always use insect repellent as directed.  _[US Centers for Disease Control and Prevention (CD.42)]_
-- PUBLISHABLE: Avoid scratching bug bites, and apply hydrocortisone cream or calamine lotion to reduce the itching.  _[US Centers for Disease Control and Prevention (CD.43)]_
-- PUBLISHABLE: Although bed bugs do not carry disease, they are an annoyance. See our information page about avoiding bug bites for some easy tips to avoid them.  _[US Centers for Disease Control and Prevention (CD.44)]_
+### Mosquito protection  [MOSQUITO] HOLD
+- HELD (item_held): Bugs (like mosquitoes, ticks, and fleas) can spread a number of diseases in Ghana. Many of these diseases cannot be prevented with a vaccine or medicine. You can reduce your risk by taking steps to prevent bug bites.  _[US Centers for Disease Control and Prevention (CD.40)]_
+- HELD (item_held): Use permethrin-treated clothing and gear (such as boots, pants, socks, and tents). Do not use permethrin directly on skin.  _[US Centers for Disease Control and Prevention (CD.41)]_
+- HELD (item_held): Stay and sleep in air-conditioned or screened rooms.  _[US Centers for Disease Control and Prevention (CD.41)]_
+- HELD (item_held): Use a bed net if the area where you are sleeping is exposed to the outdoors.  _[US Centers for Disease Control and Prevention (CD.41)]_
+- HELD (item_held): FOR PROTECTION AGAINST TICKS AND MOSQUITOES: Use a repellent that contains 20% or more DEET for protection that lasts up to several hours.  _[US Centers for Disease Control and Prevention (CD.42)]_
+- HELD (item_held): Always use insect repellent as directed.  _[US Centers for Disease Control and Prevention (CD.42)]_
+- HELD (item_held): Avoid scratching bug bites, and apply hydrocortisone cream or calamine lotion to reduce the itching.  _[US Centers for Disease Control and Prevention (CD.43)]_
+- HELD (item_held): Although bed bugs do not carry disease, they are an annoyance. See our information page about avoiding bug bites for some easy tips to avoid them.  _[US Centers for Disease Control and Prevention (CD.44)]_
 - Uncertainty: Wording is the source's own. Other nationalities' governments may advise differently.
 
 ### Electrical plugs and supply  [PLUGS] PUBLISH
@@ -79,7 +79,7 @@ Missing evidence:
 
 ## Exceptions held (routed to the Master Agent)
 
-- [automatic retry] gh/EQUIPMENT/MOSQUITO: no_dated_source_within_freshness_limit. Held until a registry-backed source states a publication date inside its freshness limit. No action unless it persists. (seen 1x since 22 Oct 2026 20:47 Cyprus time)
+- [NEEDS DECISION] gh/EQUIPMENT/MOSQUITO: conflicts_with_existing_record, no_dated_source_within_freshness_limit. The new text points the opposite way from an existing record. The existing record was kept untouched. Held until a registry-backed source states a publication date inside its freshness limit. No action unless it persists. (seen 1x since 22 Oct 2026 20:55 Cyprus time)
 
 ## Awaiting budget authorisation (model-written topics; not exceptions)
 
@@ -96,7 +96,7 @@ Missing evidence:
 ## Drafts and assessments held on this branch
 
 - gh/ENVIRONMENT: cib-gh-environment-21fa3f4dcf | ELIGIBLE_AWAITING_PUBLICATION_RUN | model: NOT_NEEDED | claims 9 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/ENVIRONMENT/cib-gh-environment-21fa3f4dcf.json
-- gh/EQUIPMENT: cib-gh-equipment-e087b56a8f | ELIGIBLE_AWAITING_PUBLICATION_RUN | model: NOT_NEEDED | claims 29 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-e087b56a8f.json
+- gh/EQUIPMENT: cib-gh-equipment-e087b56a8f | HELD_EXCEPTIONS_ROUTED | model: NOT_NEEDED | claims 29 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-e087b56a8f.json
 - gh/ENVIRONMENT: cib-gh-environment-49f34bc868 | ELIGIBLE_AWAITING_PUBLICATION_RUN | model: NOT_NEEDED | claims 9 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/ENVIRONMENT/cib-gh-environment-49f34bc868.json | superseded by cib-gh-environment-21fa3f4dcf
 - gh/EQUIPMENT: cib-gh-equipment-49834200ea | HELD_EXCEPTIONS_ROUTED | model: NOT_NEEDED | claims 28 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-49834200ea.json | superseded by cib-gh-equipment-e087b56a8f
 - gh/TRANSPORT: cib-gh-transport-21272f0ba2 | AUTO_PUBLISHED_AND_VERIFIED | model: NOT_NEEDED | claims 31 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/TRANSPORT/cib-gh-transport-21272f0ba2.json

@@ -118,12 +118,12 @@
           "gh-environment-flooding-natural-hazards"
         ]
       },
-      "state": "running",
+      "state": "completed",
       "attempts": 1,
       "created_at": "2026-10-22T17:44:23+00:00",
       "updated_at": "2026-10-22T17:55:57+00:00",
-      "lease_owner": "runnervm8k3b6-2346-5f818a",
-      "lease_expires": "2026-10-22T18:15:57+00:00",
+      "lease_owner": null,
+      "lease_expires": null,
       "outcome": "assessed",
       "cost_usd": 0.0,
       "blockingReason": null,
@@ -152,18 +152,20 @@
           "gh-equipment-mosquito"
         ]
       },
-      "state": "running",
+      "state": "completed",
       "attempts": 1,
       "created_at": "2026-10-22T17:44:23+00:00",
       "updated_at": "2026-10-22T17:55:57+00:00",
-      "lease_owner": "runnervm8k3b6-2346-5f818a",
-      "lease_expires": "2026-10-22T18:15:57+00:00",
+      "lease_owner": null,
+      "lease_expires": null,
       "outcome": "assessed",
       "cost_usd": 0.0,
       "blockingReason": null,
       "error": null,
       "published": [],
-      "held": [],
+      "held": [
+        "MOSQUITO"
+      ],
       "draftId": "cib-gh-equipment-e087b56a8f"
     }
   },
@@ -250,7 +252,7 @@
       "evidenceFingerprint": "21fa3f4dcfcce2b9785ab1d9fed11b2d",
       "modelStatus": "NOT_NEEDED",
       "reviewStatus": "ELIGIBLE_AWAITING_PUBLICATION_RUN",
-      "createdAt": "2026-10-22T17:47:04+00:00",
+      "createdAt": "2026-10-22T17:55:57+00:00",
       "costUsd": 0.0,
       "claims": 9,
       "rules": "c466ba82776a5cd51c26d1cd0cfb9b47",
@@ -265,8 +267,8 @@
       "category": "EQUIPMENT",
       "evidenceFingerprint": "e087b56a8fa44da0e4361fcaf306a5da",
       "modelStatus": "NOT_NEEDED",
-      "reviewStatus": "ELIGIBLE_AWAITING_PUBLICATION_RUN",
-      "createdAt": "2026-10-22T17:47:04+00:00",
+      "reviewStatus": "HELD_EXCEPTIONS_ROUTED",
+      "createdAt": "2026-10-22T17:55:57+00:00",
       "costUsd": 0.0,
       "claims": 29,
       "rules": "2fe109167307767794d84a37176694cb",
@@ -493,6 +495,21 @@
         "Travel Intelligence|country_content_draft|gh:ENVIRONMENT:TOPIC_MISSING|7a929f2bc7b1730469b607518c74a6f3|W42": "assessed",
         "Travel Intelligence|country_content_draft|gh:EQUIPMENT:TOPIC_MISSING|eac9425a6a54efcca2aabe86e799d47b|W42": "assessed"
       }
+    },
+    {
+      "at": "2026-10-22T17:55:57+00:00",
+      "mode": "draft",
+      "tasksRun": 2,
+      "created": 0,
+      "reopened": 2,
+      "duplicatesSuppressed": 0,
+      "recovered": [],
+      "published": [],
+      "publicationFailures": [],
+      "outcomes": {
+        "Travel Intelligence|country_content_draft|gh:ENVIRONMENT:TOPIC_MISSING|7a929f2bc7b1730469b607518c74a6f3|W42": "assessed",
+        "Travel Intelligence|country_content_draft|gh:EQUIPMENT:TOPIC_MISSING|eac9425a6a54efcca2aabe86e799d47b|W42": "assessed"
+      }
     }
   ],
   "exceptions": {
@@ -625,10 +642,11 @@
       "action": "Held until a registry-backed source states a publication date inside its freshness limit. No action unless it persists.",
       "requiresHuman": false,
       "id": "cbx-3b5e34a9f5",
-      "state": "HELD",
+      "state": "RESOLVED",
       "firstSeen": "2026-10-22T17:47:04+00:00",
       "lastSeen": "2026-10-22T17:47:04+00:00",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-22T17:55:57+00:00"
     },
     "gh:EQUIPMENT:PLUGS:no_external_source": {
       "key": "gh:EQUIPMENT:PLUGS:no_external_source",
@@ -684,11 +702,10 @@
       "action": "The new text points the opposite way from an existing record. The existing record was kept untouched. Held until a registry-backed source states a publication date inside its freshness limit. No action unless it persists.",
       "requiresHuman": true,
       "id": "cbx-0115b7fad0",
-      "state": "RESOLVED",
-      "firstSeen": "2026-10-22T17:44:23+00:00",
-      "lastSeen": "2026-10-22T17:44:23+00:00",
-      "occurrences": 1,
-      "resolvedAt": "2026-10-22T17:47:04+00:00"
+      "state": "HELD",
+      "firstSeen": "2026-10-22T17:55:57+00:00",
+      "lastSeen": "2026-10-22T17:55:57+00:00",
+      "occurrences": 1
     },
     "gh:EQUIPMENT:PLUGS:evidence_missing:d7f37337": {
       "key": "gh:EQUIPMENT:PLUGS:evidence_missing:d7f37337",
@@ -758,7 +775,7 @@
     "currency": "USD",
     "status": "estimated from API usage fields x configured list prices; not invoice-confirmed",
     "mode": "dry_run",
-    "updated": "2026-10-22T17:47:35+00:00"
+    "updated": "2026-10-22T17:56:39+00:00"
   },
   "triageCache": {}
 }
