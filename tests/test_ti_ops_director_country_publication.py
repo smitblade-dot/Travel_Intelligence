@@ -727,6 +727,34 @@ class SiblingRecordsDoNotRaiseFalseConflicts(unittest.TestCase):
         self.assertNotIn("conflicts_with_existing_record", check_claim(claim, ev, cfg.sources, reg, cfg.publication_cfg, cs.NOW.date(), [hand], []))
 
 
+class RuleChangesReassessHeldItems(unittest.TestCase):
+    def test_the_rules_fingerprint_changes_with_the_rules_version_so_held_items_are_looked_at_again(self):
+        from unittest import mock
+        import ti_ops_director.country_rules as rules
+        with tempfile.TemporaryDirectory() as tmp:
+            b = PublishHarness(tmp).builder(registered=True)
+            before = b.rules_fingerprint("EQUIPMENT")
+            with mock.patch.object(rules, "RULES_VERSION", "next"):
+                self.assertNotEqual(before, b.rules_fingerprint("EQUIPMENT"))
+            self.assertEqual(before, b.rules_fingerprint("EQUIPMENT"))
+
+    def test_a_pending_publication_verified_by_recheck_keeps_its_commit(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            h = PublishHarness(tmp, site_mode="stale")
+            ledger_backend = LocalBackend(Path(tmp) / "ledger")
+            b = h.builder(categories=["TRANSPORT"], ledger=ledger_backend)
+            restore = FailureAndRollback._short_window(b)
+            try:
+                b.run()
+            finally:
+                restore()
+            h.site.mode = "live"
+            h.builder(categories=["TRANSPORT"], ledger=ledger_backend).run()
+            pub = list(ledger(h)["publications"].values())[0]
+            self.assertEqual(pub["state"], "VERIFIED")
+            self.assertTrue(pub.get("commit"))
+
+
 class WmoClimateAndElectricalSupply(unittest.TestCase):
     """The live configuration: WMO WWIS seasonal climate averages and official Ghana plug/voltage/frequency sources."""
     WMO_ROBOTS = {"worldweather.wmo.int": (cs.FX / "wmo_robots.txt").read_text()}

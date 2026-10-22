@@ -43,6 +43,9 @@ HEDGES = re.compile(r"(?i)\b(may|might|can|could|some|sometimes|often|usually|ge
 NEGATIONS = re.compile(r"(?i)\b(not|no|never|cannot|can't|don't|do not|without|unless|except|avoid\w*|illegal\w*|prohibit\w*|forbid\w*|ban(?:ned)?)\b")
 STOP = set("a an the of and or to in on at for from by with as is are was were be been it its this that these those you your we our they their "
            "there have has had can may might will would should could not no".split())
+# Bump when the publication rules change, so items held under older rules are assessed again (it feeds the rules fingerprint).
+RULES_VERSION = "2026-10-22.3"
+
 DIRECTIVE_NEG = re.compile(r"(?i)\b(avoid|do not|don't|never|not (?:use|travel|drive|ride)|should not|must not|illegal|prohibited|unsafe|dangerous)\b")
 DIRECTIVE_POS = re.compile(r"(?i)\b(safer to|safe to|recommended|advisable|it is best to|best to|prefer|choose|should|encouraged)\b")
 

@@ -23,6 +23,7 @@ from .country_draft import (PROMPT_VERSION, SYSTEM_PROMPT, build_candidate_batch
                             structural_valid, validate_batch)
 from .country_evidence import collect_category, evidence_fingerprint, http_get, select_passages
 from .country_gaps import TASK_TYPE, coverage_summary, find_gaps, task_for
+from . import country_rules
 from .country_pipeline import assess_all, build_items, source_exceptions, topic_exceptions, unique_exceptions, verify_model_claims
 from .country_publish import (PublishRefused, make_main_backend, publish_items, rollback_publication, release_is_ours, served_matches, served_without,
                               site_url_for, verify_live)
@@ -257,7 +258,7 @@ class Builder:
 
     def rules_fingerprint(self, category):
         return fingerprint([self.cfg.publication_cfg, self.cfg.raw["categories"][category],
-                            {k: self.cfg.sources[k].get("registry_id") for k in self.cfg.sources}, self.registry_fingerprint()])
+                            {k: self.cfg.sources[k].get("registry_id") for k in self.cfg.sources}, self.registry_fingerprint(), country_rules.RULES_VERSION])
 
     def registry_fingerprint(self):
         from .country_rules import repo_file
@@ -580,7 +581,8 @@ class Builder:
                 v = verify_live(url, self.site_http, lambda served: served_matches(served, items), ver.get("recheck_timeout_seconds", 120),
                                 ver["interval_seconds"], sleep=self.sleep)
                 if v["ok"]:
-                    self._ledger(lambda s2: s2["publications"][pub_id].update(state="VERIFIED", verifiedAt=iso(self.clock()), served=v, pending=None))
+                    self._ledger(lambda s2: s2["publications"][pub_id].update(state="VERIFIED", verifiedAt=iso(self.clock()), served=v, pending=None,
+                                                                           commit=pend.get("commit")))
                     report.append({"publicationId": pub_id, "result": "verified", "records": p["records"], "verification": v})
                     continue
             n = pend["rechecks"] + 1
