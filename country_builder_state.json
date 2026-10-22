@@ -500,7 +500,7 @@
     "pub-20261022T142741Z-1dfa3c": {
       "id": "pub-20261022T142741Z-1dfa3c",
       "at": "2026-10-22T14:27:41+00:00",
-      "state": "PENDING",
+      "state": "VERIFIED",
       "records": [
         "gh-environment-flooding-natural-hazards",
         "gh-transport-road-travel",
@@ -508,7 +508,32 @@
         "gh-transport-air-travel-and-gateways",
         "gh-equipment-clothing",
         "gh-equipment-mosquito"
-      ]
+      ],
+      "commit": "6465d45e349cedc2a37c929153d24470b0a5a0a7",
+      "verifiedAt": "2026-10-22T14:36:15+00:00",
+      "summary": {
+        "added": [
+          "gh-environment-flooding-natural-hazards",
+          "gh-transport-road-travel",
+          "gh-transport-taxis-and-public-transport",
+          "gh-transport-air-travel-and-gateways",
+          "gh-equipment-clothing",
+          "gh-equipment-mosquito"
+        ],
+        "updated": [],
+        "unchanged": [],
+        "refreshed": [],
+        "skipped": [],
+        "generated": "2026-10-22T14:27:41+00:00",
+        "commit": "6465d45e349cedc2a37c929153d24470b0a5a0a7"
+      },
+      "served": {
+        "ok": true,
+        "attempts": 26,
+        "served_generated": "2026-10-22T14:27:41+00:00",
+        "served_sha256": "ea488ff9f7778df30f43d995ecaa29ab988d5bb2b27d395cf1c7a984fe9db302",
+        "url": "https://travelintelligence22.com/"
+      }
     }
   },
   "pending": {},
