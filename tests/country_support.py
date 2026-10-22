@@ -221,7 +221,7 @@ class PublishHarness:
         return subprocess.run(["git", "-C", str(cwd), *args], capture_output=True, text=True, env=env, check=True).stdout.strip()
 
     def builder(self, provider=None, net=None, mode="publish", extractive=True, env=None, dry_run=True, limits=None, sonnet=False,
-                categories=None, ledger=None, registered=False):
+                categories=None, ledger=None, registered=False, now=None):
         e = {"TI_CB_MODE": mode, "TI_CB_STATE_BACKEND": "file", "TI_CB_STATE_DIR": str(self.tmp / "ledger"),
              "TI_CB_DRY_RUN": "true" if dry_run else "false", **self.ENV}
         if limits:
@@ -238,7 +238,7 @@ class PublishHarness:
         if categories:
             cfg.categories = categories
         out = []
-        b = Builder(cfg, self.work, ledger or LocalBackend(self.tmp / "ledger"), http=net or FakeNet(), provider=provider, clock=lambda: NOW,
+        b = Builder(cfg, self.work, ledger or LocalBackend(self.tmp / "ledger"), http=net or FakeNet(), provider=provider, clock=lambda: (now or NOW),
                     env=e, out=out.append, workdir=self.tmp / "w", data_path=self.work / "data.json",
                     main_backend=make_main_backend(self.work), site_http=self.site, sleep=lambda s: None)
         b.captured = out

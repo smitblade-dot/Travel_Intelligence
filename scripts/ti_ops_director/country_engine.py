@@ -355,7 +355,14 @@ class Builder:
                 return {"state": dump_state(st)}, st
             for t in planned:
                 key = t["dedupe_key"]
-                if key in st["tasks"] and st["tasks"][key]["state"] != "cancelled":
+                old = st["tasks"].get(key)
+                if old and old["state"] == "completed" and old["updated_at"][:10] < iso(now)[:10]:
+                    # The gap is still open and the task last ran on an earlier day (for example a draft-mode trial): look again.
+                    # Unchanged evidence and rules cost nothing (see ``unchanged_evidence``); changed ones are reassessed.
+                    old.update(state="pending", attempts=0, updated_at=iso(now))
+                    stats["created"] += 1
+                    continue
+                if old and old["state"] != "cancelled":
                     stats["duplicates"] += 1
                     continue
                 st["tasks"][key] = {"id": "cbt-" + uuid.uuid4().hex[:12], "dedupe_key": key, "task_type": TASK_TYPE,

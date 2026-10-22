@@ -228,6 +228,19 @@ class RegisteredHealthSources(unittest.TestCase):
             self.assertTrue(any("cdc" in x or x.startswith("cb-gh-") for x in srcs))
 
 
+class DraftTrialThenPublish(unittest.TestCase):
+    def test_tasks_finished_in_a_draft_trial_are_looked_at_again_so_eligible_content_publishes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            h = PublishHarness(tmp)
+            shared = LocalBackend(Path(tmp) / "ledger")
+            trial = h.builder(mode="draft", ledger=shared, categories=["TRANSPORT"], env={"GITHUB_EVENT_NAME": "pull_request", "GITHUB_REF": "refs/pull/1/merge"})
+            run_all(trial)
+            self.assertNotIn("gh-transport-road-travel", records(h))
+            live = h.builder(mode="publish", ledger=shared, categories=["TRANSPORT"], now=cs.NOW + timedelta(days=1))
+            live.run()
+            self.assertIn("gh-transport-road-travel", records(h))
+
+
 class FailureAndRollback(unittest.TestCase):
     @staticmethod
     def _short_window(b, timeout=3):
