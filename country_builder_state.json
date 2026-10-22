@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "agent": "03AA-04_Country_Intelligence_Builder_TI",
+  "controls": {
+    "paused": false,
+    "stopped": false
+  },
+  "tasks": {
+    "Travel Intelligence|country_content_draft|gh:ENVIRONMENT:MISSING|89289d18c5f66290275665f64e9406a9|W42": {
+      "id": "cbt-35ba405c0f46",
+      "dedupe_key": "Travel Intelligence|country_content_draft|gh:ENVIRONMENT:MISSING|89289d18c5f66290275665f64e9406a9|W42",
+      "task_type": "country_content_draft",
+      "inputs": {
+        "countryId": "gh",
+        "country": "Ghana",
+        "category": "ENVIRONMENT",
+        "gap": {
+          "type": "MISSING",
+          "detail": "No active ENVIRONMENT record for Ghana."
+        },
+        "existingRecordIds": []
+      },
+      "state": "running",
+      "attempts": 1,
+      "created_at": "2026-10-22T05:40:37+00:00",
+      "updated_at": "2026-10-22T05:40:37+00:00",
+      "lease_owner": "runnervm8k3b6-2103-e255a1",
+      "lease_expires": "2026-10-22T06:00:37+00:00"
+    },
+    "Travel Intelligence|country_content_draft|gh:TRANSPORT:MISSING|cfbb29ccdb58436d53d137f9d07961ac|W42": {
+      "id": "cbt-2b3c9639f0ac",
+      "dedupe_key": "Travel Intelligence|country_content_draft|gh:TRANSPORT:MISSING|cfbb29ccdb58436d53d137f9d07961ac|W42",
+      "task_type": "country_content_draft",
+      "inputs": {
+        "countryId": "gh",
+        "country": "Ghana",
+        "category": "TRANSPORT",
+        "gap": {
+          "type": "MISSING",
+          "detail": "No active TRANSPORT record for Ghana."
+        },
+        "existingRecordIds": []
+      },
+      "state": "pending",
+      "attempts": 0,
+      "created_at": "2026-10-22T05:40:37+00:00",
+      "updated_at": "2026-10-22T05:40:37+00:00",
+      "lease_owner": null,
+      "lease_expires": null
+    },
+    "Travel Intelligence|country_content_draft|gh:EQUIPMENT:MISSING|1b1ea479b4bf2ebbb9dc5502bbb1b9e9|W42": {
+      "id": "cbt-8c8b36742bb7",
+      "dedupe_key": "Travel Intelligence|country_content_draft|gh:EQUIPMENT:MISSING|1b1ea479b4bf2ebbb9dc5502bbb1b9e9|W42",
+      "task_type": "country_content_draft",
+      "inputs": {
+        "countryId": "gh",
+        "country": "Ghana",
+        "category": "EQUIPMENT",
+        "gap": {
+          "type": "MISSING",
+          "detail": "No active EQUIPMENT record for Ghana."
+        },
+        "existingRecordIds": []
+      },
+      "state": "pending",
+      "attempts": 0,
+      "created_at": "2026-10-22T05:40:37+00:00",
+      "updated_at": "2026-10-22T05:40:37+00:00",
+      "lease_owner": null,
+      "lease_expires": null
+    }
+  },
+  "drafts": {},
+  "runs": [],
+  "runs_pending": null
+}
