@@ -1,6 +1,6 @@
 # 03AA-04_Country_Intelligence_Builder_TI
 
-Run: 22 Oct 2026 22:16 Cyprus time | mode: draft | automatic publication: OFF (publication_off (mode draft, TI_CB_PUBLISH unset)) | paid model use: OFF (awaiting_paid_authorisation)
+Run: 22 Oct 2026 22:21 Cyprus time | mode: publish | automatic publication: ON | paid model use: OFF (awaiting_paid_authorisation)
 
 Coverage (whole product): 187/728 combinations; gaps in scope: 0. Tasks this run: 0; new 0; reopened 0; duplicates suppressed 0; interrupted tasks recovered 0.
 
@@ -20,11 +20,12 @@ Spend recorded (all time, USD): 0 (estimated from API usage fields x configured 
 
 ## Scope
 
-- Validation scope: gh / ENVIRONMENT, TRANSPORT, EQUIPMENT. Expansion: OFF (needs confirmation of coverage and budget); proof gate: not met (6 record(s) verified live (need 3), 0 rollback(s) (max 0), 1 clean publication run(s) (need 2))
+- Validation scope: gh / ENVIRONMENT, TRANSPORT, EQUIPMENT. Expansion: OFF (needs confirmation of coverage and budget); proof gate: MET (10 record(s) verified live (need 3), 0 rollback(s) (max 0), 2 clean publication run(s) (need 2))
 
 ## Records published by this agent
 
 - pub-20261022T142741Z-1dfa3c: gh-environment-flooding-natural-hazards, gh-transport-road-travel, gh-transport-taxis-and-public-transport, gh-transport-air-travel-and-gateways, gh-equipment-clothing, gh-equipment-mosquito | commit 6465d45e349cedc2a37c929153d24470b0a5a0a7 | verified live 22 Oct 2026 17:36 Cyprus time
+- pub-20261022T181139Z-21fa3f: gh-environment-climate-seasonal, gh-environment-flooding-natural-hazards, gh-equipment-clothing, gh-equipment-plugs | commit None | verified live 22 Oct 2026 22:22 Cyprus time
 
 ## Drafts and assessments held on this branch
 
