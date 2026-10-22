@@ -299,6 +299,7 @@ class FailureAndRollback(unittest.TestCase):
             h.git(h.work, "fetch", "--quiet", "origin", "main")                       # a new run checks out the current main
             h.git(h.work, "reset", "--quiet", "--hard", "FETCH_HEAD")
             b3 = h.builder(categories=["TRANSPORT"], ledger=ledger_backend)           # a verified publication is final
+            b3.cfg.raw["publication"]["verification"].update(timeout_seconds=3, interval_seconds=1, recheck_timeout_seconds=3)   # same rules as run 1
             b3.run()
             self.assertIn("reopened 0", "\n".join(b3.captured))
             self.assertEqual(sorted(p["state"] for p in ledger(h)["publications"].values()), ["VERIFIED"])
