@@ -171,6 +171,31 @@
         "MOSQUITO"
       ],
       "draftId": "cib-gh-equipment-e087b56a8f"
+    },
+    "Travel Intelligence|country_content_draft|gh:EQUIPMENT:RECHECK_HELD|c700b914fa0729b420e73550ae9a01d4|W42": {
+      "id": "cbt-95b52e2c9533",
+      "dedupe_key": "Travel Intelligence|country_content_draft|gh:EQUIPMENT:RECHECK_HELD|c700b914fa0729b420e73550ae9a01d4|W42",
+      "task_type": "country_content_draft",
+      "inputs": {
+        "countryId": "gh",
+        "country": "Ghana",
+        "category": "EQUIPMENT",
+        "gap": {
+          "type": "RECHECK_HELD",
+          "detail": "Held EQUIPMENT items for Ghana were assessed under earlier rules; assessed again."
+        },
+        "existingRecordIds": [
+          "gh-equipment-clothing",
+          "gh-equipment-mosquito",
+          "gh-equipment-plugs"
+        ]
+      },
+      "state": "running",
+      "attempts": 1,
+      "created_at": "2026-10-22T19:48:19+00:00",
+      "updated_at": "2026-10-22T19:48:19+00:00",
+      "lease_owner": "runnervm8k3b6-2340-266f9a",
+      "lease_expires": "2026-10-22T20:08:19+00:00"
     }
   },
   "drafts": {
