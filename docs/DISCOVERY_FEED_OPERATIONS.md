@@ -18,9 +18,16 @@ this final coverage check. Never describe such a run as a fully healthy refresh.
   countries. If refreshing fails, retain previous airport nodes with their
   original fetch timestamp and explicitly stale status. With no previous
   non-empty network, fail without overwriting the output.
-- **GDELT:** bounded 24-hour news query, at most three requests on transient
-  failures, with backoff and Retry-After handling. A persistent provider outage
-  or rate limit remains a reported failure; no attempt to evade it.
+- **GDELT:** supplementary bounded 24-hour news query, one request per collector
+  invocation, including on rate limits, transport errors or malformed replies.
+  Wait until the next scheduled refresh rather than retrying. This reduces
+  traffic; it does not guarantee acceptance or establish a published daily quota.
+  Use existing registered reputable news and official/local-language sources
+  directly for the intelligence review; the reviewer must not call GDELT again.
+  Missing GDELT results never establish no news or no change. A provider outage
+  remains visible in the strict feed audit; publication evidence and validation
+  gates remain mandatory. No alternative source is automatically a substitute
+  for all GDELT coverage.
 - **GDACS:** validate the current GeoJSON features array before accepting it.
 - **ADSB.lol:** the unsupported `/v2/all` call is replaced by documented point
   queries, at most one per second, around one scheduled large/medium airport

@@ -94,6 +94,15 @@ jobs:
             never manufacture evidence or mark a country reviewed merely
             because a discovery signal or old record exists.
 
+            Use existing registered reputable news sources and current official,
+            host-country and local-language sources for discovery and review.
+            Search for current reporting directly rather than depending on
+            GDELT results. GDELT is supplementary: use its collected evidence
+            when available, but do not call GDELT again or retry it with Bash,
+            WebFetch or another tool. Its absence does not establish no news
+            or no change. Record actual sources checked for every review;
+            if alternative sources cannot establish coverage, report unverified.
+
             Treat the country records as a live intelligence layer as well as
             Current Intelligence events. Inspect all tracked countries for
             material, currently verified changes to traveller-relevant
