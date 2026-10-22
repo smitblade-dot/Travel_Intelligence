@@ -7,101 +7,100 @@ Acceptance standard: `docs/AGENT_BUILD_STANDARD.md`.
 
 ## What it is
 
-A worker that finds a missing or stale country/category in `data.json`, collects permitted evidence for it, and
-produces a **draft** that is checked claim by claim against what was retrieved. The draft is saved on its own
-branch (`ti-country-drafts`). It never writes `data.json`, never publishes, and a completed draft is not an
-independently verified or published country profile.
+TI is an automated, live intelligence service governed by rules and spending limits. This agent finds a missing or stale
+country/category in `data.json`, collects permitted evidence, applies the TI publication rules, **publishes what passes
+automatically**, checks that the public site serves it, and holds only the exceptions, with their reasons, routed through the
+Master Agent. (Operating model corrected by Marc on 22 October 2026; it replaces the earlier draft-only design with mandatory
+human review.)
 
-It is the `country_content_builder` worker of the Master Agent (`03AA-04_Master_Agent_TI_Ops_Director`) and
-also runs on GitHub Actions. It reuses the Director's queue and dedupe-key format (`store.task_dedupe_key`), its
-reserve-before-call spending gateway (`ModelGateway`, through the monitor's `MonitorSpend` wrapper so limits are
-shared across runs), the compare-and-swap state branch backend, text sanitising, and the operational report. It
-reuses the baseline requirements (`config/baseline_requirements.json`), the 14 category keys, the existing
-`data.json` record, source and observation shapes, and the baseline-batch shape that
-`scripts/merge_baseline_batches.py` reads. It does not duplicate the Sonnet bulk generator
-(`baseline-population.yml`).
+It is the `country_content_builder` worker of the Master Agent (`03AA-04_Master_Agent_TI_Ops_Director`) and also runs on
+GitHub Actions. It reuses: the Director's queue and dedupe-key format, its reserve-before-call spending gateway (through the
+monitor's `MonitorSpend` wrapper, so limits are shared across runs), the compare-and-swap commit backend the continuous monitor
+uses to write main, the canonical validator `scripts/validate_ti_data.py`, the source register `config/source_registry.json`,
+`config/baseline_requirements.json` and the 14 category keys, the Production Controller's site address, GitHub Pages as the
+deployment, and `meta.counts` / `meta.generated` / `change_log` upkeep as CLAUDE.md requires. It does not duplicate the Sonnet
+bulk generator (`baseline-population.yml`).
 
-## What it does, step by step
+## The rules (a matching quotation is not enough)
 
-1. **Detect a gap** (ordinary code). A country/category is MISSING when it has no active record (same definition as
-   `scripts/audit_baseline_coverage.py`), or STALE when every active record is past its `reviewDate` or last checked
-   more than 365 days ago. Only the configured countries and categories are considered.
-2. **Queue a deduplicated task.** One task per country, category, gap type and recheck window (7 days), using the
-   Director's dedupe-key format. A repeat plan creates nothing. In the Master Agent queue the same key stops a
-   second task; on Actions the ledger on the drafts branch does.
-3. **Collect permitted evidence** (ordinary code). HTTPS GET from hosts named in `config/country_builder.json` only,
-   `robots.txt` checked first (an unreadable `robots.txt` counts as not permitted), size, time and retries bounded.
-   Pages become numbered, verbatim passages with their heading path. Publication dates are recorded only if the source
-   states them; otherwise `publicationDateStatus` is `NOT_STATED`. Each source gets a status: `RETRIEVED`, `STALE`,
-   `UNAVAILABLE`, `BLOCKED_BY_ROBOTS` or `PARSE_FAILED`. A source that is not `RETRIEVED` contributes nothing.
-4. **Compute what code can compute.** Climate and seasons come from the NASA POWER monthly climatology for the
-   capital's grid point (hottest/coolest month, wettest/driest months), with no model. Plugs come from TI's own
-   country reference fields and are flagged as needing an external source. The next 4-6 weeks is always reported as
-   missing evidence until an approved current outlook source is configured.
-5. **Draft the rest with Haiku** (only if there is changed evidence, the mode is `draft`, and paid execution is
-   configured). The model receives only the selected passages and proposes claims with verbatim quotes.
-6. **Check every claim** (ordinary code). A claim is kept only if its quote is verbatim in a cited passage, every
-   number in it appears in its quotes, it makes no assurance (safe, normal, no restrictions, operating normally) that the
-   quotes do not make, and it does not use present-tense language unless declared CURRENT and supported by a source that
-   is allowed to support current claims. Valid CURRENT claims go to `currentContext`, beside the baseline, never into
-   candidate records. A CONFLICT claim needs two independent sources, otherwise it is downgraded to UNCERTAIN.
-   Rejected claims are listed in the draft with the reason; a topic with nothing left is reported as missing.
-7. **Build the candidate batch.** Records (status `DRAFT`), any new sources, and one SourceObservation per
-   record/source with `recordId` only, `sourceUrl`, `extractedClaim`, `independenceGroupId`, retrieval time, rights and
-   language. It is merged into a **copy** of `data.json` and run through `scripts/validate_ti_data.py`; it is never
-   applied.
-8. **Save, report and cost.** Draft, ledger and `country_builder_report.md` go to `ti-country-drafts` by compare-and-swap
-   commit. The report shows country and category, the gap, the draft content, sources, uncertainty, review status, and
-   the actual processing cost (measured from API usage fields x list prices; not invoice-confirmed).
+Content is published only if every rule holds. Rules are in `scripts/ti_ops_director/country_rules.py`.
 
-## Draft content rules (from the brief and CLAUDE.md)
+| Rule | What is checked | On failure |
+|---|---|---|
+| **Permitted source** | The source is in the TI source register (`fcdos` etc.) at TIER_1, ACTIVE or INTEGRATION_READY, automation YES/REVIEWED, retrieved this run, robots.txt honoured. A source outside the register may corroborate but never establish a claim alone. | claim excluded; `source_not_in_registry` etc. routed |
+| **Freshness** | At least one register-backed source states a date inside its limit (FCDO: the later of its substantive-update and page-updated dates, 120 days). An undated page cannot establish freshness. Present-tense claims are not baseline: they belong to Current Intelligence events. | claim excluded |
+| **Attribution and dates** | Published text starts with the publisher and its stated date ("UK FCDO travel advice (last updated 2 Jul 2026): ..."). The record keeps source URL, publication date, retrieval date, original language, rights and the observation. | n/a (built in code) |
+| **Classification** | The claim comes from a section whose heading belongs to the topic, and each source block goes to the one topic it fits best. Another topic's wording is excluded. | claim excluded |
+| **Support** | Extractive claims are the source's own block, unedited. A model-written claim must also pass an independent verification pass (SUPPORTED, not PARTIAL), keep every hedge, negation and named place, and use no number or name the quote lacks. | item held (`model_claim_unverified`, `qualifier_lost`) |
+| **Uncertainty and conflict** | Only VERIFIED claims publish. UNCERTAIN or CONFLICT claims do not. Sources that advise opposite things, or new text that advises the opposite of an existing record, hold the item. The existing record is left untouched. | item held, needs a person |
+| **Quality** | Self-contained block (not a fragment, pointer such as "see below", link, contact detail, markup or unbalanced bracket); not a duplicate of existing content; confidence at least MEDIUM (one register-backed dated source; HIGH needs two independent ones). | claim excluded / no change |
+| **Schema** | The candidate `data.json` passes `validate_ti_data.py` before anything is pushed. | publication refused |
+| **Spending** | Every model call is reserved through the existing gateway against the per-task, daily and monthly limits. | work waits |
 
-- Every claim carries source URL, publisher, publication date where stated, retrieval timestamp and the verbatim quote.
-- VERIFIED, UNCERTAIN, CONFLICT and missing evidence are kept distinct. Absence of evidence is never written as safe,
-  normal or operating.
-- Original language is recorded per source; no translation is performed, so `translationMethod` is `NONE`.
-- Model memory is never evidence. Stable reference information is separated from information needing current retrieval.
-- Content rights and automation permission are recorded per source as configured (TravelHealthPro is UNKNOWN, so only short
-  quotes are kept).
+Ordinary code does the work first. The model is used only for topics the extractive pass cannot cover, with Haiku by
+default and Sonnet only as a second opinion on a PARTIAL verdict, only if `sonnet_escalation_enabled`, never Opus.
 
-## Where it runs and what triggers it
+## Publication path
 
-- **GitHub Actions** (`.github/workflows/country-intelligence-builder.yml`): daily cron `41 5 * * *` UTC (GitHub may delay
-  scheduled runs), manual dispatch, and a same-repository pull-request trial. Permissions: `contents: write` for the
-  drafts branch only. On pull requests the model key is not passed and dry-run is forced.
-- **Master Agent queue** (one host; the NUC is out of scope and not deployed): the `country_content_draft` task type is
-  registered; `country_builder_interval_minutes` in the Director config enqueues gaps. Off unless set.
-- **Evaluation** (`.github/workflows/country-builder-eval.yml`): runs only when `config/country_builder_eval_approval.json`
-  exists; one capped live Haiku run over the manually assessed cases in
-  `tests/fixtures/country_builder/labelled_cases.json`.
+1. Gap detected (MISSING, or STALE: every active record past review or older than 365 days) for the active scope.
+2. Evidence collected (allow-listed HTTPS hosts, robots.txt, size/time/retry bounds, numbered verbatim passages).
+3. Claims built and assessed. Items that pass become publication items (record, any new source, one observation per source).
+4. **Publish** only from a scheduled or manual run on `refs/heads/main` with mode `publish`, `publication.enabled` true and
+   `TI_CB_PUBLISH` not `false`. One compare-and-swap commit to main (`GitStateBackend`): the agent reads the tip, applies the
+   items, validates, pushes; if main moved it re-reads and re-applies, never force-pushes.
+5. **Duplicate prevention:** a record whose content hash already matches is not rewritten (its check date is refreshed after 7 days).
+6. **Safe updates:** only records this agent published are replaced, and the previous version is stored in the `change_log` entry.
+   Hand-written and grandfathered records are never touched. A replacement that fails any rule leaves the existing record as
+   it was, with its original `dateChecked`, so its age on the site stays honest.
+7. **Live verification:** the public `data.json` (cache-busting) is polled until it serves exactly the published records,
+   sources and observations (15 min limit; GitHub Pages usually takes 1-3).
+8. **Rollback:** if the site does not serve the content in time the publication is rolled back by record id (not `git revert`,
+   which cannot work on a one-line `data.json`), verified again, and recorded as an exception. Anything edited by someone
+   else since is left alone. Manual rollback: `python3 scripts/country_builder.py rollback <publicationId> --by NAME`.
+
+## Exceptions
+
+An item or claim that fails a rule is held, never published, and recorded with its reasons in the ledger
+(`country_builder_state.json` on the drafts branch) and the report. Each open exception is mirrored into the Master Agent
+queue as one deduplicated blocked task (`country_publication_exception`), cancelled automatically when a later run resolves it:
+by the queue worker, or with `python3 scripts/country_builder.py route-exceptions`. Exceptions marked "needs decision" are those
+only a person can resolve (for example adding a source to the register or approving a robots.txt exception); the rest retry
+automatically each run.
+
+## Scope and expansion
+
+Ghana (ENVIRONMENT, TRANSPORT, EQUIPMENT) is the validation scope. It is not a permanent restriction: `scope.expansion`
+defines a proof gate (published and live-verified records, no rollbacks, clean publication runs) and the agent reports whether
+it is met every run. Expansion stays off until `scope.expansion.enabled` is set, because it also needs confirmed coverage and
+budget; nothing widens automatically before the path is proved.
+
+## Spending
+
+The ordinary-code path costs nothing. Model use needs `TI_CB_DRY_RUN=false`, all three limits and `ANTHROPIC_API_KEY`;
+without them model-written topics wait in "Awaiting budget authorisation" and no call is made. The Ops Director's `TI_OPS_*`
+limits and the earlier evaluation allowance are not read. Proposed budget (not yet authorised): per task $0.05, daily $0.20,
+monthly $2.00, Haiku only, Sonnet escalation off. A scripted Ghana drafting call plus verification costs about $0.001.
 
 ## Controls
 
-| Control | How | Effect |
-|---|---|---|
-| Stop everything | repository variable `TI_CB_MODE=off`, or disable the workflow | job skipped; immediate |
-| Pause / stop | `python3 scripts/country_builder.py pause`, `stop` (resume with `resume`) | stored in the ledger; no task starts |
-| Observe | `operation.mode: observe` (committed default) | plans and checks evidence, writes nothing, no model call |
-| Draft | `operation.mode: draft` | saves drafts; the model is called only if paid execution is also configured |
-| Paid execution | `TI_CB_DRY_RUN=false` **and** `TI_CB_PER_TASK_LIMIT_USD`, `TI_CB_DAILY_LIMIT_USD`, `TI_CB_MONTHLY_LIMIT_USD` **and** `ANTHROPIC_API_KEY` | otherwise `awaiting_paid_authorisation`, $0 |
-| Review | `python3 scripts/country_builder.py review <draftId> --decision accepted\|rejected\|needs_changes --by NAME` | records a decision; publication stays `DRAFT` |
+| Control | How |
+|---|---|
+| Stop everything | repository variable `TI_CB_MODE=off`, or disable the workflow |
+| Stop publication only | `TI_CB_PUBLISH=false` (anything but the committed `publish` setting fails closed) |
+| Pause / stop | `python3 scripts/country_builder.py pause`, `stop`, `resume` (stored in the ledger) |
+| Roll back a publication | `python3 scripts/country_builder.py rollback <publicationId> --by NAME` |
+| Modes | `off`, `observe` (plans, writes nothing), `draft` (assesses and saves, never writes main), `publish` |
 
-The Ops Director's `TI_OPS_*` limits and the earlier evaluation allowance are not read: this agent has its own limits.
+Pull requests run in `draft` mode with dry-run forced and no model key; the code refuses to write main unless the event is a
+schedule or a manual dispatch on main.
 
-## Cost
+## Known limits
 
-Ordinary code costs nothing. A scripted Ghana call is about 2,200 input and 600 output tokens: about $0.0004 at Haiku 5.5
-list prices. A conservative per-call reservation is about $0.0013. No eligible work means no model call; unchanged
-evidence means no model call (the evidence fingerprint covers the exact passage text the model would see, not page
-chrome such as live weather widgets). Infrastructure is GitHub Actions minutes (about one minute per run).
-
-## Tests
-
-`tests/test_ti_ops_director_country_builder.py` and `tests/test_ti_ops_director_country_eval.py` (offline, no key):
-configuration; gaps; evidence parsing, robots, unavailable, parse failure, stale, hostile text; grounding (paraphrase,
-invented number, assurance language, undeclared and unsupported current claims, conflict, unknown passage); end-to-end draft;
-dry-run; duplicate and unchanged evidence; supersession; malformed output; Sonnet only after failed validation and only
-when enabled; Opus never; budget exhaustion; shared daily limit; unavailable and stale evidence; interrupted execution and
-lease recovery; bounded errors; provider failure; off/observe/pause/stop/resume; review; the real-git branch backend
-against a bare remote (main untouched); Master Agent worker, dedupe, capability limits and report; evaluation scorer,
-refusals, cap, and idempotence. Model behaviour in all of them is **scripted (mock)** and says so.
+- CDC Travelers' Health, TravelHealthPro, NASA POWER and the World Bank climate API are not in the source register, so they
+  cannot yet establish a claim; mosquito and climate content therefore stays held until the register is extended.
+  NASA POWER's robots.txt disallows its API and the World Bank API's robots.txt errors, so they are not fetched regardless.
+- The model path (writer, verifier, Sonnet second opinion) is proven only with scripted replies. Haiku's quality is not
+  measured; see `scripts/country_builder.py eval`.
+- Only English government pages are used; no translation is performed.
+- The extractive path publishes the source's own wording from sections it can classify; it does not summarise, translate or
+  combine facts.

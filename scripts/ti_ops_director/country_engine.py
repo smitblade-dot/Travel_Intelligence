@@ -269,8 +269,15 @@ class Builder:
         used = {x["passageId"] for it in items for c in it["claims"] for x in c["evidence"]} | {x["passageId"] for c in current for x in c["evidence"]}
         draft_id = f"cib-{cc}-{category.lower()}-{fp[:10]}"
         decisions = {a["topic"]: a for a in assessments}
-        out_items = [{**it, "content": item_content(it), "layer": "BASELINE", "decision": decisions.get(it["topic"], {}).get("decision"),
-                      "heldReasons": decisions.get(it["topic"], {}).get("reasons", [])} for it in items]
+        out_items = []
+        for it in items:
+            a = decisions.get(it["topic"], {})
+            kept = {c["text"] for c in a.get("claims", [])}
+            why = {e.get("text", "")[:200]: (e.get("reasons") or [e.get("reason")]) for e in a.get("excluded", [])}
+            claims = [{**c, "publishable": c["text"] in kept, "heldBecause": [] if c["text"] in kept else why.get(c["text"][:200], ["item_held"])}
+                      for c in it["claims"]]
+            out_items.append({**it, "claims": claims, "content": item_content(it), "layer": "BASELINE", "decision": a.get("decision"),
+                              "heldReasons": a.get("reasons", [])})
         return {
             "draftId": draft_id, "schemaVersion": "2.0", "agent": AGENT_NAME, "promptVersion": PROMPT_VERSION,
             "countryId": cc, "country": country["name"], "category": category, "gap": inputs["gap"],
@@ -729,7 +736,8 @@ def _preview(d, branch):
         lines.append(f"### {it['title']}  [{it['topic']}] {it.get('decision') or ''}")
         for c in it["claims"][:8]:
             src = "; ".join(sorted({f"{x['publisher'].split(' (')[0]} ({x['passageId']})" for x in c["evidence"]})) or "no external source"
-            lines.append(f"- {c['status']}: {c['text']}  _[{src}]_")
+            tag = "PUBLISHABLE" if c.get("publishable") else "HELD (" + ", ".join(c.get("heldBecause") or ["n/a"]) + ")" if "publishable" in c else c["status"]
+            lines.append(f"- {tag}: {c['text']}  _[{src}]_")
         lines.append(f"- Uncertainty: {it['uncertainty']}")
         lines.append("")
     if d["missingEvidence"]:

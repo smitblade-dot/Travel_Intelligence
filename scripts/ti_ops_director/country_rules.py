@@ -32,7 +32,7 @@ ROUTINE = {"fragment_or_pointer", "duplicate_of_existing", "not_about_topic"}   
 
 TIME_BOUND = re.compile(r"(?i)\b(until further notice|as of|temporar(?:y|ily)|at the moment|for now|this (?:week|month|year|season)|"
                         r"next (?:week|month)|today|tomorrow|tonight)\b")
-POINTER = re.compile(r"(?i)\bsee (?:below|above|more)\b|\b(?:as )?(?:described|listed|shown|detailed|outlined|set out) (?:below|above)\b|\bclick\b|\bthe following\b|\bfollowing:|:\s*$|\bread more\b|\bmore information\b")
+POINTER = re.compile(r"(?i)\bsee (?:below|above|more)\b|\b(?:as )?(?:described|listed|shown|detailed|outlined|set out) (?:below|above)\b|\bclick\b|\bthe following\b|\bfollowing:|:\s*$|\bread more\b|\bmore information\b|\bwebsite\b|\bweb ?page\b")
 BAD_START = re.compile(r"^(?:this|these|that|those|it|its|they|their|such|however|also|and|but|then|see|read|find out|for more)\b", re.I)
 MARKUP = re.compile(r"[<>{}\[\]|]|https?://|\bwww\.|[\x00-\x08\x0b\x0c\x0e-\x1f]")
 PII = re.compile(r"[\w.+-]+@[\w-]+\.[\w.]+|\+?\d[\d\s().-]{8,}\d")
@@ -82,6 +82,24 @@ def quality_problem(sentence, limits):
     return None
 
 
+LAST_BOUNDARY = re.compile(r"(?<=[.!?])\s+(?=[A-Z0-9])")
+
+
+def trim_trailing(block, limits):
+    """If only the last sentence(s) of a block make it unpublishable (a pointer to a website, a time-bound note), drop them. What
+    remains is an unedited prefix of the source block, so every remaining sentence keeps the context it had."""
+    problem = quality_problem(block, limits)
+    cuts = 0
+    while problem in ("pointer", "markup_or_link", "time_bound") and cuts < 2:
+        cuts_at = [m.start() for m in LAST_BOUNDARY.finditer(block)]
+        if not cuts_at:
+            break
+        block = block[:cuts_at[-1]].rstrip()
+        problem = quality_problem(block, limits)
+        cuts += 1
+    return block, problem, cuts
+
+
 def heading_ok(locator, patterns):
     return any(re.search(p, locator or "", re.I) for p in patterns)
 
@@ -115,11 +133,11 @@ def extractive_by_topic(passages, evidence_by_code, topics, rules_cfg):
             if key in seen:
                 continue
             seen.add(key)
-            problem = quality_problem(block, rules_cfg["quality"])
+            block, problem, trimmed = trim_trailing(block, rules_cfg["quality"])
             if problem:
                 out[best][1].append({"text": block[:160], "reason": "fragment_or_pointer", "detail": problem, "passageId": p["id"]})
                 continue
-            out[best][0].append({"text": block, "status": "VERIFIED", "temporal": "STABLE", "method": "EXTRACTIVE",
+            out[best][0].append({"text": block, "status": "VERIFIED", "temporal": "STABLE", "method": "EXTRACTIVE", "trimmedTrailingSentences": trimmed,
                                  "evidence": [evidence_entry(ev, p["id"], block)], "independentSources": 1, "note": None})
     return out
 

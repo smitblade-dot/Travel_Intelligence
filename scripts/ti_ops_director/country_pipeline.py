@@ -49,6 +49,12 @@ def source_exceptions(inputs, evidence):
 def topic_exceptions(inputs, topic, assessed):
     """Exceptions for one topic. 'Source not in the register' is one exception per source (not per topic): the decision is the same."""
     out = []
+    if assessed.get("decision") == "REFERENCE_ONLY":
+        return [{"key": f"{inputs['countryId']}:{inputs['category']}:{topic}:no_external_source", "scope": "topic", "countryId": inputs["countryId"],
+                 "category": inputs["category"], "topic": topic, "reasons": ["no_external_source_for_reference_value"], "decision": "REFERENCE_ONLY",
+                 "detail": "TI's own reference fields hold a value, but no register-backed external source was retrieved for it",
+                 "action": "Add an authoritative source for this value to the source register (for example the IEC world plugs list); until then it is not republished as a sourced record.",
+                 "requiresHuman": True}]
     excluded = assessed.get("excluded", [])
     reasons = set(assessed.get("reasons", [])) | {r for e in excluded for r in (e.get("reasons") or [])}
     reasons -= {"duplicate_of_existing"}
