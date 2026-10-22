@@ -831,6 +831,17 @@
         "served_sha256": "ea488ff9f7778df30f43d995ecaa29ab988d5bb2b27d395cf1c7a984fe9db302",
         "url": "https://travelintelligence22.com/"
       }
+    },
+    "pub-20261022T181139Z-21fa3f": {
+      "id": "pub-20261022T181139Z-21fa3f",
+      "at": "2026-10-22T18:11:39+00:00",
+      "state": "PENDING",
+      "records": [
+        "gh-environment-climate-seasonal",
+        "gh-environment-flooding-natural-hazards",
+        "gh-equipment-clothing",
+        "gh-equipment-plugs"
+      ]
     }
   },
   "pending": {},
