@@ -1,8 +1,8 @@
 # 03AA-04_Country_Intelligence_Builder_TI
 
-Run: 2026-10-22T13:35:49+00:00 | mode: draft | automatic publication: OFF (publication_off (mode draft, TI_CB_PUBLISH unset)) | paid model use: OFF (awaiting_paid_authorisation)
+Run: 2026-10-22T13:42:53+00:00 | mode: draft | automatic publication: OFF (publication_off (mode draft, TI_CB_PUBLISH unset)) | paid model use: OFF (awaiting_paid_authorisation)
 
-Coverage (whole product): 184/728 combinations; gaps in scope: 3. Tasks this run: 0; new 0; duplicates suppressed 3; interrupted tasks recovered 0.
+Coverage (whole product): 184/728 combinations; gaps in scope: 3. Tasks this run: 0; new 0; reopened 0; duplicates suppressed 3; interrupted tasks recovered 0.
 
 Spend recorded (all time, USD): 0 (estimated from API usage fields x configured list prices; not invoice-confirmed).
 
