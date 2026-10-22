@@ -236,7 +236,7 @@ class DraftTrialThenPublish(unittest.TestCase):
             trial = h.builder(mode="draft", ledger=shared, categories=["TRANSPORT"], env={"GITHUB_EVENT_NAME": "pull_request", "GITHUB_REF": "refs/pull/1/merge"})
             run_all(trial)
             self.assertNotIn("gh-transport-road-travel", records(h))
-            live = h.builder(mode="publish", ledger=shared, categories=["TRANSPORT"], now=cs.NOW + timedelta(days=1))
+            live = h.builder(mode="publish", ledger=shared, categories=["TRANSPORT"])      # same day: the trial must not block it
             live.run()
             self.assertIn("gh-transport-road-travel", records(h))
 
@@ -296,6 +296,12 @@ class FailureAndRollback(unittest.TestCase):
             st = ledger(h)
             self.assertEqual(sorted(p["state"] for p in st["publications"].values()), ["VERIFIED"])
             self.assertIn("gh-transport-road-travel", records(h))
+            h.git(h.work, "fetch", "--quiet", "origin", "main")                       # a new run checks out the current main
+            h.git(h.work, "reset", "--quiet", "--hard", "FETCH_HEAD")
+            b3 = h.builder(categories=["TRANSPORT"], ledger=ledger_backend)           # a verified publication is final
+            b3.run()
+            self.assertIn("reopened 0", "\n".join(b3.captured))
+            self.assertEqual(sorted(p["state"] for p in ledger(h)["publications"].values()), ["VERIFIED"])
 
     def test_rechecks_are_bounded_and_an_unresolved_publication_is_escalated_not_deleted(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -363,6 +369,29 @@ class FailureAndRollback(unittest.TestCase):
                 restore()
             self.assertIn("(edited)", records(h)["gh-transport-road-travel"]["content"])      # the edit survives
             self.assertFalse([c for c in h.main_data()["change_log"] if c.get("rollbackOf") and "edited" in json.dumps(c)])
+
+    def test_a_gap_emptied_by_a_rollback_is_reopened_and_filled_again(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            h = PublishHarness(tmp, site_mode="stale")
+            shared = LocalBackend(Path(tmp) / "ledger")
+            b = h.builder(categories=["TRANSPORT"], ledger=shared)
+            restore = self._short_window(b)
+            try:
+                b.run()                                            # published, verification pending
+            finally:
+                restore()
+            h.site.mode = "newer"                                  # then demonstrably wrong: rolled back off main
+            b2 = h.builder(categories=["TRANSPORT"], ledger=shared)
+            restore = self._short_window(b2)
+            try:
+                b2.run()
+            finally:
+                restore()
+            self.assertNotIn("gh-transport-road-travel", records(h))
+            h.site.mode = "live"
+            b3 = h.builder(categories=["TRANSPORT"], ledger=shared)
+            b3.run()
+            self.assertIn("gh-transport-road-travel", records(h))   # the gap is refilled, not stuck
 
     def test_pages_lag_is_tolerated_within_the_timeout(self):
         with tempfile.TemporaryDirectory() as tmp:

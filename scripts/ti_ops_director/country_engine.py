@@ -359,7 +359,7 @@ class Builder:
             for t in planned:
                 key = t["dedupe_key"]
                 old = st["tasks"].get(key)
-                if old and old["state"] == "completed" and old["updated_at"][:10] < iso(now)[:10] and self._needs_another_look(st, old):
+                if old and old["state"] == "completed" and self._needs_another_look(st, old):
                     # The gap is still open and the last result cannot be final: its draft never settled (for example a
                     # draft-mode trial that could not publish) or the rules/register have changed since. Settled work waits
                     # for its normal recheck bucket.
@@ -439,7 +439,13 @@ class Builder:
         if not drafts:
             return True
         d = max(drafts, key=lambda d: d["createdAt"])
-        return (not d.get("settled")) or d.get("rules") != self.rules_fingerprint(inp["category"])
+        pub = st["publications"].get(d.get("publicationId") or "", {})
+        if pub.get("state") in ("VERIFICATION_PENDING", "ROLLBACK_PENDING"):
+            return False                      # on main with verification pending: rechecked by the ledger, never republished
+        changed_rules = d.get("rules") != self.rules_fingerprint(inp["category"])
+        if pub.get("state") in ("VERIFIED", "NO_CHANGE") and d.get("published"):
+            return changed_rules              # published and verified (possibly by a later recheck): final unless the rules changed
+        return (not d.get("settled")) or changed_rules
 
     def _publish_phase(self, results, now):
         """Publish every item that passed the rules, verify the live site, roll back if it does not serve them."""
@@ -639,7 +645,7 @@ class Builder:
                         "draftId": d["draftId"], "path": path, "countryId": d["countryId"], "category": d["category"],
                         "evidenceFingerprint": d["evidenceFingerprint"], "modelStatus": d["modelStatus"], "reviewStatus": d["reviewStatus"],
                         "createdAt": d["generatedAt"], "costUsd": d["cost"].get("estimatedUsd", 0), "claims": d["validation"]["claimsKept"],
-                        "rules": self.rules_fingerprint(d["category"]),
+                        "rules": self.rules_fingerprint(d["category"]), "publicationId": publication.get("publicationId") if published & set(eligible) else None,
                         "settled": bool(not unpublished and not failed_pub and not o.get("pending") and not publication.get("pending")),
                         "published": sorted(published & set(eligible))}
                     t["draftId"] = d["draftId"]
