@@ -20,19 +20,19 @@
         },
         "existingRecordIds": []
       },
-      "state": "running",
+      "state": "completed",
       "attempts": 1,
       "created_at": "2026-10-22T11:09:38+00:00",
       "updated_at": "2026-10-22T13:52:15+00:00",
-      "lease_owner": "runnervmfese6-2296-7f483c",
-      "lease_expires": "2026-10-22T14:12:15+00:00",
+      "lease_owner": null,
+      "lease_expires": null,
       "outcome": "assessed",
       "cost_usd": 0.0,
       "blockingReason": null,
       "error": null,
       "published": [],
       "held": [],
-      "draftId": "cib-gh-environment-a0afa9c016"
+      "draftId": "cib-gh-environment-1dfa3c0367"
     },
     "Travel Intelligence|country_content_draft|gh:TRANSPORT:MISSING|cfbb29ccdb58436d53d137f9d07961ac|W42": {
       "id": "cbt-6fe1cfdf3b64",
@@ -48,19 +48,19 @@
         },
         "existingRecordIds": []
       },
-      "state": "running",
+      "state": "completed",
       "attempts": 1,
       "created_at": "2026-10-22T11:09:38+00:00",
       "updated_at": "2026-10-22T13:52:15+00:00",
-      "lease_owner": "runnervmfese6-2296-7f483c",
-      "lease_expires": "2026-10-22T14:12:15+00:00",
+      "lease_owner": null,
+      "lease_expires": null,
       "outcome": "assessed",
       "cost_usd": 0.0,
       "blockingReason": null,
       "error": null,
       "published": [],
       "held": [],
-      "draftId": "cib-gh-transport-7147f6c436"
+      "draftId": "cib-gh-transport-21272f0ba2"
     },
     "Travel Intelligence|country_content_draft|gh:EQUIPMENT:MISSING|1b1ea479b4bf2ebbb9dc5502bbb1b9e9|W42": {
       "id": "cbt-0c762b7b3a6d",
@@ -76,21 +76,19 @@
         },
         "existingRecordIds": []
       },
-      "state": "running",
+      "state": "completed",
       "attempts": 1,
       "created_at": "2026-10-22T11:09:38+00:00",
       "updated_at": "2026-10-22T13:52:15+00:00",
-      "lease_owner": "runnervmfese6-2296-7f483c",
-      "lease_expires": "2026-10-22T14:12:15+00:00",
+      "lease_owner": null,
+      "lease_expires": null,
       "outcome": "assessed",
       "cost_usd": 0.0,
       "blockingReason": null,
       "error": null,
       "published": [],
-      "held": [
-        "MOSQUITO"
-      ],
-      "draftId": "cib-gh-equipment-ee6320b817"
+      "held": [],
+      "draftId": "cib-gh-equipment-f44ba0f486"
     }
   },
   "drafts": {
@@ -106,7 +104,8 @@
       "costUsd": 0.0,
       "claims": 3,
       "settled": false,
-      "published": []
+      "published": [],
+      "supersededBy": "cib-gh-environment-1dfa3c0367"
     },
     "cib-gh-transport-7147f6c436": {
       "draftId": "cib-gh-transport-7147f6c436",
@@ -120,7 +119,8 @@
       "costUsd": 0.0,
       "claims": 31,
       "settled": false,
-      "published": []
+      "published": [],
+      "supersededBy": "cib-gh-transport-21272f0ba2"
     },
     "cib-gh-equipment-ee6320b817": {
       "draftId": "cib-gh-equipment-ee6320b817",
@@ -133,6 +133,52 @@
       "createdAt": "2026-10-22T11:09:38+00:00",
       "costUsd": 0.0,
       "claims": 25,
+      "settled": false,
+      "published": [],
+      "supersededBy": "cib-gh-equipment-f44ba0f486"
+    },
+    "cib-gh-environment-1dfa3c0367": {
+      "draftId": "cib-gh-environment-1dfa3c0367",
+      "path": "drafts/gh/ENVIRONMENT/cib-gh-environment-1dfa3c0367.json",
+      "countryId": "gh",
+      "category": "ENVIRONMENT",
+      "evidenceFingerprint": "1dfa3c03677e7ab5da5a25bd62f439aa",
+      "modelStatus": "NOT_NEEDED",
+      "reviewStatus": "ELIGIBLE_AWAITING_PUBLICATION_RUN",
+      "createdAt": "2026-10-22T13:52:15+00:00",
+      "costUsd": 0.0,
+      "claims": 3,
+      "rules": "c8d8faf45453a09edf6e3f5273fd7984",
+      "settled": false,
+      "published": []
+    },
+    "cib-gh-transport-21272f0ba2": {
+      "draftId": "cib-gh-transport-21272f0ba2",
+      "path": "drafts/gh/TRANSPORT/cib-gh-transport-21272f0ba2.json",
+      "countryId": "gh",
+      "category": "TRANSPORT",
+      "evidenceFingerprint": "21272f0ba2f5ae385419e11c307a52fd",
+      "modelStatus": "NOT_NEEDED",
+      "reviewStatus": "ELIGIBLE_AWAITING_PUBLICATION_RUN",
+      "createdAt": "2026-10-22T13:52:15+00:00",
+      "costUsd": 0.0,
+      "claims": 31,
+      "rules": "1f24e1b19369e7ef7e542c23237d3f9d",
+      "settled": false,
+      "published": []
+    },
+    "cib-gh-equipment-f44ba0f486": {
+      "draftId": "cib-gh-equipment-f44ba0f486",
+      "path": "drafts/gh/EQUIPMENT/cib-gh-equipment-f44ba0f486.json",
+      "countryId": "gh",
+      "category": "EQUIPMENT",
+      "evidenceFingerprint": "f44ba0f486e72b085f6849766a283bfb",
+      "modelStatus": "NOT_NEEDED",
+      "reviewStatus": "ELIGIBLE_AWAITING_PUBLICATION_RUN",
+      "createdAt": "2026-10-22T13:52:15+00:00",
+      "costUsd": 0.0,
+      "claims": 27,
+      "rules": "51c021388da78a8ad2d9c3842a84b3d8",
       "settled": false,
       "published": []
     }
@@ -242,6 +288,22 @@
       "published": [],
       "publicationFailures": [],
       "outcomes": {}
+    },
+    {
+      "at": "2026-10-22T13:52:15+00:00",
+      "mode": "draft",
+      "tasksRun": 3,
+      "created": 0,
+      "reopened": 3,
+      "duplicatesSuppressed": 0,
+      "recovered": [],
+      "published": [],
+      "publicationFailures": [],
+      "outcomes": {
+        "Travel Intelligence|country_content_draft|gh:ENVIRONMENT:MISSING|89289d18c5f66290275665f64e9406a9|W42": "assessed",
+        "Travel Intelligence|country_content_draft|gh:TRANSPORT:MISSING|cfbb29ccdb58436d53d137f9d07961ac|W42": "assessed",
+        "Travel Intelligence|country_content_draft|gh:EQUIPMENT:MISSING|1b1ea479b4bf2ebbb9dc5502bbb1b9e9|W42": "assessed"
+      }
     }
   ],
   "exceptions": {
@@ -260,8 +322,8 @@
       "id": "cbx-cef0d7be0c",
       "state": "HELD",
       "firstSeen": "2026-10-22T11:09:38+00:00",
-      "lastSeen": "2026-10-22T11:09:38+00:00",
-      "occurrences": 1
+      "lastSeen": "2026-10-22T13:52:15+00:00",
+      "occurrences": 2
     },
     "gh:ENVIRONMENT:source:worldbank_cckp:BLOCKED_BY_ROBOTS": {
       "key": "gh:ENVIRONMENT:source:worldbank_cckp:BLOCKED_BY_ROBOTS",
@@ -278,8 +340,8 @@
       "id": "cbx-d66740f506",
       "state": "HELD",
       "firstSeen": "2026-10-22T11:09:38+00:00",
-      "lastSeen": "2026-10-22T11:09:38+00:00",
-      "occurrences": 1
+      "lastSeen": "2026-10-22T13:52:15+00:00",
+      "occurrences": 2
     },
     "gh:TRANSPORT:registry:cdc_travel": {
       "key": "gh:TRANSPORT:registry:cdc_travel",
@@ -294,10 +356,11 @@
       "action": "Add this source family to config/source_registry.json after due diligence, or leave these claims held. It may corroborate but cannot establish a claim alone.",
       "requiresHuman": true,
       "id": "cbx-b63b1a0bfd",
-      "state": "HELD",
+      "state": "RESOLVED",
       "firstSeen": "2026-10-22T11:09:38+00:00",
       "lastSeen": "2026-10-22T11:09:38+00:00",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-22T13:52:15+00:00"
     },
     "gh:EQUIPMENT:registry:cdc_travel": {
       "key": "gh:EQUIPMENT:registry:cdc_travel",
@@ -312,10 +375,11 @@
       "action": "Add this source family to config/source_registry.json after due diligence, or leave these claims held. It may corroborate but cannot establish a claim alone.",
       "requiresHuman": true,
       "id": "cbx-2dbda1512a",
-      "state": "HELD",
+      "state": "RESOLVED",
       "firstSeen": "2026-10-22T11:09:38+00:00",
       "lastSeen": "2026-10-22T11:09:38+00:00",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-22T13:52:15+00:00"
     },
     "gh:EQUIPMENT:registry:travelhealthpro": {
       "key": "gh:EQUIPMENT:registry:travelhealthpro",
@@ -330,10 +394,11 @@
       "action": "Add this source family to config/source_registry.json after due diligence, or leave these claims held. It may corroborate but cannot establish a claim alone.",
       "requiresHuman": true,
       "id": "cbx-4caed5b56f",
-      "state": "HELD",
+      "state": "RESOLVED",
       "firstSeen": "2026-10-22T11:09:38+00:00",
       "lastSeen": "2026-10-22T11:09:38+00:00",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-22T13:52:15+00:00"
     },
     "gh:EQUIPMENT:MOSQUITO:fragment_or_pointer": {
       "key": "gh:EQUIPMENT:MOSQUITO:fragment_or_pointer",
@@ -349,9 +414,48 @@
       "action": "fragment_or_pointer",
       "requiresHuman": false,
       "id": "cbx-a32ef9ebde",
-      "state": "HELD",
+      "state": "RESOLVED",
       "firstSeen": "2026-10-22T11:09:38+00:00",
       "lastSeen": "2026-10-22T11:09:38+00:00",
+      "occurrences": 1,
+      "resolvedAt": "2026-10-22T13:52:15+00:00"
+    },
+    "gh:EQUIPMENT:MOSQUITO:no_dated_source_within_freshness_limit": {
+      "key": "gh:EQUIPMENT:MOSQUITO:no_dated_source_within_freshness_limit",
+      "scope": "topic",
+      "countryId": "gh",
+      "category": "EQUIPMENT",
+      "topic": "MOSQUITO",
+      "reasons": [
+        "no_dated_source_within_freshness_limit"
+      ],
+      "decision": "PUBLISH",
+      "detail": "Dengue - CDC Yellow Book -> fragment_or_pointer; Map: Dengue risk for Africa and Europe -> fragment_or_pointer; Use an appropriate insect repellent (see below). -> fragment_or_pointer",
+      "action": "Held until a registry-backed source states a publication date inside its freshness limit. No action unless it persists.",
+      "requiresHuman": false,
+      "id": "cbx-3b5e34a9f5",
+      "state": "HELD",
+      "firstSeen": "2026-10-22T13:52:15+00:00",
+      "lastSeen": "2026-10-22T13:52:15+00:00",
+      "occurrences": 1
+    },
+    "gh:EQUIPMENT:PLUGS:no_external_source": {
+      "key": "gh:EQUIPMENT:PLUGS:no_external_source",
+      "scope": "topic",
+      "countryId": "gh",
+      "category": "EQUIPMENT",
+      "topic": "PLUGS",
+      "reasons": [
+        "no_external_source_for_reference_value"
+      ],
+      "decision": "REFERENCE_ONLY",
+      "detail": "TI's own reference fields hold a value, but no register-backed external source was retrieved for it",
+      "action": "Add an authoritative source for this value to the source register (for example the IEC world plugs list); until then it is not republished as a sourced record.",
+      "requiresHuman": true,
+      "id": "cbx-96ddf125b1",
+      "state": "HELD",
+      "firstSeen": "2026-10-22T13:52:15+00:00",
+      "lastSeen": "2026-10-22T13:52:15+00:00",
       "occurrences": 1
     }
   },
@@ -364,7 +468,7 @@
     "currency": "USD",
     "status": "estimated from API usage fields x configured list prices; not invoice-confirmed",
     "mode": "dry_run",
-    "updated": "2026-10-22T11:09:43+00:00"
+    "updated": "2026-10-22T13:52:21+00:00"
   },
   "triageCache": {}
 }

@@ -1,0 +1,1320 @@
+{
+  "draftId": "cib-gh-transport-21272f0ba2",
+  "schemaVersion": "2.0",
+  "agent": "03AA-04_Country_Intelligence_Builder_TI",
+  "promptVersion": "cib-1",
+  "countryId": "gh",
+  "country": "Ghana",
+  "category": "TRANSPORT",
+  "gap": {
+    "type": "MISSING",
+    "detail": "No active TRANSPORT record for Ghana."
+  },
+  "generatedAt": "2026-10-22T13:52:15+00:00",
+  "evidenceFingerprint": "21272f0ba2f5ae385419e11c307a52fd",
+  "reviewStatus": "ELIGIBLE_AWAITING_PUBLICATION_RUN",
+  "publicationStatus": "NOT_PUBLISHED",
+  "modelStatus": "NOT_NEEDED",
+  "model": null,
+  "verification": null,
+  "items": [
+    {
+      "topic": "ROAD_TRAVEL",
+      "title": "Road travel",
+      "claims": [
+        {
+          "text": "You can drive in Ghana using the 1949 version of the international driving permit (IDP) or a Ghanaian driving licence. Carry your driving documents with you.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "FS.31",
+              "sourceKey": "fcdo_safety",
+              "sourceId": "gh-fcdo-security",
+              "url": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
+              "publisher": "UK Foreign, Commonwealth & Development Office",
+              "quote": "You can drive in Ghana using the 1949 version of the international driving permit (IDP) or a Ghanaian driving licence. Carry your driving documents with you.",
+              "retrievedAt": "2026-10-22T13:52:15+00:00",
+              "publicationDate": "2026-07-02",
+              "independenceGroupId": "uk-fcdo"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Roads can be in a poor condition, particularly in rural areas. Grass or leaves strewn in the road often mean there is an accident or other hazard ahead.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "FS.32",
+              "sourceKey": "fcdo_safety",
+              "sourceId": "gh-fcdo-security",
+              "url": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
+              "publisher": "UK Foreign, Commonwealth & Development Office",
+              "quote": "Roads can be in a poor condition, particularly in rural areas. Grass or leaves strewn in the road often mean there is an accident or other hazard ahead.",
+              "retrievedAt": "2026-10-22T13:52:15+00:00",
+              "publicationDate": "2026-07-02",
+              "independenceGroupId": "uk-fcdo"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Street lighting is poor or non-existent. Avoid travelling by road outside the main towns after dark, when the risk of serious road accidents is much greater, and there is a heightened risk of attacks on vehicles (see the crime section). If you choose to drive at night be aware of impromptu police checkpoints. Do not give cash to the police as this can be perceived as a bribe.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "FS.32",
+              "sourceKey": "fcdo_safety",
+              "sourceId": "gh-fcdo-security",
+              "url": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
+              "publisher": "UK Foreign, Commonwealth & Development Office",
+              "quote": "Street lighting is poor or non-existent. Avoid travelling by road outside the main towns after dark, when the risk of serious road accidents is much greater, and there is a heightened risk of attacks on vehicles (see the crime section). If you choose to drive at night be aware of impromptu police checkpoints. Do not give cash to the police as this can be perceived as a bribe.",
+              "retrievedAt": "2026-10-22T13:52:15+00:00",
+              "publicationDate": "2026-07-02",
+              "independenceGroupId": "uk-fcdo"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Motor vehicle crashes are the #1 killer of healthy US citizens in foreign countries.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.57",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "Motor vehicle crashes are the #1 killer of healthy US citizens in foreign countries.",
+              "retrievedAt": "2026-10-22T13:52:15+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Choose a safe vehicle.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.59",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "Choose a safe vehicle.",
+              "retrievedAt": "2026-10-22T13:52:15+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Ride only in cars that have seatbelts.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.59",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "Ride only in cars that have seatbelts.",
+              "retrievedAt": "2026-10-22T13:52:15+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Choose newer vehicles—they may have more safety features, such as airbags, and be more reliable.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.59",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "Choose newer vehicles—they may have more safety features, such as airbags, and be more reliable.",
+              "retrievedAt": "2026-10-22T13:52:15+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Choose larger vehicles, which may provide more protection in crashes.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.59",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "Choose larger vehicles, which may provide more protection in crashes.",
+              "retrievedAt": "2026-10-22T13:52:15+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Think about the driver.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.59",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "Think about the driver.",
+              "retrievedAt": "2026-10-22T13:52:15+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": false,
+          "heldBecause": [
+            "item_held"
+          ]
+        },
+        {
+          "text": "Do not drive after drinking alcohol or ride with someone who has been drinking.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.60",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "Do not drive after drinking alcohol or ride with someone who has been drinking.",
+              "retrievedAt": "2026-10-22T13:52:15+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": false,
+          "heldBecause": [
+            "item_held"
+          ]
+        },
+        {
+          "text": "Consider hiring a licensed, trained driver familiar with the area.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.60",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "Consider hiring a licensed, trained driver familiar with the area.",
+              "retrievedAt": "2026-10-22T13:52:15+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": false,
+          "heldBecause": [
+            "item_held"
+          ]
+        },
+        {
+          "text": "Wear a seatbelt at all times.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.60",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "Wear a seatbelt at all times.",
+              "retrievedAt": "2026-10-22T13:52:15+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": false,
+          "heldBecause": [
+            "item_held"
+          ]
+        },
+        {
+          "text": "Avoid driving at night; street lighting in certain parts of Ghana may be poor.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.60",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "Avoid driving at night; street lighting in certain parts of Ghana may be poor.",
+              "retrievedAt": "2026-10-22T13:52:15+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": false,
+          "heldBecause": [
+            "item_held"
+          ]
+        },
+        {
+          "text": "Do not use a cell phone or text while driving (illegal in many countries).",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.60",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "Do not use a cell phone or text while driving (illegal in many countries).",
+              "retrievedAt": "2026-10-22T13:52:15+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": false,
+          "heldBecause": [
+            "item_held"
+          ]
+        },
+        {
+          "text": "If you choose to drive a vehicle in Ghana, learn the local traffic laws and have the proper paperwork.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.61",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "If you choose to drive a vehicle in Ghana, learn the local traffic laws and have the proper paperwork.",
+              "retrievedAt": "2026-10-22T13:52:15+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": false,
+          "heldBecause": [
+            "item_held"
+          ]
+        },
+        {
+          "text": "Get any driving permits and insurance you may need. Get an International Driving Permit (IDP). Carry the IDP and a US-issued driver's license at all times.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.61",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "Get any driving permits and insurance you may need. Get an International Driving Permit (IDP). Carry the IDP and a US-issued driver's license at all times.",
+              "retrievedAt": "2026-10-22T13:52:15+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": false,
+          "heldBecause": [
+            "item_held"
+          ]
+        },
+        {
+          "text": "Road Safety Overseas (Information from the US Department of State): Includes tips on driving in other countries, International Driving Permits, auto insurance, and other resources.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.64",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "Road Safety Overseas (Information from the US Department of State): Includes tips on driving in other countries, International Driving Permits, auto insurance, and other resources.",
+              "retrievedAt": "2026-10-22T13:52:15+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": false,
+          "heldBecause": [
+            "item_held"
+          ]
+        },
+        {
+          "text": "The Association for International Road Travel has country-specific Road Travel Reviews available for most countries for a minimal fee.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.64",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "The Association for International Road Travel has country-specific Road Travel Reviews available for most countries for a minimal fee.",
+              "retrievedAt": "2026-10-22T13:52:15+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": false,
+          "heldBecause": [
+            "item_held"
+          ]
+        },
+        {
+          "text": "For information traffic safety and road conditions in Ghana, see Travel and Transportation on US Department of State's country-specific information for Ghana.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.64",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "For information traffic safety and road conditions in Ghana, see Travel and Transportation on US Department of State's country-specific information for Ghana.",
+              "retrievedAt": "2026-10-22T13:52:15+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": false,
+          "heldBecause": [
+            "item_held"
+          ]
+        }
+      ],
+      "excluded": [],
+      "method": "EXTRACTIVE",
+      "uncertainty": "Wording is the source's own. Other nationalities' governments may advise differently.",
+      "candidateRecord": true,
+      "content": "You can drive in Ghana using the 1949 version of the international driving permit (IDP) or a Ghanaian driving licence. Carry your driving documents with you. Roads can be in a poor condition, particularly in rural areas. Grass or leaves strewn in the road often mean there is an accident or other hazard ahead. Street lighting is poor or non-existent. Avoid travelling by road outside the main towns after dark, when the risk of serious road accidents is much greater, and there is a heightened risk of attacks on vehicles (see the crime section). If you choose to drive at night be aware of impromptu police checkpoints. Do not give cash to the police as this can be perceived as a bribe. Motor vehicle crashes are the #1 killer of healthy US citizens in foreign countries. Choose a safe vehicle. Ride only in cars that have seatbelts. Choose newer vehicles—they may have more safety features, such as airbags, and be more reliable. Choose larger vehicles, which may provide more protection in crashes. Think about the driver. Do not drive after drinking alcohol or ride with someone who has been drinking. Consider hiring a licensed, trained driver familiar with the area. Wear a seatbelt at all times. Avoid driving at night; street lighting in certain parts of Ghana may be poor. Do not use a cell phone or text while driving (illegal in many countries). If you choose to drive a vehicle in Ghana, learn the local traffic laws and have the proper paperwork. Get any driving permits and insurance you may need. Get an International Driving Permit (IDP). Carry the IDP and a US-issued driver's license at all times. Road Safety Overseas (Information from the US Department of State): Includes tips on driving in other countries, International Driving Permits, auto insurance, and other resources. The Association for International Road Travel has country-specific Road Travel Reviews available for most countries for a minimal fee. For information traffic safety and road conditions in Ghana, see Travel and Transportation on US Department of State's country-specific information for Ghana.",
+      "layer": "BASELINE",
+      "decision": "PUBLISH",
+      "heldReasons": []
+    },
+    {
+      "topic": "TAXIS_AND_PUBLIC_TRANSPORT",
+      "title": "Taxis and public transport",
+      "claims": [
+        {
+          "text": "Attacks on vehicles are increasing, sometimes involving the use of weapons. A British national died in one such attack in August 2021. Take particular care when your car or taxi is stationary in a busy area. Keep windows up and doors locked.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "FS.15",
+              "sourceKey": "fcdo_safety",
+              "sourceId": "gh-fcdo-security",
+              "url": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
+              "publisher": "UK Foreign, Commonwealth & Development Office",
+              "quote": "Attacks on vehicles are increasing, sometimes involving the use of weapons. A British national died in one such attack in August 2021. Take particular care when your car or taxi is stationary in a busy area. Keep windows up and doors locked.",
+              "retrievedAt": "2026-10-22T13:52:15+00:00",
+              "publicationDate": "2026-07-02",
+              "independenceGroupId": "uk-fcdo"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "There have been isolated incidents of crime taking place in all types of taxis, including licensed taxis, minibuses (‘tro tros’) and app-based taxi services. Use licensed taxis and check driver ID and the vehicle’s condition before you travel. Some hotels will book transport to pick you up on arrival. Avoid travelling alone in taxis after dark.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "FS.15",
+              "sourceKey": "fcdo_safety",
+              "sourceId": "gh-fcdo-security",
+              "url": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
+              "publisher": "UK Foreign, Commonwealth & Development Office",
+              "quote": "There have been isolated incidents of crime taking place in all types of taxis, including licensed taxis, minibuses (‘tro tros’) and app-based taxi services. Use licensed taxis and check driver ID and the vehicle’s condition before you travel. Some hotels will book transport to pick you up on arrival. Avoid travelling alone in taxis after dark.",
+              "retrievedAt": "2026-10-22T13:52:15+00:00",
+              "publicationDate": "2026-07-02",
+              "independenceGroupId": "uk-fcdo"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Safety standards of taxi services in Ghana are low. Driver training and vehicle standards will vary from providers in the UK. Drivers of ‘tro-tros’ and popular app-based taxi services are not centrally licensed. There is no responsible body that is accountable for your safety.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "FS.33",
+              "sourceKey": "fcdo_safety",
+              "sourceId": "gh-fcdo-security",
+              "url": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
+              "publisher": "UK Foreign, Commonwealth & Development Office",
+              "quote": "Safety standards of taxi services in Ghana are low. Driver training and vehicle standards will vary from providers in the UK. Drivers of ‘tro-tros’ and popular app-based taxi services are not centrally licensed. There is no responsible body that is accountable for your safety.",
+              "retrievedAt": "2026-10-22T13:52:15+00:00",
+              "publicationDate": "2026-07-02",
+              "independenceGroupId": "uk-fcdo"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Outside major towns and cities it’s safer to use pre-booked vehicles from reputable taxi companies.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "FS.33",
+              "sourceKey": "fcdo_safety",
+              "sourceId": "gh-fcdo-security",
+              "url": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
+              "publisher": "UK Foreign, Commonwealth & Development Office",
+              "quote": "Outside major towns and cities it’s safer to use pre-booked vehicles from reputable taxi companies.",
+              "retrievedAt": "2026-10-22T13:52:15+00:00",
+              "publicationDate": "2026-07-02",
+              "independenceGroupId": "uk-fcdo"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "In many places cars, buses, large trucks, rickshaws, bikes, people on foot, and even animals share the same lanes of traffic, increasing the risk for crashes.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.57",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "In many places cars, buses, large trucks, rickshaws, bikes, people on foot, and even animals share the same lanes of traffic, increasing the risk for crashes.",
+              "retrievedAt": "2026-10-22T13:52:15+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Choose official taxis or public transportation, such as trains and buses.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.59",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "Choose official taxis or public transportation, such as trains and buses.",
+              "retrievedAt": "2026-10-22T13:52:15+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Avoid overcrowded, overloaded, top-heavy buses and minivans.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.59",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "Avoid overcrowded, overloaded, top-heavy buses and minivans.",
+              "retrievedAt": "2026-10-22T13:52:15+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Sit in the back seat of cars and taxis.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.60",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "Sit in the back seat of cars and taxis.",
+              "retrievedAt": "2026-10-22T13:52:15+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        }
+      ],
+      "excluded": [
+        {
+          "text": "Avoid riding on motorcycles or motorbikes, especially motorbike taxis. (Many crashes are caused by inexperienced motorbike drivers.)",
+          "reason": "fragment_or_pointer",
+          "detail": "no_terminal_punctuation",
+          "passageId": "CD.59"
+        },
+        {
+          "text": "When on motorbikes or bicycles, always wear a helmet. (Bring a helmet from home, if needed.)",
+          "reason": "fragment_or_pointer",
+          "detail": "no_terminal_punctuation",
+          "passageId": "CD.60"
+        }
+      ],
+      "method": "EXTRACTIVE",
+      "uncertainty": "Wording is the source's own. Other nationalities' governments may advise differently.",
+      "candidateRecord": true,
+      "content": "Attacks on vehicles are increasing, sometimes involving the use of weapons. A British national died in one such attack in August 2021. Take particular care when your car or taxi is stationary in a busy area. Keep windows up and doors locked. There have been isolated incidents of crime taking place in all types of taxis, including licensed taxis, minibuses (‘tro tros’) and app-based taxi services. Use licensed taxis and check driver ID and the vehicle’s condition before you travel. Some hotels will book transport to pick you up on arrival. Avoid travelling alone in taxis after dark. Safety standards of taxi services in Ghana are low. Driver training and vehicle standards will vary from providers in the UK. Drivers of ‘tro-tros’ and popular app-based taxi services are not centrally licensed. There is no responsible body that is accountable for your safety. Outside major towns and cities it’s safer to use pre-booked vehicles from reputable taxi companies. In many places cars, buses, large trucks, rickshaws, bikes, people on foot, and even animals share the same lanes of traffic, increasing the risk for crashes. Choose official taxis or public transportation, such as trains and buses. Avoid overcrowded, overloaded, top-heavy buses and minivans. Sit in the back seat of cars and taxis.",
+      "layer": "BASELINE",
+      "decision": "PUBLISH",
+      "heldReasons": []
+    },
+    {
+      "topic": "AIR_TRAVEL_AND_GATEWAYS",
+      "title": "Air travel and gateways",
+      "claims": [
+        {
+          "text": "There are reports of a small number of thefts of luggage and travel documents at Kotoka International Airport. Make sure your passport is always secure and do not leave your bags unattended. Be wary of offers of help except from uniformed porters or officials. All permanent staff at the airport wear an ID card showing their name and a photo. ID cards without a photo are not valid.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "FS.12",
+              "sourceKey": "fcdo_safety",
+              "sourceId": "gh-fcdo-security",
+              "url": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
+              "publisher": "UK Foreign, Commonwealth & Development Office",
+              "quote": "There are reports of a small number of thefts of luggage and travel documents at Kotoka International Airport. Make sure your passport is always secure and do not leave your bags unattended. Be wary of offers of help except from uniformed porters or officials. All permanent staff at the airport wear an ID card showing their name and a photo. ID cards without a photo are not valid.",
+              "retrievedAt": "2026-10-22T13:52:15+00:00",
+              "publicationDate": "2026-07-02",
+              "independenceGroupId": "uk-fcdo"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "If you’re being collected at the airport, confirm the identity of your driver by asking for ID. British nationals have been robbed by impostors who have approached them around the main arrivals area pretending to be their driver.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "FS.13",
+              "sourceKey": "fcdo_safety",
+              "sourceId": "gh-fcdo-security",
+              "url": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
+              "publisher": "UK Foreign, Commonwealth & Development Office",
+              "quote": "If you’re being collected at the airport, confirm the identity of your driver by asking for ID. British nationals have been robbed by impostors who have approached them around the main arrivals area pretending to be their driver.",
+              "retrievedAt": "2026-10-22T13:52:15+00:00",
+              "publicationDate": "2026-07-02",
+              "independenceGroupId": "uk-fcdo"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Avoid using local, unscheduled aircraft.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.62",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "Avoid using local, unscheduled aircraft.",
+              "retrievedAt": "2026-10-22T13:52:15+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Try to schedule flights during daylight hours and in good weather.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.62",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "Try to schedule flights during daylight hours and in good weather.",
+              "retrievedAt": "2026-10-22T13:52:15+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        }
+      ],
+      "excluded": [],
+      "method": "EXTRACTIVE",
+      "uncertainty": "Wording is the source's own. Other nationalities' governments may advise differently.",
+      "candidateRecord": true,
+      "content": "There are reports of a small number of thefts of luggage and travel documents at Kotoka International Airport. Make sure your passport is always secure and do not leave your bags unattended. Be wary of offers of help except from uniformed porters or officials. All permanent staff at the airport wear an ID card showing their name and a photo. ID cards without a photo are not valid. If you’re being collected at the airport, confirm the identity of your driver by asking for ID. British nationals have been robbed by impostors who have approached them around the main arrivals area pretending to be their driver. Avoid using local, unscheduled aircraft. Try to schedule flights during daylight hours and in good weather.",
+      "layer": "BASELINE",
+      "decision": "PUBLISH",
+      "heldReasons": []
+    }
+  ],
+  "missingEvidence": [],
+  "rejectedClaims": [],
+  "currentContext": [],
+  "assessment": [
+    {
+      "topic": "ROAD_TRAVEL",
+      "decision": "PUBLISH",
+      "confidence": "MEDIUM",
+      "reasons": [],
+      "claimsPublishable": 8,
+      "excluded": []
+    },
+    {
+      "topic": "TAXIS_AND_PUBLIC_TRANSPORT",
+      "decision": "PUBLISH",
+      "confidence": "MEDIUM",
+      "reasons": [],
+      "claimsPublishable": 8,
+      "excluded": [
+        {
+          "text": "Avoid riding on motorcycles or motorbikes, especially motorbike taxis. (Many crashes are caused by inexperienced motorbike drivers.)",
+          "reason": "fragment_or_pointer",
+          "detail": "no_terminal_punctuation",
+          "passageId": "CD.59"
+        },
+        {
+          "text": "When on motorbikes or bicycles, always wear a helmet. (Bring a helmet from home, if needed.)",
+          "reason": "fragment_or_pointer",
+          "detail": "no_terminal_punctuation",
+          "passageId": "CD.60"
+        }
+      ]
+    },
+    {
+      "topic": "AIR_TRAVEL_AND_GATEWAYS",
+      "decision": "PUBLISH",
+      "confidence": "MEDIUM",
+      "reasons": [],
+      "claimsPublishable": 4,
+      "excluded": []
+    }
+  ],
+  "evidence": [
+    {
+      "sourceKey": "fcdo_safety",
+      "sourceId": "gh-fcdo-security",
+      "sourceIdIsExisting": true,
+      "code": "FS",
+      "publisher": "UK Foreign, Commonwealth & Development Office",
+      "jurisdiction": "UK",
+      "tier": "A",
+      "title": "Foreign travel advice: safety and security",
+      "url": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
+      "retrievedAt": "2026-10-22T13:52:15+00:00",
+      "originalLanguage": "en",
+      "contentRights": "GOVERNMENT_OPEN",
+      "accessMethod": "WEB_PAGE",
+      "automationPermission": "PERMITTED",
+      "independenceGroupId": "uk-fcdo",
+      "currentCapable": true,
+      "staleAfterDays": 120,
+      "publicationDate": "2026-07-02",
+      "publicationDateStatus": "STATED",
+      "status": "RETRIEVED",
+      "error": null,
+      "httpStatus": 200,
+      "contentSha256": "61ba53b0ab217e9a77254e91c0dd0e33235c3bb02b9d50a0a2e0bd2121ccc455",
+      "publicationDateSource": "govuk:public-updated-at",
+      "pageTitle": "Safety and security - Ghana travel advice - GOV.UKGOV.UK",
+      "pageUpdatedAt": "2026-10-19T09:25:06+01:00",
+      "currencyDate": "2026-10-19",
+      "bytes": 100929,
+      "publicationAgeDays": 3,
+      "passagesUsed": [
+        {
+          "id": "FS.12",
+          "locator": "Safety and security > Crime > Safety at airports",
+          "text": "There are reports of a small number of thefts of luggage and travel documents at Kotoka International Airport. Make sure your passport is always secure and do not leave your bags unattended. Be wary of offers of help except from uniformed porters or officials. All permanent staff at the airport wear an ID card showing their name and a photo. ID cards without a photo are not valid."
+        },
+        {
+          "id": "FS.13",
+          "locator": "Safety and security > Crime > Safety at airports",
+          "text": "If you’re being collected at the airport, confirm the identity of your driver by asking for ID. British nationals have been robbed by impostors who have approached them around the main arrivals area pretending to be their driver."
+        },
+        {
+          "id": "FS.15",
+          "locator": "Safety and security > Crime > Vehicle crime",
+          "text": "Attacks on vehicles are increasing, sometimes involving the use of weapons. A British national died in one such attack in August 2021. Take particular care when your car or taxi is stationary in a busy area. Keep windows up and doors locked.\nThere have been isolated incidents of crime taking place in all types of taxis, including licensed taxis, minibuses (‘tro tros’) and app-based taxi services. Use licensed taxis and check driver ID and the vehicle’s condition before you travel. Some hotels will book transport to pick you up on arrival. Avoid travelling alone in taxis after dark."
+        },
+        {
+          "id": "FS.31",
+          "locator": "Safety and security > Transport risks > Road travel",
+          "text": "You can drive in Ghana using the 1949 version of the international driving permit (IDP) or a Ghanaian driving licence. Carry your driving documents with you."
+        },
+        {
+          "id": "FS.32",
+          "locator": "Safety and security > Transport risks > Driving standards",
+          "text": "Roads can be in a poor condition, particularly in rural areas. Grass or leaves strewn in the road often mean there is an accident or other hazard ahead.\nStreet lighting is poor or non-existent. Avoid travelling by road outside the main towns after dark, when the risk of serious road accidents is much greater, and there is a heightened risk of attacks on vehicles (see the crime section). If you choose to drive at night be aware of impromptu police checkpoints. Do not give cash to the police as this can be perceived as a bribe."
+        },
+        {
+          "id": "FS.33",
+          "locator": "Safety and security > Transport risks > Driving standards",
+          "text": "Safety standards of taxi services in Ghana are low. Driver training and vehicle standards will vary from providers in the UK. Drivers of ‘tro-tros’ and popular app-based taxi services are not centrally licensed. There is no responsible body that is accountable for your safety.\nOutside major towns and cities it’s safer to use pre-booked vehicles from reputable taxi companies."
+        }
+      ]
+    },
+    {
+      "sourceKey": "cdc_travel",
+      "sourceId": "cb-gh-cdc-travel",
+      "sourceIdIsExisting": false,
+      "code": "CD",
+      "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+      "jurisdiction": "US",
+      "tier": "A",
+      "title": "CDC Travelers' Health: traveler view",
+      "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+      "retrievedAt": "2026-10-22T13:52:15+00:00",
+      "originalLanguage": "en",
+      "contentRights": "GOVERNMENT_OPEN",
+      "accessMethod": "WEB_PAGE",
+      "automationPermission": "PERMITTED",
+      "independenceGroupId": "us-cdc",
+      "currentCapable": false,
+      "staleAfterDays": 365,
+      "publicationDate": "2026-08-25",
+      "publicationDateStatus": "STATED",
+      "status": "RETRIEVED",
+      "error": null,
+      "httpStatus": 200,
+      "contentSha256": "66df24e8eeb45f04ca73b1574b716357115a0b7c19efb027eaa9f1de779a5fa6",
+      "publicationDateSource": "Page last reviewed",
+      "pageTitle": "Ghana - Traveler view | Travelers' Health | CDC Centers for Disease Control and Prevention. CDC twenty four seven. Saving Lives, Protecting PeopleHomeexpandexpa",
+      "currencyDate": "2026-08-25",
+      "bytes": 389843,
+      "publicationAgeDays": 58,
+      "passagesUsed": [
+        {
+          "id": "CD.57",
+          "locator": "Select safe transportation",
+          "text": "Motor vehicle crashes are the #1 killer of healthy US citizens in foreign countries.\nIn many places cars, buses, large trucks, rickshaws, bikes, people on foot, and even animals share the same lanes of traffic, increasing the risk for crashes."
+        },
+        {
+          "id": "CD.59",
+          "locator": "Select safe transportation > Riding/Driving",
+          "text": "Choose a safe vehicle.\n- Choose official taxis or public transportation, such as trains and buses.\n- Ride only in cars that have seatbelts.\n- Avoid overcrowded, overloaded, top-heavy buses and minivans.\n- Avoid riding on motorcycles or motorbikes, especially motorbike taxis. (Many crashes are caused by inexperienced motorbike drivers.)\n- Choose newer vehicles—they may have more safety features, such as airbags, and be more reliable.\n- Choose larger vehicles, which may provide more protection in crashes.\nThink about the driver."
+        },
+        {
+          "id": "CD.60",
+          "locator": "Select safe transportation > Riding/Driving",
+          "text": "- Do not drive after drinking alcohol or ride with someone who has been drinking.\n- Consider hiring a licensed, trained driver familiar with the area.\n- Arrange payment before departing.\nFollow basic safety tips.\n- Wear a seatbelt at all times.\n- Sit in the back seat of cars and taxis.\n- When on motorbikes or bicycles, always wear a helmet. (Bring a helmet from home, if needed.)\n- Avoid driving at night; street lighting in certain parts of Ghana may be poor.\n- Do not use a cell phone or text while driving (illegal in many countries)."
+        },
+        {
+          "id": "CD.61",
+          "locator": "Select safe transportation > Riding/Driving",
+          "text": "- Travel during daylight hours only, especially in rural areas.\n- If you choose to drive a vehicle in Ghana, learn the local traffic laws and have the proper paperwork.\n- Get any driving permits and insurance you may need. Get an International Driving Permit (IDP). Carry the IDP and a US-issued driver's license at all times.\n- Check with your auto insurance policy's international coverage, and get more coverage if needed. Make sure you have liability insurance."
+        },
+        {
+          "id": "CD.62",
+          "locator": "Select safe transportation > Flying",
+          "text": "- Avoid using local, unscheduled aircraft.\n- If possible, fly on larger planes (more than 30 seats); larger airplanes are more likely to have regular safety inspections.\n- Try to schedule flights during daylight hours and in good weather."
+        },
+        {
+          "id": "CD.64",
+          "locator": "Select safe transportation > Helpful Resources",
+          "text": "Road Safety Overseas (Information from the US Department of State): Includes tips on driving in other countries, International Driving Permits, auto insurance, and other resources.\nThe Association for International Road Travel has country-specific Road Travel Reviews available for most countries for a minimal fee.\nFor information traffic safety and road conditions in Ghana, see Travel and Transportation on US Department of State's country-specific information for Ghana.\nHide"
+        }
+      ]
+    }
+  ],
+  "candidateBatch": {
+    "records": [
+      {
+        "id": "gh-transport-road-travel",
+        "countryId": "gh",
+        "category": "TRANSPORT",
+        "subcategory": "Road travel",
+        "dataType": "CONSIDERATION",
+        "title": "Road travel",
+        "content": "You can drive in Ghana using the 1949 version of the international driving permit (IDP) or a Ghanaian driving licence. Carry your driving documents with you. Roads can be in a poor condition, particularly in rural areas. Grass or leaves strewn in the road often mean there is an accident or other hazard ahead. Street lighting is poor or non-existent. Avoid travelling by road outside the main towns after dark, when the risk of serious road accidents is much greater, and there is a heightened risk of attacks on vehicles (see the crime section). If you choose to drive at night be aware of impromptu police checkpoints. Do not give cash to the police as this can be perceived as a bribe. Motor vehicle crashes are the #1 killer of healthy US citizens in foreign countries. Choose a safe vehicle. Ride only in cars that have seatbelts. Choose newer vehicles—they may have more safety features, such as airbags, and be more reliable. Choose larger vehicles, which may provide more protection in crashes. Think about the driver. Do not drive after drinking alcohol or ride with someone who has been drinking. Consider hiring a licensed, trained driver familiar with the area. Wear a seatbelt at all times. Avoid driving at night; street lighting in certain parts of Ghana may be poor. Do not use a cell phone or text while driving (illegal in many countries). If you choose to drive a vehicle in Ghana, learn the local traffic laws and have the proper paperwork. Get any driving permits and insurance you may need. Get an International Driving Permit (IDP). Carry the IDP and a US-issued driver's license at all times. Road Safety Overseas (Information from the US Department of State): Includes tips on driving in other countries, International Driving Permits, auto insurance, and other resources. The Association for International Road Travel has country-specific Road Travel Reviews available for most countries for a minimal fee. For information traffic safety and road conditions in Ghana, see Travel and Transportation on US Department of State's country-specific information for Ghana.",
+        "confidence": "MEDIUM",
+        "status": "DRAFT",
+        "sourceId": "cb-gh-cdc-travel",
+        "locationId": null,
+        "dateChecked": "2026-10-22",
+        "reviewDate": "2027-04-20",
+        "notes": "DRAFT by 03AA-04_Country_Intelligence_Builder_TI; not independently verified or reviewed. Wording is the source's own. Other nationalities' governments may advise differently."
+      },
+      {
+        "id": "gh-transport-taxis-and-public-transport",
+        "countryId": "gh",
+        "category": "TRANSPORT",
+        "subcategory": "Taxis and public transport",
+        "dataType": "CONSIDERATION",
+        "title": "Taxis and public transport",
+        "content": "Attacks on vehicles are increasing, sometimes involving the use of weapons. A British national died in one such attack in August 2021. Take particular care when your car or taxi is stationary in a busy area. Keep windows up and doors locked. There have been isolated incidents of crime taking place in all types of taxis, including licensed taxis, minibuses (‘tro tros’) and app-based taxi services. Use licensed taxis and check driver ID and the vehicle’s condition before you travel. Some hotels will book transport to pick you up on arrival. Avoid travelling alone in taxis after dark. Safety standards of taxi services in Ghana are low. Driver training and vehicle standards will vary from providers in the UK. Drivers of ‘tro-tros’ and popular app-based taxi services are not centrally licensed. There is no responsible body that is accountable for your safety. Outside major towns and cities it’s safer to use pre-booked vehicles from reputable taxi companies. In many places cars, buses, large trucks, rickshaws, bikes, people on foot, and even animals share the same lanes of traffic, increasing the risk for crashes. Choose official taxis or public transportation, such as trains and buses. Avoid overcrowded, overloaded, top-heavy buses and minivans. Sit in the back seat of cars and taxis.",
+        "confidence": "MEDIUM",
+        "status": "DRAFT",
+        "sourceId": "gh-fcdo-security",
+        "locationId": null,
+        "dateChecked": "2026-10-22",
+        "reviewDate": "2027-04-20",
+        "notes": "DRAFT by 03AA-04_Country_Intelligence_Builder_TI; not independently verified or reviewed. Wording is the source's own. Other nationalities' governments may advise differently."
+      },
+      {
+        "id": "gh-transport-air-travel-and-gateways",
+        "countryId": "gh",
+        "category": "TRANSPORT",
+        "subcategory": "Air travel and gateways",
+        "dataType": "CONSIDERATION",
+        "title": "Air travel and gateways",
+        "content": "There are reports of a small number of thefts of luggage and travel documents at Kotoka International Airport. Make sure your passport is always secure and do not leave your bags unattended. Be wary of offers of help except from uniformed porters or officials. All permanent staff at the airport wear an ID card showing their name and a photo. ID cards without a photo are not valid. If you’re being collected at the airport, confirm the identity of your driver by asking for ID. British nationals have been robbed by impostors who have approached them around the main arrivals area pretending to be their driver. Avoid using local, unscheduled aircraft. Try to schedule flights during daylight hours and in good weather.",
+        "confidence": "MEDIUM",
+        "status": "DRAFT",
+        "sourceId": "gh-fcdo-security",
+        "locationId": null,
+        "dateChecked": "2026-10-22",
+        "reviewDate": "2027-04-20",
+        "notes": "DRAFT by 03AA-04_Country_Intelligence_Builder_TI; not independently verified or reviewed. Wording is the source's own. Other nationalities' governments may advise differently."
+      }
+    ],
+    "sources": [
+      {
+        "id": "cb-gh-cdc-travel",
+        "countryId": "gh",
+        "sourceName": "CDC Travelers' Health: traveler view",
+        "organisation": "US Centers for Disease Control and Prevention (Travelers' Health)",
+        "sourceType": "GOVERNMENT",
+        "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+        "jurisdiction": "US",
+        "confidence": "HIGH",
+        "active": true,
+        "accessMethod": "WEB_PAGE",
+        "contentRights": "GOVERNMENT_OPEN",
+        "automationPermission": "PERMITTED",
+        "originalLanguage": "en",
+        "geographicScope": "NATIONAL",
+        "dateChecked": "2026-10-22",
+        "reviewFrequency": "Every 3-6 months, or on any change",
+        "notes": "Proposed by the country builder draft; rights and automation permission as configured, not independently confirmed."
+      }
+    ],
+    "sourceObservations": [
+      {
+        "id": "obs-gh-transport-road-travel-fcdo-safety",
+        "recordId": "gh-transport-road-travel",
+        "sourceId": "gh-fcdo-security",
+        "sourceUrl": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
+        "extractedClaim": "You can drive in Ghana using the 1949 version of the international driving permit (IDP) or a Ghanaian driving licence. Carry your driving documents with you. … Roads can be in a poor condition, particularly in rural areas. Grass or leaves strewn in the road often mean there is an accident or other hazard ahead. … Street lighting is poor or non-existent. Avoid travelling by road outside the main towns after dark, when the risk of serious road accidents is much greater, and there is a heightened risk of attacks on vehicles (see the crime section). If you choose to drive at night be aware of impr",
+        "independenceGroupId": "uk-fcdo",
+        "dateChecked": "2026-10-22",
+        "observationStatus": "DRAFT_UNREVIEWED",
+        "originalLanguage": "en",
+        "translated": false,
+        "translationMethod": "NONE",
+        "retrievedAt": "2026-10-22T13:52:15+00:00",
+        "publicationDate": "2026-07-02",
+        "publicationDateStatus": "STATED",
+        "contentRights": "GOVERNMENT_OPEN",
+        "rightsStatus": "GOVERNMENT_OPEN",
+        "accessMethod": "WEB_PAGE",
+        "automationPermission": "PERMITTED",
+        "uncertainty": "Wording is the source's own. Other nationalities' governments may advise differently."
+      },
+      {
+        "id": "obs-gh-transport-road-travel-cdc-travel",
+        "recordId": "gh-transport-road-travel",
+        "sourceId": "cb-gh-cdc-travel",
+        "sourceUrl": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+        "extractedClaim": "Motor vehicle crashes are the #1 killer of healthy US citizens in foreign countries. … Choose a safe vehicle. … Ride only in cars that have seatbelts. … Choose newer vehicles—they may have more safety features, such as airbags, and be more reliable. … Choose larger vehicles, which may provide more protection in crashes. … Think about the driver. … Do not drive after drinking alcohol or ride with someone who has been drinking. … Consider hiring a licensed, trained driver familiar with the area. … Wear a seatbelt at all times. … Avoid driving at night; street lighting in certain parts of Ghana m",
+        "independenceGroupId": "us-cdc",
+        "dateChecked": "2026-10-22",
+        "observationStatus": "DRAFT_UNREVIEWED",
+        "originalLanguage": "en",
+        "translated": false,
+        "translationMethod": "NONE",
+        "retrievedAt": "2026-10-22T13:52:15+00:00",
+        "publicationDate": "2026-08-25",
+        "publicationDateStatus": "STATED",
+        "contentRights": "GOVERNMENT_OPEN",
+        "rightsStatus": "GOVERNMENT_OPEN",
+        "accessMethod": "WEB_PAGE",
+        "automationPermission": "PERMITTED",
+        "uncertainty": "Wording is the source's own. Other nationalities' governments may advise differently."
+      },
+      {
+        "id": "obs-gh-transport-taxis-and-public-transport-fcdo-safety",
+        "recordId": "gh-transport-taxis-and-public-transport",
+        "sourceId": "gh-fcdo-security",
+        "sourceUrl": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
+        "extractedClaim": "Attacks on vehicles are increasing, sometimes involving the use of weapons. A British national died in one such attack in August 2021. Take particular care when your car or taxi is stationary in a busy area. Keep windows up and doors locked. … There have been isolated incidents of crime taking place in all types of taxis, including licensed taxis, minibuses (‘tro tros’) and app-based taxi services. Use licensed taxis and check driver ID and the vehicle’s condition before you travel. Some hotels will book transport to pick you up on arrival. Avoid travelling alone in taxis after dark. … Safety ",
+        "independenceGroupId": "uk-fcdo",
+        "dateChecked": "2026-10-22",
+        "observationStatus": "DRAFT_UNREVIEWED",
+        "originalLanguage": "en",
+        "translated": false,
+        "translationMethod": "NONE",
+        "retrievedAt": "2026-10-22T13:52:15+00:00",
+        "publicationDate": "2026-07-02",
+        "publicationDateStatus": "STATED",
+        "contentRights": "GOVERNMENT_OPEN",
+        "rightsStatus": "GOVERNMENT_OPEN",
+        "accessMethod": "WEB_PAGE",
+        "automationPermission": "PERMITTED",
+        "uncertainty": "Wording is the source's own. Other nationalities' governments may advise differently."
+      },
+      {
+        "id": "obs-gh-transport-taxis-and-public-transport-cdc-travel",
+        "recordId": "gh-transport-taxis-and-public-transport",
+        "sourceId": "cb-gh-cdc-travel",
+        "sourceUrl": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+        "extractedClaim": "In many places cars, buses, large trucks, rickshaws, bikes, people on foot, and even animals share the same lanes of traffic, increasing the risk for crashes. … Choose official taxis or public transportation, such as trains and buses. … Avoid overcrowded, overloaded, top-heavy buses and minivans. … Sit in the back seat of cars and taxis.",
+        "independenceGroupId": "us-cdc",
+        "dateChecked": "2026-10-22",
+        "observationStatus": "DRAFT_UNREVIEWED",
+        "originalLanguage": "en",
+        "translated": false,
+        "translationMethod": "NONE",
+        "retrievedAt": "2026-10-22T13:52:15+00:00",
+        "publicationDate": "2026-08-25",
+        "publicationDateStatus": "STATED",
+        "contentRights": "GOVERNMENT_OPEN",
+        "rightsStatus": "GOVERNMENT_OPEN",
+        "accessMethod": "WEB_PAGE",
+        "automationPermission": "PERMITTED",
+        "uncertainty": "Wording is the source's own. Other nationalities' governments may advise differently."
+      },
+      {
+        "id": "obs-gh-transport-air-travel-and-gateways-fcdo-safety",
+        "recordId": "gh-transport-air-travel-and-gateways",
+        "sourceId": "gh-fcdo-security",
+        "sourceUrl": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
+        "extractedClaim": "There are reports of a small number of thefts of luggage and travel documents at Kotoka International Airport. Make sure your passport is always secure and do not leave your bags unattended. Be wary of offers of help except from uniformed porters or officials. All permanent staff at the airport wear an ID card showing their name and a photo. ID cards without a photo are not valid. … If you’re being collected at the airport, confirm the identity of your driver by asking for ID. British nationals have been robbed by impostors who have approached them around the main arrivals area pretending to b",
+        "independenceGroupId": "uk-fcdo",
+        "dateChecked": "2026-10-22",
+        "observationStatus": "DRAFT_UNREVIEWED",
+        "originalLanguage": "en",
+        "translated": false,
+        "translationMethod": "NONE",
+        "retrievedAt": "2026-10-22T13:52:15+00:00",
+        "publicationDate": "2026-07-02",
+        "publicationDateStatus": "STATED",
+        "contentRights": "GOVERNMENT_OPEN",
+        "rightsStatus": "GOVERNMENT_OPEN",
+        "accessMethod": "WEB_PAGE",
+        "automationPermission": "PERMITTED",
+        "uncertainty": "Wording is the source's own. Other nationalities' governments may advise differently."
+      },
+      {
+        "id": "obs-gh-transport-air-travel-and-gateways-cdc-travel",
+        "recordId": "gh-transport-air-travel-and-gateways",
+        "sourceId": "cb-gh-cdc-travel",
+        "sourceUrl": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+        "extractedClaim": "Avoid using local, unscheduled aircraft. … Try to schedule flights during daylight hours and in good weather.",
+        "independenceGroupId": "us-cdc",
+        "dateChecked": "2026-10-22",
+        "observationStatus": "DRAFT_UNREVIEWED",
+        "originalLanguage": "en",
+        "translated": false,
+        "translationMethod": "NONE",
+        "retrievedAt": "2026-10-22T13:52:15+00:00",
+        "publicationDate": "2026-08-25",
+        "publicationDateStatus": "STATED",
+        "contentRights": "GOVERNMENT_OPEN",
+        "rightsStatus": "GOVERNMENT_OPEN",
+        "accessMethod": "WEB_PAGE",
+        "automationPermission": "PERMITTED",
+        "uncertainty": "Wording is the source's own. Other nationalities' governments may advise differently."
+      }
+    ]
+  },
+  "publicationItems": [
+    {
+      "recordId": "gh-transport-road-travel",
+      "contentHash": "51a7cc6ded799423",
+      "record": {
+        "id": "gh-transport-road-travel",
+        "countryId": "gh",
+        "category": "TRANSPORT",
+        "subcategory": "Road travel",
+        "dataType": "CONSIDERATION",
+        "title": "Road travel",
+        "content": "UK FCDO travel advice (last updated 2 Jul 2026): You can drive in Ghana using the 1949 version of the international driving permit (IDP) or a Ghanaian driving licence. Carry your driving documents with you. Roads can be in a poor condition, particularly in rural areas. Grass or leaves strewn in the road often mean there is an accident or other hazard ahead. Street lighting is poor or non-existent. Avoid travelling by road outside the main towns after dark, when the risk of serious road accidents is much greater, and there is a heightened risk of attacks on vehicles (see the crime section). If you choose to drive at night be aware of impromptu police checkpoints. Do not give cash to the police as this can be perceived as a bribe. US CDC Travelers' Health (page last reviewed 25 Aug 2026): Motor vehicle crashes are the #1 killer of healthy US citizens in foreign countries. Choose a safe vehicle. Ride only in cars that have seatbelts. Choose newer vehicles—they may have more safety features, such as airbags, and be more reliable. Choose larger vehicles, which may provide more protection in crashes.",
+        "confidence": "MEDIUM",
+        "status": "ACTIVE",
+        "sourceId": "cb-gh-cdc-travel",
+        "locationId": null,
+        "dateChecked": "2026-10-22",
+        "reviewDate": "2027-01-20",
+        "sourcePublicationDate": "2026-08-25",
+        "notes": "Published automatically by 03AA-04_Country_Intelligence_Builder_TI after the TI publication rules passed. Source wording is quoted verbatim (page last reviewed 25 Aug 2026; retrieved 2026-10-22). The advice is the named government's guidance and may differ for other nationalities.",
+        "provenance": {
+          "builder": "03AA-04_Country_Intelligence_Builder_TI",
+          "publicationId": "pub-20261022T135215Z-21272f",
+          "method": "EXTRACTIVE",
+          "contentHash": "51a7cc6ded799423",
+          "topic": "ROAD_TRAVEL"
+        }
+      }
+    },
+    {
+      "recordId": "gh-transport-taxis-and-public-transport",
+      "contentHash": "a5b386464d3c033a",
+      "record": {
+        "id": "gh-transport-taxis-and-public-transport",
+        "countryId": "gh",
+        "category": "TRANSPORT",
+        "subcategory": "Taxis and public transport",
+        "dataType": "CONSIDERATION",
+        "title": "Taxis and public transport",
+        "content": "UK FCDO travel advice (last updated 2 Jul 2026): Attacks on vehicles are increasing, sometimes involving the use of weapons. A British national died in one such attack in August 2021. Take particular care when your car or taxi is stationary in a busy area. Keep windows up and doors locked. There have been isolated incidents of crime taking place in all types of taxis, including licensed taxis, minibuses (‘tro tros’) and app-based taxi services. Use licensed taxis and check driver ID and the vehicle’s condition before you travel. Some hotels will book transport to pick you up on arrival. Avoid travelling alone in taxis after dark. Safety standards of taxi services in Ghana are low. Driver training and vehicle standards will vary from providers in the UK. Drivers of ‘tro-tros’ and popular app-based taxi services are not centrally licensed. There is no responsible body that is accountable for your safety. Outside major towns and cities it’s safer to use pre-booked vehicles from reputable taxi companies. US CDC Travelers' Health (page last reviewed 25 Aug 2026): In many places cars, buses, large trucks, rickshaws, bikes, people on foot, and even animals share the same lanes of traffic, increasing the risk for crashes. Choose official taxis or public transportation, such as trains and buses. Avoid overcrowded, overloaded, top-heavy buses and minivans. Sit in the back seat of cars and taxis.",
+        "confidence": "MEDIUM",
+        "status": "ACTIVE",
+        "sourceId": "gh-fcdo-security",
+        "locationId": null,
+        "dateChecked": "2026-10-22",
+        "reviewDate": "2027-01-20",
+        "sourcePublicationDate": "2026-08-25",
+        "notes": "Published automatically by 03AA-04_Country_Intelligence_Builder_TI after the TI publication rules passed. Source wording is quoted verbatim (last updated 2 Jul 2026; retrieved 2026-10-22). The advice is the named government's guidance and may differ for other nationalities.",
+        "provenance": {
+          "builder": "03AA-04_Country_Intelligence_Builder_TI",
+          "publicationId": "pub-20261022T135215Z-21272f",
+          "method": "EXTRACTIVE",
+          "contentHash": "a5b386464d3c033a",
+          "topic": "TAXIS_AND_PUBLIC_TRANSPORT"
+        }
+      }
+    },
+    {
+      "recordId": "gh-transport-air-travel-and-gateways",
+      "contentHash": "fb28a757c3c1fdc7",
+      "record": {
+        "id": "gh-transport-air-travel-and-gateways",
+        "countryId": "gh",
+        "category": "TRANSPORT",
+        "subcategory": "Air travel and gateways",
+        "dataType": "CONSIDERATION",
+        "title": "Air travel and gateways",
+        "content": "UK FCDO travel advice (last updated 2 Jul 2026): There are reports of a small number of thefts of luggage and travel documents at Kotoka International Airport. Make sure your passport is always secure and do not leave your bags unattended. Be wary of offers of help except from uniformed porters or officials. All permanent staff at the airport wear an ID card showing their name and a photo. ID cards without a photo are not valid. If you’re being collected at the airport, confirm the identity of your driver by asking for ID. British nationals have been robbed by impostors who have approached them around the main arrivals area pretending to be their driver. US CDC Travelers' Health (page last reviewed 25 Aug 2026): Avoid using local, unscheduled aircraft. Try to schedule flights during daylight hours and in good weather.",
+        "confidence": "MEDIUM",
+        "status": "ACTIVE",
+        "sourceId": "gh-fcdo-security",
+        "locationId": null,
+        "dateChecked": "2026-10-22",
+        "reviewDate": "2027-01-20",
+        "sourcePublicationDate": "2026-08-25",
+        "notes": "Published automatically by 03AA-04_Country_Intelligence_Builder_TI after the TI publication rules passed. Source wording is quoted verbatim (last updated 2 Jul 2026; retrieved 2026-10-22). The advice is the named government's guidance and may differ for other nationalities.",
+        "provenance": {
+          "builder": "03AA-04_Country_Intelligence_Builder_TI",
+          "publicationId": "pub-20261022T135215Z-21272f",
+          "method": "EXTRACTIVE",
+          "contentHash": "fb28a757c3c1fdc7",
+          "topic": "AIR_TRAVEL_AND_GATEWAYS"
+        }
+      }
+    }
+  ],
+  "validation": {
+    "candidateBatchMergesCleanly": true,
+    "detail": "VALID: schema 2.0 | countries=52 records=385 sources=191 locations=14 events=31 observations=151",
+    "claimsKept": 31,
+    "claimsRejected": 0
+  },
+  "cost": {
+    "model": null,
+    "calls": 0,
+    "inputTokens": 0,
+    "outputTokens": 0,
+    "estimatedUsd": 0.0,
+    "status": "no model call",
+    "wouldCostUsdIfRun": null
+  },
+  "publication": {
+    "publicationId": null,
+    "recordIds": [],
+    "verification": null,
+    "skipped": "publication_off (mode draft, TI_CB_PUBLISH unset)"
+  }
+}
