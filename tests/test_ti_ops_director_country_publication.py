@@ -754,6 +754,8 @@ class RuleChangesReassessHeldItems(unittest.TestCase):
             # a hand-made open exception, as a held item would leave
             st["exceptions"]["gh:EQUIPMENT:MOSQUITO:x"] = {"key": "gh:EQUIPMENT:MOSQUITO:x", "scope": "topic", "countryId": "gh", "category": "EQUIPMENT",
                                                           "state": "HELD", "reasons": ["x"], "topic": "MOSQUITO"}
+            for k in [k for k in st["exceptions"] if k != "gh:EQUIPMENT:MOSQUITO:x"]:
+                del st["exceptions"][k]                                                  # holds that retry themselves are covered below
             data = json.loads((h.work / "data.json").read_text())
             gaps, _ = b.plan(data, cs.NOW.date(), st)
             self.assertEqual([g["gap"]["type"] for g in gaps], [])                       # same rules: nothing to redo
@@ -761,6 +763,24 @@ class RuleChangesReassessHeldItems(unittest.TestCase):
                 gaps, planned = b.plan(data, cs.NOW.date(), st)
                 self.assertEqual([g["gap"]["type"] for g in gaps], ["RECHECK_HELD"])
                 self.assertEqual(len(planned), 1)
+
+    def test_a_hold_that_can_clear_by_itself_is_retried_under_unchanged_rules(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            h = PublishHarness(tmp)
+            shared = LocalBackend(Path(tmp) / "ledger")
+            run_all(h.builder(registered=True, categories=["EQUIPMENT"], ledger=shared))
+            h.git(h.work, "fetch", "--quiet", "origin", "main")
+            h.git(h.work, "reset", "--quiet", "--hard", "FETCH_HEAD")
+            b = h.builder(registered=True, categories=["EQUIPMENT"], ledger=shared)
+            b.cfg.raw["scope"]["gap_types"] = ["MISSING", "STALE", "TOPIC_MISSING", "RECHECK_HELD"]
+            st = _sections(shared.snapshot().state())
+            st["exceptions"]["gh:EQUIPMENT:source:gsa_plugs:UNAVAILABLE"] = {
+                "key": "gh:EQUIPMENT:source:gsa_plugs:UNAVAILABLE", "scope": "source", "countryId": "gh", "category": "EQUIPMENT",
+                "state": "HELD", "reasons": ["x"]}
+            data = json.loads((h.work / "data.json").read_text())
+            gaps, planned = b.plan(data, cs.NOW.date(), st)
+            self.assertEqual([g["gap"]["type"] for g in gaps], ["RECHECK_HELD"])
+            self.assertTrue(b._held_for_retry(st, planned[0]))
 
     def test_recheck_held_respects_scope_and_never_duplicates_an_existing_gap(self):
         from unittest import mock

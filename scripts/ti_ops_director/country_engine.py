@@ -164,8 +164,13 @@ class Builder:
             return []
         names = {str(c["id"]).lower(): c for c in data.get("countries", [])}
         out = []
-        pairs = {(e["countryId"], e["category"]) for e in state["exceptions"].values()
-                 if e["state"] == "HELD" and e["scope"] != "publication" and e.get("countryId") and e.get("category")}
+        held = [(k, e) for k, e in state["exceptions"].items()
+                if e["state"] == "HELD" and e["scope"] != "publication" and e.get("countryId") and e.get("category")]
+        pairs = {(e["countryId"], e["category"]) for _, e in held}
+        # A held item whose cause can clear by itself (a source that was unreachable, evidence not retrieved, no dated source yet)
+        # is looked at again on every run, so a restored source heals the record without waiting for a rules change.
+        retry_pairs = {(e["countryId"], e["category"]) for k, e in held
+                       if ":source:" in k or "evidence_missing" in k or "no_dated_source" in k}
         for d in state["drafts"].values():      # eligible content that was assessed but never published (for example in a draft-mode run)
             if not d.get("supersededBy") and d.get("reviewStatus") == "ELIGIBLE_AWAITING_PUBLICATION_RUN" and not d.get("settled"):
                 pairs.add((d["countryId"], d["category"]))
@@ -174,7 +179,8 @@ class Builder:
                 continue
             drafts = [d for d in state["drafts"].values() if d["countryId"] == cc and d["category"] == cat and not d.get("supersededBy")]
             latest = max(drafts, key=lambda d: d["createdAt"]) if drafts else None
-            if latest and latest.get("rules") == self.rules_fingerprint(cat) and latest.get("reviewStatus") != "ELIGIBLE_AWAITING_PUBLICATION_RUN":
+            if (latest and latest.get("rules") == self.rules_fingerprint(cat) and (cc, cat) not in retry_pairs
+                    and latest.get("reviewStatus") != "ELIGIBLE_AWAITING_PUBLICATION_RUN"):
                 continue
             ids = sorted(r["id"] for r in data["records"] if r.get("countryId") == cc and r.get("category") == cat and r.get("status", "ACTIVE") == "ACTIVE")
             eligible = bool(latest and latest.get("reviewStatus") == "ELIGIBLE_AWAITING_PUBLICATION_RUN")
@@ -399,7 +405,7 @@ class Builder:
             for t in planned:
                 key = t["dedupe_key"]
                 old = st["tasks"].get(key)
-                if old and old["state"] == "completed" and self._needs_another_look(st, old):
+                if old and old["state"] == "completed" and (self._needs_another_look(st, old) or self._held_for_retry(st, t)):
                     # The gap is still open and the last result cannot be final: its draft never settled (for example a
                     # draft-mode trial that could not publish) or the rules/register have changed since. Settled work waits
                     # for its normal recheck bucket.
@@ -472,6 +478,16 @@ class Builder:
         return EXIT_OK
 
     # -- publication --
+    @staticmethod
+    def _held_for_retry(st, planned):
+        """A RECHECK_HELD task whose hold can clear by itself (source unreachable, evidence missing, no dated source yet) runs again."""
+        inp = planned["inputs"]
+        if inp["gap"]["type"] != "RECHECK_HELD":
+            return False
+        return any(e["state"] == "HELD" and e.get("scope") != "publication" and e.get("countryId") == inp["countryId"]
+                   and e.get("category") == inp["category"] and (":source:" in k or "evidence_missing" in k or "no_dated_source" in k)
+                   for k, e in st["exceptions"].items())
+
     def _needs_another_look(self, st, task):
         inp = task["inputs"]
         drafts = [d for d in st["drafts"].values() if d["countryId"] == inp["countryId"] and d["category"] == inp["category"]
