@@ -1,0 +1,1865 @@
+{
+  "draftId": "cib-gh-equipment-e087b56a8f",
+  "schemaVersion": "2.0",
+  "agent": "03AA-04_Country_Intelligence_Builder_TI",
+  "promptVersion": "cib-1",
+  "countryId": "gh",
+  "country": "Ghana",
+  "category": "EQUIPMENT",
+  "gap": {
+    "type": "TOPIC_MISSING",
+    "detail": "No active EQUIPMENT record yet for Ghana on: PLUGS.",
+    "topics": [
+      "PLUGS"
+    ]
+  },
+  "generatedAt": "2026-10-22T17:47:04+00:00",
+  "evidenceFingerprint": "e087b56a8fa44da0e4361fcaf306a5da",
+  "reviewStatus": "ELIGIBLE_AWAITING_PUBLICATION_RUN",
+  "publicationStatus": "NOT_PUBLISHED",
+  "modelStatus": "NOT_NEEDED",
+  "model": null,
+  "verification": null,
+  "items": [
+    {
+      "topic": "CLOTHING",
+      "title": "Clothing",
+      "claims": [
+        {
+          "text": "Prepare for activities by wearing the right clothes and packing protective items, such as bug spray, sunscreen, and a basic first aid kit.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.45",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "Prepare for activities by wearing the right clothes and packing protective items, such as bug spray, sunscreen, and a basic first aid kit.",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Heat-related illness, such as heat stroke, can be deadly. Eat and drink regularly, wear loose and lightweight clothing, and limit physical activity during high temperatures.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.46",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "Heat-related illness, such as heat stroke, can be deadly. Eat and drink regularly, wear loose and lightweight clothing, and limit physical activity during high temperatures.",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Protect yourself from UV radiation: use sunscreen with an SPF of at least 15, wear protective clothing, and seek shade during the hottest time of day (10 a.m.–4 p.m.).",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.46",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "Protect yourself from UV radiation: use sunscreen with an SPF of at least 15, wear protective clothing, and seek shade during the hottest time of day (10 a.m.–4 p.m.).",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Very cold temperatures can be dangerous. Dress in layers and cover heads, hands, and feet properly if you are visiting a cold location.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.47",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "Very cold temperatures can be dangerous. Dress in layers and cover heads, hands, and feet properly if you are visiting a cold location.",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "To prevent infections, wear shoes on beaches where there may be animal waste.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.48",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "To prevent infections, wear shoes on beaches where there may be animal waste.",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Dress modestly in public. Shorts and t-shirts are acceptable for both males and females, but it is best not to wear anything too revealing.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "FS.21",
+              "sourceKey": "fcdo_safety",
+              "sourceId": "gh-fcdo-security",
+              "url": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
+              "publisher": "UK Foreign, Commonwealth & Development Office",
+              "quote": "Dress modestly in public. Shorts and t-shirts are acceptable for both males and females, but it is best not to wear anything too revealing.",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2026-07-02",
+              "independenceGroupId": "uk-fcdo"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Wearing military clothing including camouflage is illegal.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "FS.21",
+              "sourceKey": "fcdo_safety",
+              "sourceId": "gh-fcdo-security",
+              "url": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
+              "publisher": "UK Foreign, Commonwealth & Development Office",
+              "quote": "Wearing military clothing including camouflage is illegal.",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2026-07-02",
+              "independenceGroupId": "uk-fcdo"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        }
+      ],
+      "excluded": [],
+      "method": "EXTRACTIVE",
+      "uncertainty": "Wording is the source's own. Other nationalities' governments may advise differently.",
+      "candidateRecord": true,
+      "content": "Prepare for activities by wearing the right clothes and packing protective items, such as bug spray, sunscreen, and a basic first aid kit. Heat-related illness, such as heat stroke, can be deadly. Eat and drink regularly, wear loose and lightweight clothing, and limit physical activity during high temperatures. Protect yourself from UV radiation: use sunscreen with an SPF of at least 15, wear protective clothing, and seek shade during the hottest time of day (10 a.m.–4 p.m.). Very cold temperatures can be dangerous. Dress in layers and cover heads, hands, and feet properly if you are visiting a cold location. To prevent infections, wear shoes on beaches where there may be animal waste. Dress modestly in public. Shorts and t-shirts are acceptable for both males and females, but it is best not to wear anything too revealing. Wearing military clothing including camouflage is illegal.",
+      "layer": "BASELINE",
+      "decision": "PUBLISH",
+      "heldReasons": []
+    },
+    {
+      "topic": "MOSQUITO",
+      "title": "Mosquito protection",
+      "claims": [
+        {
+          "text": "Bugs (like mosquitoes, ticks, and fleas) can spread a number of diseases in Ghana. Many of these diseases cannot be prevented with a vaccine or medicine. You can reduce your risk by taking steps to prevent bug bites.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.40",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "Bugs (like mosquitoes, ticks, and fleas) can spread a number of diseases in Ghana. Many of these diseases cannot be prevented with a vaccine or medicine. You can reduce your risk by taking steps to prevent bug bites.",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Use permethrin-treated clothing and gear (such as boots, pants, socks, and tents). Do not use permethrin directly on skin.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.41",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "Use permethrin-treated clothing and gear (such as boots, pants, socks, and tents). Do not use permethrin directly on skin.",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Stay and sleep in air-conditioned or screened rooms.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.41",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "Stay and sleep in air-conditioned or screened rooms.",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Use a bed net if the area where you are sleeping is exposed to the outdoors.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.41",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "Use a bed net if the area where you are sleeping is exposed to the outdoors.",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "FOR PROTECTION AGAINST TICKS AND MOSQUITOES: Use a repellent that contains 20% or more DEET for protection that lasts up to several hours.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.42",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "FOR PROTECTION AGAINST TICKS AND MOSQUITOES: Use a repellent that contains 20% or more DEET for protection that lasts up to several hours.",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Always use insect repellent as directed.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.42",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "Always use insect repellent as directed.",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Avoid scratching bug bites, and apply hydrocortisone cream or calamine lotion to reduce the itching.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "CD.43",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "Avoid scratching bug bites, and apply hydrocortisone cream or calamine lotion to reduce the itching.",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Although bed bugs do not carry disease, they are an annoyance. See our information page about avoiding bug bites for some easy tips to avoid them.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 1,
+          "evidence": [
+            {
+              "passageId": "CD.44",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "Although bed bugs do not carry disease, they are an annoyance. See our information page about avoiding bug bites for some easy tips to avoid them.",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Some diseases in Ghana—such as dengue, leishmaniasis, and African sleeping sickness—are spread by bugs and cannot be prevented with a vaccine.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 1,
+          "evidence": [
+            {
+              "passageId": "CD.44",
+              "sourceKey": "cdc_travel",
+              "sourceId": "cb-gh-cdc-travel",
+              "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+              "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+              "quote": "Some diseases in Ghana—such as dengue, leishmaniasis, and African sleeping sickness—are spread by bugs and cannot be prevented with a vaccine.",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2026-08-25",
+              "independenceGroupId": "us-cdc"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": false,
+          "heldBecause": [
+            "item_held"
+          ]
+        },
+        {
+          "text": "Yellow fever is a viral infection transmitted by mosquitoes which predominantly feed between dawn and dusk, but may also bite at night, especially in the jungle environment. Symptoms may be absent or mild, but in severe cases it can cause internal bleeding, organ failure and death.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "TH.26",
+              "sourceKey": "travelhealthpro",
+              "sourceId": "cb-gh-travelhealthpro",
+              "url": "https://travelhealthpro.org.uk/country/89/ghana",
+              "publisher": "TravelHealthPro (UK Health Security Agency / NaTHNaC)",
+              "quote": "Yellow fever is a viral infection transmitted by mosquitoes which predominantly feed between dawn and dusk, but may also bite at night, especially in the jungle environment. Symptoms may be absent or mild, but in severe cases it can cause internal bleeding, organ failure and death.",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": null,
+              "independenceGroupId": "uk-ukhsa-nathnac"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": false,
+          "heldBecause": [
+            "no_dated_source_within_freshness_limit"
+          ]
+        },
+        {
+          "text": "There is a risk of yellow fever transmission throughout this country.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "TH.27",
+              "sourceKey": "travelhealthpro",
+              "sourceId": "cb-gh-travelhealthpro",
+              "url": "https://travelhealthpro.org.uk/country/89/ghana",
+              "publisher": "TravelHealthPro (UK Health Security Agency / NaTHNaC)",
+              "quote": "There is a risk of yellow fever transmission throughout this country.",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": null,
+              "independenceGroupId": "uk-ukhsa-nathnac"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": false,
+          "heldBecause": [
+            "no_dated_source_within_freshness_limit"
+          ]
+        },
+        {
+          "text": "The yellow fever vaccine is not suitable for all travellers, there are specific undesirable effects associated with it. This vaccine is only available at registered yellow fever vaccination centres. Health professionals should carefully assess the risks and benefits of the vaccine, and seek specialist advice if necessary.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "TH.29",
+              "sourceKey": "travelhealthpro",
+              "sourceId": "cb-gh-travelhealthpro",
+              "url": "https://travelhealthpro.org.uk/country/89/ghana",
+              "publisher": "TravelHealthPro (UK Health Security Agency / NaTHNaC)",
+              "quote": "The yellow fever vaccine is not suitable for all travellers, there are specific undesirable effects associated with it. This vaccine is only available at registered yellow fever vaccination centres. Health professionals should carefully assess the risks and benefits of the vaccine, and seek specialist advice if necessary.",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": null,
+              "independenceGroupId": "uk-ukhsa-nathnac"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": false,
+          "heldBecause": [
+            "no_dated_source_within_freshness_limit"
+          ]
+        },
+        {
+          "text": "Dengue is a viral infection spread by mosquitoes which mainly feed during daytime hours. It causes a flu-like illness, which can occasionally develop into a more serious life-threatening illness. Severe dengue is rare in travellers.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "TH.38",
+              "sourceKey": "travelhealthpro",
+              "sourceId": "cb-gh-travelhealthpro",
+              "url": "https://travelhealthpro.org.uk/country/89/ghana",
+              "publisher": "TravelHealthPro (UK Health Security Agency / NaTHNaC)",
+              "quote": "Dengue is a viral infection spread by mosquitoes which mainly feed during daytime hours. It causes a flu-like illness, which can occasionally develop into a more serious life-threatening illness. Severe dengue is rare in travellers.",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": null,
+              "independenceGroupId": "uk-ukhsa-nathnac"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": false,
+          "heldBecause": [
+            "no_dated_source_within_freshness_limit"
+          ]
+        },
+        {
+          "text": "The mosquitoes that spread dengue are more common in towns, cities and surrounding areas.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "TH.38",
+              "sourceKey": "travelhealthpro",
+              "sourceId": "cb-gh-travelhealthpro",
+              "url": "https://travelhealthpro.org.uk/country/89/ghana",
+              "publisher": "TravelHealthPro (UK Health Security Agency / NaTHNaC)",
+              "quote": "The mosquitoes that spread dengue are more common in towns, cities and surrounding areas.",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": null,
+              "independenceGroupId": "uk-ukhsa-nathnac"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": false,
+          "heldBecause": [
+            "no_dated_source_within_freshness_limit"
+          ]
+        },
+        {
+          "text": "There is a risk of dengue in this country.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "TH.39",
+              "sourceKey": "travelhealthpro",
+              "sourceId": "cb-gh-travelhealthpro",
+              "url": "https://travelhealthpro.org.uk/country/89/ghana",
+              "publisher": "TravelHealthPro (UK Health Security Agency / NaTHNaC)",
+              "quote": "There is a risk of dengue in this country.",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": null,
+              "independenceGroupId": "uk-ukhsa-nathnac"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": false,
+          "heldBecause": [
+            "no_dated_source_within_freshness_limit"
+          ]
+        },
+        {
+          "text": "Exceptionally, vaccination can be considered in those who have not had dengue in the past. In these situations, further expert advice should be considered. Detailed guidance on how to ascertain previous infection is available in the UK Health Security Agency Immunisation against infectious disease the 'Green book'. The final decision on vaccination rests with the health professional and the traveller after a detailed risk assessment has been performed and the potential risks of vaccination explained.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "TH.41",
+              "sourceKey": "travelhealthpro",
+              "sourceId": "cb-gh-travelhealthpro",
+              "url": "https://travelhealthpro.org.uk/country/89/ghana",
+              "publisher": "TravelHealthPro (UK Health Security Agency / NaTHNaC)",
+              "quote": "Exceptionally, vaccination can be considered in those who have not had dengue in the past. In these situations, further expert advice should be considered. Detailed guidance on how to ascertain previous infection is available in the UK Health Security Agency Immunisation against infectious disease the 'Green book'. The final decision on vaccination rests with the health professional and the traveller after a detailed risk assessment has been performed and the potential risks of vaccination explained.",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": null,
+              "independenceGroupId": "uk-ukhsa-nathnac"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": false,
+          "heldBecause": [
+            "no_dated_source_within_freshness_limit"
+          ]
+        },
+        {
+          "text": "Malaria is a serious illness caused by infection of red blood cells with a parasite called Plasmodium. The disease is transmitted by mosquitoes which predominantly feed between dusk and dawn.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "TH.71",
+              "sourceKey": "travelhealthpro",
+              "sourceId": "cb-gh-travelhealthpro",
+              "url": "https://travelhealthpro.org.uk/country/89/ghana",
+              "publisher": "TravelHealthPro (UK Health Security Agency / NaTHNaC)",
+              "quote": "Malaria is a serious illness caused by infection of red blood cells with a parasite called Plasmodium. The disease is transmitted by mosquitoes which predominantly feed between dusk and dawn.",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": null,
+              "independenceGroupId": "uk-ukhsa-nathnac"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": false,
+          "heldBecause": [
+            "no_dated_source_within_freshness_limit"
+          ]
+        },
+        {
+          "text": "Symptoms usually begin with a fever (high temperature) of 38°C (100°F) or more. Other symptoms may include feeling cold and shivery, headache, nausea, vomiting and aching muscles. Symptoms may appear between eight days and one year after the infected mosquito bite.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "TH.71",
+              "sourceKey": "travelhealthpro",
+              "sourceId": "cb-gh-travelhealthpro",
+              "url": "https://travelhealthpro.org.uk/country/89/ghana",
+              "publisher": "TravelHealthPro (UK Health Security Agency / NaTHNaC)",
+              "quote": "Symptoms usually begin with a fever (high temperature) of 38°C (100°F) or more. Other symptoms may include feeling cold and shivery, headache, nausea, vomiting and aching muscles. Symptoms may appear between eight days and one year after the infected mosquito bite.",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": null,
+              "independenceGroupId": "uk-ukhsa-nathnac"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": false,
+          "heldBecause": [
+            "no_dated_source_within_freshness_limit"
+          ]
+        },
+        {
+          "text": "Prompt diagnosis and treatment is required as people with malaria can deteriorate quickly. Those at higher risk of malaria, or of severe complications from malaria, include pregnant women, infants and young children, the elderly, travellers who do not have a functioning spleen and those visiting friends and relatives.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "TH.72",
+              "sourceKey": "travelhealthpro",
+              "sourceId": "cb-gh-travelhealthpro",
+              "url": "https://travelhealthpro.org.uk/country/89/ghana",
+              "publisher": "TravelHealthPro (UK Health Security Agency / NaTHNaC)",
+              "quote": "Prompt diagnosis and treatment is required as people with malaria can deteriorate quickly. Those at higher risk of malaria, or of severe complications from malaria, include pregnant women, infants and young children, the elderly, travellers who do not have a functioning spleen and those visiting friends and relatives.",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": null,
+              "independenceGroupId": "uk-ukhsa-nathnac"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": false,
+          "heldBecause": [
+            "no_dated_source_within_freshness_limit"
+          ]
+        }
+      ],
+      "excluded": [
+        {
+          "text": "Dengue - CDC Yellow Book",
+          "reason": "fragment_or_pointer",
+          "detail": "no_terminal_punctuation",
+          "passageId": "CD.31"
+        },
+        {
+          "text": "Map: Dengue risk for Africa and Europe",
+          "reason": "fragment_or_pointer",
+          "detail": "no_terminal_punctuation",
+          "passageId": "CD.31"
+        },
+        {
+          "text": "Use an appropriate insect repellent (see below).",
+          "reason": "fragment_or_pointer",
+          "detail": "pointer",
+          "passageId": "CD.41"
+        },
+        {
+          "text": "FOR PROTECTION AGAINST MOSQUITOES ONLY: Products with one of the following active ingredients can also help prevent mosquito bites.",
+          "reason": "fragment_or_pointer",
+          "detail": "pointer",
+          "passageId": "CD.42"
+        },
+        {
+          "text": "DEET",
+          "reason": "fragment_or_pointer",
+          "detail": "length",
+          "passageId": "CD.42"
+        },
+        {
+          "text": "For more detailed information on avoiding bug bites, see Avoid Bug Bites.",
+          "reason": "fragment_or_pointer",
+          "detail": "starts_mid_thought",
+          "passageId": "CD.44"
+        },
+        {
+          "text": "Vaccination can be considered for individuals aged 4 years of age and older who have had dengue infection in the past and who are:",
+          "reason": "fragment_or_pointer",
+          "detail": "no_terminal_punctuation",
+          "passageId": "TH.40"
+        },
+        {
+          "text": "travelling to areas where there is a risk of dengue infection or areas with an ongoing outbreak of dengue, or",
+          "reason": "fragment_or_pointer",
+          "detail": "starts_mid_thought",
+          "passageId": "TH.40"
+        },
+        {
+          "text": "are exposed to dengue virus through their work, such as laboratory staff working with the virus",
+          "reason": "fragment_or_pointer",
+          "detail": "starts_mid_thought",
+          "passageId": "TH.40"
+        },
+        {
+          "text": "start one to two days before arrival in the malaria risk area",
+          "reason": "fragment_or_pointer",
+          "detail": "starts_mid_thought",
+          "passageId": "TH.77"
+        },
+        {
+          "text": "for adults, one tablet is taken every day, ideally at the same time of day for the duration of the time in a malaria risk area and daily for seven days after le",
+          "reason": "fragment_or_pointer",
+          "detail": "starts_mid_thought",
+          "passageId": "TH.77"
+        },
+        {
+          "text": "adults and children over 12 years of age take 100mg daily, ideally at the same time of day for the duration of the time in a malaria risk area and daily for fou",
+          "reason": "fragment_or_pointer",
+          "detail": "starts_mid_thought",
+          "passageId": "TH.78"
+        },
+        {
+          "text": "start two to three weeks before arrival in the malaria risk area and continue weekly until four weeks after leaving the malaria risk area",
+          "reason": "fragment_or_pointer",
+          "detail": "starts_mid_thought",
+          "passageId": "TH.79"
+        },
+        {
+          "text": "Yellow fever cases continue to be reported in Africa and South America",
+          "reason": "fragment_or_pointer",
+          "detail": "no_terminal_punctuation",
+          "passageId": "TH.108"
+        },
+        {
+          "text": "Advice for travellers and health professionals about malaria",
+          "reason": "fragment_or_pointer",
+          "detail": "no_terminal_punctuation",
+          "passageId": "TH.110"
+        },
+        {
+          "text": "As of 11 October 2026, 43 suspected cases (including three confirmed deaths) of yellow fever have been reported in the Upper West Region. Case numbers appear to",
+          "reason": "fragment_or_pointer",
+          "detail": "time_bound",
+          "passageId": "TH.112"
+        },
+        {
+          "text": "Source: WHO Yellow fever in brief Take usual precautions Outbreak updates (latest first)Upper West",
+          "reason": "fragment_or_pointer",
+          "detail": "no_terminal_punctuation",
+          "passageId": "TH.112"
+        },
+        {
+          "text": "As of 8 October 2026, Ghana's Ministry of Health has reported three confirmed fatal yellow fever cases in Upper West Region.",
+          "reason": "fragment_or_pointer",
+          "detail": "time_bound",
+          "passageId": "TH.113"
+        },
+        {
+          "text": "Malaria",
+          "reason": "fragment_or_pointer",
+          "detail": "length",
+          "passageId": "TH.113"
+        },
+        {
+          "text": "Polio Pregnancy Yellow fever Malaria Vaccine / Vaccination Rabies Dengue Marburg Mpox Nipah virus Oropouche MERS-CoV Pertussis",
+          "reason": "fragment_or_pointer",
+          "detail": "no_terminal_punctuation",
+          "passageId": "TH.114"
+        },
+        {
+          "text": "yellow fever",
+          "reason": "fragment_or_pointer",
+          "detail": "length",
+          "passageId": "FH.05"
+        },
+        {
+          "text": "dengue",
+          "reason": "fragment_or_pointer",
+          "detail": "length",
+          "passageId": "FH.05"
+        }
+      ],
+      "method": "EXTRACTIVE",
+      "uncertainty": "Wording is the source's own. Other nationalities' governments may advise differently.",
+      "candidateRecord": true,
+      "content": "Bugs (like mosquitoes, ticks, and fleas) can spread a number of diseases in Ghana. Many of these diseases cannot be prevented with a vaccine or medicine. You can reduce your risk by taking steps to prevent bug bites. Use permethrin-treated clothing and gear (such as boots, pants, socks, and tents). Do not use permethrin directly on skin. Stay and sleep in air-conditioned or screened rooms. Use a bed net if the area where you are sleeping is exposed to the outdoors. FOR PROTECTION AGAINST TICKS AND MOSQUITOES: Use a repellent that contains 20% or more DEET for protection that lasts up to several hours. Always use insect repellent as directed. Avoid scratching bug bites, and apply hydrocortisone cream or calamine lotion to reduce the itching. Although bed bugs do not carry disease, they are an annoyance. See our information page about avoiding bug bites for some easy tips to avoid them. Some diseases in Ghana—such as dengue, leishmaniasis, and African sleeping sickness—are spread by bugs and cannot be prevented with a vaccine. Yellow fever is a viral infection transmitted by mosquitoes which predominantly feed between dawn and dusk, but may also bite at night, especially in the jungle environment. Symptoms may be absent or mild, but in severe cases it can cause internal bleeding, organ failure and death. There is a risk of yellow fever transmission throughout this country. The yellow fever vaccine is not suitable for all travellers, there are specific undesirable effects associated with it. This vaccine is only available at registered yellow fever vaccination centres. Health professionals should carefully assess the risks and benefits of the vaccine, and seek specialist advice if necessary. Dengue is a viral infection spread by mosquitoes which mainly feed during daytime hours. It causes a flu-like illness, which can occasionally develop into a more serious life-threatening illness. Severe dengue is rare in travellers. The mosquitoes that spread dengue are more common in towns, cities and surrounding areas. There is a risk of dengue in this country. Exceptionally, vaccination can be considered in those who have not had dengue in the past. In these situations, further expert advice should be considered. Detailed guidance on how to ascertain previous infection is available in the UK Health Security Agency Immunisation against infectious disease the 'Green book'. The final decision on vaccination rests with the health professional and the traveller after a detailed risk assessment has been performed and the potential risks of vaccination explained. Malaria is a serious illness caused by infection of red blood cells with a parasite called Plasmodium. The disease is transmitted by mosquitoes which predominantly feed between dusk and dawn. Symptoms usually begin with a fever (high temperature) of 38°C (100°F) or more. Other symptoms may include feeling cold and shivery, headache, nausea, vomiting and aching muscles. Symptoms may appear between eight days and one year after the infected mosquito bite. Prompt diagnosis and treatment is required as people with malaria can deteriorate quickly. Those at higher risk of malaria, or of severe complications from malaria, include pregnant women, infants and young children, the elderly, travellers who do not have a functioning spleen and those visiting friends and relatives.",
+      "layer": "BASELINE",
+      "decision": "PUBLISH",
+      "heldReasons": []
+    },
+    {
+      "topic": "PLUGS",
+      "title": "Electrical plugs and supply",
+      "claims": [
+        {
+          "text": "The Ghana Standards Authority requires imported household plugs to be type G (13-amp, three rectangular pins), effective 1 January 2019.",
+          "evidence": [
+            {
+              "passageId": "GS.02",
+              "sourceKey": "gsa_plugs",
+              "sourceId": "cb-gh-gsa-plugs",
+              "url": "https://gsa.gov.gh/wp-content/uploads/2018/11/ADVERT-socket-and-plugs.pdf",
+              "publisher": "Ghana Standards Authority",
+              "quote": "the Plugs should be type G.",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2019-01-01",
+              "independenceGroupId": "gh-gsa"
+            },
+            {
+              "passageId": "GS.02",
+              "sourceKey": "gsa_plugs",
+              "sourceId": "cb-gh-gsa-plugs",
+              "url": "https://gsa.gov.gh/wp-content/uploads/2018/11/ADVERT-socket-and-plugs.pdf",
+              "publisher": "Ghana Standards Authority",
+              "quote": "13-amp plug with three rectangular prongs",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2019-01-01",
+              "independenceGroupId": "gh-gsa"
+            }
+          ],
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "independentSources": 1,
+          "method": "COMPUTED",
+          "note": "stated by the cited source(s); wording composed in code",
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Ghana's supply regulations (L.I. 1935) require the voltage at a customer's premises to stay within plus or minus ten percent of 230 volts or 400 volts (or of the higher network voltages they list).",
+          "evidence": [
+            {
+              "passageId": "LI.01",
+              "sourceKey": "li_1935",
+              "sourceId": "cb-gh-li-1935",
+              "url": "https://www.purc.com.gh/attachment/719588-20201123111126.pdf",
+              "publisher": "Ghana Public Utilities Regulatory Commission (publishing L.I. 1935)",
+              "quote": "within plus or minus ten percent of the following voltage levels: (a) 230 Volts; (b) 400 Volts",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2008-06-13",
+              "independenceGroupId": "gh-li-1935"
+            },
+            {
+              "passageId": "EC.02",
+              "sourceKey": "ecg_technical",
+              "sourceId": "cb-gh-ecg-technical",
+              "url": "https://ecg.com.gh/index.php/en/history/technical-information-tariff",
+              "publisher": "Electricity Company of Ghana",
+              "quote": "standard voltages are 230 volts ±10% single phase 2 wire, 400volts ±10% three phase 4 wire",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": null,
+              "independenceGroupId": "gh-ecg"
+            }
+          ],
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "independentSources": 2,
+          "method": "COMPUTED",
+          "note": "stated by the cited source(s); wording composed in code",
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Ghana's National Electricity Grid Code treats 50 Hz as the nominal system frequency.",
+          "evidence": [
+            {
+              "passageId": "GC.06",
+              "sourceKey": "grid_code",
+              "sourceId": "cb-gh-grid-code",
+              "url": "https://www.energycom.gov.gh/index.php/regulation/codes-sub-codes?download=13:national-elect-grid-code-2009",
+              "publisher": "Energy Commission of Ghana",
+              "quote": "y of power supply shall be considered to be acceptable when none of the following conditions is present: (a) the system frequency has deviated from the nominal value of 50 Hz by more than 0",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2009-10-01",
+              "independenceGroupId": "gh-energy-commission"
+            },
+            {
+              "passageId": "EC.02",
+              "sourceKey": "ecg_technical",
+              "sourceId": "cb-gh-ecg-technical",
+              "url": "https://ecg.com.gh/index.php/en/history/technical-information-tariff",
+              "publisher": "Electricity Company of Ghana",
+              "quote": "frequency of 50hertz",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": null,
+              "independenceGroupId": "gh-ecg"
+            }
+          ],
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "independentSources": 2,
+          "method": "COMPUTED",
+          "note": "stated by the cited source(s); wording composed in code",
+          "publishable": true,
+          "heldBecause": []
+        }
+      ],
+      "recordNote": "Plug type and supply voltage are as stated by Ghana's standards body and electricity regulations on the dates shown; instruments may have been amended since. Other plug types that may be found in older buildings are not covered by these sources.",
+      "uncertainty": "Official statements as of their stated dates; not re-confirmed against any later amendment. ",
+      "derivation": "COMPUTED_FROM_SOURCE_DATA",
+      "method": "COMPUTED",
+      "excluded": [],
+      "content": "The Ghana Standards Authority requires imported household plugs to be type G (13-amp, three rectangular pins), effective 1 January 2019. Ghana's supply regulations (L.I. 1935) require the voltage at a customer's premises to stay within plus or minus ten percent of 230 volts or 400 volts (or of the higher network voltages they list). Ghana's National Electricity Grid Code treats 50 Hz as the nominal system frequency.",
+      "layer": "BASELINE",
+      "decision": "PUBLISH",
+      "heldReasons": []
+    }
+  ],
+  "missingEvidence": [],
+  "rejectedClaims": [],
+  "currentContext": [],
+  "assessment": [
+    {
+      "topic": "CLOTHING",
+      "decision": "PUBLISH",
+      "confidence": "MEDIUM",
+      "reasons": [],
+      "claimsPublishable": 7,
+      "excluded": []
+    },
+    {
+      "topic": "MOSQUITO",
+      "decision": "PUBLISH",
+      "confidence": "MEDIUM",
+      "reasons": [],
+      "claimsPublishable": 8,
+      "excluded": [
+        {
+          "text": "Dengue - CDC Yellow Book",
+          "reason": "fragment_or_pointer",
+          "detail": "no_terminal_punctuation",
+          "passageId": "CD.31"
+        },
+        {
+          "text": "Map: Dengue risk for Africa and Europe",
+          "reason": "fragment_or_pointer",
+          "detail": "no_terminal_punctuation",
+          "passageId": "CD.31"
+        },
+        {
+          "text": "Use an appropriate insect repellent (see below).",
+          "reason": "fragment_or_pointer",
+          "detail": "pointer",
+          "passageId": "CD.41"
+        },
+        {
+          "text": "FOR PROTECTION AGAINST MOSQUITOES ONLY: Products with one of the following active ingredients can also help prevent mosquito bites.",
+          "reason": "fragment_or_pointer",
+          "detail": "pointer",
+          "passageId": "CD.42"
+        },
+        {
+          "text": "DEET",
+          "reason": "fragment_or_pointer",
+          "detail": "length",
+          "passageId": "CD.42"
+        },
+        {
+          "text": "For more detailed information on avoiding bug bites, see Avoid Bug Bites.",
+          "reason": "fragment_or_pointer",
+          "detail": "starts_mid_thought",
+          "passageId": "CD.44"
+        },
+        {
+          "text": "Vaccination can be considered for individuals aged 4 years of age and older who have had dengue infection in the past and who are:",
+          "reason": "fragment_or_pointer",
+          "detail": "no_terminal_punctuation",
+          "passageId": "TH.40"
+        },
+        {
+          "text": "travelling to areas where there is a risk of dengue infection or areas with an ongoing outbreak of dengue, or",
+          "reason": "fragment_or_pointer",
+          "detail": "starts_mid_thought",
+          "passageId": "TH.40"
+        },
+        {
+          "text": "are exposed to dengue virus through their work, such as laboratory staff working with the virus",
+          "reason": "fragment_or_pointer",
+          "detail": "starts_mid_thought",
+          "passageId": "TH.40"
+        },
+        {
+          "text": "start one to two days before arrival in the malaria risk area",
+          "reason": "fragment_or_pointer",
+          "detail": "starts_mid_thought",
+          "passageId": "TH.77"
+        },
+        {
+          "text": "for adults, one tablet is taken every day, ideally at the same time of day for the duration of the time in a malaria risk area and daily for seven days after le",
+          "reason": "fragment_or_pointer",
+          "detail": "starts_mid_thought",
+          "passageId": "TH.77"
+        },
+        {
+          "text": "adults and children over 12 years of age take 100mg daily, ideally at the same time of day for the duration of the time in a malaria risk area and daily for fou",
+          "reason": "fragment_or_pointer",
+          "detail": "starts_mid_thought",
+          "passageId": "TH.78"
+        }
+      ]
+    },
+    {
+      "topic": "PLUGS",
+      "decision": "PUBLISH",
+      "confidence": "MEDIUM",
+      "reasons": [],
+      "claimsPublishable": 3,
+      "excluded": []
+    }
+  ],
+  "evidence": [
+    {
+      "sourceKey": "cdc_travel",
+      "sourceId": "cb-gh-cdc-travel",
+      "sourceIdIsExisting": false,
+      "code": "CD",
+      "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)",
+      "jurisdiction": "US",
+      "tier": "A",
+      "title": "CDC Travelers' Health: traveler view",
+      "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+      "retrievedAt": "2026-10-22T17:47:04+00:00",
+      "originalLanguage": "en",
+      "contentRights": "GOVERNMENT_OPEN",
+      "accessMethod": "WEB_PAGE",
+      "automationPermission": "PERMITTED",
+      "independenceGroupId": "us-cdc",
+      "currentCapable": false,
+      "staleAfterDays": 365,
+      "publicationDate": "2026-08-25",
+      "publicationDateStatus": "STATED",
+      "status": "RETRIEVED",
+      "error": null,
+      "httpStatus": 200,
+      "contentSha256": "7bac4685b73e3cbb642010da8dbc9e8d30cc42bcc488d2a339f24d7a222fb34c",
+      "publicationDateSource": "Page last reviewed",
+      "publicationDatePrecision": "DAY",
+      "pageTitle": "Ghana - Traveler view | Travelers' Health | CDC Centers for Disease Control and Prevention. CDC twenty four seven. Saving Lives, Protecting PeopleHomeexpandexpa",
+      "currencyDate": "2026-08-25",
+      "bytes": 390126,
+      "publicationAgeDays": 58,
+      "passagesUsed": [
+        {
+          "id": "CD.40",
+          "locator": "Prevent bug bites",
+          "text": "Bugs (like mosquitoes, ticks, and fleas) can spread a number of diseases in Ghana. Many of these diseases cannot be prevented with a vaccine or medicine. You can reduce your risk by taking steps to prevent bug bites."
+        },
+        {
+          "id": "CD.41",
+          "locator": "Prevent bug bites > What can I do to prevent bug bites?",
+          "text": "- Cover exposed skin by wearing long-sleeved shirts, long pants, and hats.\n- Use an appropriate insect repellent (see below).\n- Use permethrin-treated clothing and gear (such as boots, pants, socks, and tents). Do not use permethrin directly on skin.\n- Stay and sleep in air-conditioned or screened rooms.\n- Use a bed net if the area where you are sleeping is exposed to the outdoors."
+        },
+        {
+          "id": "CD.42",
+          "locator": "Prevent bug bites > What type of insect repellent should I use?",
+          "text": "- FOR PROTECTION AGAINST TICKS AND MOSQUITOES: Use a repellent that contains 20% or more DEET for protection that lasts up to several hours.\n- FOR PROTECTION AGAINST MOSQUITOES ONLY: Products with one of the following active ingredients can also help prevent mosquito bites. Higher percentages of active ingredient provide longer protection.\n- DEET\n- Picaridin (also known as KBR 3023, Bayrepel, and icaridin)\n- Oil of lemon eucalyptus (OLE) or para-menthane-diol (PMD)\n- IR3535\n- 2-undecanone\n- Always use insect repellent as directed."
+        },
+        {
+          "id": "CD.43",
+          "locator": "Prevent bug bites > What should I do if I am bitten by bugs?",
+          "text": "- Avoid scratching bug bites, and apply hydrocortisone cream or calamine lotion to reduce the itching.\n- Check your entire body for ticks after outdoor activity. Be sure to remove ticks properly."
+        },
+        {
+          "id": "CD.44",
+          "locator": "Prevent bug bites > What can I do to avoid bed bugs?",
+          "text": "Although bed bugs do not carry disease, they are an annoyance. See our information page about avoiding bug bites for some easy tips to avoid them. For more information on bed bugs, see Bed Bugs.\nFor more detailed information on avoiding bug bites, see Avoid Bug Bites.\nSome diseases in Ghana—such as dengue, leishmaniasis, and African sleeping sickness—are spread by bugs and cannot be prevented with a vaccine. Follow the insect avoidance measures described above to prevent these and other illnesses.\nHide"
+        },
+        {
+          "id": "CD.45",
+          "locator": "Stay safe outdoors",
+          "text": "If your travel plans in Ghana include outdoor activities, take these steps to stay safe and healthy during your trip.\n- Stay alert to changing weather conditions and adjust your plans if conditions become unsafe.\n- Prepare for activities by wearing the right clothes and packing protective items, such as bug spray, sunscreen, and a basic first aid kit.\n- Consider learning basic first aid and CPR before travel. Bring a travel health kit with items appropriate for your activities."
+        },
+        {
+          "id": "CD.46",
+          "locator": "Stay safe outdoors",
+          "text": "- Heat-related illness, such as heat stroke, can be deadly. Eat and drink regularly, wear loose and lightweight clothing, and limit physical activity during high temperatures.\n- If you are outside for many hours in heat, eat salty snacks and drink water to stay hydrated and replace salt lost through sweating.\n- Protect yourself from UV radiation: use sunscreen with an SPF of at least 15, wear protective clothing, and seek shade during the hottest time of day (10 a.m.–4 p.m.)."
+        },
+        {
+          "id": "CD.47",
+          "locator": "Stay safe outdoors",
+          "text": "- Be especially careful during summer months and at high elevation. Because sunlight reflects off snow, sand, and water, sun exposure may be increased during activities like skiing, swimming, and sailing.\n- Very cold temperatures can be dangerous. Dress in layers and cover heads, hands, and feet properly if you are visiting a cold location."
+        },
+        {
+          "id": "CD.48",
+          "locator": "Stay safe outdoors > Stay safe around water",
+          "text": "- Swim only in designated swimming areas. Obey lifeguards and warning flags on beaches.\n- Practice safe boating—follow all boating safety laws, do not drink alcohol if driving a boat, and always wear a life jacket.\n- Do not dive into shallow water.\n- Do not swim in freshwater in developing areas or where sanitation is poor.\n- Avoid swallowing water when swimming. Untreated water can carry germs that make you sick.\n- To prevent infections, wear shoes on beaches where there may be animal waste."
+        }
+      ]
+    },
+    {
+      "sourceKey": "travelhealthpro",
+      "sourceId": "cb-gh-travelhealthpro",
+      "sourceIdIsExisting": false,
+      "code": "TH",
+      "publisher": "TravelHealthPro (UK Health Security Agency / NaTHNaC)",
+      "jurisdiction": "UK",
+      "tier": "A",
+      "title": "TravelHealthPro country information",
+      "url": "https://travelhealthpro.org.uk/country/89/ghana",
+      "retrievedAt": "2026-10-22T17:47:04+00:00",
+      "originalLanguage": "en",
+      "contentRights": "OPEN_LICENCE",
+      "accessMethod": "WEB_PAGE",
+      "automationPermission": "PERMITTED",
+      "independenceGroupId": "uk-ukhsa-nathnac",
+      "currentCapable": false,
+      "staleAfterDays": 180,
+      "publicationDate": null,
+      "publicationDateStatus": "NOT_STATED",
+      "status": "RETRIEVED",
+      "error": null,
+      "httpStatus": 200,
+      "contentSha256": "58fd770c2258c61ef7a4de269587b20fd4c004a67e7f7f5e40dfa7caa55437a6",
+      "pageTitle": "NaTHNaC - Ghana",
+      "bytes": 212531,
+      "passagesUsed": [
+        {
+          "id": "TH.26",
+          "locator": "Ghana > Prevention > Yellow fever",
+          "text": "Yellow fever is a viral infection transmitted by mosquitoes which predominantly feed between dawn and dusk, but may also bite at night, especially in the jungle environment. Symptoms may be absent or mild, but in severe cases it can cause internal bleeding, organ failure and death."
+        },
+        {
+          "id": "TH.27",
+          "locator": "Ghana > Yellow fever in Ghana",
+          "text": "There is a risk of yellow fever transmission throughout this country."
+        },
+        {
+          "id": "TH.29",
+          "locator": "Ghana > Prevention > Yellow fever vaccination",
+          "text": "- Vaccination is recommended for travellers aged 9 months and older.\n- See vaccine recommendation map below.\nThe yellow fever vaccine is not suitable for all travellers, there are specific undesirable effects associated with it. This vaccine is only available at registered yellow fever vaccination centres. Health professionals should carefully assess the risks and benefits of the vaccine, and seek specialist advice if necessary."
+        },
+        {
+          "id": "TH.38",
+          "locator": "Ghana > Prevention > Dengue",
+          "text": "Dengue is a viral infection spread by mosquitoes which mainly feed during daytime hours. It causes a flu-like illness, which can occasionally develop into a more serious life-threatening illness. Severe dengue is rare in travellers.\nThe mosquitoes that spread dengue are more common in towns, cities and surrounding areas."
+        },
+        {
+          "id": "TH.39",
+          "locator": "Ghana > Dengue in Ghana",
+          "text": "There is a risk of dengue in this country.\nInformation on current outbreaks, where available, will be reported on our outbreak surveillance database."
+        },
+        {
+          "id": "TH.41",
+          "locator": "Ghana > Prevention > Dengue vaccination",
+          "text": "Exceptionally, vaccination can be considered in those who have not had dengue in the past. In these situations, further expert advice should be considered. Detailed guidance on how to ascertain previous infection is available in the UK Health Security Agency Immunisation against infectious disease the 'Green book'. The final decision on vaccination rests with the health professional and the traveller after a detailed risk assessment has been performed and the potential risks of vaccination explained."
+        },
+        {
+          "id": "TH.71",
+          "locator": "Ghana > Malaria",
+          "text": "Malaria is a serious illness caused by infection of red blood cells with a parasite called Plasmodium. The disease is transmitted by mosquitoes which predominantly feed between dusk and dawn.\nSymptoms usually begin with a fever (high temperature) of 38°C (100°F) or more. Other symptoms may include feeling cold and shivery, headache, nausea, vomiting and aching muscles. Symptoms may appear between eight days and one year after the infected mosquito bite."
+        },
+        {
+          "id": "TH.72",
+          "locator": "Ghana > Malaria",
+          "text": "Prompt diagnosis and treatment is required as people with malaria can deteriorate quickly. Those at higher risk of malaria, or of severe complications from malaria, include pregnant women, infants and young children, the elderly, travellers who do not have a functioning spleen and those visiting friends and relatives."
+        }
+      ]
+    },
+    {
+      "sourceKey": "fcdo_health",
+      "sourceId": "gh-fcdo-health",
+      "sourceIdIsExisting": true,
+      "code": "FH",
+      "publisher": "UK Foreign, Commonwealth & Development Office",
+      "jurisdiction": "UK",
+      "tier": "A",
+      "title": "Foreign travel advice: health",
+      "url": "https://www.gov.uk/foreign-travel-advice/ghana/health",
+      "retrievedAt": "2026-10-22T17:47:04+00:00",
+      "originalLanguage": "en",
+      "contentRights": "GOVERNMENT_OPEN",
+      "accessMethod": "WEB_PAGE",
+      "automationPermission": "PERMITTED",
+      "independenceGroupId": "uk-fcdo",
+      "currentCapable": true,
+      "staleAfterDays": 120,
+      "publicationDate": "2026-07-02",
+      "publicationDateStatus": "STATED",
+      "status": "RETRIEVED",
+      "error": null,
+      "httpStatus": 200,
+      "contentSha256": "50dcf091323c730cb6f63cfa9995040b7a87faa442c3b7c660eeec1367f81624",
+      "publicationDateSource": "govuk:public-updated-at",
+      "publicationDatePrecision": "DAY",
+      "pageTitle": "Health - Ghana travel advice - GOV.UKGOV.UK",
+      "pageUpdatedAt": "2026-10-19T09:25:06+01:00",
+      "currencyDate": "2026-10-19",
+      "bytes": 77184,
+      "publicationAgeDays": 3,
+      "passagesUsed": []
+    },
+    {
+      "sourceKey": "fcdo_safety",
+      "sourceId": "gh-fcdo-security",
+      "sourceIdIsExisting": true,
+      "code": "FS",
+      "publisher": "UK Foreign, Commonwealth & Development Office",
+      "jurisdiction": "UK",
+      "tier": "A",
+      "title": "Foreign travel advice: safety and security",
+      "url": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
+      "retrievedAt": "2026-10-22T17:47:04+00:00",
+      "originalLanguage": "en",
+      "contentRights": "GOVERNMENT_OPEN",
+      "accessMethod": "WEB_PAGE",
+      "automationPermission": "PERMITTED",
+      "independenceGroupId": "uk-fcdo",
+      "currentCapable": true,
+      "staleAfterDays": 120,
+      "publicationDate": "2026-07-02",
+      "publicationDateStatus": "STATED",
+      "status": "RETRIEVED",
+      "error": null,
+      "httpStatus": 200,
+      "contentSha256": "61ba53b0ab217e9a77254e91c0dd0e33235c3bb02b9d50a0a2e0bd2121ccc455",
+      "publicationDateSource": "govuk:public-updated-at",
+      "publicationDatePrecision": "DAY",
+      "pageTitle": "Safety and security - Ghana travel advice - GOV.UKGOV.UK",
+      "pageUpdatedAt": "2026-10-19T09:25:06+01:00",
+      "currencyDate": "2026-10-19",
+      "bytes": 100929,
+      "publicationAgeDays": 3,
+      "passagesUsed": [
+        {
+          "id": "FS.21",
+          "locator": "Safety and security > Laws and cultural differences > Dress code",
+          "text": "Dress modestly in public. Shorts and t-shirts are acceptable for both males and females, but it is best not to wear anything too revealing.\nWearing military clothing including camouflage is illegal."
+        }
+      ]
+    },
+    {
+      "sourceKey": "gsa_plugs",
+      "sourceId": "cb-gh-gsa-plugs",
+      "sourceIdIsExisting": false,
+      "code": "GS",
+      "publisher": "Ghana Standards Authority",
+      "jurisdiction": "GH",
+      "tier": "A",
+      "title": "Ghana Standards Authority public notice: plugs and socket-outlets",
+      "url": "https://gsa.gov.gh/wp-content/uploads/2018/11/ADVERT-socket-and-plugs.pdf",
+      "retrievedAt": "2026-10-22T17:47:04+00:00",
+      "originalLanguage": "en",
+      "contentRights": "FACTUAL_SUMMARY_ONLY",
+      "accessMethod": "WEB_PAGE",
+      "automationPermission": "PERMITTED",
+      "independenceGroupId": "gh-gsa",
+      "currentCapable": false,
+      "staleAfterDays": 3650,
+      "publicationDate": "2019-01-01",
+      "publicationDateStatus": "STATED",
+      "status": "RETRIEVED",
+      "error": null,
+      "httpStatus": 200,
+      "contentSha256": "c3f67994f2827dd8f85150801404232a825f924699a7e6ef87a1c5969ddd039e",
+      "publicationDateSource": "date stated in the document",
+      "publicationDatePrecision": "DAY",
+      "pageTitle": "",
+      "currencyDate": "2019-01-01",
+      "bytes": 162877,
+      "publicationAgeDays": 2851,
+      "passagesUsed": [
+        {
+          "id": "GS.02",
+          "locator": "",
+          "text": "The plugs comply with the Ghana Standard GS IEC 60884-2-1 - Plugs and socket-outlets for household and similar purposes; Part 2-1: Particular Requirements for Fused Plugs. In addition, the Plugs should be type G. It shall be 13-amp plug with three rectangular prongs that form an isosceles triangle. The central earth pin is 4 by 8 mm and 22.7 mm long. Line and neutral pins are 4 by 6.35 mm and 17.7 mm long, on centres spaced 22.2 mm apart. The centre-to-centre distance between the earth pin and the middle of the imaginary line connecting the two power pins is 22.2 mm."
+        }
+      ]
+    },
+    {
+      "sourceKey": "li_1935",
+      "sourceId": "cb-gh-li-1935",
+      "sourceIdIsExisting": false,
+      "code": "LI",
+      "publisher": "Ghana Public Utilities Regulatory Commission (publishing L.I. 1935)",
+      "jurisdiction": "GH",
+      "tier": "A",
+      "title": "Electricity Supply and Distribution (Standards of Performance) Regulations, 2008 (L.I. 1935)",
+      "url": "https://www.purc.com.gh/attachment/719588-20201123111126.pdf",
+      "retrievedAt": "2026-10-22T17:47:04+00:00",
+      "originalLanguage": "en",
+      "contentRights": "FACTUAL_SUMMARY_ONLY",
+      "accessMethod": "WEB_PAGE",
+      "automationPermission": "PERMITTED",
+      "independenceGroupId": "gh-li-1935",
+      "currentCapable": false,
+      "staleAfterDays": 7305,
+      "publicationDate": "2008-06-13",
+      "publicationDateStatus": "STATED",
+      "status": "RETRIEVED",
+      "error": null,
+      "httpStatus": 200,
+      "contentSha256": "153ba491f470b98a8d032c5ed8a2a2de331e7aad6ee4c6e5e76202938ab9cf0c",
+      "publicationDateSource": "date stated in the document",
+      "publicationDatePrecision": "DAY",
+      "pageTitle": "",
+      "currencyDate": "2008-06-13",
+      "bytes": 438850,
+      "publicationAgeDays": 6705,
+      "passagesUsed": [
+        {
+          "id": "LI.01",
+          "locator": "",
+          "text": "Reporting Standards System Voltage 8.\nSystem voltage complaint The meter 9.\nSystem Voltage System voltage complaint 8.\n(1) Subject to regulation 21(1), a supplier shall ensure that the voltage at the point of supply to a customer’s premises or electrical installation is within plus or minus ten percent of the following voltage levels: (a) 230 Volts; (b) 400 Volts; (c) 11 Kilovolts; (d) 33 Kilovolts; or (e) 34.5 Kilovolts."
+        }
+      ]
+    },
+    {
+      "sourceKey": "grid_code",
+      "sourceId": "cb-gh-grid-code",
+      "sourceIdIsExisting": false,
+      "code": "GC",
+      "publisher": "Energy Commission of Ghana",
+      "jurisdiction": "GH",
+      "tier": "A",
+      "title": "National Electricity Grid Code (Republic of Ghana)",
+      "url": "https://www.energycom.gov.gh/index.php/regulation/codes-sub-codes?download=13:national-elect-grid-code-2009",
+      "retrievedAt": "2026-10-22T17:47:04+00:00",
+      "originalLanguage": "en",
+      "contentRights": "FACTUAL_SUMMARY_ONLY",
+      "accessMethod": "WEB_PAGE",
+      "automationPermission": "PERMITTED",
+      "independenceGroupId": "gh-energy-commission",
+      "currentCapable": false,
+      "staleAfterDays": 9000,
+      "publicationDate": "2009-10-01",
+      "publicationDateStatus": "STATED",
+      "status": "RETRIEVED",
+      "error": null,
+      "httpStatus": 200,
+      "contentSha256": "1d555b6d59801bbb0cf41bb66576913f338a5788c1c3c2a7b0748ff57a610465",
+      "publicationDateSource": "date stated in the document",
+      "publicationDatePrecision": "MONTH",
+      "pageTitle": "",
+      "currencyDate": "2009-10-01",
+      "bytes": 1137058,
+      "publicationAgeDays": 6230,
+      "passagesUsed": [
+        {
+          "id": "GC.06",
+          "locator": "",
+          "text": "Standards for power quality and reliability Art 12.07 The quality of power supply shall be considered to be acceptable when none of the following conditions is present: (a) the system frequency has deviated from the nominal value of 50 Hz by more than 0.2 Hz or otherwise contrary to the limits stipulated in Technical Schedule TS F; (b) voltage magnitudes are outside the allowable deviation of 5% or otherwise contrary to the limits stipulated in TS-E (c) there is imbalance in the magnitude of the phase voltages or otherwise contrary to the limits stipulated in Technical Schedule TS-E; (d) the"
+        }
+      ]
+    },
+    {
+      "sourceKey": "ecg_technical",
+      "sourceId": "cb-gh-ecg-technical",
+      "sourceIdIsExisting": false,
+      "code": "EC",
+      "publisher": "Electricity Company of Ghana",
+      "jurisdiction": "GH",
+      "tier": "A",
+      "title": "ECG Technical Information & Tariff",
+      "url": "https://ecg.com.gh/index.php/en/history/technical-information-tariff",
+      "retrievedAt": "2026-10-22T17:47:04+00:00",
+      "originalLanguage": "en",
+      "contentRights": "FACTUAL_SUMMARY_ONLY",
+      "accessMethod": "WEB_PAGE",
+      "automationPermission": "PERMITTED",
+      "independenceGroupId": "gh-ecg",
+      "currentCapable": false,
+      "staleAfterDays": 3650,
+      "publicationDate": null,
+      "publicationDateStatus": "NOT_STATED",
+      "status": "RETRIEVED",
+      "error": null,
+      "httpStatus": 200,
+      "contentSha256": "258fbd73a485c8904dd510b8c2be93342e2ddf2b9cb08480f7ed7cd6301de0a4",
+      "pageTitle": "Electricity Company of Ghana Ltd - Technical Information & Tariff",
+      "bytes": 43042,
+      "passagesUsed": [
+        {
+          "id": "EC.02",
+          "locator": "Technical Information & Tariff",
+          "text": "Voltage Supply All Customers are supplied with Alternating Current (AC) at a frequency of 50hertz. The standard voltages are 230 volts ±10% single phase 2 wire, 400volts ±10% three phase 4 wire. Customers with demands above 800kW may be supplied at 11,000 or 33,000 volts."
+        }
+      ]
+    }
+  ],
+  "candidateBatch": {
+    "records": [
+      {
+        "id": "gh-equipment-clothing-d",
+        "countryId": "gh",
+        "category": "EQUIPMENT",
+        "subcategory": "Clothing",
+        "dataType": "CONSIDERATION",
+        "title": "Clothing",
+        "content": "Prepare for activities by wearing the right clothes and packing protective items, such as bug spray, sunscreen, and a basic first aid kit. Heat-related illness, such as heat stroke, can be deadly. Eat and drink regularly, wear loose and lightweight clothing, and limit physical activity during high temperatures. Protect yourself from UV radiation: use sunscreen with an SPF of at least 15, wear protective clothing, and seek shade during the hottest time of day (10 a.m.–4 p.m.). Very cold temperatures can be dangerous. Dress in layers and cover heads, hands, and feet properly if you are visiting a cold location. To prevent infections, wear shoes on beaches where there may be animal waste. Dress modestly in public. Shorts and t-shirts are acceptable for both males and females, but it is best not to wear anything too revealing. Wearing military clothing including camouflage is illegal.",
+        "confidence": "MEDIUM",
+        "status": "DRAFT",
+        "sourceId": "cb-gh-cdc-travel",
+        "locationId": null,
+        "dateChecked": "2026-10-22",
+        "reviewDate": "2027-04-20",
+        "notes": "DRAFT by 03AA-04_Country_Intelligence_Builder_TI; not independently verified or reviewed. Wording is the source's own. Other nationalities' governments may advise differently."
+      },
+      {
+        "id": "gh-equipment-mosquito-d",
+        "countryId": "gh",
+        "category": "EQUIPMENT",
+        "subcategory": "Mosquito protection",
+        "dataType": "CONSIDERATION",
+        "title": "Mosquito protection",
+        "content": "Bugs (like mosquitoes, ticks, and fleas) can spread a number of diseases in Ghana. Many of these diseases cannot be prevented with a vaccine or medicine. You can reduce your risk by taking steps to prevent bug bites. Use permethrin-treated clothing and gear (such as boots, pants, socks, and tents). Do not use permethrin directly on skin. Stay and sleep in air-conditioned or screened rooms. Use a bed net if the area where you are sleeping is exposed to the outdoors. FOR PROTECTION AGAINST TICKS AND MOSQUITOES: Use a repellent that contains 20% or more DEET for protection that lasts up to several hours. Always use insect repellent as directed. Avoid scratching bug bites, and apply hydrocortisone cream or calamine lotion to reduce the itching. Although bed bugs do not carry disease, they are an annoyance. See our information page about avoiding bug bites for some easy tips to avoid them. Some diseases in Ghana—such as dengue, leishmaniasis, and African sleeping sickness—are spread by bugs and cannot be prevented with a vaccine. Yellow fever is a viral infection transmitted by mosquitoes which predominantly feed between dawn and dusk, but may also bite at night, especially in the jungle environment. Symptoms may be absent or mild, but in severe cases it can cause internal bleeding, organ failure and death. There is a risk of yellow fever transmission throughout this country. The yellow fever vaccine is not suitable for all travellers, there are specific undesirable effects associated with it. This vaccine is only available at registered yellow fever vaccination centres. Health professionals should carefully assess the risks and benefits of the vaccine, and seek specialist advice if necessary. Dengue is a viral infection spread by mosquitoes which mainly feed during daytime hours. It causes a flu-like illness, which can occasionally develop into a more serious life-threatening illness. Severe dengue is rare in travellers. The mosquitoes that spread dengue are more common in towns, cities and surrounding areas. There is a risk of dengue in this country. Exceptionally, vaccination can be considered in those who have not had dengue in the past. In these situations, further expert advice should be considered. Detailed guidance on how to ascertain previous infection is available in the UK Health Security Agency Immunisation against infectious disease the 'Green book'. The final decision on vaccination rests with the health professional and the traveller after a detailed risk assessment has been performed and the potential risks of vaccination explained. Malaria is a serious illness caused by infection of red blood cells with a parasite called Plasmodium. The disease is transmitted by mosquitoes which predominantly feed between dusk and dawn. Symptoms usually begin with a fever (high temperature) of 38°C (100°F) or more. Other symptoms may include feeling cold and shivery, headache, nausea, vomiting and aching muscles. Symptoms may appear between eight days and one year after the infected mosquito bite. Prompt diagnosis and treatment is required as people with malaria can deteriorate quickly. Those at higher risk of malaria, or of severe complications from malaria, include pregnant women, infants and young children, the elderly, travellers who do not have a functioning spleen and those visiting friends and relatives.",
+        "confidence": "MEDIUM",
+        "status": "DRAFT",
+        "sourceId": "cb-gh-travelhealthpro",
+        "locationId": null,
+        "dateChecked": "2026-10-22",
+        "reviewDate": "2027-04-20",
+        "notes": "DRAFT by 03AA-04_Country_Intelligence_Builder_TI; not independently verified or reviewed. Wording is the source's own. Other nationalities' governments may advise differently."
+      },
+      {
+        "id": "gh-equipment-plugs",
+        "countryId": "gh",
+        "category": "EQUIPMENT",
+        "subcategory": "Electrical plugs and supply",
+        "dataType": "FACT",
+        "title": "Electrical plugs and supply",
+        "content": "The Ghana Standards Authority requires imported household plugs to be type G (13-amp, three rectangular pins), effective 1 January 2019. Ghana's supply regulations (L.I. 1935) require the voltage at a customer's premises to stay within plus or minus ten percent of 230 volts or 400 volts (or of the higher network voltages they list). Ghana's National Electricity Grid Code treats 50 Hz as the nominal system frequency.",
+        "confidence": "MEDIUM",
+        "status": "DRAFT",
+        "sourceId": "cb-gh-gsa-plugs",
+        "locationId": null,
+        "dateChecked": "2026-10-22",
+        "reviewDate": "2027-04-20",
+        "notes": "DRAFT by 03AA-04_Country_Intelligence_Builder_TI; not independently verified or reviewed. Official statements as of their stated dates; not re-confirmed against any later amendment. "
+      }
+    ],
+    "sources": [
+      {
+        "id": "cb-gh-cdc-travel",
+        "countryId": "gh",
+        "sourceName": "CDC Travelers' Health: traveler view",
+        "organisation": "US Centers for Disease Control and Prevention (Travelers' Health)",
+        "sourceType": "GOVERNMENT",
+        "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+        "jurisdiction": "US",
+        "confidence": "HIGH",
+        "active": true,
+        "accessMethod": "WEB_PAGE",
+        "contentRights": "GOVERNMENT_OPEN",
+        "automationPermission": "PERMITTED",
+        "originalLanguage": "en",
+        "geographicScope": "NATIONAL",
+        "dateChecked": "2026-10-22",
+        "reviewFrequency": "Every 3-6 months, or on any change",
+        "notes": "Proposed by the country builder draft; rights and automation permission as configured, not independently confirmed."
+      },
+      {
+        "id": "cb-gh-travelhealthpro",
+        "countryId": "gh",
+        "sourceName": "TravelHealthPro country information",
+        "organisation": "TravelHealthPro (UK Health Security Agency / NaTHNaC)",
+        "sourceType": "GOVERNMENT",
+        "url": "https://travelhealthpro.org.uk/country/89/ghana",
+        "jurisdiction": "UK",
+        "confidence": "HIGH",
+        "active": true,
+        "accessMethod": "WEB_PAGE",
+        "contentRights": "OPEN_LICENCE",
+        "automationPermission": "PERMITTED",
+        "originalLanguage": "en",
+        "geographicScope": "NATIONAL",
+        "dateChecked": "2026-10-22",
+        "reviewFrequency": "Every 3-6 months, or on any change",
+        "notes": "Proposed by the country builder draft; rights and automation permission as configured, not independently confirmed."
+      },
+      {
+        "id": "cb-gh-gsa-plugs",
+        "countryId": "gh",
+        "sourceName": "Ghana Standards Authority public notice: plugs and socket-outlets",
+        "organisation": "Ghana Standards Authority",
+        "sourceType": "GOVERNMENT",
+        "url": "https://gsa.gov.gh/wp-content/uploads/2018/11/ADVERT-socket-and-plugs.pdf",
+        "jurisdiction": "GH",
+        "confidence": "HIGH",
+        "active": true,
+        "accessMethod": "WEB_PAGE",
+        "contentRights": "FACTUAL_SUMMARY_ONLY",
+        "automationPermission": "PERMITTED",
+        "originalLanguage": "en",
+        "geographicScope": "NATIONAL",
+        "dateChecked": "2026-10-22",
+        "reviewFrequency": "Every 3-6 months, or on any change",
+        "notes": "Proposed by the country builder draft; rights and automation permission as configured, not independently confirmed."
+      },
+      {
+        "id": "cb-gh-li-1935",
+        "countryId": "gh",
+        "sourceName": "Electricity Supply and Distribution (Standards of Performance) Regulations, 2008 (L.I. 1935)",
+        "organisation": "Ghana Public Utilities Regulatory Commission (publishing L.I. 1935)",
+        "sourceType": "GOVERNMENT",
+        "url": "https://www.purc.com.gh/attachment/719588-20201123111126.pdf",
+        "jurisdiction": "GH",
+        "confidence": "HIGH",
+        "active": true,
+        "accessMethod": "WEB_PAGE",
+        "contentRights": "FACTUAL_SUMMARY_ONLY",
+        "automationPermission": "PERMITTED",
+        "originalLanguage": "en",
+        "geographicScope": "NATIONAL",
+        "dateChecked": "2026-10-22",
+        "reviewFrequency": "Every 3-6 months, or on any change",
+        "notes": "Proposed by the country builder draft; rights and automation permission as configured, not independently confirmed."
+      },
+      {
+        "id": "cb-gh-ecg-technical",
+        "countryId": "gh",
+        "sourceName": "ECG Technical Information & Tariff",
+        "organisation": "Electricity Company of Ghana",
+        "sourceType": "GOVERNMENT",
+        "url": "https://ecg.com.gh/index.php/en/history/technical-information-tariff",
+        "jurisdiction": "GH",
+        "confidence": "HIGH",
+        "active": true,
+        "accessMethod": "WEB_PAGE",
+        "contentRights": "FACTUAL_SUMMARY_ONLY",
+        "automationPermission": "PERMITTED",
+        "originalLanguage": "en",
+        "geographicScope": "NATIONAL",
+        "dateChecked": "2026-10-22",
+        "reviewFrequency": "Every 3-6 months, or on any change",
+        "notes": "Proposed by the country builder draft; rights and automation permission as configured, not independently confirmed."
+      },
+      {
+        "id": "cb-gh-grid-code",
+        "countryId": "gh",
+        "sourceName": "National Electricity Grid Code (Republic of Ghana)",
+        "organisation": "Energy Commission of Ghana",
+        "sourceType": "GOVERNMENT",
+        "url": "https://www.energycom.gov.gh/index.php/regulation/codes-sub-codes?download=13:national-elect-grid-code-2009",
+        "jurisdiction": "GH",
+        "confidence": "HIGH",
+        "active": true,
+        "accessMethod": "WEB_PAGE",
+        "contentRights": "FACTUAL_SUMMARY_ONLY",
+        "automationPermission": "PERMITTED",
+        "originalLanguage": "en",
+        "geographicScope": "NATIONAL",
+        "dateChecked": "2026-10-22",
+        "reviewFrequency": "Every 3-6 months, or on any change",
+        "notes": "Proposed by the country builder draft; rights and automation permission as configured, not independently confirmed."
+      }
+    ],
+    "sourceObservations": [
+      {
+        "id": "obs-gh-equipment-clothing-d-cdc-travel",
+        "recordId": "gh-equipment-clothing-d",
+        "sourceId": "cb-gh-cdc-travel",
+        "sourceUrl": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+        "extractedClaim": "Prepare for activities by wearing the right clothes and packing protective items, such as bug spray, sunscreen, and a basic first aid kit. … Heat-related illness, such as heat stroke, can be deadly. Eat and drink regularly, wear loose and lightweight clothing, and limit physical activity during high temperatures. … Protect yourself from UV radiation: use sunscreen with an SPF of at least 15, wear protective clothing, and seek shade during the hottest time of day (10 a.m.–4 p.m.). … Very cold temperatures can be dangerous. Dress in layers and cover heads, hands, and feet properly if you are vis",
+        "independenceGroupId": "us-cdc",
+        "dateChecked": "2026-10-22",
+        "observationStatus": "DRAFT_UNREVIEWED",
+        "originalLanguage": "en",
+        "translated": false,
+        "translationMethod": "NONE",
+        "retrievedAt": "2026-10-22T17:47:04+00:00",
+        "publicationDate": "2026-08-25",
+        "publicationDateStatus": "STATED",
+        "contentRights": "GOVERNMENT_OPEN",
+        "rightsStatus": "GOVERNMENT_OPEN",
+        "accessMethod": "WEB_PAGE",
+        "automationPermission": "PERMITTED",
+        "uncertainty": "Wording is the source's own. Other nationalities' governments may advise differently."
+      },
+      {
+        "id": "obs-gh-equipment-clothing-d-fcdo-safety",
+        "recordId": "gh-equipment-clothing-d",
+        "sourceId": "gh-fcdo-security",
+        "sourceUrl": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
+        "extractedClaim": "Dress modestly in public. Shorts and t-shirts are acceptable for both males and females, but it is best not to wear anything too revealing. … Wearing military clothing including camouflage is illegal.",
+        "independenceGroupId": "uk-fcdo",
+        "dateChecked": "2026-10-22",
+        "observationStatus": "DRAFT_UNREVIEWED",
+        "originalLanguage": "en",
+        "translated": false,
+        "translationMethod": "NONE",
+        "retrievedAt": "2026-10-22T17:47:04+00:00",
+        "publicationDate": "2026-07-02",
+        "publicationDateStatus": "STATED",
+        "contentRights": "GOVERNMENT_OPEN",
+        "rightsStatus": "GOVERNMENT_OPEN",
+        "accessMethod": "WEB_PAGE",
+        "automationPermission": "PERMITTED",
+        "uncertainty": "Wording is the source's own. Other nationalities' governments may advise differently."
+      },
+      {
+        "id": "obs-gh-equipment-mosquito-d-cdc-travel",
+        "recordId": "gh-equipment-mosquito-d",
+        "sourceId": "cb-gh-cdc-travel",
+        "sourceUrl": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/ghana",
+        "extractedClaim": "Bugs (like mosquitoes, ticks, and fleas) can spread a number of diseases in Ghana. Many of these diseases cannot be prevented with a vaccine or medicine. You can reduce your risk by taking steps to prevent bug bites. … Use permethrin-treated clothing and gear (such as boots, pants, socks, and tents). Do not use permethrin directly on skin. … Stay and sleep in air-conditioned or screened rooms. … Use a bed net if the area where you are sleeping is exposed to the outdoors. … FOR PROTECTION AGAINST TICKS AND MOSQUITOES: Use a repellent that contains 20% or more DEET for protection that lasts up t",
+        "independenceGroupId": "us-cdc",
+        "dateChecked": "2026-10-22",
+        "observationStatus": "DRAFT_UNREVIEWED",
+        "originalLanguage": "en",
+        "translated": false,
+        "translationMethod": "NONE",
+        "retrievedAt": "2026-10-22T17:47:04+00:00",
+        "publicationDate": "2026-08-25",
+        "publicationDateStatus": "STATED",
+        "contentRights": "GOVERNMENT_OPEN",
+        "rightsStatus": "GOVERNMENT_OPEN",
+        "accessMethod": "WEB_PAGE",
+        "automationPermission": "PERMITTED",
+        "uncertainty": "Wording is the source's own. Other nationalities' governments may advise differently."
+      },
+      {
+        "id": "obs-gh-equipment-mosquito-d-travelhealthpro",
+        "recordId": "gh-equipment-mosquito-d",
+        "sourceId": "cb-gh-travelhealthpro",
+        "sourceUrl": "https://travelhealthpro.org.uk/country/89/ghana",
+        "extractedClaim": "Yellow fever is a viral infection transmitted by mosquitoes which predominantly feed between dawn and dusk, but may also bite at night, especially in the jungle environment. Symptoms may be absent or mild, but in severe cases it can cause internal bleeding, organ failure and death. … There is a risk of yellow fever transmission throughout this country. … The yellow fever vaccine is not suitable for all travellers, there are specific undesirable effects associated with it. This vaccine is only available at registered yellow fever vaccination centres. Health professionals should carefully assess",
+        "independenceGroupId": "uk-ukhsa-nathnac",
+        "dateChecked": "2026-10-22",
+        "observationStatus": "DRAFT_UNREVIEWED",
+        "originalLanguage": "en",
+        "translated": false,
+        "translationMethod": "NONE",
+        "retrievedAt": "2026-10-22T17:47:04+00:00",
+        "publicationDate": null,
+        "publicationDateStatus": "NOT_STATED",
+        "contentRights": "OPEN_LICENCE",
+        "rightsStatus": "OPEN_LICENCE",
+        "accessMethod": "WEB_PAGE",
+        "automationPermission": "PERMITTED",
+        "uncertainty": "Wording is the source's own. Other nationalities' governments may advise differently."
+      },
+      {
+        "id": "obs-gh-equipment-plugs-gsa-plugs",
+        "recordId": "gh-equipment-plugs",
+        "sourceId": "cb-gh-gsa-plugs",
+        "sourceUrl": "https://gsa.gov.gh/wp-content/uploads/2018/11/ADVERT-socket-and-plugs.pdf",
+        "extractedClaim": "the Plugs should be type G. … 13-amp plug with three rectangular prongs",
+        "independenceGroupId": "gh-gsa",
+        "dateChecked": "2026-10-22",
+        "observationStatus": "DRAFT_UNREVIEWED",
+        "originalLanguage": "en",
+        "translated": false,
+        "translationMethod": "NONE",
+        "retrievedAt": "2026-10-22T17:47:04+00:00",
+        "publicationDate": "2019-01-01",
+        "publicationDateStatus": "STATED",
+        "contentRights": "FACTUAL_SUMMARY_ONLY",
+        "rightsStatus": "FACTUAL_SUMMARY_ONLY",
+        "accessMethod": "WEB_PAGE",
+        "automationPermission": "PERMITTED",
+        "uncertainty": "Official statements as of their stated dates; not re-confirmed against any later amendment. "
+      },
+      {
+        "id": "obs-gh-equipment-plugs-li-1935",
+        "recordId": "gh-equipment-plugs",
+        "sourceId": "cb-gh-li-1935",
+        "sourceUrl": "https://www.purc.com.gh/attachment/719588-20201123111126.pdf",
+        "extractedClaim": "within plus or minus ten percent of the following voltage levels: (a) 230 Volts; (b) 400 Volts",
+        "independenceGroupId": "gh-li-1935",
+        "dateChecked": "2026-10-22",
+        "observationStatus": "DRAFT_UNREVIEWED",
+        "originalLanguage": "en",
+        "translated": false,
+        "translationMethod": "NONE",
+        "retrievedAt": "2026-10-22T17:47:04+00:00",
+        "publicationDate": "2008-06-13",
+        "publicationDateStatus": "STATED",
+        "contentRights": "FACTUAL_SUMMARY_ONLY",
+        "rightsStatus": "FACTUAL_SUMMARY_ONLY",
+        "accessMethod": "WEB_PAGE",
+        "automationPermission": "PERMITTED",
+        "uncertainty": "Official statements as of their stated dates; not re-confirmed against any later amendment. "
+      },
+      {
+        "id": "obs-gh-equipment-plugs-ecg-technical",
+        "recordId": "gh-equipment-plugs",
+        "sourceId": "cb-gh-ecg-technical",
+        "sourceUrl": "https://ecg.com.gh/index.php/en/history/technical-information-tariff",
+        "extractedClaim": "standard voltages are 230 volts ±10% single phase 2 wire, 400volts ±10% three phase 4 wire … frequency of 50hertz",
+        "independenceGroupId": "gh-ecg",
+        "dateChecked": "2026-10-22",
+        "observationStatus": "DRAFT_UNREVIEWED",
+        "originalLanguage": "en",
+        "translated": false,
+        "translationMethod": "NONE",
+        "retrievedAt": "2026-10-22T17:47:04+00:00",
+        "publicationDate": null,
+        "publicationDateStatus": "NOT_STATED",
+        "contentRights": "FACTUAL_SUMMARY_ONLY",
+        "rightsStatus": "FACTUAL_SUMMARY_ONLY",
+        "accessMethod": "WEB_PAGE",
+        "automationPermission": "PERMITTED",
+        "uncertainty": "Official statements as of their stated dates; not re-confirmed against any later amendment. "
+      },
+      {
+        "id": "obs-gh-equipment-plugs-grid-code",
+        "recordId": "gh-equipment-plugs",
+        "sourceId": "cb-gh-grid-code",
+        "sourceUrl": "https://www.energycom.gov.gh/index.php/regulation/codes-sub-codes?download=13:national-elect-grid-code-2009",
+        "extractedClaim": "y of power supply shall be considered to be acceptable when none of the following conditions is present: (a) the system frequency has deviated from the nominal value of 50 Hz by more than 0",
+        "independenceGroupId": "gh-energy-commission",
+        "dateChecked": "2026-10-22",
+        "observationStatus": "DRAFT_UNREVIEWED",
+        "originalLanguage": "en",
+        "translated": false,
+        "translationMethod": "NONE",
+        "retrievedAt": "2026-10-22T17:47:04+00:00",
+        "publicationDate": "2009-10-01",
+        "publicationDateStatus": "STATED",
+        "contentRights": "FACTUAL_SUMMARY_ONLY",
+        "rightsStatus": "FACTUAL_SUMMARY_ONLY",
+        "accessMethod": "WEB_PAGE",
+        "automationPermission": "PERMITTED",
+        "uncertainty": "Official statements as of their stated dates; not re-confirmed against any later amendment. "
+      }
+    ]
+  },
+  "publicationItems": [
+    {
+      "recordId": "gh-equipment-clothing",
+      "contentHash": "60b3c7aee3c2f2c2",
+      "record": {
+        "id": "gh-equipment-clothing",
+        "countryId": "gh",
+        "category": "EQUIPMENT",
+        "subcategory": "Clothing",
+        "dataType": "CONSIDERATION",
+        "title": "Clothing",
+        "content": "US CDC Travelers' Health (page last reviewed 25 Aug 2026): Prepare for activities by wearing the right clothes and packing protective items, such as bug spray, sunscreen, and a basic first aid kit. Heat-related illness, such as heat stroke, can be deadly. Eat and drink regularly, wear loose and lightweight clothing, and limit physical activity during high temperatures. Protect yourself from UV radiation: use sunscreen with an SPF of at least 15, wear protective clothing, and seek shade during the hottest time of day (10 a.m.–4 p.m.). Very cold temperatures can be dangerous. Dress in layers and cover heads, hands, and feet properly if you are visiting a cold location. To prevent infections, wear shoes on beaches where there may be animal waste. UK FCDO travel advice (last updated 2 Jul 2026): Dress modestly in public. Shorts and t-shirts are acceptable for both males and females, but it is best not to wear anything too revealing. Wearing military clothing including camouflage is illegal.",
+        "confidence": "MEDIUM",
+        "status": "ACTIVE",
+        "sourceId": "cb-gh-cdc-travel",
+        "locationId": null,
+        "dateChecked": "2026-10-22",
+        "reviewDate": "2027-01-20",
+        "sourcePublicationDate": "2026-08-25",
+        "notes": "Published automatically by 03AA-04_Country_Intelligence_Builder_TI after the TI publication rules passed. Source wording is quoted verbatim (page last reviewed 25 Aug 2026; retrieved 2026-10-22). The advice is the named government's guidance and may differ for other nationalities.",
+        "provenance": {
+          "builder": "03AA-04_Country_Intelligence_Builder_TI",
+          "publicationId": "pub-20261022T174704Z-e087b5",
+          "method": "EXTRACTIVE",
+          "contentHash": "60b3c7aee3c2f2c2",
+          "topic": "CLOTHING"
+        }
+      }
+    },
+    {
+      "recordId": "gh-equipment-mosquito",
+      "contentHash": "1350ec545ae78edb",
+      "record": {
+        "id": "gh-equipment-mosquito",
+        "countryId": "gh",
+        "category": "EQUIPMENT",
+        "subcategory": "Mosquito protection",
+        "dataType": "CONSIDERATION",
+        "title": "Mosquito protection",
+        "content": "US CDC Travelers' Health (page last reviewed 25 Aug 2026): Bugs (like mosquitoes, ticks, and fleas) can spread a number of diseases in Ghana. Many of these diseases cannot be prevented with a vaccine or medicine. You can reduce your risk by taking steps to prevent bug bites. Use permethrin-treated clothing and gear (such as boots, pants, socks, and tents). Do not use permethrin directly on skin. Stay and sleep in air-conditioned or screened rooms. Use a bed net if the area where you are sleeping is exposed to the outdoors. FOR PROTECTION AGAINST TICKS AND MOSQUITOES: Use a repellent that contains 20% or more DEET for protection that lasts up to several hours. Always use insect repellent as directed. Avoid scratching bug bites, and apply hydrocortisone cream or calamine lotion to reduce the itching. Although bed bugs do not carry disease, they are an annoyance. See our information page about avoiding bug bites for some easy tips to avoid them.",
+        "confidence": "MEDIUM",
+        "status": "ACTIVE",
+        "sourceId": "cb-gh-cdc-travel",
+        "locationId": null,
+        "dateChecked": "2026-10-22",
+        "reviewDate": "2027-01-20",
+        "sourcePublicationDate": "2026-08-25",
+        "notes": "Published automatically by 03AA-04_Country_Intelligence_Builder_TI after the TI publication rules passed. Source wording is quoted verbatim (page last reviewed 25 Aug 2026; retrieved 2026-10-22). The advice is the named government's guidance and may differ for other nationalities.",
+        "provenance": {
+          "builder": "03AA-04_Country_Intelligence_Builder_TI",
+          "publicationId": "pub-20261022T174704Z-e087b5",
+          "method": "EXTRACTIVE",
+          "contentHash": "1350ec545ae78edb",
+          "topic": "MOSQUITO"
+        }
+      }
+    },
+    {
+      "recordId": "gh-equipment-plugs",
+      "contentHash": "0fcab864260302e3",
+      "record": {
+        "id": "gh-equipment-plugs",
+        "countryId": "gh",
+        "category": "EQUIPMENT",
+        "subcategory": "Electrical plugs and supply",
+        "dataType": "FACT",
+        "title": "Electrical plugs and supply",
+        "content": "Ghana Standards Authority public notice (effective 1 Jan 2019): The Ghana Standards Authority requires imported household plugs to be type G (13-amp, three rectangular pins), effective 1 January 2019. Ghana Electricity Supply and Distribution (Standards of Performance) Regulations, L.I. 1935 (gazetted 13 Jun 2008): Ghana's supply regulations (L.I. 1935) require the voltage at a customer's premises to stay within plus or minus ten percent of 230 volts or 400 volts (or of the higher network voltages they list). Ghana National Electricity Grid Code (edition dated Oct 2009): Ghana's National Electricity Grid Code treats 50 Hz as the nominal system frequency.",
+        "confidence": "MEDIUM",
+        "status": "ACTIVE",
+        "sourceId": "cb-gh-gsa-plugs",
+        "locationId": null,
+        "dateChecked": "2026-10-22",
+        "reviewDate": "2027-01-20",
+        "sourcePublicationDate": "2019-01-01",
+        "notes": "Published automatically by 03AA-04_Country_Intelligence_Builder_TI after the TI publication rules passed (retrieved 2026-10-22). Plug type and supply voltage are as stated by Ghana's standards body and electricity regulations on the dates shown; instruments may have been amended since. Other plug types that may be found in older buildings are not covered by these sources. The notice sets a requirement for imported plugs; it does not describe plug types in older installations. A legal instrument may have been amended since the date shown; check the issuing authority. A grid code may have been revised since the edition shown; check the issuing authority.",
+        "provenance": {
+          "builder": "03AA-04_Country_Intelligence_Builder_TI",
+          "publicationId": "pub-20261022T174704Z-e087b5",
+          "method": "MODEL_VERIFIED",
+          "contentHash": "0fcab864260302e3",
+          "topic": "PLUGS"
+        }
+      }
+    }
+  ],
+  "validation": {
+    "candidateBatchMergesCleanly": true,
+    "detail": "VALID: schema 2.0 | countries=52 records=391 sources=197 locations=14 events=31 observations=163",
+    "claimsKept": 29,
+    "claimsRejected": 0
+  },
+  "cost": {
+    "model": null,
+    "calls": 0,
+    "inputTokens": 0,
+    "outputTokens": 0,
+    "estimatedUsd": 0.0,
+    "status": "no model call",
+    "wouldCostUsdIfRun": null
+  },
+  "publication": {
+    "publicationId": null,
+    "recordIds": [],
+    "verification": null,
+    "skipped": "publication_off (mode draft, TI_CB_PUBLISH unset)"
+  }
+}

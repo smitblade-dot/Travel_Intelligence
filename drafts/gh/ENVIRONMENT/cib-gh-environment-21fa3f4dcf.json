@@ -1,0 +1,875 @@
+{
+  "draftId": "cib-gh-environment-21fa3f4dcf",
+  "schemaVersion": "2.0",
+  "agent": "03AA-04_Country_Intelligence_Builder_TI",
+  "promptVersion": "cib-1",
+  "countryId": "gh",
+  "country": "Ghana",
+  "category": "ENVIRONMENT",
+  "gap": {
+    "type": "TOPIC_MISSING",
+    "detail": "No active ENVIRONMENT record yet for Ghana on: CLIMATE_SEASONAL.",
+    "topics": [
+      "CLIMATE_SEASONAL"
+    ]
+  },
+  "generatedAt": "2026-10-22T17:47:04+00:00",
+  "evidenceFingerprint": "21fa3f4dcfcce2b9785ab1d9fed11b2d",
+  "reviewStatus": "ELIGIBLE_AWAITING_PUBLICATION_RUN",
+  "publicationStatus": "NOT_PUBLISHED",
+  "modelStatus": "NOT_NEEDED",
+  "model": null,
+  "verification": null,
+  "items": [
+    {
+      "topic": "CLIMATE_SEASONAL",
+      "title": "Climate and seasons (Accra, Kumasi, Wa)",
+      "claims": [
+        {
+          "text": "Accra, 1981-2010 averages: the mean daily maximum temperature is highest in February (33.1 C) and lowest in August (28.3 C).",
+          "evidence": [
+            {
+              "passageId": "WA.01",
+              "sourceKey": "wmo_wwis_accra",
+              "sourceId": "cb-gh-wmo-wwis-accra",
+              "url": "https://worldweather.wmo.int/en/json/921_en.json",
+              "publisher": "World Meteorological Organization (World Weather Information Service)",
+              "quote": "FEB: mean daily maximum 33.1 C, mean daily minimum 25.0 C, rainfall 14.2 mm, 1 rain days",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2010-12-31",
+              "independenceGroupId": "wmo-wwis"
+            },
+            {
+              "passageId": "WA.03",
+              "sourceKey": "wmo_wwis_accra",
+              "sourceId": "cb-gh-wmo-wwis-accra",
+              "url": "https://worldweather.wmo.int/en/json/921_en.json",
+              "publisher": "World Meteorological Organization (World Weather Information Service)",
+              "quote": "AUG: mean daily maximum 28.3 C, mean daily minimum 22.7 C, rainfall 22.2 mm, 4 rain days",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2010-12-31",
+              "independenceGroupId": "wmo-wwis"
+            }
+          ],
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "independentSources": 1,
+          "method": "COMPUTED",
+          "note": "computed from the source's published monthly climate averages",
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Accra: the wettest months are June (175.5 mm, 10 rain days) and May (148.0 mm, 8 rain days); the driest are January (9.5 mm) and February (14.2 mm).",
+          "evidence": [
+            {
+              "passageId": "WA.02",
+              "sourceKey": "wmo_wwis_accra",
+              "sourceId": "cb-gh-wmo-wwis-accra",
+              "url": "https://worldweather.wmo.int/en/json/921_en.json",
+              "publisher": "World Meteorological Organization (World Weather Information Service)",
+              "quote": "JUN: mean daily maximum 29.7 C, mean daily minimum 23.6 C, rainfall 175.5 mm, 10 rain days",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2010-12-31",
+              "independenceGroupId": "wmo-wwis"
+            },
+            {
+              "passageId": "WA.02",
+              "sourceKey": "wmo_wwis_accra",
+              "sourceId": "cb-gh-wmo-wwis-accra",
+              "url": "https://worldweather.wmo.int/en/json/921_en.json",
+              "publisher": "World Meteorological Organization (World Weather Information Service)",
+              "quote": "MAY: mean daily maximum 31.6 C, mean daily minimum 24.4 C, rainfall 148.0 mm, 8 rain days",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2010-12-31",
+              "independenceGroupId": "wmo-wwis"
+            },
+            {
+              "passageId": "WA.01",
+              "sourceKey": "wmo_wwis_accra",
+              "sourceId": "cb-gh-wmo-wwis-accra",
+              "url": "https://worldweather.wmo.int/en/json/921_en.json",
+              "publisher": "World Meteorological Organization (World Weather Information Service)",
+              "quote": "JAN: mean daily maximum 32.4 C, mean daily minimum 24.1 C, rainfall 9.5 mm, 1 rain days",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2010-12-31",
+              "independenceGroupId": "wmo-wwis"
+            },
+            {
+              "passageId": "WA.01",
+              "sourceKey": "wmo_wwis_accra",
+              "sourceId": "cb-gh-wmo-wwis-accra",
+              "url": "https://worldweather.wmo.int/en/json/921_en.json",
+              "publisher": "World Meteorological Organization (World Weather Information Service)",
+              "quote": "FEB: mean daily maximum 33.1 C, mean daily minimum 25.0 C, rainfall 14.2 mm, 1 rain days",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2010-12-31",
+              "independenceGroupId": "wmo-wwis"
+            }
+          ],
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "independentSources": 1,
+          "method": "COMPUTED",
+          "note": "computed from the source's published monthly climate averages",
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Kumasi, 1981-2010 averages: the mean daily maximum temperature is highest in February (34.4 C) and lowest in August (28.2 C).",
+          "evidence": [
+            {
+              "passageId": "WK.01",
+              "sourceKey": "wmo_wwis_kumasi",
+              "sourceId": "cb-gh-wmo-wwis-kumasi",
+              "url": "https://worldweather.wmo.int/en/json/922_en.json",
+              "publisher": "World Meteorological Organization (World Weather Information Service)",
+              "quote": "FEB: mean daily maximum 34.4 C, mean daily minimum 22.6 C, rainfall 47.5 mm, 4 rain days",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2010-12-31",
+              "independenceGroupId": "wmo-wwis"
+            },
+            {
+              "passageId": "WK.03",
+              "sourceKey": "wmo_wwis_kumasi",
+              "sourceId": "cb-gh-wmo-wwis-kumasi",
+              "url": "https://worldweather.wmo.int/en/json/922_en.json",
+              "publisher": "World Meteorological Organization (World Weather Information Service)",
+              "quote": "AUG: mean daily maximum 28.2 C, mean daily minimum 21.3 C, rainfall 85.4 mm, 8 rain days",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2010-12-31",
+              "independenceGroupId": "wmo-wwis"
+            }
+          ],
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "independentSources": 1,
+          "method": "COMPUTED",
+          "note": "computed from the source's published monthly climate averages",
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Kumasi: the wettest months are June (208.5 mm, 12 rain days) and September (167.5 mm, 12 rain days); the driest are January (20.1 mm) and December (28.7 mm).",
+          "evidence": [
+            {
+              "passageId": "WK.02",
+              "sourceKey": "wmo_wwis_kumasi",
+              "sourceId": "cb-gh-wmo-wwis-kumasi",
+              "url": "https://worldweather.wmo.int/en/json/922_en.json",
+              "publisher": "World Meteorological Organization (World Weather Information Service)",
+              "quote": "JUN: mean daily maximum 30.2 C, mean daily minimum 22.1 C, rainfall 208.5 mm, 12 rain days",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2010-12-31",
+              "independenceGroupId": "wmo-wwis"
+            },
+            {
+              "passageId": "WK.03",
+              "sourceKey": "wmo_wwis_kumasi",
+              "sourceId": "cb-gh-wmo-wwis-kumasi",
+              "url": "https://worldweather.wmo.int/en/json/922_en.json",
+              "publisher": "World Meteorological Organization (World Weather Information Service)",
+              "quote": "SEP: mean daily maximum 29.3 C, mean daily minimum 21.6 C, rainfall 167.5 mm, 12 rain days",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2010-12-31",
+              "independenceGroupId": "wmo-wwis"
+            },
+            {
+              "passageId": "WK.01",
+              "sourceKey": "wmo_wwis_kumasi",
+              "sourceId": "cb-gh-wmo-wwis-kumasi",
+              "url": "https://worldweather.wmo.int/en/json/922_en.json",
+              "publisher": "World Meteorological Organization (World Weather Information Service)",
+              "quote": "JAN: mean daily maximum 32.8 C, mean daily minimum 21.1 C, rainfall 20.1 mm, 1 rain days",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2010-12-31",
+              "independenceGroupId": "wmo-wwis"
+            },
+            {
+              "passageId": "WK.04",
+              "sourceKey": "wmo_wwis_kumasi",
+              "sourceId": "cb-gh-wmo-wwis-kumasi",
+              "url": "https://worldweather.wmo.int/en/json/922_en.json",
+              "publisher": "World Meteorological Organization (World Weather Information Service)",
+              "quote": "DEC: mean daily maximum 31.6 C, mean daily minimum 21.7 C, rainfall 28.7 mm, 2 rain days",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2010-12-31",
+              "independenceGroupId": "wmo-wwis"
+            }
+          ],
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "independentSources": 1,
+          "method": "COMPUTED",
+          "note": "computed from the source's published monthly climate averages",
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Wa, 1981-2010 averages: the mean daily maximum temperature is highest in March (37.9 C) and lowest in August (29.7 C).",
+          "evidence": [
+            {
+              "passageId": "WW.01",
+              "sourceKey": "wmo_wwis_wa",
+              "sourceId": "cb-gh-wmo-wwis-wa",
+              "url": "https://worldweather.wmo.int/en/json/1387_en.json",
+              "publisher": "World Meteorological Organization (World Weather Information Service)",
+              "quote": "MAR: mean daily maximum 37.9 C, mean daily minimum 25.3 C, rainfall 23.0 mm, 2 rain days",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2010-12-31",
+              "independenceGroupId": "wmo-wwis"
+            },
+            {
+              "passageId": "WW.03",
+              "sourceKey": "wmo_wwis_wa",
+              "sourceId": "cb-gh-wmo-wwis-wa",
+              "url": "https://worldweather.wmo.int/en/json/1387_en.json",
+              "publisher": "World Meteorological Organization (World Weather Information Service)",
+              "quote": "AUG: mean daily maximum 29.7 C, mean daily minimum 22.0 C, rainfall 208.9 mm, 13 rain days",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2010-12-31",
+              "independenceGroupId": "wmo-wwis"
+            }
+          ],
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "independentSources": 1,
+          "method": "COMPUTED",
+          "note": "computed from the source's published monthly climate averages",
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Wa: the wettest months are August (208.9 mm, 13 rain days) and September (182.0 mm, 14 rain days); the driest are December (1.9 mm) and January (4.7 mm).",
+          "evidence": [
+            {
+              "passageId": "WW.03",
+              "sourceKey": "wmo_wwis_wa",
+              "sourceId": "cb-gh-wmo-wwis-wa",
+              "url": "https://worldweather.wmo.int/en/json/1387_en.json",
+              "publisher": "World Meteorological Organization (World Weather Information Service)",
+              "quote": "AUG: mean daily maximum 29.7 C, mean daily minimum 22.0 C, rainfall 208.9 mm, 13 rain days",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2010-12-31",
+              "independenceGroupId": "wmo-wwis"
+            },
+            {
+              "passageId": "WW.03",
+              "sourceKey": "wmo_wwis_wa",
+              "sourceId": "cb-gh-wmo-wwis-wa",
+              "url": "https://worldweather.wmo.int/en/json/1387_en.json",
+              "publisher": "World Meteorological Organization (World Weather Information Service)",
+              "quote": "SEP: mean daily maximum 30.6 C, mean daily minimum 22.0 C, rainfall 182.0 mm, 14 rain days",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2010-12-31",
+              "independenceGroupId": "wmo-wwis"
+            },
+            {
+              "passageId": "WW.04",
+              "sourceKey": "wmo_wwis_wa",
+              "sourceId": "cb-gh-wmo-wwis-wa",
+              "url": "https://worldweather.wmo.int/en/json/1387_en.json",
+              "publisher": "World Meteorological Organization (World Weather Information Service)",
+              "quote": "DEC: mean daily maximum 35.0 C, mean daily minimum 19.9 C, rainfall 1.9 mm, 1 rain days",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2010-12-31",
+              "independenceGroupId": "wmo-wwis"
+            },
+            {
+              "passageId": "WW.01",
+              "sourceKey": "wmo_wwis_wa",
+              "sourceId": "cb-gh-wmo-wwis-wa",
+              "url": "https://worldweather.wmo.int/en/json/1387_en.json",
+              "publisher": "World Meteorological Organization (World Weather Information Service)",
+              "quote": "JAN: mean daily maximum 34.7 C, mean daily minimum 20.0 C, rainfall 4.7 mm, 1 rain days",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2010-12-31",
+              "independenceGroupId": "wmo-wwis"
+            }
+          ],
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "independentSources": 1,
+          "method": "COMPUTED",
+          "note": "computed from the source's published monthly climate averages",
+          "publishable": true,
+          "heldBecause": []
+        }
+      ],
+      "recordNote": "Long-term climate averages for the 1981-2010 reference period at Accra, Kumasi, Wa, from WMO's World Weather Information Service (data from the national meteorological service). These are seasonal averages, not current conditions or a forecast, and the reference period is not the most recent WMO normal period. WMO's disclaimer applies.",
+      "uncertainty": "Station averages for Accra, Kumasi, Wa only; conditions elsewhere in the country differ. Reference period 1981-2010. Not a forecast and not current conditions. The feed lists data-supply dates of 2003-06-04, 2020-07-23, which predate the end of the stated reference period; the stated reference period is used and the supply date is not relied on.",
+      "derivation": "COMPUTED_FROM_SOURCE_DATA",
+      "method": "COMPUTED",
+      "excluded": [],
+      "content": "Accra, 1981-2010 averages: the mean daily maximum temperature is highest in February (33.1 C) and lowest in August (28.3 C). Accra: the wettest months are June (175.5 mm, 10 rain days) and May (148.0 mm, 8 rain days); the driest are January (9.5 mm) and February (14.2 mm). Kumasi, 1981-2010 averages: the mean daily maximum temperature is highest in February (34.4 C) and lowest in August (28.2 C). Kumasi: the wettest months are June (208.5 mm, 12 rain days) and September (167.5 mm, 12 rain days); the driest are January (20.1 mm) and December (28.7 mm). Wa, 1981-2010 averages: the mean daily maximum temperature is highest in March (37.9 C) and lowest in August (29.7 C). Wa: the wettest months are August (208.9 mm, 13 rain days) and September (182.0 mm, 14 rain days); the driest are December (1.9 mm) and January (4.7 mm).",
+      "layer": "BASELINE",
+      "decision": "PUBLISH",
+      "heldReasons": []
+    },
+    {
+      "topic": "FLOODING_NATURAL_HAZARDS",
+      "title": "Flooding and natural hazards",
+      "claims": [
+        {
+          "text": "Flooding is common in the Upper West, North East, Northern and Savannah regions during the rainy season, from March to November.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "FS.35",
+              "sourceKey": "fcdo_safety",
+              "sourceId": "gh-fcdo-security",
+              "url": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
+              "publisher": "UK Foreign, Commonwealth & Development Office",
+              "quote": "Flooding is common in the Upper West, North East, Northern and Savannah regions during the rainy season, from March to November.",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2026-07-02",
+              "independenceGroupId": "uk-fcdo"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Heavy rainfall can also cause flooding in other parts of Ghana, including urban areas such as Accra and its surroundings. Flooding can disrupt road travel, public transport, electricity and other services, and conditions can change quickly following periods of intense rainfall.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 0,
+          "evidence": [
+            {
+              "passageId": "FS.35",
+              "sourceKey": "fcdo_safety",
+              "sourceId": "gh-fcdo-security",
+              "url": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
+              "publisher": "UK Foreign, Commonwealth & Development Office",
+              "quote": "Heavy rainfall can also cause flooding in other parts of Ghana, including urban areas such as Accra and its surroundings. Flooding can disrupt road travel, public transport, electricity and other services, and conditions can change quickly following periods of intense rainfall.",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2026-07-02",
+              "independenceGroupId": "uk-fcdo"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        },
+        {
+          "text": "Earthquakes and tremors are a risk in Ghana.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "trimmedTrailingSentences": 1,
+          "evidence": [
+            {
+              "passageId": "FS.36",
+              "sourceKey": "fcdo_safety",
+              "sourceId": "gh-fcdo-security",
+              "url": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
+              "publisher": "UK Foreign, Commonwealth & Development Office",
+              "quote": "Earthquakes and tremors are a risk in Ghana.",
+              "retrievedAt": "2026-10-22T17:47:04+00:00",
+              "publicationDate": "2026-07-02",
+              "independenceGroupId": "uk-fcdo"
+            }
+          ],
+          "independentSources": 1,
+          "note": null,
+          "publishable": true,
+          "heldBecause": []
+        }
+      ],
+      "excluded": [],
+      "method": "EXTRACTIVE",
+      "uncertainty": "Wording is the source's own. Other nationalities' governments may advise differently.",
+      "candidateRecord": true,
+      "content": "Flooding is common in the Upper West, North East, Northern and Savannah regions during the rainy season, from March to November. Heavy rainfall can also cause flooding in other parts of Ghana, including urban areas such as Accra and its surroundings. Flooding can disrupt road travel, public transport, electricity and other services, and conditions can change quickly following periods of intense rainfall. Earthquakes and tremors are a risk in Ghana.",
+      "layer": "BASELINE",
+      "decision": "PUBLISH",
+      "heldReasons": []
+    }
+  ],
+  "missingEvidence": [
+    {
+      "topic": "OUTLOOK_4_6_WEEKS",
+      "origin": "collector",
+      "reason": "No approved current seasonal-outlook source is configured for the next 4-6 weeks. Model knowledge is not used as evidence of current conditions."
+    }
+  ],
+  "rejectedClaims": [],
+  "currentContext": [],
+  "assessment": [
+    {
+      "topic": "CLIMATE_SEASONAL",
+      "decision": "PUBLISH",
+      "confidence": "MEDIUM",
+      "reasons": [],
+      "claimsPublishable": 6,
+      "excluded": []
+    },
+    {
+      "topic": "FLOODING_NATURAL_HAZARDS",
+      "decision": "PUBLISH",
+      "confidence": "MEDIUM",
+      "reasons": [],
+      "claimsPublishable": 3,
+      "excluded": []
+    }
+  ],
+  "evidence": [
+    {
+      "sourceKey": "wmo_wwis_accra",
+      "sourceId": "cb-gh-wmo-wwis-accra",
+      "sourceIdIsExisting": false,
+      "code": "WA",
+      "publisher": "World Meteorological Organization (World Weather Information Service)",
+      "jurisdiction": "INTERNATIONAL",
+      "tier": "A",
+      "title": "WMO World Weather Information Service: Accra climate averages",
+      "url": "https://worldweather.wmo.int/en/json/921_en.json",
+      "retrievedAt": "2026-10-22T17:47:04+00:00",
+      "originalLanguage": "en",
+      "contentRights": "ATTRIBUTION_REQUIRED",
+      "accessMethod": "API",
+      "automationPermission": "PERMITTED",
+      "independenceGroupId": "wmo-wwis",
+      "currentCapable": false,
+      "staleAfterDays": 7305,
+      "publicationDate": "2010-12-31",
+      "publicationDateStatus": "STATED",
+      "status": "RETRIEVED",
+      "error": null,
+      "httpStatus": 200,
+      "contentSha256": "9b4e9324e62d4717bfeaf0b44b1d6071f7225129f684d8e229430680cf4f4892",
+      "dataPeriod": "1981-2010",
+      "currencyDate": "2010-12-31",
+      "publicationDateSource": "climate reference period end (climate.datae)",
+      "bytes": 3700,
+      "publicationAgeDays": 5774,
+      "passagesUsed": [
+        {
+          "id": "WA.01",
+          "locator": "Monthly climate averages",
+          "text": "JAN: mean daily maximum 32.4 C, mean daily minimum 24.1 C, rainfall 9.5 mm, 1 rain days; FEB: mean daily maximum 33.1 C, mean daily minimum 25.0 C, rainfall 14.2 mm, 1 rain days; MAR: mean daily maximum 33.0 C, mean daily minimum 25.1 C, rainfall 55.3 mm, 4 rain days"
+        },
+        {
+          "id": "WA.02",
+          "locator": "Monthly climate averages",
+          "text": "APR: mean daily maximum 32.7 C, mean daily minimum 25.1 C, rainfall 82.5 mm, 5 rain days; MAY: mean daily maximum 31.6 C, mean daily minimum 24.4 C, rainfall 148.0 mm, 8 rain days; JUN: mean daily maximum 29.7 C, mean daily minimum 23.6 C, rainfall 175.5 mm, 10 rain days"
+        },
+        {
+          "id": "WA.03",
+          "locator": "Monthly climate averages",
+          "text": "JUL: mean daily maximum 28.4 C, mean daily minimum 23.1 C, rainfall 65.2 mm, 5 rain days; AUG: mean daily maximum 28.3 C, mean daily minimum 22.7 C, rainfall 22.2 mm, 4 rain days; SEP: mean daily maximum 29.5 C, mean daily minimum 23.1 C, rainfall 47.1 mm, 5 rain days"
+        }
+      ]
+    },
+    {
+      "sourceKey": "wmo_wwis_kumasi",
+      "sourceId": "cb-gh-wmo-wwis-kumasi",
+      "sourceIdIsExisting": false,
+      "code": "WK",
+      "publisher": "World Meteorological Organization (World Weather Information Service)",
+      "jurisdiction": "INTERNATIONAL",
+      "tier": "A",
+      "title": "WMO World Weather Information Service: Kumasi climate averages",
+      "url": "https://worldweather.wmo.int/en/json/922_en.json",
+      "retrievedAt": "2026-10-22T17:47:04+00:00",
+      "originalLanguage": "en",
+      "contentRights": "ATTRIBUTION_REQUIRED",
+      "accessMethod": "API",
+      "automationPermission": "PERMITTED",
+      "independenceGroupId": "wmo-wwis",
+      "currentCapable": false,
+      "staleAfterDays": 7305,
+      "publicationDate": "2010-12-31",
+      "publicationDateStatus": "STATED",
+      "status": "RETRIEVED",
+      "error": null,
+      "httpStatus": 200,
+      "contentSha256": "b31236d179aad86168bff21216d29dcd02e068a7a960b432c7d969eff031abcf",
+      "dataPeriod": "1981-2010",
+      "currencyDate": "2010-12-31",
+      "publicationDateSource": "climate reference period end (climate.datae)",
+      "bytes": 3651,
+      "publicationAgeDays": 5774,
+      "passagesUsed": [
+        {
+          "id": "WK.01",
+          "locator": "Monthly climate averages",
+          "text": "JAN: mean daily maximum 32.8 C, mean daily minimum 21.1 C, rainfall 20.1 mm, 1 rain days; FEB: mean daily maximum 34.4 C, mean daily minimum 22.6 C, rainfall 47.5 mm, 4 rain days; MAR: mean daily maximum 33.8 C, mean daily minimum 23.0 C, rainfall 112.1 mm, 7 rain days"
+        },
+        {
+          "id": "WK.02",
+          "locator": "Monthly climate averages",
+          "text": "APR: mean daily maximum 32.7 C, mean daily minimum 22.9 C, rainfall 151.5 mm, 9 rain days; MAY: mean daily maximum 31.8 C, mean daily minimum 22.8 C, rainfall 161.1 mm, 11 rain days; JUN: mean daily maximum 30.2 C, mean daily minimum 22.1 C, rainfall 208.5 mm, 12 rain days"
+        },
+        {
+          "id": "WK.03",
+          "locator": "Monthly climate averages",
+          "text": "JUL: mean daily maximum 28.6 C, mean daily minimum 21.5 C, rainfall 139.1 mm, 9 rain days; AUG: mean daily maximum 28.2 C, mean daily minimum 21.3 C, rainfall 85.4 mm, 8 rain days; SEP: mean daily maximum 29.3 C, mean daily minimum 21.6 C, rainfall 167.5 mm, 12 rain days"
+        },
+        {
+          "id": "WK.04",
+          "locator": "Monthly climate averages",
+          "text": "OCT: mean daily maximum 30.8 C, mean daily minimum 21.9 C, rainfall 146.8 mm, 13 rain days; NOV: mean daily maximum 31.9 C, mean daily minimum 22.3 C, rainfall 46.3 mm, 5 rain days; DEC: mean daily maximum 31.6 C, mean daily minimum 21.7 C, rainfall 28.7 mm, 2 rain days"
+        }
+      ]
+    },
+    {
+      "sourceKey": "wmo_wwis_wa",
+      "sourceId": "cb-gh-wmo-wwis-wa",
+      "sourceIdIsExisting": false,
+      "code": "WW",
+      "publisher": "World Meteorological Organization (World Weather Information Service)",
+      "jurisdiction": "INTERNATIONAL",
+      "tier": "A",
+      "title": "WMO World Weather Information Service: Wa climate averages",
+      "url": "https://worldweather.wmo.int/en/json/1387_en.json",
+      "retrievedAt": "2026-10-22T17:47:04+00:00",
+      "originalLanguage": "en",
+      "contentRights": "ATTRIBUTION_REQUIRED",
+      "accessMethod": "API",
+      "automationPermission": "PERMITTED",
+      "independenceGroupId": "wmo-wwis",
+      "currentCapable": false,
+      "staleAfterDays": 7305,
+      "publicationDate": "2010-12-31",
+      "publicationDateStatus": "STATED",
+      "status": "RETRIEVED",
+      "error": null,
+      "httpStatus": 200,
+      "contentSha256": "84fa052ad157eb06db055a311d5afb92b42a6de7a097a7fec8187136f803647f",
+      "dataPeriod": "1981-2010",
+      "currencyDate": "2010-12-31",
+      "publicationDateSource": "climate reference period end (climate.datae)",
+      "bytes": 3598,
+      "publicationAgeDays": 5774,
+      "passagesUsed": [
+        {
+          "id": "WW.01",
+          "locator": "Monthly climate averages",
+          "text": "JAN: mean daily maximum 34.7 C, mean daily minimum 20.0 C, rainfall 4.7 mm, 1 rain days; FEB: mean daily maximum 37.0 C, mean daily minimum 22.9 C, rainfall 5.9 mm, 1 rain days; MAR: mean daily maximum 37.9 C, mean daily minimum 25.3 C, rainfall 23.0 mm, 2 rain days"
+        },
+        {
+          "id": "WW.03",
+          "locator": "Monthly climate averages",
+          "text": "JUL: mean daily maximum 30.3 C, mean daily minimum 22.3 C, rainfall 149.6 mm, 11 rain days; AUG: mean daily maximum 29.7 C, mean daily minimum 22.0 C, rainfall 208.9 mm, 13 rain days; SEP: mean daily maximum 30.6 C, mean daily minimum 22.0 C, rainfall 182.0 mm, 14 rain days"
+        },
+        {
+          "id": "WW.04",
+          "locator": "Monthly climate averages",
+          "text": "OCT: mean daily maximum 33.2 C, mean daily minimum 22.7 C, rainfall 74.1 mm, 7 rain days; NOV: mean daily maximum 35.3 C, mean daily minimum 21.7 C, rainfall 5.0 mm, 1 rain days; DEC: mean daily maximum 35.0 C, mean daily minimum 19.9 C, rainfall 1.9 mm, 1 rain days"
+        }
+      ]
+    },
+    {
+      "sourceKey": "fcdo_safety",
+      "sourceId": "gh-fcdo-security",
+      "sourceIdIsExisting": true,
+      "code": "FS",
+      "publisher": "UK Foreign, Commonwealth & Development Office",
+      "jurisdiction": "UK",
+      "tier": "A",
+      "title": "Foreign travel advice: safety and security",
+      "url": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
+      "retrievedAt": "2026-10-22T17:47:04+00:00",
+      "originalLanguage": "en",
+      "contentRights": "GOVERNMENT_OPEN",
+      "accessMethod": "WEB_PAGE",
+      "automationPermission": "PERMITTED",
+      "independenceGroupId": "uk-fcdo",
+      "currentCapable": true,
+      "staleAfterDays": 120,
+      "publicationDate": "2026-07-02",
+      "publicationDateStatus": "STATED",
+      "status": "RETRIEVED",
+      "error": null,
+      "httpStatus": 200,
+      "contentSha256": "61ba53b0ab217e9a77254e91c0dd0e33235c3bb02b9d50a0a2e0bd2121ccc455",
+      "publicationDateSource": "govuk:public-updated-at",
+      "publicationDatePrecision": "DAY",
+      "pageTitle": "Safety and security - Ghana travel advice - GOV.UKGOV.UK",
+      "pageUpdatedAt": "2026-10-19T09:25:06+01:00",
+      "currencyDate": "2026-10-19",
+      "bytes": 100929,
+      "publicationAgeDays": 3,
+      "passagesUsed": [
+        {
+          "id": "FS.35",
+          "locator": "Safety and security > Transport risks > Flooding",
+          "text": "Flooding is common in the Upper West, North East, Northern and Savannah regions during the rainy season, from March to November.\nHeavy rainfall can also cause flooding in other parts of Ghana, including urban areas such as Accra and its surroundings. Flooding can disrupt road travel, public transport, electricity and other services, and conditions can change quickly following periods of intense rainfall.\nFollow the advice of local authorities, monitor local weather reports and expect difficulties when travelling to affected areas."
+        },
+        {
+          "id": "FS.36",
+          "locator": "Safety and security > Transport risks > Earthquakes",
+          "text": "Earthquakes and tremors are a risk in Ghana. The US Federal Emergency Management Agency website has advice about what to do before, during and after an earthquake.\nView a printable version of the whole guide"
+        }
+      ]
+    }
+  ],
+  "candidateBatch": {
+    "records": [
+      {
+        "id": "gh-environment-climate-seasonal",
+        "countryId": "gh",
+        "category": "ENVIRONMENT",
+        "subcategory": "Climate and seasons",
+        "dataType": "FACT",
+        "title": "Climate and seasons (Accra, Kumasi, Wa)",
+        "content": "Accra, 1981-2010 averages: the mean daily maximum temperature is highest in February (33.1 C) and lowest in August (28.3 C). Accra: the wettest months are June (175.5 mm, 10 rain days) and May (148.0 mm, 8 rain days); the driest are January (9.5 mm) and February (14.2 mm). Kumasi, 1981-2010 averages: the mean daily maximum temperature is highest in February (34.4 C) and lowest in August (28.2 C). Kumasi: the wettest months are June (208.5 mm, 12 rain days) and September (167.5 mm, 12 rain days); the driest are January (20.1 mm) and December (28.7 mm). Wa, 1981-2010 averages: the mean daily maximum temperature is highest in March (37.9 C) and lowest in August (29.7 C). Wa: the wettest months are August (208.9 mm, 13 rain days) and September (182.0 mm, 14 rain days); the driest are December (1.9 mm) and January (4.7 mm).",
+        "confidence": "MEDIUM",
+        "status": "DRAFT",
+        "sourceId": "cb-gh-wmo-wwis-accra",
+        "locationId": null,
+        "dateChecked": "2026-10-22",
+        "reviewDate": "2027-04-20",
+        "notes": "DRAFT by 03AA-04_Country_Intelligence_Builder_TI; not independently verified or reviewed. Station averages for Accra, Kumasi, Wa only; conditions elsewhere in the country differ. Reference period 1981-2010. Not a forecast and not current conditions. The feed lists data-supply dates of 2003-06-04, 2020-07-23, which predate the end of the stated reference period; the stated reference period is used and the supply date is not relied on."
+      },
+      {
+        "id": "gh-environment-flooding-natural-hazards-d",
+        "countryId": "gh",
+        "category": "ENVIRONMENT",
+        "subcategory": "Flooding and natural hazards",
+        "dataType": "CONSIDERATION",
+        "title": "Flooding and natural hazards",
+        "content": "Flooding is common in the Upper West, North East, Northern and Savannah regions during the rainy season, from March to November. Heavy rainfall can also cause flooding in other parts of Ghana, including urban areas such as Accra and its surroundings. Flooding can disrupt road travel, public transport, electricity and other services, and conditions can change quickly following periods of intense rainfall. Earthquakes and tremors are a risk in Ghana.",
+        "confidence": "MEDIUM",
+        "status": "DRAFT",
+        "sourceId": "gh-fcdo-security",
+        "locationId": null,
+        "dateChecked": "2026-10-22",
+        "reviewDate": "2027-04-20",
+        "notes": "DRAFT by 03AA-04_Country_Intelligence_Builder_TI; not independently verified or reviewed. Wording is the source's own. Other nationalities' governments may advise differently."
+      }
+    ],
+    "sources": [
+      {
+        "id": "cb-gh-wmo-wwis-accra",
+        "countryId": "gh",
+        "sourceName": "WMO World Weather Information Service: Accra climate averages",
+        "organisation": "World Meteorological Organization (World Weather Information Service)",
+        "sourceType": "GOVERNMENT",
+        "url": "https://worldweather.wmo.int/en/json/921_en.json",
+        "jurisdiction": "INTERNATIONAL",
+        "confidence": "HIGH",
+        "active": true,
+        "accessMethod": "API",
+        "contentRights": "ATTRIBUTION_REQUIRED",
+        "automationPermission": "PERMITTED",
+        "originalLanguage": "en",
+        "geographicScope": "NATIONAL",
+        "dateChecked": "2026-10-22",
+        "reviewFrequency": "Every 3-6 months, or on any change",
+        "notes": "Proposed by the country builder draft; rights and automation permission as configured, not independently confirmed."
+      },
+      {
+        "id": "cb-gh-wmo-wwis-kumasi",
+        "countryId": "gh",
+        "sourceName": "WMO World Weather Information Service: Kumasi climate averages",
+        "organisation": "World Meteorological Organization (World Weather Information Service)",
+        "sourceType": "GOVERNMENT",
+        "url": "https://worldweather.wmo.int/en/json/922_en.json",
+        "jurisdiction": "INTERNATIONAL",
+        "confidence": "HIGH",
+        "active": true,
+        "accessMethod": "API",
+        "contentRights": "ATTRIBUTION_REQUIRED",
+        "automationPermission": "PERMITTED",
+        "originalLanguage": "en",
+        "geographicScope": "NATIONAL",
+        "dateChecked": "2026-10-22",
+        "reviewFrequency": "Every 3-6 months, or on any change",
+        "notes": "Proposed by the country builder draft; rights and automation permission as configured, not independently confirmed."
+      },
+      {
+        "id": "cb-gh-wmo-wwis-wa",
+        "countryId": "gh",
+        "sourceName": "WMO World Weather Information Service: Wa climate averages",
+        "organisation": "World Meteorological Organization (World Weather Information Service)",
+        "sourceType": "GOVERNMENT",
+        "url": "https://worldweather.wmo.int/en/json/1387_en.json",
+        "jurisdiction": "INTERNATIONAL",
+        "confidence": "HIGH",
+        "active": true,
+        "accessMethod": "API",
+        "contentRights": "ATTRIBUTION_REQUIRED",
+        "automationPermission": "PERMITTED",
+        "originalLanguage": "en",
+        "geographicScope": "NATIONAL",
+        "dateChecked": "2026-10-22",
+        "reviewFrequency": "Every 3-6 months, or on any change",
+        "notes": "Proposed by the country builder draft; rights and automation permission as configured, not independently confirmed."
+      }
+    ],
+    "sourceObservations": [
+      {
+        "id": "obs-gh-environment-climate-seasonal-wmo-wwis-accra",
+        "recordId": "gh-environment-climate-seasonal",
+        "sourceId": "cb-gh-wmo-wwis-accra",
+        "sourceUrl": "https://worldweather.wmo.int/en/json/921_en.json",
+        "extractedClaim": "FEB: mean daily maximum 33.1 C, mean daily minimum 25.0 C, rainfall 14.2 mm, 1 rain days … AUG: mean daily maximum 28.3 C, mean daily minimum 22.7 C, rainfall 22.2 mm, 4 rain days … JUN: mean daily maximum 29.7 C, mean daily minimum 23.6 C, rainfall 175.5 mm, 10 rain days … MAY: mean daily maximum 31.6 C, mean daily minimum 24.4 C, rainfall 148.0 mm, 8 rain days … JAN: mean daily maximum 32.4 C, mean daily minimum 24.1 C, rainfall 9.5 mm, 1 rain days",
+        "independenceGroupId": "wmo-wwis",
+        "dateChecked": "2026-10-22",
+        "observationStatus": "DRAFT_UNREVIEWED",
+        "originalLanguage": "en",
+        "translated": false,
+        "translationMethod": "NONE",
+        "retrievedAt": "2026-10-22T17:47:04+00:00",
+        "publicationDate": "2010-12-31",
+        "publicationDateStatus": "STATED",
+        "contentRights": "ATTRIBUTION_REQUIRED",
+        "rightsStatus": "ATTRIBUTION_REQUIRED",
+        "accessMethod": "API",
+        "automationPermission": "PERMITTED",
+        "uncertainty": "Station averages for Accra, Kumasi, Wa only; conditions elsewhere in the country differ. Reference period 1981-2010. Not a forecast and not current conditions. The feed lists data-supply dates of 2003-06-04, 2020-07-23, which predate the end of the stated reference period; the stated reference period is used and the supply date is not relied on."
+      },
+      {
+        "id": "obs-gh-environment-climate-seasonal-wmo-wwis-kumasi",
+        "recordId": "gh-environment-climate-seasonal",
+        "sourceId": "cb-gh-wmo-wwis-kumasi",
+        "sourceUrl": "https://worldweather.wmo.int/en/json/922_en.json",
+        "extractedClaim": "FEB: mean daily maximum 34.4 C, mean daily minimum 22.6 C, rainfall 47.5 mm, 4 rain days … AUG: mean daily maximum 28.2 C, mean daily minimum 21.3 C, rainfall 85.4 mm, 8 rain days … JUN: mean daily maximum 30.2 C, mean daily minimum 22.1 C, rainfall 208.5 mm, 12 rain days … SEP: mean daily maximum 29.3 C, mean daily minimum 21.6 C, rainfall 167.5 mm, 12 rain days … JAN: mean daily maximum 32.8 C, mean daily minimum 21.1 C, rainfall 20.1 mm, 1 rain days … DEC: mean daily maximum 31.6 C, mean daily minimum 21.7 C, rainfall 28.7 mm, 2 rain days",
+        "independenceGroupId": "wmo-wwis",
+        "dateChecked": "2026-10-22",
+        "observationStatus": "DRAFT_UNREVIEWED",
+        "originalLanguage": "en",
+        "translated": false,
+        "translationMethod": "NONE",
+        "retrievedAt": "2026-10-22T17:47:04+00:00",
+        "publicationDate": "2010-12-31",
+        "publicationDateStatus": "STATED",
+        "contentRights": "ATTRIBUTION_REQUIRED",
+        "rightsStatus": "ATTRIBUTION_REQUIRED",
+        "accessMethod": "API",
+        "automationPermission": "PERMITTED",
+        "uncertainty": "Station averages for Accra, Kumasi, Wa only; conditions elsewhere in the country differ. Reference period 1981-2010. Not a forecast and not current conditions. The feed lists data-supply dates of 2003-06-04, 2020-07-23, which predate the end of the stated reference period; the stated reference period is used and the supply date is not relied on."
+      },
+      {
+        "id": "obs-gh-environment-climate-seasonal-wmo-wwis-wa",
+        "recordId": "gh-environment-climate-seasonal",
+        "sourceId": "cb-gh-wmo-wwis-wa",
+        "sourceUrl": "https://worldweather.wmo.int/en/json/1387_en.json",
+        "extractedClaim": "MAR: mean daily maximum 37.9 C, mean daily minimum 25.3 C, rainfall 23.0 mm, 2 rain days … AUG: mean daily maximum 29.7 C, mean daily minimum 22.0 C, rainfall 208.9 mm, 13 rain days … SEP: mean daily maximum 30.6 C, mean daily minimum 22.0 C, rainfall 182.0 mm, 14 rain days … DEC: mean daily maximum 35.0 C, mean daily minimum 19.9 C, rainfall 1.9 mm, 1 rain days … JAN: mean daily maximum 34.7 C, mean daily minimum 20.0 C, rainfall 4.7 mm, 1 rain days",
+        "independenceGroupId": "wmo-wwis",
+        "dateChecked": "2026-10-22",
+        "observationStatus": "DRAFT_UNREVIEWED",
+        "originalLanguage": "en",
+        "translated": false,
+        "translationMethod": "NONE",
+        "retrievedAt": "2026-10-22T17:47:04+00:00",
+        "publicationDate": "2010-12-31",
+        "publicationDateStatus": "STATED",
+        "contentRights": "ATTRIBUTION_REQUIRED",
+        "rightsStatus": "ATTRIBUTION_REQUIRED",
+        "accessMethod": "API",
+        "automationPermission": "PERMITTED",
+        "uncertainty": "Station averages for Accra, Kumasi, Wa only; conditions elsewhere in the country differ. Reference period 1981-2010. Not a forecast and not current conditions. The feed lists data-supply dates of 2003-06-04, 2020-07-23, which predate the end of the stated reference period; the stated reference period is used and the supply date is not relied on."
+      },
+      {
+        "id": "obs-gh-environment-flooding-natural-hazards-d-fcdo-safety",
+        "recordId": "gh-environment-flooding-natural-hazards-d",
+        "sourceId": "gh-fcdo-security",
+        "sourceUrl": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
+        "extractedClaim": "Flooding is common in the Upper West, North East, Northern and Savannah regions during the rainy season, from March to November. … Heavy rainfall can also cause flooding in other parts of Ghana, including urban areas such as Accra and its surroundings. Flooding can disrupt road travel, public transport, electricity and other services, and conditions can change quickly following periods of intense rainfall. … Earthquakes and tremors are a risk in Ghana.",
+        "independenceGroupId": "uk-fcdo",
+        "dateChecked": "2026-10-22",
+        "observationStatus": "DRAFT_UNREVIEWED",
+        "originalLanguage": "en",
+        "translated": false,
+        "translationMethod": "NONE",
+        "retrievedAt": "2026-10-22T17:47:04+00:00",
+        "publicationDate": "2026-07-02",
+        "publicationDateStatus": "STATED",
+        "contentRights": "GOVERNMENT_OPEN",
+        "rightsStatus": "GOVERNMENT_OPEN",
+        "accessMethod": "WEB_PAGE",
+        "automationPermission": "PERMITTED",
+        "uncertainty": "Wording is the source's own. Other nationalities' governments may advise differently."
+      }
+    ]
+  },
+  "publicationItems": [
+    {
+      "recordId": "gh-environment-climate-seasonal",
+      "contentHash": "a00626ad470e7e9b",
+      "record": {
+        "id": "gh-environment-climate-seasonal",
+        "countryId": "gh",
+        "category": "ENVIRONMENT",
+        "subcategory": "Climate and seasons",
+        "dataType": "FACT",
+        "title": "Climate and seasons",
+        "content": "WMO World Weather Information Service climate averages for Accra, not current conditions or a forecast (reference period ended 31 Dec 2010): Accra, 1981-2010 averages: the mean daily maximum temperature is highest in February (33.1 C) and lowest in August (28.3 C). Accra: the wettest months are June (175.5 mm, 10 rain days) and May (148.0 mm, 8 rain days); the driest are January (9.5 mm) and February (14.2 mm). WMO World Weather Information Service climate averages for Kumasi, not current conditions or a forecast (reference period ended 31 Dec 2010): Kumasi, 1981-2010 averages: the mean daily maximum temperature is highest in February (34.4 C) and lowest in August (28.2 C). Kumasi: the wettest months are June (208.5 mm, 12 rain days) and September (167.5 mm, 12 rain days); the driest are January (20.1 mm) and December (28.7 mm). WMO World Weather Information Service climate averages for Wa, not current conditions or a forecast (reference period ended 31 Dec 2010): Wa, 1981-2010 averages: the mean daily maximum temperature is highest in March (37.9 C) and lowest in August (29.7 C). Wa: the wettest months are August (208.9 mm, 13 rain days) and September (182.0 mm, 14 rain days); the driest are December (1.9 mm) and January (4.7 mm).",
+        "confidence": "MEDIUM",
+        "status": "ACTIVE",
+        "sourceId": "cb-gh-wmo-wwis-accra",
+        "locationId": null,
+        "dateChecked": "2026-10-22",
+        "reviewDate": "2027-01-20",
+        "sourcePublicationDate": "2010-12-31",
+        "notes": "Published automatically by 03AA-04_Country_Intelligence_Builder_TI after the TI publication rules passed (retrieved 2026-10-22). Long-term climate averages for the 1981-2010 reference period at Accra, Kumasi, Wa, from WMO's World Weather Information Service (data from the national meteorological service). These are seasonal averages, not current conditions or a forecast, and the reference period is not the most recent WMO normal period. WMO's disclaimer applies. WMO World Weather Information Service is acknowledged as the source; its disclaimer applies (worldweather.wmo.int/en/disclaimer.html).",
+        "provenance": {
+          "builder": "03AA-04_Country_Intelligence_Builder_TI",
+          "publicationId": "pub-20261022T174704Z-21fa3f",
+          "method": "MODEL_VERIFIED",
+          "contentHash": "a00626ad470e7e9b",
+          "topic": "CLIMATE_SEASONAL"
+        }
+      }
+    },
+    {
+      "recordId": "gh-environment-flooding-natural-hazards",
+      "contentHash": "4bc0116aeb01cdc8",
+      "record": {
+        "id": "gh-environment-flooding-natural-hazards",
+        "countryId": "gh",
+        "category": "ENVIRONMENT",
+        "subcategory": "Flooding and natural hazards",
+        "dataType": "CONSIDERATION",
+        "title": "Flooding and natural hazards",
+        "content": "UK FCDO travel advice (last updated 2 Jul 2026): Flooding is common in the Upper West, North East, Northern and Savannah regions during the rainy season, from March to November. Heavy rainfall can also cause flooding in other parts of Ghana, including urban areas such as Accra and its surroundings. Flooding can disrupt road travel, public transport, electricity and other services, and conditions can change quickly following periods of intense rainfall. Earthquakes and tremors are a risk in Ghana.",
+        "confidence": "MEDIUM",
+        "status": "ACTIVE",
+        "sourceId": "gh-fcdo-security",
+        "locationId": null,
+        "dateChecked": "2026-10-22",
+        "reviewDate": "2027-01-20",
+        "sourcePublicationDate": "2026-07-02",
+        "notes": "Published automatically by 03AA-04_Country_Intelligence_Builder_TI after the TI publication rules passed. Source wording is quoted verbatim (last updated 2 Jul 2026; retrieved 2026-10-22). The advice is the named government's guidance and may differ for other nationalities.",
+        "provenance": {
+          "builder": "03AA-04_Country_Intelligence_Builder_TI",
+          "publicationId": "pub-20261022T174704Z-21fa3f",
+          "method": "EXTRACTIVE",
+          "contentHash": "4bc0116aeb01cdc8",
+          "topic": "FLOODING_NATURAL_HAZARDS"
+        }
+      }
+    }
+  ],
+  "validation": {
+    "candidateBatchMergesCleanly": true,
+    "detail": "VALID: schema 2.0 | countries=52 records=390 sources=194 locations=14 events=31 observations=159",
+    "claimsKept": 9,
+    "claimsRejected": 0
+  },
+  "cost": {
+    "model": null,
+    "calls": 0,
+    "inputTokens": 0,
+    "outputTokens": 0,
+    "estimatedUsd": 0.0,
+    "status": "no model call",
+    "wouldCostUsdIfRun": null
+  },
+  "publication": {
+    "publicationId": null,
+    "recordIds": [],
+    "verification": null,
+    "skipped": "publication_off (mode draft, TI_CB_PUBLISH unset)"
+  }
+}
