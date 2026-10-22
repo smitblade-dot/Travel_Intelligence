@@ -21,7 +21,7 @@ import hashlib
 import json
 import subprocess
 import time
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from .country_config import AGENT_NAME
@@ -73,7 +73,7 @@ def build_publication_item(cc, category, tname, tdef, assessed, evidence, source
             s = sources_cfg[sk]
             new_sources[e["sourceId"]] = {
                 "id": e["sourceId"], "countryId": cc, "sourceName": s["title"], "organisation": s["publisher"], "sourceType": "GOVERNMENT",
-                "url": e["url"], "jurisdiction": s["jurisdiction"], "confidence": SOURCE_CONFIDENCE.get(s.get("tier"), "MEDIUM"), "active": True, "accessMethod": s["access_method"],
+                "url": e["url"], "jurisdiction": s["jurisdiction"], "confidence": SOURCE_CONFIDENCE.get(s.get("tier"), "LOW"), "active": True, "accessMethod": s["access_method"],
                 "contentRights": s["content_rights"], "automationPermission": s["automation_permission"],
                 "originalLanguage": s["original_language"], "geographicScope": "NATIONAL", "dateChecked": today.isoformat(),
                 "reviewFrequency": "Every 3-6 months, or on any change"}
@@ -92,7 +92,7 @@ def build_publication_item(cc, category, tname, tdef, assessed, evidence, source
 
 
 # ---- applying to data.json ----------------------------------------------------------------------------------
-SOURCE_CONFIDENCE = {"A": "HIGH", "B": "MEDIUM", "C": "MEDIUM", "D": "LOW"}
+SOURCE_CONFIDENCE = {"A": "HIGH", "B": "MEDIUM", "C": "MEDIUM", "D": "LOW", "E": "LOW", "F": "LOW"}
 
 
 def owned(record):
@@ -243,11 +243,20 @@ def rollback_publication(backend, pub_id, now):
     return summary
 
 
+def _utc(ts):
+    try:
+        d = datetime.fromisoformat(str(ts).replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    return d.replace(tzinfo=timezone.utc) if d.tzinfo is None else d.astimezone(timezone.utc)
+
+
 def release_is_ours(v, published_generated):
     """True when the site is demonstrably serving a release at or after ours yet not our content (so the content, not the
-    deployment, is wrong). A site that is merely behind, unreachable or unreadable proves nothing about the content."""
-    served = v.get("served_generated")
-    return bool(served and published_generated and served >= published_generated)
+    deployment, is wrong). A site that is merely behind, unreachable or unreadable proves nothing about the content;
+    timestamps that cannot be parsed prove nothing either."""
+    served, ours = _utc(v.get("served_generated")), _utc(published_generated)
+    return bool(served and ours and served >= ours)
 
 
 # ---- live verification --------------------------------------------------------------------------------------

@@ -62,5 +62,5 @@ jobs:
           TI_CB_PER_TASK_LIMIT_USD: ${{ vars.TI_CB_PER_TASK_LIMIT_USD }}
           TI_CB_DAILY_LIMIT_USD: ${{ vars.TI_CB_DAILY_LIMIT_USD }}
           TI_CB_MONTHLY_LIMIT_USD: ${{ vars.TI_CB_MONTHLY_LIMIT_USD }}
-        # Exit 3: configuration error. 4: state could not be persisted. Held exceptions are reported, not failures.
+        # Exit 3: configuration error. 4: state could not be persisted. 5: a publication needs attention (push/validation refused, content demonstrably incorrect, rollback failed, or verification unresolved after bounded rechecks). A merely pending deployment and held exceptions exit 0.
         run: python3 scripts/country_builder.py run

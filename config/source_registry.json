@@ -223,7 +223,11 @@
       "role": "Country health baseline (vaccines, malaria and mosquito-borne disease)",
       "rights": "SOURCE_SPECIFIC",
       "status": "INTEGRATION_READY",
-      "reviewNote": "22 Oct 2026: wwwnc.cdc.gov/robots.txt allows generic agents on /travel (Crawl-delay 20, observed by the one-page-per-run fetch). US Government work; quote verbatim with attribution and page-review date."
+      "reviewNote": "22 Oct 2026: wwwnc.cdc.gov/robots.txt allows generic agents on /travel (Crawl-delay 20, observed by the one-page-per-run fetch). US Government work; quote verbatim with attribution and page-review date.",
+      "reviewedBy": "03AA-04 builder agent, automated robots/licence check 22 Oct 2026 (no human review recorded)",
+      "evidenceUrls": [
+        "https://wwwnc.cdc.gov/robots.txt"
+      ]
     },
     {
       "id": "travelhealthpro",
@@ -234,7 +238,12 @@
       "role": "Country health baseline (UK travel health guidance)",
       "rights": "SOURCE_SPECIFIC",
       "status": "INTEGRATION_READY",
-      "reviewNote": "22 Oct 2026: travelhealthpro.org.uk/robots.txt allows /country pages; site states all content is available under the Open Government Licence v3.0 except where marked, excluding logos and the Crown emblem. Pages carry no stated date, so they corroborate only and cannot establish freshness."
+      "reviewNote": "22 Oct 2026: travelhealthpro.org.uk/robots.txt allows /country pages; site states all content is available under the Open Government Licence v3.0 except where marked, excluding logos and the Crown emblem. Pages carry no stated date, so they corroborate only and cannot establish freshness. Third-party material marked otherwise on a page is not covered by the OGL; the builder quotes only the page's own text.",
+      "reviewedBy": "03AA-04 builder agent, automated robots/licence check 22 Oct 2026 (no human review recorded)",
+      "evidenceUrls": [
+        "https://travelhealthpro.org.uk/robots.txt",
+        "https://travelhealthpro.org.uk/widget.php"
+      ]
     }
   ]
 }

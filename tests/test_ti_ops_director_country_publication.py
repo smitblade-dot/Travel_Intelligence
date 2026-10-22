@@ -305,6 +305,41 @@ class FailureAndRollback(unittest.TestCase):
             self.assertTrue(any(c.get("rollbackOf") for c in h.main_data()["change_log"]))
             self.assertEqual([p["state"] for p in ledger(h)["publications"].values()], ["ROLLED_BACK"])
 
+    def test_release_comparison_parses_timestamps_and_ignores_unparseable_ones(self):
+        from ti_ops_director.country_publish import release_is_ours
+        self.assertFalse(release_is_ours({"served_generated": "2026-10-22T05:00:00Z"}, "2026-10-22T05:00:01+00:00"))
+        self.assertTrue(release_is_ours({"served_generated": "2026-10-22T05:00:01Z"}, "2026-10-22T05:00:01+00:00"))
+        self.assertFalse(release_is_ours({"served_generated": "garbage"}, "2026-10-22T05:00:01+00:00"))
+        self.assertFalse(release_is_ours({"served_generated": None}, "2026-10-22T05:00:01+00:00"))
+
+    def test_a_pending_publication_replaced_by_a_later_change_is_closed_as_superseded_not_rolled_back(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            h = PublishHarness(tmp, site_mode="stale")
+            ledger_backend = LocalBackend(Path(tmp) / "ledger")
+            b = h.builder(categories=["TRANSPORT"], ledger=ledger_backend)
+            restore = self._short_window(b)
+            try:
+                b.run()
+            finally:
+                restore()
+            d = h.main_data()                                    # a person edits one record on main afterwards
+            for r in d["records"]:
+                if r["id"] == "gh-transport-road-travel":
+                    r["provenance"] = {"builder": "someone-else"}
+                    r["content"] += " (edited)"
+            h.sync()
+            (h.work / "data.json").write_text(json.dumps(d), encoding="utf-8")
+            h.git(h.work, "add", "-A"); h.git(h.work, "commit", "-m", "manual edit"); h.git(h.work, "push", "origin", "HEAD:main")
+            h.site.mode = "newer"
+            b2 = h.builder(categories=["TRANSPORT"], ledger=ledger_backend)
+            restore = self._short_window(b2)
+            try:
+                b2.run()
+            finally:
+                restore()
+            self.assertIn("(edited)", records(h)["gh-transport-road-travel"]["content"])      # the edit survives
+            self.assertFalse([c for c in h.main_data()["change_log"] if c.get("rollbackOf") and "edited" in json.dumps(c)])
+
     def test_pages_lag_is_tolerated_within_the_timeout(self):
         with tempfile.TemporaryDirectory() as tmp:
             h = PublishHarness(tmp, site_mode="lag", lag=2)
