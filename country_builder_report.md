@@ -1,6 +1,6 @@
 # 03AA-04_Country_Intelligence_Builder_TI
 
-Run: 2026-10-22T14:14:23+00:00 | mode: draft | automatic publication: OFF (publication_off (mode draft, TI_CB_PUBLISH unset)) | paid model use: OFF (awaiting_paid_authorisation)
+Run: 2026-10-22T14:27:41+00:00 | mode: publish | automatic publication: ON | paid model use: OFF (awaiting_paid_authorisation)
 
 Coverage (whole product): 184/728 combinations; gaps in scope: 3. Tasks this run: 3; new 0; reopened 3; duplicates suppressed 0; interrupted tasks recovered 0.
 
@@ -8,7 +8,8 @@ Spend recorded (all time, USD): 0 (estimated from API usage fields x configured 
 
 ## Publication
 
-- NOT published: publication_off (mode draft, TI_CB_PUBLISH unset). Would publish: gh-environment-flooding-natural-hazards, gh-transport-road-travel, gh-transport-taxis-and-public-transport, gh-transport-air-travel-and-gateways, gh-equipment-clothing, gh-equipment-mosquito.
+- PUBLISHED and verified on the live site: gh-environment-flooding-natural-hazards, gh-transport-road-travel, gh-transport-taxis-and-public-transport, gh-transport-air-travel-and-gateways, gh-equipment-clothing, gh-equipment-mosquito
+- Commit: https://github.com/smitblade-dot/Travel_Intelligence/commit/6465d45e349cedc2a37c929153d24470b0a5a0a7 | live check: https://travelintelligence22.com/data.json served the new content after 26 check(s); served data generated 2026-10-22T14:27:41+00:00
 
 ## Ghana / ENVIRONMENT: COMPLETED (assessed)
 
@@ -78,8 +79,8 @@ Missing evidence:
 - CLOTHING: **PUBLISH**, confidence MEDIUM, 7 claim(s)
 - MOSQUITO: **PUBLISH**, confidence MEDIUM, 8 claim(s)
 - PLUGS: **REFERENCE_ONLY**
-- Draft: cib-gh-equipment-68d4253efe | status **AWAITING_PUBLICATION_DECISION** | publication NOT_PUBLISHED | model: NOT_NEEDED
-- Link: https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-68d4253efe.json
+- Draft: cib-gh-equipment-f44ba0f486 | status **AWAITING_PUBLICATION_DECISION** | publication NOT_PUBLISHED | model: NOT_NEEDED
+- Link: https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-f44ba0f486.json
 
 ### Clothing  [CLOTHING] PUBLISH
 - PUBLISHABLE: Prepare for activities by wearing the right clothes and packing protective items, such as bug spray, sunscreen, and a basic first aid kit.  _[US Centers for Disease Control and Prevention (CD.45)]_
@@ -109,10 +110,10 @@ Missing evidence:
 
 ## Exceptions held (routed to the Master Agent)
 
-- [NEEDS DECISION] gh/ENVIRONMENT: source_blocked_by_robots. Source cannot be used as configured: robots.txt disallows this path for generic agents. Needs Marc's decision (robots exception or another source). (seen 4x since 2026-10-22)
-- [NEEDS DECISION] gh/ENVIRONMENT: source_blocked_by_robots. Source cannot be used as configured: robots.txt could not be read (HTTP 500); treated as not permitted. Needs Marc's decision (robots exception or another source). (seen 4x since 2026-10-22)
-- [automatic retry] gh/EQUIPMENT/MOSQUITO: no_dated_source_within_freshness_limit. Held until a registry-backed source states a publication date inside its freshness limit. No action unless it persists. (seen 3x since 2026-10-22)
-- [NEEDS DECISION] gh/EQUIPMENT/PLUGS: no_external_source_for_reference_value. Add an authoritative source for this value to the source register (for example the IEC world plugs list); until then it is not republished as a sourced record. (seen 3x since 2026-10-22)
+- [NEEDS DECISION] gh/ENVIRONMENT: source_blocked_by_robots. Source cannot be used as configured: robots.txt disallows this path for generic agents. Needs Marc's decision (robots exception or another source). (seen 5x since 2026-10-22)
+- [NEEDS DECISION] gh/ENVIRONMENT: source_blocked_by_robots. Source cannot be used as configured: robots.txt could not be read (HTTP 500); treated as not permitted. Needs Marc's decision (robots exception or another source). (seen 5x since 2026-10-22)
+- [automatic retry] gh/EQUIPMENT/MOSQUITO: no_dated_source_within_freshness_limit. Held until a registry-backed source states a publication date inside its freshness limit. No action unless it persists. (seen 4x since 2026-10-22)
+- [NEEDS DECISION] gh/EQUIPMENT/PLUGS: no_external_source_for_reference_value. Add an authoritative source for this value to the source register (for example the IEC world plugs list); until then it is not republished as a sourced record. (seen 4x since 2026-10-22)
 
 ## Awaiting budget authorisation (model-written topics; not exceptions)
 
@@ -120,17 +121,17 @@ Missing evidence:
 
 ## Scope
 
-- Validation scope: gh / ENVIRONMENT, TRANSPORT, EQUIPMENT. Expansion: OFF (needs confirmation of coverage and budget); proof gate: not met (0 record(s) verified live (need 3), 0 rollback(s) (max 0), 0 clean publication run(s) (need 2))
+- Validation scope: gh / ENVIRONMENT, TRANSPORT, EQUIPMENT. Expansion: OFF (needs confirmation of coverage and budget); proof gate: not met (6 record(s) verified live (need 3), 0 rollback(s) (max 0), 1 clean publication run(s) (need 2))
 
 ## Records published by this agent
 
-- none yet
+- pub-20261022T142741Z-1dfa3c: gh-environment-flooding-natural-hazards, gh-transport-road-travel, gh-transport-taxis-and-public-transport, gh-transport-air-travel-and-gateways, gh-equipment-clothing, gh-equipment-mosquito | commit 6465d45e349cedc2a37c929153d24470b0a5a0a7 | verified live 2026-10-22T14:36:15+00:00
 
 ## Drafts and assessments held on this branch
 
-- gh/ENVIRONMENT: cib-gh-environment-1dfa3c0367 | ELIGIBLE_AWAITING_PUBLICATION_RUN | model: NOT_NEEDED | claims 3 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/ENVIRONMENT/cib-gh-environment-1dfa3c0367.json
-- gh/TRANSPORT: cib-gh-transport-21272f0ba2 | ELIGIBLE_AWAITING_PUBLICATION_RUN | model: NOT_NEEDED | claims 31 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/TRANSPORT/cib-gh-transport-21272f0ba2.json
-- gh/EQUIPMENT: cib-gh-equipment-68d4253efe | ELIGIBLE_AWAITING_PUBLICATION_RUN | model: NOT_NEEDED | claims 27 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-68d4253efe.json
-- gh/EQUIPMENT: cib-gh-equipment-f44ba0f486 | ELIGIBLE_AWAITING_PUBLICATION_RUN | model: NOT_NEEDED | claims 27 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-f44ba0f486.json | superseded by cib-gh-equipment-68d4253efe
+- gh/ENVIRONMENT: cib-gh-environment-1dfa3c0367 | AUTO_PUBLISHED_AND_VERIFIED | model: NOT_NEEDED | claims 3 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/ENVIRONMENT/cib-gh-environment-1dfa3c0367.json
+- gh/TRANSPORT: cib-gh-transport-21272f0ba2 | AUTO_PUBLISHED_AND_VERIFIED | model: NOT_NEEDED | claims 31 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/TRANSPORT/cib-gh-transport-21272f0ba2.json
+- gh/EQUIPMENT: cib-gh-equipment-f44ba0f486 | AUTO_PUBLISHED_AND_VERIFIED | model: NOT_NEEDED | claims 27 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-f44ba0f486.json
+- gh/EQUIPMENT: cib-gh-equipment-68d4253efe | ELIGIBLE_AWAITING_PUBLICATION_RUN | model: NOT_NEEDED | claims 27 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-68d4253efe.json | superseded by cib-gh-equipment-f44ba0f486
 - gh/TRANSPORT: cib-gh-transport-7147f6c436 | ELIGIBLE_AWAITING_PUBLICATION_RUN | model: NOT_NEEDED | claims 31 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/TRANSPORT/cib-gh-transport-7147f6c436.json | superseded by cib-gh-transport-21272f0ba2
 - gh/EQUIPMENT: cib-gh-equipment-ee6320b817 | HELD_EXCEPTIONS_ROUTED | model: NOT_NEEDED | claims 25 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-ee6320b817.json | superseded by cib-gh-equipment-f44ba0f486

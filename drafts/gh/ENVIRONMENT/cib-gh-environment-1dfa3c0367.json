@@ -10,10 +10,10 @@
     "type": "MISSING",
     "detail": "No active ENVIRONMENT record for Ghana."
   },
-  "generatedAt": "2026-10-22T14:14:23+00:00",
+  "generatedAt": "2026-10-22T14:27:41+00:00",
   "evidenceFingerprint": "1dfa3c03677e7ab5da5a25bd62f439aa",
-  "reviewStatus": "ELIGIBLE_AWAITING_PUBLICATION_RUN",
-  "publicationStatus": "NOT_PUBLISHED",
+  "reviewStatus": "AUTO_PUBLISHED_AND_VERIFIED",
+  "publicationStatus": "PUBLISHED",
   "modelStatus": "NOT_NEEDED",
   "model": null,
   "verification": null,
@@ -36,7 +36,7 @@
               "url": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
               "publisher": "UK Foreign, Commonwealth & Development Office",
               "quote": "Flooding is common in the Upper West, North East, Northern and Savannah regions during the rainy season, from March to November.",
-              "retrievedAt": "2026-10-22T14:14:23+00:00",
+              "retrievedAt": "2026-10-22T14:27:41+00:00",
               "publicationDate": "2026-07-02",
               "independenceGroupId": "uk-fcdo"
             }
@@ -60,7 +60,7 @@
               "url": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
               "publisher": "UK Foreign, Commonwealth & Development Office",
               "quote": "Heavy rainfall can also cause flooding in other parts of Ghana, including urban areas such as Accra and its surroundings. Flooding can disrupt road travel, public transport, electricity and other services, and conditions can change quickly following periods of intense rainfall.",
-              "retrievedAt": "2026-10-22T14:14:23+00:00",
+              "retrievedAt": "2026-10-22T14:27:41+00:00",
               "publicationDate": "2026-07-02",
               "independenceGroupId": "uk-fcdo"
             }
@@ -84,7 +84,7 @@
               "url": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
               "publisher": "UK Foreign, Commonwealth & Development Office",
               "quote": "Earthquakes and tremors are a risk in Ghana.",
-              "retrievedAt": "2026-10-22T14:14:23+00:00",
+              "retrievedAt": "2026-10-22T14:27:41+00:00",
               "publicationDate": "2026-07-02",
               "independenceGroupId": "uk-fcdo"
             }
@@ -140,7 +140,7 @@
       "tier": "A",
       "title": "NASA POWER monthly climatology (MERRA-2)",
       "url": "https://power.larc.nasa.gov/api/temporal/climatology/point?parameters=T2M,PRECTOTCORR&community=RE&longitude=-0.19&latitude=5.6&format=JSON",
-      "retrievedAt": "2026-10-22T14:14:23+00:00",
+      "retrievedAt": "2026-10-22T14:27:41+00:00",
       "originalLanguage": "en",
       "contentRights": "OPEN_LICENCE",
       "accessMethod": "API",
@@ -166,7 +166,7 @@
       "tier": "A",
       "title": "World Bank CCKP monthly climatology (CRU TS 4.07, 1991-2020)",
       "url": "https://cckpapi.worldbank.org/cckp/v1/cru-x0.5_climatology_tas,pr_climatology_monthly_1991-2020_mean_historical_cru_ts4.07_mean/GHA?_format=json",
-      "retrievedAt": "2026-10-22T14:14:23+00:00",
+      "retrievedAt": "2026-10-22T14:27:41+00:00",
       "originalLanguage": "en",
       "contentRights": "OPEN_LICENCE",
       "accessMethod": "API",
@@ -192,7 +192,7 @@
       "tier": "A",
       "title": "Foreign travel advice: safety and security",
       "url": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
-      "retrievedAt": "2026-10-22T14:14:23+00:00",
+      "retrievedAt": "2026-10-22T14:27:41+00:00",
       "originalLanguage": "en",
       "contentRights": "GOVERNMENT_OPEN",
       "accessMethod": "WEB_PAGE",
@@ -259,7 +259,7 @@
         "originalLanguage": "en",
         "translated": false,
         "translationMethod": "NONE",
-        "retrievedAt": "2026-10-22T14:14:23+00:00",
+        "retrievedAt": "2026-10-22T14:27:41+00:00",
         "publicationDate": "2026-07-02",
         "publicationDateStatus": "STATED",
         "contentRights": "GOVERNMENT_OPEN",
@@ -292,7 +292,7 @@
         "notes": "Published automatically by 03AA-04_Country_Intelligence_Builder_TI after the TI publication rules passed. Source wording is quoted verbatim (last updated 2 Jul 2026; retrieved 2026-10-22). The advice is the named government's guidance and may differ for other nationalities.",
         "provenance": {
           "builder": "03AA-04_Country_Intelligence_Builder_TI",
-          "publicationId": "pub-20261022T141423Z-1dfa3c",
+          "publicationId": "pub-20261022T142741Z-1dfa3c",
           "method": "EXTRACTIVE",
           "contentHash": "4bc0116aeb01cdc8",
           "topic": "FLOODING_NATURAL_HAZARDS"
@@ -316,9 +316,17 @@
     "wouldCostUsdIfRun": null
   },
   "publication": {
-    "publicationId": null,
-    "recordIds": [],
-    "verification": null,
-    "skipped": "publication_off (mode draft, TI_CB_PUBLISH unset)"
+    "publicationId": "pub-20261022T142741Z-1dfa3c",
+    "recordIds": [
+      "gh-environment-flooding-natural-hazards"
+    ],
+    "verification": {
+      "ok": true,
+      "attempts": 26,
+      "served_generated": "2026-10-22T14:27:41+00:00",
+      "served_sha256": "ea488ff9f7778df30f43d995ecaa29ab988d5bb2b27d395cf1c7a984fe9db302",
+      "url": "https://travelintelligence22.com/"
+    },
+    "skipped": null
   }
 }
