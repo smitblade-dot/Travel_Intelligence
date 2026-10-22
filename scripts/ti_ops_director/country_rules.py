@@ -21,6 +21,8 @@ from __future__ import annotations
 import json
 import re
 from datetime import date, datetime
+
+from .country_config import AGENT_NAME
 from pathlib import Path
 
 from .country_draft import CURRENT_WORDS, NUMBER, norm
@@ -194,7 +196,7 @@ def source_backing(src_cfg, registry, pub_cfg):
     return True, None
 
 
-def check_claim(claim, evidence_by_key, sources_cfg, registry, pub_cfg, today, existing_texts):
+def check_claim(claim, evidence_by_key, sources_cfg, registry, pub_cfg, today, existing_texts, polarity_texts=None):
     """-> list of reason codes (empty = publishable). Evidence entries are from sources retrieved this run."""
     reasons = []
     if claim["status"] == "CONFLICT":
@@ -235,6 +237,9 @@ def check_claim(claim, evidence_by_key, sources_cfg, registry, pub_cfg, today, e
         if jaccard(claim["text"], t) >= pub_cfg["duplicate_similarity"]:
             reasons.append("duplicate_of_existing")
             break
+    # Advice that reverses an existing record is a conflict. Records this builder published from the same verified sources are
+    # not compared for polarity (sibling topics cannot contradict each other; the keyword heuristic only produced false alarms).
+    for t in (existing_texts if polarity_texts is None else polarity_texts):
         if opposite_polarity(claim["text"], t):
             reasons.append("conflicts_with_existing_record")
             break
@@ -303,10 +308,12 @@ def item_confidence(claims, evidence_by_key, sources_cfg, registry, pub_cfg, tod
 def assess_item(item, evidence, sources_cfg, registry, pub_cfg, today, existing_records, country_id, category):
     """Decide one topic. -> dict(decision, claims, excluded, reasons, confidence). decision: PUBLISH | HOLD | NO_CHANGE."""
     ev_by_key = {e["sourceKey"]: e for e in evidence}
-    existing_texts = [r["content"] for r in existing_records if r.get("countryId") == country_id and r.get("category") == category]
+    same = [r for r in existing_records if r.get("countryId") == country_id and r.get("category") == category]
+    existing_texts = [r["content"] for r in same]
+    polarity_texts = [r["content"] for r in same if (r.get("provenance") or {}).get("builder") != AGENT_NAME]
     keep, excluded, held_reasons = [], list(item.get("excluded", [])), []
     for c in item["claims"]:
-        reasons = check_claim(c, ev_by_key, sources_cfg, registry, pub_cfg, today, existing_texts)
+        reasons = check_claim(c, ev_by_key, sources_cfg, registry, pub_cfg, today, existing_texts, polarity_texts)
         if not reasons:
             keep.append(c)
         else:

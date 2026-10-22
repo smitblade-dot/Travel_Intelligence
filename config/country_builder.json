@@ -320,7 +320,7 @@
       "jurisdiction": "GH",
       "tier": "A",
       "title": "Ghana Standards Authority public notice: plugs and socket-outlets",
-      "url": "https://www.gsa.gov.gh/wp-content/uploads/2018/11/ADVERT-socket-and-plugs.pdf",
+      "url": "https://gsa.gov.gh/wp-content/uploads/2018/11/ADVERT-socket-and-plugs.pdf",
       "parser": "pdf",
       "existing_source_id": null,
       "independence_group": "gh-gsa",
@@ -337,7 +337,8 @@
       "only_countries": [
         "gh"
       ],
-      "caveat": "The notice sets a requirement for imported plugs; it does not describe plug types in older installations."
+      "caveat": "The notice sets a requirement for imported plugs; it does not describe plug types in older installations.",
+      "_note": "Canonical host gsa.gov.gh: www.gsa.gov.gh fails TLS certificate verification (seen in the 22 Oct 2026 PR trial), and verification is never disabled."
     },
     "li_1935": {
       "code": "LI",

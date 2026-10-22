@@ -692,6 +692,31 @@ if __name__ == "__main__":
     unittest.main()
 
 
+class SiblingRecordsDoNotRaiseFalseConflicts(unittest.TestCase):
+    def test_a_rerun_over_the_builders_own_published_records_does_not_hold_them_as_conflicting(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            h = PublishHarness(tmp)
+            shared = LocalBackend(Path(tmp) / "ledger")
+            run_all(h.builder(registered=True, categories=["EQUIPMENT"], ledger=shared))
+            h.git(h.work, "fetch", "--quiet", "origin", "main")
+            h.git(h.work, "reset", "--quiet", "--hard", "FETCH_HEAD")
+            b = h.builder(registered=True, categories=["EQUIPMENT"], ledger=shared, now=cs.NOW + timedelta(days=8))
+            b.run()
+            self.assertNotIn("conflicts_with_existing_record", "\n".join(b.captured))
+
+    def test_hand_written_records_are_still_compared_for_reversed_advice(self):
+        from ti_ops_director.country_rules import check_claim
+        cfg = load_builder_config({}, ROOT)
+        claim = {"text": "Do not use pre-booked taxis from reputable companies.", "status": "VERIFIED", "temporal": "STABLE", "method": "EXTRACTIVE",
+                 "evidence": [{"sourceKey": "fcdo_safety", "quote": "Do not use pre-booked taxis from reputable companies.", "independenceGroupId": "g"}]}
+        ev = {"fcdo_safety": {"status": "RETRIEVED", "publicationDate": "2026-07-02", "staleAfterDays": 120, "currencyDate": "2026-10-19"}}
+        reg = load_registry(ROOT)
+        hand = "It is safer to use pre-booked vehicles from reputable taxi companies."
+        r = check_claim(claim, ev, cfg.sources, reg, cfg.publication_cfg, cs.NOW.date(), [hand], [hand])
+        self.assertIn("conflicts_with_existing_record", r)
+        self.assertNotIn("conflicts_with_existing_record", check_claim(claim, ev, cfg.sources, reg, cfg.publication_cfg, cs.NOW.date(), [hand], []))
+
+
 class WmoClimateAndElectricalSupply(unittest.TestCase):
     """The live configuration: WMO WWIS seasonal climate averages and official Ghana plug/voltage/frequency sources."""
     WMO_ROBOTS = {"worldweather.wmo.int": (cs.FX / "wmo_robots.txt").read_text()}
