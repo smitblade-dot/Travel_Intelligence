@@ -57,7 +57,8 @@ jobs:
           TI_CB_MODE: ${{ github.event_name == 'pull_request' && 'draft' || vars.TI_CB_MODE }}
           TI_CB_PUBLISH: ${{ vars.TI_CB_PUBLISH }}
           TI_CB_DRY_RUN: ${{ github.event_name == 'pull_request' && 'true' || vars.TI_CB_DRY_RUN }}
-          TI_CB_STATE_BRANCH: ${{ vars.TI_CB_STATE_BRANCH }}
+          # Pull-request trials keep their own ledger branch so they never write into the production ledger.
+          TI_CB_STATE_BRANCH: ${{ github.event_name == 'pull_request' && 'ti-country-drafts-trial' || vars.TI_CB_STATE_BRANCH }}
           TI_CB_COUNTRIES: ${{ vars.TI_CB_COUNTRIES }}
           TI_CB_CATEGORIES: ${{ vars.TI_CB_CATEGORIES }}
           TI_CB_BATCH_SIZE: ${{ vars.TI_CB_BATCH_SIZE }}

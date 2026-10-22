@@ -162,12 +162,17 @@ class Builder:
             return []
         names = {str(c["id"]).lower(): c for c in data.get("countries", [])}
         out = []
-        for cc, cat in sorted({(e["countryId"], e["category"]) for e in state["exceptions"].values()
-                               if e["state"] == "HELD" and e["scope"] != "publication" and e.get("countryId") and e.get("category")}):
+        pairs = {(e["countryId"], e["category"]) for e in state["exceptions"].values()
+                 if e["state"] == "HELD" and e["scope"] != "publication" and e.get("countryId") and e.get("category")}
+        for d in state["drafts"].values():      # eligible content that was assessed but never published (for example in a draft-mode run)
+            if not d.get("supersededBy") and d.get("reviewStatus") == "ELIGIBLE_AWAITING_PUBLICATION_RUN" and not d.get("settled"):
+                pairs.add((d["countryId"], d["category"]))
+        for cc, cat in sorted(pairs):
             if cc not in countries or cat not in self.cfg.categories or (cc, cat) in already or cc not in names:
                 continue
             drafts = [d for d in state["drafts"].values() if d["countryId"] == cc and d["category"] == cat and not d.get("supersededBy")]
-            if drafts and max(drafts, key=lambda d: d["createdAt"]).get("rules") == self.rules_fingerprint(cat):
+            latest = max(drafts, key=lambda d: d["createdAt"]) if drafts else None
+            if latest and latest.get("rules") == self.rules_fingerprint(cat) and latest.get("reviewStatus") != "ELIGIBLE_AWAITING_PUBLICATION_RUN":
                 continue
             ids = sorted(r["id"] for r in data["records"] if r.get("countryId") == cc and r.get("category") == cat and r.get("status", "ACTIVE") == "ACTIVE")
             out.append({"countryId": cc, "country": names[cc]["name"], "category": cat, "existingRecordIds": ids,
