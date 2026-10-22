@@ -164,6 +164,8 @@ still fails the strict audit. No concurrency, alternate identity or rate-limit
 bypass is used. Persistent limits require a later run or provider agreement,
 not an invented healthy result.
 
+Historical GDELT behaviour below is superseded by the 22 October one-request
+policy in the source guidance above; it is retained as an implementation log.
 GDELT transport errors retain bounded retries. HTTP-200 HTML/plain-text replies
 now receive a fixed non-JSON diagnostic without retaining the response body,
 and up to two further requests spaced by 15 seconds. The initial transport
