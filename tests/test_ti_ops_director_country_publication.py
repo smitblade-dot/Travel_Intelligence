@@ -236,7 +236,7 @@ class DraftTrialThenPublish(unittest.TestCase):
             trial = h.builder(mode="draft", ledger=shared, categories=["TRANSPORT"], env={"GITHUB_EVENT_NAME": "pull_request", "GITHUB_REF": "refs/pull/1/merge"})
             run_all(trial)
             self.assertNotIn("gh-transport-road-travel", records(h))
-            live = h.builder(mode="publish", ledger=shared, categories=["TRANSPORT"], now=cs.NOW + timedelta(days=1))
+            live = h.builder(mode="publish", ledger=shared, categories=["TRANSPORT"])      # same day: the trial must not block it
             live.run()
             self.assertIn("gh-transport-road-travel", records(h))
 

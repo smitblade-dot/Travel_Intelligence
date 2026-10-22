@@ -359,7 +359,7 @@ class Builder:
             for t in planned:
                 key = t["dedupe_key"]
                 old = st["tasks"].get(key)
-                if old and old["state"] == "completed" and old["updated_at"][:10] < iso(now)[:10] and self._needs_another_look(st, old):
+                if old and old["state"] == "completed" and self._needs_another_look(st, old):
                     # The gap is still open and the last result cannot be final: its draft never settled (for example a
                     # draft-mode trial that could not publish) or the rules/register have changed since. Settled work waits
                     # for its normal recheck bucket.
@@ -439,6 +439,8 @@ class Builder:
         if not drafts:
             return True
         d = max(drafts, key=lambda d: d["createdAt"])
+        if d.get("published") and not d.get("settled"):
+            return False                      # on main, verification pending: rechecked by the ledger, never republished
         return (not d.get("settled")) or d.get("rules") != self.rules_fingerprint(inp["category"])
 
     def _publish_phase(self, results, now):
