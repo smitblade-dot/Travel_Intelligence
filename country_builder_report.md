@@ -1,6 +1,6 @@
 # 03AA-04_Country_Intelligence_Builder_TI
 
-Run: 2026-10-22T13:52:15+00:00 | mode: draft | automatic publication: OFF (publication_off (mode draft, TI_CB_PUBLISH unset)) | paid model use: OFF (awaiting_paid_authorisation)
+Run: 2026-10-22T14:01:27+00:00 | mode: draft | automatic publication: OFF (publication_off (mode draft, TI_CB_PUBLISH unset)) | paid model use: OFF (awaiting_paid_authorisation)
 
 Coverage (whole product): 184/728 combinations; gaps in scope: 3. Tasks this run: 3; new 0; reopened 3; duplicates suppressed 0; interrupted tasks recovered 0.
 
@@ -109,10 +109,10 @@ Missing evidence:
 
 ## Exceptions held (routed to the Master Agent)
 
-- [NEEDS DECISION] gh/ENVIRONMENT: source_blocked_by_robots. Source cannot be used as configured: robots.txt disallows this path for generic agents. Needs Marc's decision (robots exception or another source). (seen 2x since 2026-10-22)
-- [NEEDS DECISION] gh/ENVIRONMENT: source_blocked_by_robots. Source cannot be used as configured: robots.txt could not be read (HTTP 500); treated as not permitted. Needs Marc's decision (robots exception or another source). (seen 2x since 2026-10-22)
-- [automatic retry] gh/EQUIPMENT/MOSQUITO: no_dated_source_within_freshness_limit. Held until a registry-backed source states a publication date inside its freshness limit. No action unless it persists. (seen 1x since 2026-10-22)
-- [NEEDS DECISION] gh/EQUIPMENT/PLUGS: no_external_source_for_reference_value. Add an authoritative source for this value to the source register (for example the IEC world plugs list); until then it is not republished as a sourced record. (seen 1x since 2026-10-22)
+- [NEEDS DECISION] gh/ENVIRONMENT: source_blocked_by_robots. Source cannot be used as configured: robots.txt disallows this path for generic agents. Needs Marc's decision (robots exception or another source). (seen 3x since 2026-10-22)
+- [NEEDS DECISION] gh/ENVIRONMENT: source_blocked_by_robots. Source cannot be used as configured: robots.txt could not be read (HTTP 500); treated as not permitted. Needs Marc's decision (robots exception or another source). (seen 3x since 2026-10-22)
+- [automatic retry] gh/EQUIPMENT/MOSQUITO: no_dated_source_within_freshness_limit. Held until a registry-backed source states a publication date inside its freshness limit. No action unless it persists. (seen 2x since 2026-10-22)
+- [NEEDS DECISION] gh/EQUIPMENT/PLUGS: no_external_source_for_reference_value. Add an authoritative source for this value to the source register (for example the IEC world plugs list); until then it is not republished as a sourced record. (seen 2x since 2026-10-22)
 
 ## Awaiting budget authorisation (model-written topics; not exceptions)
 
