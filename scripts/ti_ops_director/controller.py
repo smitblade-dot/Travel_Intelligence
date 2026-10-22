@@ -181,6 +181,13 @@ class Controller:
                                             dedupe_subject=pslot, priority=70)
                 self.store.set_meta("last_slot:production_verification", pslot)
                 done["production_verification"] = {"task": tid, "created": created}
+        cb_every = self.cfg.country_builder_interval_minutes
+        if cb_every and mode == "live":
+            cslot = interval_slot(now, cb_every).isoformat()
+            if self.store.get_meta("last_slot:country_builder") != cslot:
+                from .country_worker import enqueue_gaps
+                done["country_builder"] = enqueue_gaps(self, now)
+                self.store.set_meta("last_slot:country_builder", cslot)
         dslot = last_daily_slot(now, self.cfg.daily_consolidation_local, self.cfg.timezone)
         if self.store.get_meta("last_slot:daily_consolidation") != dslot.isoformat():
             tid, created = self.enqueue(task_type="daily_consolidation", inputs={"slot_utc": dslot.isoformat()},

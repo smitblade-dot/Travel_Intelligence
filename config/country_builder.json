@@ -1,0 +1,150 @@
+{
+  "_comment": "03AA-04_Country_Intelligence_Builder_TI. Committed operating configuration (no secrets). Repository variables TI_CB_* override these values when set. TI_CB_MODE=off or disabling the workflow stops the agent. See docs/TI_COUNTRY_INTELLIGENCE_BUILDER.md.",
+  "agent": "03AA-04_Country_Intelligence_Builder_TI",
+  "operation": {
+    "_approval": "PROPOSED, NOT YET CONFIRMED BY MARC. Defaults are the safest working values: observe mode (reads and plans, writes nothing, no model call), paid execution unset.",
+    "mode": "observe",
+    "state_branch": "ti-country-drafts"
+  },
+  "scope": {
+    "_approval": "Proposed initial scope, to be confirmed by Marc. Chosen from the actual coverage gaps in data.json: Ghana has no ENVIRONMENT, TRANSPORT or EQUIPMENT record.",
+    "countries": ["gh"],
+    "categories": ["ENVIRONMENT", "TRANSPORT", "EQUIPMENT"],
+    "batch_size_tasks_per_run": 1,
+    "gap_types": ["MISSING", "STALE"],
+    "stale_after_days_since_checked": 365
+  },
+  "schedule": {
+    "_note": "Trigger for the GitHub Actions workflow (.github/workflows/country-intelligence-builder.yml). GitHub may delay scheduled runs.",
+    "cron_utc": "41 5 * * *",
+    "recheck_after_days": 7
+  },
+  "freshness": {
+    "_note": "Per-source limits live on each source (stale_after_days). CURRENT claims need a source marked current_capable, retrieved in this run, and inside its limit. STABLE claims may use stale-but-dated reference material only when flagged.",
+    "max_evidence_age_hours_for_reuse": 24,
+    "drop_stale_sources": true
+  },
+  "retention": {
+    "evidence_days": 90,
+    "superseded_drafts_keep": 3,
+    "run_history_keep": 100,
+    "closed_task_days": 60
+  },
+  "evidence_limits": {
+    "max_bytes_per_page": 1500000,
+    "http_timeout_seconds": 20,
+    "http_attempts": 2,
+    "max_passages_per_topic": 8,
+    "max_passages_per_task": 14,
+    "max_passage_chars": 600,
+    "max_prompt_chars": 9000,
+    "min_quote_chars": 12,
+    "max_quote_chars": 400
+  },
+  "spending": {
+    "_approval": "UNSET. No paid execution is authorised. These are the proposed limits; they take effect only when Marc confirms them (the agent reads the numbers from here or from the TI_CB_* variables). Earlier allowances for the Ops Director and the monitor do not transfer.",
+    "dry_run": true,
+    "per_task_limit_usd": null,
+    "daily_limit_usd": null,
+    "monthly_limit_usd": null,
+    "total_limit_usd": null,
+    "max_output_tokens": 2000,
+    "model_timeout_seconds": 60,
+    "sonnet_escalation_enabled": false,
+    "opus_enabled": false
+  },
+  "review": {
+    "required": true,
+    "reviewers_required": 1,
+    "auto_publish": false,
+    "initial_review_status": "DRAFT_PENDING_REVIEW"
+  },
+  "country_params": {
+    "gh": {
+      "fcdo": "ghana",
+      "travelhealthpro": "89/ghana",
+      "cdc": "ghana",
+      "location": {"name": "Accra", "lat": 5.60, "lon": -0.19}
+    }
+  },
+  "sources": {
+    "fcdo_safety": {
+      "code": "FS", "publisher": "UK Foreign, Commonwealth & Development Office", "jurisdiction": "UK", "tier": "A",
+      "title": "Foreign travel advice: safety and security",
+      "url": "https://www.gov.uk/foreign-travel-advice/{fcdo}/safety-and-security",
+      "parser": "govuk", "existing_source_id": "{cc}-fcdo-security", "independence_group": "uk-fcdo",
+      "content_rights": "GOVERNMENT_OPEN", "access_method": "WEB_PAGE", "automation_permission": "PERMITTED",
+      "original_language": "en", "stale_after_days": 120, "current_capable": true
+    },
+    "fcdo_health": {
+      "code": "FH", "publisher": "UK Foreign, Commonwealth & Development Office", "jurisdiction": "UK", "tier": "A",
+      "title": "Foreign travel advice: health",
+      "url": "https://www.gov.uk/foreign-travel-advice/{fcdo}/health",
+      "parser": "govuk", "existing_source_id": "{cc}-fcdo-health", "independence_group": "uk-fcdo",
+      "content_rights": "GOVERNMENT_OPEN", "access_method": "WEB_PAGE", "automation_permission": "PERMITTED",
+      "original_language": "en", "stale_after_days": 120, "current_capable": true
+    },
+    "travelhealthpro": {
+      "code": "TH", "publisher": "TravelHealthPro (UK Health Security Agency / NaTHNaC)", "jurisdiction": "UK", "tier": "A",
+      "title": "TravelHealthPro country information",
+      "url": "https://travelhealthpro.org.uk/country/{travelhealthpro}",
+      "parser": "html", "existing_source_id": null, "independence_group": "uk-ukhsa-nathnac",
+      "content_rights": "UNKNOWN", "access_method": "WEB_PAGE", "automation_permission": "UNKNOWN",
+      "original_language": "en", "stale_after_days": 180, "current_capable": false,
+      "_note": "Rights and automation permission unverified: short verbatim quotes only, robots.txt checked on every run."
+    },
+    "cdc_travel": {
+      "code": "CD", "publisher": "US Centers for Disease Control and Prevention (Travelers' Health)", "jurisdiction": "US", "tier": "A",
+      "title": "CDC Travelers' Health: traveler view",
+      "url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/{cdc}",
+      "parser": "cdc", "existing_source_id": null, "independence_group": "us-cdc",
+      "content_rights": "GOVERNMENT_OPEN", "access_method": "WEB_PAGE", "automation_permission": "UNKNOWN",
+      "original_language": "en", "stale_after_days": 365, "current_capable": false
+    },
+    "nasa_power": {
+      "code": "NP", "publisher": "NASA Langley Research Center POWER Project", "jurisdiction": "US", "tier": "A",
+      "title": "NASA POWER monthly climatology (MERRA-2)",
+      "url": "https://power.larc.nasa.gov/api/temporal/climatology/point?parameters=T2M,PRECTOTCORR&community=RE&longitude={lon}&latitude={lat}&format=JSON",
+      "parser": "nasa_power", "existing_source_id": null, "independence_group": "us-nasa-power",
+      "content_rights": "OPEN_LICENCE", "access_method": "API", "automation_permission": "PERMITTED",
+      "original_language": "en", "stale_after_days": 800, "current_capable": false
+    }
+  },
+  "categories": {
+    "ENVIRONMENT": {
+      "brief": "Climate and seasons, regional variation, natural hazards and operational implications. Include month/season context where useful.",
+      "sources": ["nasa_power", "fcdo_safety"],
+      "topics": {
+        "CLIMATE_SEASONAL": {"kind": "deterministic", "subcategory": "Climate and seasons", "data_type": "FACT", "sources": ["nasa_power"], "freshness": "STABLE"},
+        "FLOODING_NATURAL_HAZARDS": {"kind": "model", "subcategory": "Flooding and natural hazards", "data_type": "CONSIDERATION", "sources": ["fcdo_safety"], "freshness": "STABLE",
+          "keywords": ["flood", "rainy season", "earthquake", "tremor", "cyclone", "extreme weather", "rainfall", "natural hazard"]},
+        "OUTLOOK_4_6_WEEKS": {"kind": "outlook", "subcategory": "Next 4-6 weeks", "data_type": "CONSIDERATION", "sources": [], "freshness": "CURRENT",
+          "_note": "Needs an approved current seasonal-outlook source. None is configured, so this is always reported as missing evidence rather than drafted."}
+      }
+    },
+    "TRANSPORT": {
+      "brief": "Principal international gateways, road/ground transport conditions, internal movement and material seasonal/access constraints.",
+      "sources": ["fcdo_safety", "cdc_travel"],
+      "topics": {
+        "ROAD_TRAVEL": {"kind": "model", "subcategory": "Road travel", "data_type": "CONSIDERATION", "sources": ["fcdo_safety", "cdc_travel"], "freshness": "STABLE",
+          "keywords": ["road", "driving", "driver", "vehicle", "night", "checkpoint", "driving permit", "licence", "street lighting", "convoy", "seatbelt"]},
+        "TAXIS_AND_PUBLIC_TRANSPORT": {"kind": "model", "subcategory": "Taxis and public transport", "data_type": "CONSIDERATION", "sources": ["fcdo_safety", "cdc_travel"], "freshness": "STABLE",
+          "keywords": ["taxi", "tro-tro", "tro tro", "minibus", "app-based", "public transportation", "motorbike", "buses"]},
+        "AIR_TRAVEL_AND_GATEWAYS": {"kind": "model", "subcategory": "Air travel and gateways", "data_type": "CONSIDERATION", "sources": ["fcdo_safety", "cdc_travel"], "freshness": "STABLE",
+          "keywords": ["airport", "flying", "flight", "aircraft", "kotoka", "arrivals"]}
+      }
+    },
+    "EQUIPMENT": {
+      "brief": "Country/environment-specific personal and operational equipment considerations, including seasonal needs: clothing, mosquito protection and electrical plugs.",
+      "sources": ["cdc_travel", "travelhealthpro", "fcdo_health", "fcdo_safety"],
+      "topics": {
+        "CLOTHING": {"kind": "model", "subcategory": "Clothing", "data_type": "CONSIDERATION", "sources": ["cdc_travel", "fcdo_safety"], "freshness": "STABLE",
+          "keywords": ["clothing", "clothes", "dress", "camouflage", "lightweight", "sunscreen", "hats", "long-sleeved", "shoes"]},
+        "MOSQUITO": {"kind": "model", "subcategory": "Mosquito protection", "data_type": "CONSIDERATION", "sources": ["cdc_travel", "travelhealthpro", "fcdo_health"], "freshness": "STABLE",
+          "keywords": ["mosquito", "bite", "repellent", "malaria", "yellow fever", "dengue", "bed net", "permethrin", "deet", "screened"]},
+        "PLUGS": {"kind": "reference", "subcategory": "Electrical plugs and supply", "data_type": "FACT", "sources": [], "freshness": "STABLE",
+          "_note": "Taken from the TI country reference fields (plugTypes, voltage, frequency). No external source is retrieved, so the draft says so and is marked unverified."}
+      }
+    }
+  }
+}

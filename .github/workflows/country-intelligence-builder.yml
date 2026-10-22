@@ -1,0 +1,60 @@
+name: TI country intelligence builder
+# 03AA-04_Country_Intelligence_Builder_TI (docs/TI_COUNTRY_INTELLIGENCE_BUILDER.md). Finds a missing or stale
+# country/category, collects permitted evidence, and saves a source-checked DRAFT on its own branch
+# (TI_CB_STATE_BRANCH, default ti-country-drafts). It never writes main or data.json and never publishes.
+# Operating mode comes from config/country_builder.json (committed, Marc's confirmed setting); the repository
+# variable TI_CB_MODE overrides it and TI_CB_MODE=off (or disabling this workflow) stops every run.
+# Paid drafting needs TI_CB_DRY_RUN=false AND all three spending limits AND ANTHROPIC_API_KEY. On pull requests
+# the key is not passed and dry-run is forced, so a pull request can collect and plan but never spend.
+on:
+  schedule:
+    - cron: "41 5 * * *"
+  workflow_dispatch: {}
+  pull_request:
+    paths:
+      - "scripts/ti_ops_director/country_*.py"
+      - "scripts/country_builder.py"
+      - "config/country_builder.json"
+      - ".github/workflows/country-intelligence-builder.yml"
+
+permissions: {}
+
+concurrency:
+  group: ti-country-intelligence-builder
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: vars.TI_CB_MODE != 'off' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write   # the drafts branch only (never main); unused in observe mode
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event_name == 'pull_request' && github.sha || 'main' }}
+          fetch-depth: 1
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Country builder pass
+        id: cb
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # No model key on pull requests: PR code can plan and collect, never spend.
+          ANTHROPIC_API_KEY: ${{ github.event_name == 'pull_request' && '' || secrets.ANTHROPIC_API_KEY }}
+          # The pull-request trial writes a no-spend draft to the drafts branch so persistence can be inspected.
+          TI_CB_MODE: ${{ github.event_name == 'pull_request' && 'draft' || vars.TI_CB_MODE }}
+          TI_CB_DRY_RUN: ${{ github.event_name == 'pull_request' && 'true' || vars.TI_CB_DRY_RUN }}
+          TI_CB_STATE_BRANCH: ${{ vars.TI_CB_STATE_BRANCH }}
+          TI_CB_COUNTRIES: ${{ vars.TI_CB_COUNTRIES }}
+          TI_CB_CATEGORIES: ${{ vars.TI_CB_CATEGORIES }}
+          TI_CB_PER_TASK_LIMIT_USD: ${{ vars.TI_CB_PER_TASK_LIMIT_USD }}
+          TI_CB_DAILY_LIMIT_USD: ${{ vars.TI_CB_DAILY_LIMIT_USD }}
+          TI_CB_MONTHLY_LIMIT_USD: ${{ vars.TI_CB_MONTHLY_LIMIT_USD }}
+        # Exit 3: configuration error. 4: state could not be persisted. Blocked tasks are reported, not failures.
+        run: python3 scripts/country_builder.py run
+      - name: data.json untouched
+        if: always()
+        run: git diff --exit-code -- data.json
