@@ -6,7 +6,7 @@ representative cases without a network, a model or git.
 """
 from __future__ import annotations
 
-from .country_draft import (VERIFIER_PROMPT, build_verify_user, climate_item, reference_item, verify_valid)
+from .country_draft import (VERIFIER_PROMPT, build_verify_user, climate_item, electrical_item, reference_item, verify_valid, wmo_climate_item)
 from .country_publish import build_publication_item
 from .country_rules import assess_item, corroborate, extractive_by_topic, load_registry
 
@@ -92,12 +92,23 @@ def build_items(builder, inputs, country, evidence, passages, per_topic, topics,
     by_topic = extractive_by_topic(all_passages, ev_code, topics, cfg.publication_cfg or {"quality": {"min_words": 4, "max_words": 90}})
     for tname, tdef in topics.items():
         kind = tdef["kind"]
-        if kind == "deterministic":
-            it = climate_item(evidence, tdef, today)
+        if kind == "deterministic" and tdef.get("builder") == "electrical":
+            it, held = electrical_item(evidence, tdef | {"topic": tname}, today)
+            if it:
+                items.append(it | {"topic": tname, "method": "COMPUTED", "excluded": []})
+            for h in held:
+                missing.append({"topic": tname, "reason": f"{h} (not published: no source of the required standing states it)", "origin": "collector"})
+        elif kind == "deterministic":
+            if any(k.startswith("wmo_") for k in tdef.get("sources", [])):
+                it, why = wmo_climate_item(evidence, tdef)
+                reason = ("WMO WWIS climate averages were not retrieved for every configured station (" + "; ".join(why) + "); "
+                          "a partial set would misdescribe the country") if why else None
+            else:
+                it, reason = climate_item(evidence, tdef, today), "the climatology source was not retrieved"
             if it:
                 items.append(it | {"method": "COMPUTED", "excluded": []})
             else:
-                missing.append({"topic": tname, "reason": "the climatology source was not retrieved", "origin": "collector"})
+                missing.append({"topic": tname, "reason": reason, "origin": "collector"})
         elif kind == "reference":
             it = reference_item(country, tdef)
             if it:

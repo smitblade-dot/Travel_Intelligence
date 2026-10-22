@@ -18,7 +18,10 @@ FX = ROOT / "tests" / "fixtures" / "country_builder" / "gh"
 NOW = datetime(2026, 10, 22, 6, 0, tzinfo=timezone.utc)
 
 PAGES = [("safety-and-security", "fcdo_safety.html"), ("/health", "fcdo_health.html"), ("travelhealthpro", "travelhealthpro.html"),
-         ("cdc.gov", "cdc_travel.html"), ("nasa.gov", "nasa_power.json"), ("cckpapi", "worldbank_cckp.json")]
+         ("cdc.gov", "cdc_travel.html"), ("nasa.gov", "nasa_power.json"), ("cckpapi", "worldbank_cckp.json"),
+         ("/921_en.json", "wmo_921_en.json"), ("/922_en.json", "wmo_922_en.json"), ("/1387_en.json", "wmo_1387_en.json"),
+         ("ADVERT-socket", "gsa_plugs_notice.pdf"), ("719588", "purc_li1935.pdf"), ("national-elect-grid-code", "energycom_grid_code.pdf"),
+         ("ecg.com.gh", "ecg_technical.html")]
 
 
 class FakeNet:
@@ -66,12 +69,40 @@ def setup(tmp, mode="draft", dry_run=True, limits=None, env=None, data=None, son
         e.update({"TI_CB_PER_TASK_LIMIT_USD": str(limits[0]), "TI_CB_DAILY_LIMIT_USD": str(limits[1]),
                   "TI_CB_MONTHLY_LIMIT_USD": str(limits[2])})
     e.update(env or {})
-    cfg = load_builder_config(e, ROOT)
+    cfg = legacy(load_builder_config(e, ROOT))
     if sonnet:
         cfg.raw["spending"]["sonnet_escalation_enabled"] = True
     if not extractive:                      # model-path tests: make the ordinary-code extractive path find nothing
         no_extractive(cfg)
     return cfg, e
+
+
+def legacy_raw(raw):
+    """The pre-WMO ENVIRONMENT/EQUIPMENT source set (NASA POWER, World Bank CCKP, TI reference-field plugs). Older tests exercise
+    those paths; the live configuration is tested separately with ``legacy=False`` / the unmodified config."""
+    env, eq = raw["categories"]["ENVIRONMENT"], raw["categories"]["EQUIPMENT"]
+    env["sources"] = ["nasa_power", "worldbank_cckp", "fcdo_safety"]
+    env["topics"]["CLIMATE_SEASONAL"]["sources"] = ["nasa_power", "worldbank_cckp"]
+    eq["sources"] = [k for k in eq["sources"] if k not in ("gsa_plugs", "li_1935", "grid_code", "ecg_technical")]
+    eq["topics"]["PLUGS"] = {"kind": "reference", "subcategory": "Electrical plugs and supply", "data_type": "FACT", "sources": [], "freshness": "STABLE"}
+    return raw
+
+
+def legacy(cfg):
+    legacy_raw(cfg.raw)
+    return cfg
+
+
+def make_repo(tmp):
+    """A throw-away repo root (legacy source set + fixture data) for tests that load config and data from ``repo_root``."""
+    repo = Path(tmp) / "repo"
+    (repo / "config").mkdir(parents=True)
+    for f in (ROOT / "config").iterdir():
+        shutil.copy(f, repo / "config" / f.name)
+    raw = legacy_raw(json.loads((repo / "config" / "country_builder.json").read_text(encoding="utf-8")))
+    (repo / "config" / "country_builder.json").write_text(json.dumps(raw), encoding="utf-8")
+    (repo / "data.json").write_text(json.dumps(base_data()), encoding="utf-8")
+    return repo
 
 
 def no_extractive(cfg):
@@ -94,7 +125,7 @@ def make_builder(tmp, provider=None, net=None, clock=None, **kw):
 
 
 def passages_for(category, net=None, cfg=None):
-    cfg = cfg or load_builder_config({"TI_CB_MODE": "draft"}, ROOT)
+    cfg = cfg or legacy(load_builder_config({"TI_CB_MODE": "draft"}, ROOT))
     ev = collect_category(cfg, "gh", category, net or FakeNet(), NOW, base_data()["sources"])
     ps, _ = select_passages(ev, cfg.category_defs[category]["topics"], cfg.limits_cfg)
     return ev, ps
@@ -221,13 +252,15 @@ class PublishHarness:
         return subprocess.run(["git", "-C", str(cwd), *args], capture_output=True, text=True, env=env, check=True).stdout.strip()
 
     def builder(self, provider=None, net=None, mode="publish", extractive=True, env=None, dry_run=True, limits=None, sonnet=False,
-                categories=None, ledger=None, registered=False, now=None):
+                categories=None, ledger=None, registered=False, now=None, wmo=False):
         e = {"TI_CB_MODE": mode, "TI_CB_STATE_BACKEND": "file", "TI_CB_STATE_DIR": str(self.tmp / "ledger"),
              "TI_CB_DRY_RUN": "true" if dry_run else "false", **self.ENV}
         if limits:
             e.update({"TI_CB_PER_TASK_LIMIT_USD": str(limits[0]), "TI_CB_DAILY_LIMIT_USD": str(limits[1]), "TI_CB_MONTHLY_LIMIT_USD": str(limits[2])})
         e.update(env or {})
         cfg = load_builder_config(e, ROOT)
+        if not wmo:
+            legacy(cfg)
         if not registered:                      # the pre-registration scenarios: CDC and TravelHealthPro cannot establish a claim
             for k in ("cdc_travel", "travelhealthpro"):
                 cfg.raw["sources"][k]["registry_id"] = None

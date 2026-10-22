@@ -8,6 +8,7 @@ Publication dates are recorded only when the source states them.
 from __future__ import annotations
 
 import hashlib
+import io
 import json
 import re
 import time
@@ -212,6 +213,16 @@ def stated_date(parser, meta, text):
             m = re.match(r"(\d{4}-\d{2}-\d{2})", meta.get(key, ""))
             if m:
                 return m.group(1), key
+    if parser in ("pdf", "html") and meta.get("_date_regex"):
+        m = re.search(meta["_date_regex"], text, re.I | re.S)
+        if m:
+            g = m.groupdict()
+            mon = (g.get("m") or "").strip().capitalize()
+            mon = next((k for k in MONTH if k.lower().startswith(mon.lower()[:3])), None) if mon else None
+            if mon and g.get("y"):
+                if not g.get("d"):
+                    meta["_precision"] = "MONTH"        # never invent a day the document does not state
+                return f"{int(g['y']):04d}-{MONTH[mon]:02d}-{int(g.get('d') or 1):02d}", "date stated in the document"
     if parser == "cdc":
         m = re.search(r"Page last reviewed:\s*([A-Za-z]+)\s+(\d{1,2}),\s*(\d{4})", text)
         if m and m.group(1) in MONTH:
@@ -273,6 +284,83 @@ def parse_cckp(body, iso3):
     return structured, climate_passages(structured, "WB")
 
 
+# ---- WMO World Weather Information Service -------------------------------------------------------------------
+def parse_wmo(body, expect_city_id, code="WM"):
+    """Climate averages only. The feed also carries a short-range forecast; it is deliberately never read, stored or
+    published (it is a forecast, not climate). WMO's download guidance requires acknowledgement and accurate reproduction."""
+    doc = json.loads(body.decode("utf-8"))
+    city = doc["city"]
+    clim = city["climate"]
+    if int(city["cityId"]) != int(expect_city_id):
+        raise ValueError("city id differs from the request")
+    months = clim["climateMonth"]
+    if sorted(int(m["month"]) for m in months) != list(range(1, 13)):
+        raise ValueError("not all twelve months present")
+    datab, datae = int(clim["datab"]), int(clim["datae"])
+    if not (1900 < datab < datae <= 2100):
+        raise ValueError("reference period missing or implausible")
+    rows = {}
+    for m in months:
+        mon = MONTHS[int(m["month"]) - 1]
+        try:
+            rows[mon] = {"tmax": float(m["maxTemp"]), "tmin": float(m["minTemp"]), "rain": float(m["rainfall"]),
+                         "raindays": int(float(m["raindays"]))}
+        except (TypeError, ValueError):
+            raise ValueError("non-numeric climate value in " + mon)
+    structured = {"kind": "wmo", "station": city["cityName"], "area": f"{city['cityName']}, {city['member']['memName']}",
+                  "period_from": datab, "period_to": datae, "rain_unit": clim.get("rainunit", "mm"),
+                  "rain_day_threshold": clim.get("raindef", "0.1"), "months": rows,
+                  "supplied_by": city["member"].get("orgName", ""),
+                  "supply_dates": sorted({m.get("climateFromMemDate") for m in months if m.get("climateFromMemDate")})}
+    passages = [{"id": f"{code}.00", "locator": "Reference period",
+                 "text": (f"Climate averages for {city['cityName']}, {city['member']['memName']}, reference period {datab}-{datae}, "
+                          f"supplied by {structured['supplied_by'] or 'the national meteorological service'} through the WMO World Weather "
+                          f"Information Service. Rain days are days with at least {structured['rain_day_threshold']} {structured['rain_unit']}.")}]
+    for i in range(0, 12, 3):
+        ms = MONTHS[i:i + 3]
+        text = "; ".join(f"{m}: mean daily maximum {rows[m]['tmax']} C, mean daily minimum {rows[m]['tmin']} C, "
+                         f"rainfall {rows[m]['rain']} {structured['rain_unit']}, {rows[m]['raindays']} rain days" for m in ms)
+        passages.append({"id": f"{code}.{len(passages):02d}", "locator": "Monthly climate averages", "text": text})
+    return structured, passages
+
+
+# ---- PDF text --------------------------------------------------------------------------------------------------
+def pdf_text(body, max_pages=400):
+    """Plain text of a text-based PDF (no OCR). Raises ValueError with a stable reason code when it cannot."""
+    try:
+        from pypdf import PdfReader
+    except ImportError as exc:
+        raise ValueError("pdf_support_unavailable") from exc
+    try:
+        reader = PdfReader(io.BytesIO(body))
+        parts = [(pg.extract_text() or "") for pg in reader.pages[:max_pages]]
+    except Exception as exc:               # malformed or truncated file: never crash the run
+        raise ValueError("pdf_unreadable:" + type(exc).__name__) from exc
+    text = "\n".join(parts).replace("\r", "")
+    if len(text.strip()) < 40:
+        raise ValueError("pdf_has_no_extractable_text")
+    return text
+
+
+def pdf_blocks(text, keep=None):
+    """Blocks from PDF text. Text PDFs rarely keep paragraph breaks, so: with ``keep`` (regexes) the document is cut into
+    sentences and only matching ones are kept (long documents stay bounded); without it, blank lines and bullets separate
+    blocks and hard line wraps are joined."""
+    if keep:
+        rx = [re.compile(k, re.I) for k in keep]
+        flat = re.sub(r"\s+", " ", text).strip()
+        return [("p", sent.strip()) for sent in re.split(r"(?<=[.!?])\s+(?=[A-Z(\d])", flat)
+                if 25 <= len(sent.strip()) <= 1200 and any(r.search(sent) for r in rx)]
+    paras = re.split(r"\n\s*\n|\n(?=\s*[\u2022\u25cf\u25aa\u25e6-]\s)", text)
+    blocks = []
+    for p in paras:
+        t = re.sub(r"^[\u2022\u25cf\u25aa\u25e6-]\s*", "", re.sub(r"\s*\n\s*", " ", p).strip())
+        t = re.sub(r"\s{2,}", " ", t)
+        if len(t) >= 25:
+            blocks.append(("p", t))
+    return blocks
+
+
 # ---- robots.txt ----------------------------------------------------------------------------------------------
 class Robots:
     """robots.txt per host. 404/410 = no restrictions. Any other failure = not permitted (conservative)."""
@@ -303,8 +391,8 @@ class Robots:
 
 
 # ---- collection ----------------------------------------------------------------------------------------------
-def resolve_url(src, params, cc):
-    fields = {"cc": cc, "iso3": params.get("iso3", ""), "fcdo": params.get("fcdo", ""), "travelhealthpro": params.get("travelhealthpro", ""),
+def resolve_url(src, params, cc, source_key=None):
+    fields = {"wmo_city": (params.get("wmo_cities") or {}).get(source_key, ""), "cc": cc, "iso3": params.get("iso3", ""), "fcdo": params.get("fcdo", ""), "travelhealthpro": params.get("travelhealthpro", ""),
               "cdc": params.get("cdc", ""), "lat": params.get("location", {}).get("lat", ""),
               "lon": params.get("location", {}).get("lon", "")}
     return src["url"].format(**fields)
@@ -320,7 +408,7 @@ def source_id_for(src, source_key, cc, data_sources):
 
 def collect_source(source_key, src, params, cc, http, now, limits, robots, data_sources):
     """One evidence document. Never raises: every failure is recorded as a status, not hidden."""
-    url = resolve_url(src, params, cc)
+    url = resolve_url(src, params, cc, source_key)
     sid, reused = source_id_for(src, source_key, cc, data_sources)
     doc = {"sourceKey": source_key, "sourceId": sid, "sourceIdIsExisting": reused, "code": src["code"],
            "publisher": src["publisher"], "jurisdiction": src["jurisdiction"], "tier": src["tier"], "title": src["title"],
@@ -338,8 +426,8 @@ def collect_source(source_key, src, params, cc, http, now, limits, robots, data_
     if not allowed:
         doc.update(status="BLOCKED_BY_ROBOTS", error=why)
         return doc
-    res = http(url, timeout=limits["http_timeout_seconds"], attempts=limits["http_attempts"],
-               max_bytes=limits["max_bytes_per_page"])
+    res = http(url, timeout=src.get("timeout_seconds", limits["http_timeout_seconds"]), attempts=limits["http_attempts"],
+               max_bytes=src.get("max_bytes", limits["max_bytes_per_page"]))
     doc["httpStatus"] = getattr(res, "status", None)
     if res is None or res.status != 200 or not res.body:
         doc["error"] = (getattr(res, "error_kind", None) or "empty") + (f":{res.status}" if res and res.status else "")
@@ -354,13 +442,30 @@ def collect_source(source_key, src, params, cc, http, now, limits, robots, data_
             doc["structured"] = structured
             doc["dataPeriod"] = structured["period"]
             text = json.dumps(structured, sort_keys=True)
+        elif src["parser"] == "wmo_wwis":
+            structured, passages = parse_wmo(res.body, params["wmo_cities"][source_key], src["code"])
+            doc["structured"] = structured
+            doc["dataPeriod"] = f"{structured['period_from']}-{structured['period_to']}"
+            # The only date the document states is its reference period; it is recorded as such, not as a publication date.
+            end = f"{structured['period_to']}-12-31"
+            doc.update(publicationDate=end, currencyDate=end, publicationDateStatus="STATED",
+                       publicationDateSource="climate reference period end (climate.datae)")
+            text = json.dumps({k: v for k, v in structured.items() if k != "supply_dates"}, sort_keys=True)
         else:
-            blocks, meta, title = html_blocks(res.body.decode("utf-8", "replace"))
-            text = "\n".join(t for _, t in blocks)
+            if src["parser"] == "pdf":
+                raw_text = pdf_text(res.body)
+                blocks, meta, title = pdf_blocks(raw_text, src.get("keep")), {}, ""
+                text = raw_text
+            else:
+                blocks, meta, title = html_blocks(res.body.decode("utf-8", "replace"))
+                text = "\n".join(t for _, t in blocks)
+            if src.get("date_regex"):
+                meta["_date_regex"] = src["date_regex"]
             passages = passages_from_blocks(blocks, src["code"], limits["max_passage_chars"])
             pub, how = stated_date(src["parser"], meta, text)
             if pub:
-                doc.update(publicationDate=pub, publicationDateStatus="STATED", publicationDateSource=how)
+                doc.update(publicationDate=pub, publicationDateStatus="STATED", publicationDateSource=how,
+                           publicationDatePrecision=meta.get("_precision", "DAY"))
             doc["pageTitle"] = clean_text(title, 160)
             if meta.get("govuk:updated-at"):
                 doc["pageUpdatedAt"] = meta["govuk:updated-at"][:25]
@@ -389,7 +494,8 @@ def collect_category(cfg, cc, category, http, now, data_sources, params=None):
     params = params or cfg.raw["country_params"][cc]
     robots = Robots(http, cfg.limits_cfg["http_timeout_seconds"])
     return [collect_source(k, cfg.sources[k], params, cc, http, now, cfg.limits_cfg, robots, data_sources)
-            for k in cfg.category_defs[category]["sources"]]
+            for k in cfg.category_defs[category]["sources"]
+            if not cfg.sources[k].get("only_countries") or cc in cfg.sources[k]["only_countries"]]
 
 
 # ---- passage selection ---------------------------------------------------------------------------------------

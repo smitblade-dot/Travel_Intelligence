@@ -21,6 +21,8 @@ from __future__ import annotations
 import json
 import re
 from datetime import date, datetime
+
+from .country_config import AGENT_NAME
 from pathlib import Path
 
 from .country_draft import CURRENT_WORDS, NUMBER, norm
@@ -194,7 +196,7 @@ def source_backing(src_cfg, registry, pub_cfg):
     return True, None
 
 
-def check_claim(claim, evidence_by_key, sources_cfg, registry, pub_cfg, today, existing_texts):
+def check_claim(claim, evidence_by_key, sources_cfg, registry, pub_cfg, today, existing_texts, polarity_texts=None):
     """-> list of reason codes (empty = publishable). Evidence entries are from sources retrieved this run."""
     reasons = []
     if claim["status"] == "CONFLICT":
@@ -235,10 +237,30 @@ def check_claim(claim, evidence_by_key, sources_cfg, registry, pub_cfg, today, e
         if jaccard(claim["text"], t) >= pub_cfg["duplicate_similarity"]:
             reasons.append("duplicate_of_existing")
             break
+    # Advice that reverses an existing record is a conflict. Records this builder published from the same verified sources are
+    # not compared for polarity (sibling topics cannot contradict each other; the keyword heuristic only produced false alarms).
+    for t in (existing_texts if polarity_texts is None else polarity_texts):
         if opposite_polarity(claim["text"], t):
             reasons.append("conflicts_with_existing_record")
             break
     return list(dict.fromkeys(reasons))
+
+
+def polarity_for(claim, records, sources_cfg):
+    """Texts a claim is compared against for reversed advice: every hand-written record, and builder-published records that do NOT
+    share a source with the claim. A sibling topic built from the same verified source cannot contradict it (the keyword heuristic
+    only raised false alarms there), but a builder-written record from a different source still can."""
+    cited = {x["sourceKey"] for x in claim["evidence"]}
+    out = []
+    for r in records:
+        if (r.get("provenance") or {}).get("builder") != AGENT_NAME:
+            out.append(r["content"])
+            continue
+        labels = {k for k, c in sources_cfg.items()
+                  if c.get("registry_id") and c.get("attribution_label") and c["attribution_label"] in r["content"]}      # corroborators do not count as lineage
+        if not (labels & cited):
+            out.append(r["content"])
+    return out
 
 
 def qualifier_loss(claim):
@@ -303,10 +325,11 @@ def item_confidence(claims, evidence_by_key, sources_cfg, registry, pub_cfg, tod
 def assess_item(item, evidence, sources_cfg, registry, pub_cfg, today, existing_records, country_id, category):
     """Decide one topic. -> dict(decision, claims, excluded, reasons, confidence). decision: PUBLISH | HOLD | NO_CHANGE."""
     ev_by_key = {e["sourceKey"]: e for e in evidence}
-    existing_texts = [r["content"] for r in existing_records if r.get("countryId") == country_id and r.get("category") == category]
+    same = [r for r in existing_records if r.get("countryId") == country_id and r.get("category") == category]
+    existing_texts = [r["content"] for r in same]
     keep, excluded, held_reasons = [], list(item.get("excluded", [])), []
     for c in item["claims"]:
-        reasons = check_claim(c, ev_by_key, sources_cfg, registry, pub_cfg, today, existing_texts)
+        reasons = check_claim(c, ev_by_key, sources_cfg, registry, pub_cfg, today, existing_texts, polarity_for(c, same, sources_cfg))
         if not reasons:
             keep.append(c)
         else:
@@ -316,7 +339,8 @@ def assess_item(item, evidence, sources_cfg, registry, pub_cfg, today, existing_
     for a, b in conflicts_within(keep):
         held_reasons.append("conflict")
         excluded.append({"text": a, "reasons": ["conflict"], "against": b})
-    result = {"topic": item["topic"], "claims": keep, "excluded": excluded, "reasons": sorted(set(held_reasons))}
+    result = {"topic": item["topic"], "claims": keep, "excluded": excluded, "reasons": sorted(set(held_reasons)),
+              "recordNote": item.get("recordNote")}
     if held_reasons:
         return result | {"decision": "HOLD", "claims": [], "confidence": None}
     if not keep:
@@ -330,11 +354,11 @@ def assess_item(item, evidence, sources_cfg, registry, pub_cfg, today, existing_
     return result | {"decision": "PUBLISH", "confidence": conf, "claims": keep[:pub_cfg["max_claims_per_record"]]}
 
 
-def date_phrase(verb, iso):
+def date_phrase(verb, iso, precision="DAY"):
     if not iso:
         return "publication date not stated by the source"
     d = datetime.fromisoformat(iso).date()
-    return f"{verb} {d.day} {d.strftime('%b %Y')}"
+    return f"{verb} {d.strftime('%b %Y')}" if precision == "MONTH" else f"{verb} {d.day} {d.strftime('%b %Y')}"
 
 
 def compose_content(claims, evidence_by_key, sources_cfg):
@@ -346,6 +370,6 @@ def compose_content(claims, evidence_by_key, sources_cfg):
     parts = []
     for sk, texts in groups.items():
         cfg, ev = sources_cfg[sk], evidence_by_key[sk]
-        lead = f"{cfg['attribution_label']} ({date_phrase(cfg.get('date_verb', 'published'), ev.get('publicationDate'))}): "
+        lead = f"{cfg['attribution_label']} ({date_phrase(cfg.get('date_verb', 'published'), ev.get('publicationDate'), ev.get('publicationDatePrecision', 'DAY'))}): "
         parts.append(lead + " ".join(texts))
     return " ".join(parts)

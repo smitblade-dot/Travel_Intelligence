@@ -4,6 +4,7 @@ from __future__ import annotations
 from datetime import date, datetime, timedelta
 
 from .country_config import CATEGORIES
+from .country_draft import slug
 from .store import fingerprint, task_dedupe_key
 
 TASK_TYPE = "country_content_draft"
@@ -33,7 +34,7 @@ def coverage_summary(data):
     return {"countries": len(countries), "combinations": total, "covered": covered, "missing": total - covered}
 
 
-def find_gaps(data, countries, categories, today=None, stale_after_days=365, gap_types=("MISSING", "STALE")):
+def find_gaps(data, countries, categories, today=None, stale_after_days=365, gap_types=("MISSING", "STALE"), topics_by_category=None):
     """Gaps for the configured scope only, ordered by category order then country. A combination with an active
     record is STALE only when every active record is past its reviewDate or was last checked too long ago."""
     today = today or date.today()
@@ -53,6 +54,19 @@ def find_gaps(data, countries, categories, today=None, stale_after_days=365, gap
                     due, checked = _day(r.get("reviewDate")), _day(r.get("dateChecked"))
                     return (due is not None and due < today) or (checked is not None and (today - checked).days > stale_after_days)
                 if not all(stale(r) for r in recs):
+                    # The category has records, but a configured publishable topic (for example seasonal climate or electrical
+                    # supply) may still have none. That is a smaller gap of its own, so new sources reach populated categories.
+                    have_ids = {r["id"] for r in recs}
+                    have_sub = {str(r.get("subcategory", "")).strip().lower() for r in recs}
+                    absent = [t for t, sub in (topics_by_category or {}).get(cat, [])
+                              if f"{cc}-{cat.lower()}-{slug(t)}" not in have_ids and str(sub).strip().lower() not in have_sub]
+                    if not absent:
+                        continue
+                    gap = {"type": "TOPIC_MISSING", "detail": f"No active {cat} record yet for {country['name']} on: {', '.join(absent)}.",
+                           "topics": absent}
+                    if gap["type"] in gap_types:
+                        gaps.append({"countryId": cc, "country": country["name"], "category": cat, "gap": gap,
+                                     "existingRecordIds": sorted(have_ids)})
                     continue
                 gap = {"type": "STALE", "detail": f"All {len(recs)} active {cat} record(s) are past review or older than "
                                                   f"{stale_after_days} days."}

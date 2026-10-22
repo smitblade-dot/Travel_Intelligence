@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /ar/*
+Allow: /en/*
+Disallow: /api/*
+Disallow: /cla*/*
+Disallow: /com*/*
+Disallow: /cro*/*
+Disallow: /glo*/*
+Disallow: /log/*
+Disallow: /m/*
+Disallow: /mod*/*
+Disallow: /rev*/*
+Disallow: /upd*/*
+Disallow: /sitelink.htm

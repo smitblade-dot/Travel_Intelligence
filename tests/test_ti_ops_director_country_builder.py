@@ -115,10 +115,24 @@ class Gaps(unittest.TestCase):
         self.assertEqual(s["combinations"], 28)
         self.assertEqual(s["covered"] + s["missing"], 28)
 
-    def test_real_data_has_the_ghana_gaps(self):
-        data = json.loads((ROOT / "data.json").read_text(encoding="utf-8"))
+    def test_fixture_data_has_the_ghana_gaps(self):
+        data = cs.base_data()                       # the live data.json has since been filled by automatic publication
         gaps = find_gaps(data, ["gh"], ["ENVIRONMENT", "TRANSPORT", "EQUIPMENT"], datetime(2026, 10, 22).date())
         self.assertEqual([g["gap"]["type"] for g in gaps], ["MISSING"] * 3)
+
+    def test_a_populated_category_still_has_a_gap_for_a_configured_topic_with_no_record(self):
+        data = cs.base_data()
+        data["records"].append({"id": "gh-environment-flooding-natural-hazards", "countryId": "gh", "category": "ENVIRONMENT", "status": "ACTIVE",
+                                "dateChecked": "2026-10-22", "reviewDate": "2027-01-20", "content": "x", "title": "x", "sourceId": "gh-fcdo-security"})
+        topics = {"ENVIRONMENT": [("CLIMATE_SEASONAL", "Climate and seasons"), ("FLOODING_NATURAL_HAZARDS", "Flooding and natural hazards")]}
+        gaps = find_gaps(data, ["gh"], ["ENVIRONMENT"], datetime(2026, 10, 22).date(), 365, ("MISSING", "STALE", "TOPIC_MISSING"), topics)
+        self.assertEqual([(g["gap"]["type"], g["gap"]["topics"]) for g in gaps], [("TOPIC_MISSING", ["CLIMATE_SEASONAL"])])
+        data["records"].append(dict(data["records"][-1], id="gh-environment-climate-seasonal"))
+        self.assertEqual(find_gaps(data, ["gh"], ["ENVIRONMENT"], datetime(2026, 10, 22).date(), 365, ("MISSING", "STALE", "TOPIC_MISSING"), topics), [])
+        self.assertEqual(find_gaps(data, ["gh"], ["ENVIRONMENT"], datetime(2026, 10, 22).date(), 365, ("MISSING", "STALE"), topics), [])
+        data["records"].pop()                                                    # a hand-written record under another id covers the topic by subcategory
+        data["records"].append(dict(data["records"][-1], id="gh-environment-hand-written-climate", subcategory="Climate and seasons"))
+        self.assertEqual(find_gaps(data, ["gh"], ["ENVIRONMENT"], datetime(2026, 10, 22).date(), 365, ("MISSING", "STALE", "TOPIC_MISSING"), topics), [])
 
     def test_baseline_audit_script_parses_and_agrees(self):
         import subprocess
@@ -131,7 +145,7 @@ class Gaps(unittest.TestCase):
 
 class Evidence(unittest.TestCase):
     def collect(self, cat, net=None):
-        cfg = load_builder_config({}, ROOT)
+        cfg = cs.legacy(load_builder_config({}, ROOT))
         return collect_category(cfg, "gh", cat, net or FakeNet(), cs.NOW, cs.base_data()["sources"])
 
     def test_pages_are_reduced_to_verbatim_passages_without_page_chrome(self):
@@ -431,7 +445,7 @@ NASA_ROBOTS = "User-agent: *\nAllow: /api/pages/\nDisallow: /api/\nDisallow: /be
 class ClimateSources(unittest.TestCase):
     """Found live on 22 Oct 2026: NASA POWER's robots.txt disallows /api/ for generic agents."""
     def evidence(self, net, cfg=None):
-        cfg = cfg or load_builder_config({}, ROOT)
+        cfg = cfg or cs.legacy(load_builder_config({}, ROOT))
         return collect_category(cfg, "gh", "ENVIRONMENT", net, cs.NOW, cs.base_data()["sources"]), cfg
 
     def test_nasa_api_is_blocked_by_its_robots_txt_and_the_world_bank_series_is_used(self):
@@ -465,7 +479,7 @@ class ClimateSources(unittest.TestCase):
 
     def test_robots_exception_only_counts_with_marcs_written_approval(self):
         net = FakeNet(robots={"power.larc.nasa.gov": NASA_ROBOTS})
-        cfg = load_builder_config({}, ROOT)
+        cfg = cs.legacy(load_builder_config({}, ROOT))
         cfg.raw["sources"]["nasa_power"]["robots_exception"] = {"approved_by": "Someone", "approved_on": "2026-10-22"}
         ev, _ = self.evidence(net, cfg)
         self.assertEqual({e["sourceKey"]: e["status"] for e in ev}["nasa_power"], "BLOCKED_BY_ROBOTS")
@@ -856,7 +870,7 @@ class MasterAgentIntegration(unittest.TestCase):
         from ti_ops_director.controller import Controller
         from ti_ops_director.store import Store
         cfg = make_cfg(tmp)
-        cfg.repo_root = str(ROOT)
+        cfg.repo_root = str(cs.make_repo(tmp))
         store = Store(cfg.db_path)
         return Controller(cfg, store, http=net), cfg
 
