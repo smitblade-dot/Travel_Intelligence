@@ -118,12 +118,19 @@
           "gh-environment-flooding-natural-hazards"
         ]
       },
-      "state": "running",
+      "state": "completed",
       "attempts": 1,
       "created_at": "2026-10-22T17:44:23+00:00",
       "updated_at": "2026-10-22T17:44:23+00:00",
-      "lease_owner": "runnervmxehtw-2130-117179",
-      "lease_expires": "2026-10-22T18:04:23+00:00"
+      "lease_owner": null,
+      "lease_expires": null,
+      "outcome": "assessed",
+      "cost_usd": 0.0,
+      "blockingReason": null,
+      "error": null,
+      "published": [],
+      "held": [],
+      "draftId": "cib-gh-environment-49f34bc868"
     },
     "Travel Intelligence|country_content_draft|gh:EQUIPMENT:TOPIC_MISSING|eac9425a6a54efcca2aabe86e799d47b|W42": {
       "id": "cbt-41513c9ba955",
@@ -145,45 +152,24 @@
           "gh-equipment-mosquito"
         ]
       },
-      "state": "running",
+      "state": "completed",
       "attempts": 1,
       "created_at": "2026-10-22T17:44:23+00:00",
       "updated_at": "2026-10-22T17:44:23+00:00",
-      "lease_owner": "runnervmxehtw-2130-117179",
-      "lease_expires": "2026-10-22T18:04:23+00:00"
+      "lease_owner": null,
+      "lease_expires": null,
+      "outcome": "assessed",
+      "cost_usd": 0.0,
+      "blockingReason": null,
+      "error": null,
+      "published": [],
+      "held": [
+        "MOSQUITO"
+      ],
+      "draftId": "cib-gh-equipment-49834200ea"
     }
   },
   "drafts": {
-    "cib-gh-transport-7147f6c436": {
-      "draftId": "cib-gh-transport-7147f6c436",
-      "path": "drafts/gh/TRANSPORT/cib-gh-transport-7147f6c436.json",
-      "countryId": "gh",
-      "category": "TRANSPORT",
-      "evidenceFingerprint": "7147f6c4361f779b706aaddad06bc7b8",
-      "modelStatus": "NOT_NEEDED",
-      "reviewStatus": "ELIGIBLE_AWAITING_PUBLICATION_RUN",
-      "createdAt": "2026-10-22T11:09:38+00:00",
-      "costUsd": 0.0,
-      "claims": 31,
-      "settled": false,
-      "published": [],
-      "supersededBy": "cib-gh-transport-21272f0ba2"
-    },
-    "cib-gh-equipment-ee6320b817": {
-      "draftId": "cib-gh-equipment-ee6320b817",
-      "path": "drafts/gh/EQUIPMENT/cib-gh-equipment-ee6320b817.json",
-      "countryId": "gh",
-      "category": "EQUIPMENT",
-      "evidenceFingerprint": "ee6320b81739bdd81a13680a4455a3d2",
-      "modelStatus": "NOT_NEEDED",
-      "reviewStatus": "HELD_EXCEPTIONS_ROUTED",
-      "createdAt": "2026-10-22T11:09:38+00:00",
-      "costUsd": 0.0,
-      "claims": 25,
-      "settled": false,
-      "published": [],
-      "supersededBy": "cib-gh-equipment-f44ba0f486"
-    },
     "cib-gh-environment-1dfa3c0367": {
       "draftId": "cib-gh-environment-1dfa3c0367",
       "path": "drafts/gh/ENVIRONMENT/cib-gh-environment-1dfa3c0367.json",
@@ -200,7 +186,8 @@
       "settled": true,
       "published": [
         "gh-environment-flooding-natural-hazards"
-      ]
+      ],
+      "supersededBy": "cib-gh-environment-49f34bc868"
     },
     "cib-gh-transport-21272f0ba2": {
       "draftId": "cib-gh-transport-21272f0ba2",
@@ -239,7 +226,8 @@
       "published": [
         "gh-equipment-clothing",
         "gh-equipment-mosquito"
-      ]
+      ],
+      "supersededBy": "cib-gh-equipment-49834200ea"
     },
     "cib-gh-equipment-68d4253efe": {
       "draftId": "cib-gh-equipment-68d4253efe",
@@ -257,6 +245,38 @@
       "settled": false,
       "published": [],
       "supersededBy": "cib-gh-equipment-f44ba0f486"
+    },
+    "cib-gh-environment-49f34bc868": {
+      "draftId": "cib-gh-environment-49f34bc868",
+      "path": "drafts/gh/ENVIRONMENT/cib-gh-environment-49f34bc868.json",
+      "countryId": "gh",
+      "category": "ENVIRONMENT",
+      "evidenceFingerprint": "49f34bc868ade946be26130e5eb950ac",
+      "modelStatus": "NOT_NEEDED",
+      "reviewStatus": "ELIGIBLE_AWAITING_PUBLICATION_RUN",
+      "createdAt": "2026-10-22T17:44:23+00:00",
+      "costUsd": 0.0,
+      "claims": 9,
+      "rules": "d6bb6f02e8fd468bcd6846ba5444712c",
+      "publicationId": null,
+      "settled": false,
+      "published": []
+    },
+    "cib-gh-equipment-49834200ea": {
+      "draftId": "cib-gh-equipment-49834200ea",
+      "path": "drafts/gh/EQUIPMENT/cib-gh-equipment-49834200ea.json",
+      "countryId": "gh",
+      "category": "EQUIPMENT",
+      "evidenceFingerprint": "49834200ea988ec1a3b8a2bbd7afc5ff",
+      "modelStatus": "NOT_NEEDED",
+      "reviewStatus": "HELD_EXCEPTIONS_ROUTED",
+      "createdAt": "2026-10-22T17:44:23+00:00",
+      "costUsd": 0.0,
+      "claims": 28,
+      "rules": "0b995e1f60f33d2b6f3c2b864d27f6a0",
+      "publicationId": null,
+      "settled": false,
+      "published": []
     }
   },
   "runs": [
@@ -447,6 +467,21 @@
       "published": [],
       "publicationFailures": [],
       "outcomes": {}
+    },
+    {
+      "at": "2026-10-22T17:44:23+00:00",
+      "mode": "draft",
+      "tasksRun": 2,
+      "created": 2,
+      "reopened": 0,
+      "duplicatesSuppressed": 0,
+      "recovered": [],
+      "published": [],
+      "publicationFailures": [],
+      "outcomes": {
+        "Travel Intelligence|country_content_draft|gh:ENVIRONMENT:TOPIC_MISSING|7a929f2bc7b1730469b607518c74a6f3|W42": "assessed",
+        "Travel Intelligence|country_content_draft|gh:EQUIPMENT:TOPIC_MISSING|eac9425a6a54efcca2aabe86e799d47b|W42": "assessed"
+      }
     }
   ],
   "exceptions": {
@@ -463,10 +498,11 @@
       "action": "Source cannot be used as configured: robots.txt disallows this path for generic agents. Needs Marc's decision (robots exception or another source).",
       "requiresHuman": true,
       "id": "cbx-cef0d7be0c",
-      "state": "HELD",
+      "state": "RESOLVED",
       "firstSeen": "2026-10-22T11:09:38+00:00",
       "lastSeen": "2026-10-22T14:27:41+00:00",
-      "occurrences": 5
+      "occurrences": 5,
+      "resolvedAt": "2026-10-22T17:44:23+00:00"
     },
     "gh:ENVIRONMENT:source:worldbank_cckp:BLOCKED_BY_ROBOTS": {
       "key": "gh:ENVIRONMENT:source:worldbank_cckp:BLOCKED_BY_ROBOTS",
@@ -481,10 +517,11 @@
       "action": "Source cannot be used as configured: robots.txt could not be read (HTTP 500); treated as not permitted. Needs Marc's decision (robots exception or another source).",
       "requiresHuman": true,
       "id": "cbx-d66740f506",
-      "state": "HELD",
+      "state": "RESOLVED",
       "firstSeen": "2026-10-22T11:09:38+00:00",
       "lastSeen": "2026-10-22T14:27:41+00:00",
-      "occurrences": 5
+      "occurrences": 5,
+      "resolvedAt": "2026-10-22T17:44:23+00:00"
     },
     "gh:TRANSPORT:registry:cdc_travel": {
       "key": "gh:TRANSPORT:registry:cdc_travel",
@@ -577,10 +614,11 @@
       "action": "Held until a registry-backed source states a publication date inside its freshness limit. No action unless it persists.",
       "requiresHuman": false,
       "id": "cbx-3b5e34a9f5",
-      "state": "HELD",
+      "state": "RESOLVED",
       "firstSeen": "2026-10-22T13:52:15+00:00",
       "lastSeen": "2026-10-22T14:27:41+00:00",
-      "occurrences": 4
+      "occurrences": 4,
+      "resolvedAt": "2026-10-22T17:44:23+00:00"
     },
     "gh:EQUIPMENT:PLUGS:no_external_source": {
       "key": "gh:EQUIPMENT:PLUGS:no_external_source",
@@ -596,10 +634,67 @@
       "action": "Add an authoritative source for this value to the source register (for example the IEC world plugs list); until then it is not republished as a sourced record.",
       "requiresHuman": true,
       "id": "cbx-96ddf125b1",
-      "state": "HELD",
+      "state": "RESOLVED",
       "firstSeen": "2026-10-22T13:52:15+00:00",
       "lastSeen": "2026-10-22T14:27:41+00:00",
-      "occurrences": 4
+      "occurrences": 4,
+      "resolvedAt": "2026-10-22T17:44:23+00:00"
+    },
+    "gh:EQUIPMENT:source:gsa_plugs:BLOCKED_BY_ROBOTS": {
+      "key": "gh:EQUIPMENT:source:gsa_plugs:BLOCKED_BY_ROBOTS",
+      "scope": "source",
+      "countryId": "gh",
+      "category": "EQUIPMENT",
+      "topic": null,
+      "reasons": [
+        "source_blocked_by_robots"
+      ],
+      "detail": "gsa_plugs: robots.txt could not be read (HTTP network_error:SSLCertVerificationError); treated as not permitted",
+      "action": "Source cannot be used as configured: robots.txt could not be read (HTTP network_error:SSLCertVerificationError); treated as not permitted. Needs Marc's decision (robots exception or another source).",
+      "requiresHuman": true,
+      "id": "cbx-73b5b34eb7",
+      "state": "HELD",
+      "firstSeen": "2026-10-22T17:44:23+00:00",
+      "lastSeen": "2026-10-22T17:44:23+00:00",
+      "occurrences": 1
+    },
+    "gh:EQUIPMENT:MOSQUITO:conflicts_with_existing_record+no_dated_source_within_freshness_limit": {
+      "key": "gh:EQUIPMENT:MOSQUITO:conflicts_with_existing_record+no_dated_source_within_freshness_limit",
+      "scope": "topic",
+      "countryId": "gh",
+      "category": "EQUIPMENT",
+      "topic": "MOSQUITO",
+      "reasons": [
+        "conflicts_with_existing_record",
+        "no_dated_source_within_freshness_limit"
+      ],
+      "decision": "HOLD",
+      "detail": "Dengue - CDC Yellow Book -> fragment_or_pointer; Map: Dengue risk for Africa and Europe -> fragment_or_pointer; Use an appropriate insect repellent (see below). -> fragment_or_pointer",
+      "action": "The new text points the opposite way from an existing record. The existing record was kept untouched. Held until a registry-backed source states a publication date inside its freshness limit. No action unless it persists.",
+      "requiresHuman": true,
+      "id": "cbx-0115b7fad0",
+      "state": "HELD",
+      "firstSeen": "2026-10-22T17:44:23+00:00",
+      "lastSeen": "2026-10-22T17:44:23+00:00",
+      "occurrences": 1
+    },
+    "gh:EQUIPMENT:PLUGS:evidence_missing:d7f37337": {
+      "key": "gh:EQUIPMENT:PLUGS:evidence_missing:d7f37337",
+      "scope": "topic",
+      "countryId": "gh",
+      "category": "EQUIPMENT",
+      "topic": "PLUGS",
+      "reasons": [
+        "evidence_missing"
+      ],
+      "detail": "plug_type: source not retrieved (not published: no source of the required standing states it)",
+      "action": "Held: plug_type: source not retrieved (not published: no source of the required standing states it). Retried automatically each run; source problems are listed separately.",
+      "requiresHuman": false,
+      "id": "cbx-c1229e4d05",
+      "state": "HELD",
+      "firstSeen": "2026-10-22T17:44:23+00:00",
+      "lastSeen": "2026-10-22T17:44:23+00:00",
+      "occurrences": 1
     }
   },
   "publications": {
@@ -650,7 +745,7 @@
     "currency": "USD",
     "status": "estimated from API usage fields x configured list prices; not invoice-confirmed",
     "mode": "dry_run",
-    "updated": "2026-10-22T14:36:18+00:00"
+    "updated": "2026-10-22T17:44:43+00:00"
   },
   "triageCache": {}
 }
