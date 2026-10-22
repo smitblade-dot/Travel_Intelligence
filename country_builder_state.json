@@ -20,12 +20,19 @@
         },
         "existingRecordIds": []
       },
-      "state": "running",
+      "state": "completed",
       "attempts": 1,
       "created_at": "2026-10-22T11:09:38+00:00",
       "updated_at": "2026-10-22T11:09:38+00:00",
-      "lease_owner": "runnervm8k3b6-2303-e449ff",
-      "lease_expires": "2026-10-22T11:29:38+00:00"
+      "lease_owner": null,
+      "lease_expires": null,
+      "outcome": "assessed",
+      "cost_usd": 0.0,
+      "blockingReason": null,
+      "error": null,
+      "published": [],
+      "held": [],
+      "draftId": "cib-gh-environment-a0afa9c016"
     },
     "Travel Intelligence|country_content_draft|gh:TRANSPORT:MISSING|cfbb29ccdb58436d53d137f9d07961ac|W42": {
       "id": "cbt-6fe1cfdf3b64",
@@ -41,12 +48,19 @@
         },
         "existingRecordIds": []
       },
-      "state": "running",
+      "state": "completed",
       "attempts": 1,
       "created_at": "2026-10-22T11:09:38+00:00",
       "updated_at": "2026-10-22T11:09:38+00:00",
-      "lease_owner": "runnervm8k3b6-2303-e449ff",
-      "lease_expires": "2026-10-22T11:29:38+00:00"
+      "lease_owner": null,
+      "lease_expires": null,
+      "outcome": "assessed",
+      "cost_usd": 0.0,
+      "blockingReason": null,
+      "error": null,
+      "published": [],
+      "held": [],
+      "draftId": "cib-gh-transport-7147f6c436"
     },
     "Travel Intelligence|country_content_draft|gh:EQUIPMENT:MISSING|1b1ea479b4bf2ebbb9dc5502bbb1b9e9|W42": {
       "id": "cbt-0c762b7b3a6d",
@@ -62,17 +76,205 @@
         },
         "existingRecordIds": []
       },
-      "state": "running",
+      "state": "completed",
       "attempts": 1,
       "created_at": "2026-10-22T11:09:38+00:00",
       "updated_at": "2026-10-22T11:09:38+00:00",
-      "lease_owner": "runnervm8k3b6-2303-e449ff",
-      "lease_expires": "2026-10-22T11:29:38+00:00"
+      "lease_owner": null,
+      "lease_expires": null,
+      "outcome": "assessed",
+      "cost_usd": 0.0,
+      "blockingReason": null,
+      "error": null,
+      "published": [],
+      "held": [
+        "MOSQUITO"
+      ],
+      "draftId": "cib-gh-equipment-ee6320b817"
     }
   },
-  "drafts": {},
-  "runs": [],
-  "exceptions": {},
+  "drafts": {
+    "cib-gh-environment-a0afa9c016": {
+      "draftId": "cib-gh-environment-a0afa9c016",
+      "path": "drafts/gh/ENVIRONMENT/cib-gh-environment-a0afa9c016.json",
+      "countryId": "gh",
+      "category": "ENVIRONMENT",
+      "evidenceFingerprint": "a0afa9c016d4bd0c9df29fc88f6abdf4",
+      "modelStatus": "NOT_NEEDED",
+      "reviewStatus": "ELIGIBLE_AWAITING_PUBLICATION_RUN",
+      "createdAt": "2026-10-22T11:09:38+00:00",
+      "costUsd": 0.0,
+      "claims": 3,
+      "settled": false,
+      "published": []
+    },
+    "cib-gh-transport-7147f6c436": {
+      "draftId": "cib-gh-transport-7147f6c436",
+      "path": "drafts/gh/TRANSPORT/cib-gh-transport-7147f6c436.json",
+      "countryId": "gh",
+      "category": "TRANSPORT",
+      "evidenceFingerprint": "7147f6c4361f779b706aaddad06bc7b8",
+      "modelStatus": "NOT_NEEDED",
+      "reviewStatus": "ELIGIBLE_AWAITING_PUBLICATION_RUN",
+      "createdAt": "2026-10-22T11:09:38+00:00",
+      "costUsd": 0.0,
+      "claims": 31,
+      "settled": false,
+      "published": []
+    },
+    "cib-gh-equipment-ee6320b817": {
+      "draftId": "cib-gh-equipment-ee6320b817",
+      "path": "drafts/gh/EQUIPMENT/cib-gh-equipment-ee6320b817.json",
+      "countryId": "gh",
+      "category": "EQUIPMENT",
+      "evidenceFingerprint": "ee6320b81739bdd81a13680a4455a3d2",
+      "modelStatus": "NOT_NEEDED",
+      "reviewStatus": "HELD_EXCEPTIONS_ROUTED",
+      "createdAt": "2026-10-22T11:09:38+00:00",
+      "costUsd": 0.0,
+      "claims": 25,
+      "settled": false,
+      "published": []
+    }
+  },
+  "runs": [
+    {
+      "at": "2026-10-22T11:09:38+00:00",
+      "mode": "draft",
+      "tasksRun": 3,
+      "created": 3,
+      "duplicatesSuppressed": 0,
+      "recovered": [],
+      "published": [],
+      "publicationFailures": [],
+      "outcomes": {
+        "Travel Intelligence|country_content_draft|gh:ENVIRONMENT:MISSING|89289d18c5f66290275665f64e9406a9|W42": "assessed",
+        "Travel Intelligence|country_content_draft|gh:TRANSPORT:MISSING|cfbb29ccdb58436d53d137f9d07961ac|W42": "assessed",
+        "Travel Intelligence|country_content_draft|gh:EQUIPMENT:MISSING|1b1ea479b4bf2ebbb9dc5502bbb1b9e9|W42": "assessed"
+      }
+    }
+  ],
+  "exceptions": {
+    "gh:ENVIRONMENT:source:nasa_power:BLOCKED_BY_ROBOTS": {
+      "key": "gh:ENVIRONMENT:source:nasa_power:BLOCKED_BY_ROBOTS",
+      "scope": "source",
+      "countryId": "gh",
+      "category": "ENVIRONMENT",
+      "topic": null,
+      "reasons": [
+        "source_blocked_by_robots"
+      ],
+      "detail": "nasa_power: robots.txt disallows this path for generic agents",
+      "action": "Source cannot be used as configured: robots.txt disallows this path for generic agents. Needs Marc's decision (robots exception or another source).",
+      "requiresHuman": true,
+      "id": "cbx-cef0d7be0c",
+      "state": "HELD",
+      "firstSeen": "2026-10-22T11:09:38+00:00",
+      "lastSeen": "2026-10-22T11:09:38+00:00",
+      "occurrences": 1
+    },
+    "gh:ENVIRONMENT:source:worldbank_cckp:BLOCKED_BY_ROBOTS": {
+      "key": "gh:ENVIRONMENT:source:worldbank_cckp:BLOCKED_BY_ROBOTS",
+      "scope": "source",
+      "countryId": "gh",
+      "category": "ENVIRONMENT",
+      "topic": null,
+      "reasons": [
+        "source_blocked_by_robots"
+      ],
+      "detail": "worldbank_cckp: robots.txt could not be read (HTTP 500); treated as not permitted",
+      "action": "Source cannot be used as configured: robots.txt could not be read (HTTP 500); treated as not permitted. Needs Marc's decision (robots exception or another source).",
+      "requiresHuman": true,
+      "id": "cbx-d66740f506",
+      "state": "HELD",
+      "firstSeen": "2026-10-22T11:09:38+00:00",
+      "lastSeen": "2026-10-22T11:09:38+00:00",
+      "occurrences": 1
+    },
+    "gh:TRANSPORT:registry:cdc_travel": {
+      "key": "gh:TRANSPORT:registry:cdc_travel",
+      "scope": "source_register",
+      "countryId": "gh",
+      "category": "TRANSPORT",
+      "topic": null,
+      "reasons": [
+        "source_not_in_registry"
+      ],
+      "detail": "cdc_travel would support ROAD_TRAVEL (and possibly other topics)",
+      "action": "Add this source family to config/source_registry.json after due diligence, or leave these claims held. It may corroborate but cannot establish a claim alone.",
+      "requiresHuman": true,
+      "id": "cbx-b63b1a0bfd",
+      "state": "HELD",
+      "firstSeen": "2026-10-22T11:09:38+00:00",
+      "lastSeen": "2026-10-22T11:09:38+00:00",
+      "occurrences": 1
+    },
+    "gh:EQUIPMENT:registry:cdc_travel": {
+      "key": "gh:EQUIPMENT:registry:cdc_travel",
+      "scope": "source_register",
+      "countryId": "gh",
+      "category": "EQUIPMENT",
+      "topic": null,
+      "reasons": [
+        "source_not_in_registry"
+      ],
+      "detail": "cdc_travel would support CLOTHING (and possibly other topics)",
+      "action": "Add this source family to config/source_registry.json after due diligence, or leave these claims held. It may corroborate but cannot establish a claim alone.",
+      "requiresHuman": true,
+      "id": "cbx-2dbda1512a",
+      "state": "HELD",
+      "firstSeen": "2026-10-22T11:09:38+00:00",
+      "lastSeen": "2026-10-22T11:09:38+00:00",
+      "occurrences": 1
+    },
+    "gh:EQUIPMENT:registry:travelhealthpro": {
+      "key": "gh:EQUIPMENT:registry:travelhealthpro",
+      "scope": "source_register",
+      "countryId": "gh",
+      "category": "EQUIPMENT",
+      "topic": null,
+      "reasons": [
+        "source_not_in_registry"
+      ],
+      "detail": "travelhealthpro would support MOSQUITO (and possibly other topics)",
+      "action": "Add this source family to config/source_registry.json after due diligence, or leave these claims held. It may corroborate but cannot establish a claim alone.",
+      "requiresHuman": true,
+      "id": "cbx-4caed5b56f",
+      "state": "HELD",
+      "firstSeen": "2026-10-22T11:09:38+00:00",
+      "lastSeen": "2026-10-22T11:09:38+00:00",
+      "occurrences": 1
+    },
+    "gh:EQUIPMENT:MOSQUITO:fragment_or_pointer": {
+      "key": "gh:EQUIPMENT:MOSQUITO:fragment_or_pointer",
+      "scope": "topic",
+      "countryId": "gh",
+      "category": "EQUIPMENT",
+      "topic": "MOSQUITO",
+      "reasons": [
+        "fragment_or_pointer"
+      ],
+      "decision": "HOLD",
+      "detail": "Dengue - CDC Yellow Book -> fragment_or_pointer; Map: Dengue risk for Africa and Europe -> fragment_or_pointer; Use an appropriate insect repellent (see below). -> fragment_or_pointer",
+      "action": "fragment_or_pointer",
+      "requiresHuman": false,
+      "id": "cbx-a32ef9ebde",
+      "state": "HELD",
+      "firstSeen": "2026-10-22T11:09:38+00:00",
+      "lastSeen": "2026-10-22T11:09:38+00:00",
+      "occurrences": 1
+    }
+  },
   "publications": {},
-  "pending": {}
+  "pending": {},
+  "spend": {
+    "daily": {},
+    "monthly": {},
+    "open": [],
+    "currency": "USD",
+    "status": "estimated from API usage fields x configured list prices; not invoice-confirmed",
+    "mode": "dry_run",
+    "updated": "2026-10-22T11:09:43+00:00"
+  },
+  "triageCache": {}
 }

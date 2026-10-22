@@ -1,0 +1,315 @@
+{
+  "draftId": "cib-gh-environment-a0afa9c016",
+  "schemaVersion": "2.0",
+  "agent": "03AA-04_Country_Intelligence_Builder_TI",
+  "promptVersion": "cib-1",
+  "countryId": "gh",
+  "country": "Ghana",
+  "category": "ENVIRONMENT",
+  "gap": {
+    "type": "MISSING",
+    "detail": "No active ENVIRONMENT record for Ghana."
+  },
+  "generatedAt": "2026-10-22T11:09:38+00:00",
+  "evidenceFingerprint": "a0afa9c016d4bd0c9df29fc88f6abdf4",
+  "reviewStatus": "ELIGIBLE_AWAITING_PUBLICATION_RUN",
+  "publicationStatus": "NOT_PUBLISHED",
+  "modelStatus": "NOT_NEEDED",
+  "model": null,
+  "verification": null,
+  "items": [
+    {
+      "topic": "FLOODING_NATURAL_HAZARDS",
+      "title": "Flooding and natural hazards",
+      "claims": [
+        {
+          "text": "Flooding is common in the Upper West, North East, Northern and Savannah regions during the rainy season, from March to November.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "evidence": [
+            {
+              "passageId": "FS.35",
+              "sourceKey": "fcdo_safety",
+              "sourceId": "gh-fcdo-security",
+              "url": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
+              "publisher": "UK Foreign, Commonwealth & Development Office",
+              "quote": "Flooding is common in the Upper West, North East, Northern and Savannah regions during the rainy season, from March to November.",
+              "retrievedAt": "2026-10-22T11:09:38+00:00",
+              "publicationDate": "2026-07-02",
+              "independenceGroupId": "uk-fcdo"
+            }
+          ],
+          "independentSources": 1,
+          "note": null
+        },
+        {
+          "text": "Heavy rainfall can also cause flooding in other parts of Ghana, including urban areas such as Accra and its surroundings. Flooding can disrupt road travel, public transport, electricity and other services, and conditions can change quickly following periods of intense rainfall.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "evidence": [
+            {
+              "passageId": "FS.35",
+              "sourceKey": "fcdo_safety",
+              "sourceId": "gh-fcdo-security",
+              "url": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
+              "publisher": "UK Foreign, Commonwealth & Development Office",
+              "quote": "Heavy rainfall can also cause flooding in other parts of Ghana, including urban areas such as Accra and its surroundings. Flooding can disrupt road travel, public transport, electricity and other services, and conditions can change quickly following periods of intense rainfall.",
+              "retrievedAt": "2026-10-22T11:09:38+00:00",
+              "publicationDate": "2026-07-02",
+              "independenceGroupId": "uk-fcdo"
+            }
+          ],
+          "independentSources": 1,
+          "note": null
+        },
+        {
+          "text": "Earthquakes and tremors are a risk in Ghana. The US Federal Emergency Management Agency website has advice about what to do before, during and after an earthquake.",
+          "status": "VERIFIED",
+          "temporal": "STABLE",
+          "method": "EXTRACTIVE",
+          "evidence": [
+            {
+              "passageId": "FS.36",
+              "sourceKey": "fcdo_safety",
+              "sourceId": "gh-fcdo-security",
+              "url": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
+              "publisher": "UK Foreign, Commonwealth & Development Office",
+              "quote": "Earthquakes and tremors are a risk in Ghana. The US Federal Emergency Management Agency website has advice about what to do before, during and after an earthquake.",
+              "retrievedAt": "2026-10-22T11:09:38+00:00",
+              "publicationDate": "2026-07-02",
+              "independenceGroupId": "uk-fcdo"
+            }
+          ],
+          "independentSources": 1,
+          "note": null
+        }
+      ],
+      "excluded": [],
+      "method": "EXTRACTIVE",
+      "uncertainty": "Wording is the source's own. Other nationalities' governments may advise differently.",
+      "candidateRecord": true,
+      "content": "Flooding is common in the Upper West, North East, Northern and Savannah regions during the rainy season, from March to November. Heavy rainfall can also cause flooding in other parts of Ghana, including urban areas such as Accra and its surroundings. Flooding can disrupt road travel, public transport, electricity and other services, and conditions can change quickly following periods of intense rainfall. Earthquakes and tremors are a risk in Ghana. The US Federal Emergency Management Agency website has advice about what to do before, during and after an earthquake.",
+      "layer": "BASELINE",
+      "decision": "PUBLISH",
+      "heldReasons": []
+    }
+  ],
+  "missingEvidence": [
+    {
+      "topic": "CLIMATE_SEASONAL",
+      "reason": "the climatology source was not retrieved",
+      "origin": "collector"
+    },
+    {
+      "topic": "OUTLOOK_4_6_WEEKS",
+      "origin": "collector",
+      "reason": "No approved current seasonal-outlook source is configured for the next 4-6 weeks. Model knowledge is not used as evidence of current conditions."
+    }
+  ],
+  "rejectedClaims": [],
+  "currentContext": [],
+  "assessment": [
+    {
+      "topic": "FLOODING_NATURAL_HAZARDS",
+      "decision": "PUBLISH",
+      "confidence": "MEDIUM",
+      "reasons": [],
+      "claimsPublishable": 3,
+      "excluded": []
+    }
+  ],
+  "evidence": [
+    {
+      "sourceKey": "nasa_power",
+      "sourceId": "cb-gh-nasa-power",
+      "sourceIdIsExisting": false,
+      "code": "NP",
+      "publisher": "NASA Langley Research Center POWER Project",
+      "jurisdiction": "US",
+      "tier": "A",
+      "title": "NASA POWER monthly climatology (MERRA-2)",
+      "url": "https://power.larc.nasa.gov/api/temporal/climatology/point?parameters=T2M,PRECTOTCORR&community=RE&longitude=-0.19&latitude=5.6&format=JSON",
+      "retrievedAt": "2026-10-22T11:09:38+00:00",
+      "originalLanguage": "en",
+      "contentRights": "OPEN_LICENCE",
+      "accessMethod": "API",
+      "automationPermission": "PERMITTED",
+      "independenceGroupId": "us-nasa-power",
+      "currentCapable": false,
+      "staleAfterDays": 800,
+      "publicationDate": null,
+      "publicationDateStatus": "NOT_STATED",
+      "status": "BLOCKED_BY_ROBOTS",
+      "error": "robots.txt disallows this path for generic agents",
+      "httpStatus": null,
+      "contentSha256": null,
+      "passagesUsed": []
+    },
+    {
+      "sourceKey": "worldbank_cckp",
+      "sourceId": "cb-gh-worldbank-cckp",
+      "sourceIdIsExisting": false,
+      "code": "WB",
+      "publisher": "World Bank Group, Climate Change Knowledge Portal",
+      "jurisdiction": "INTERNATIONAL",
+      "tier": "A",
+      "title": "World Bank CCKP monthly climatology (CRU TS 4.07, 1991-2020)",
+      "url": "https://cckpapi.worldbank.org/cckp/v1/cru-x0.5_climatology_tas,pr_climatology_monthly_1991-2020_mean_historical_cru_ts4.07_mean/GHA?_format=json",
+      "retrievedAt": "2026-10-22T11:09:38+00:00",
+      "originalLanguage": "en",
+      "contentRights": "OPEN_LICENCE",
+      "accessMethod": "API",
+      "automationPermission": "PERMITTED",
+      "independenceGroupId": "wb-cckp-cru",
+      "currentCapable": false,
+      "staleAfterDays": 1500,
+      "publicationDate": null,
+      "publicationDateStatus": "NOT_STATED",
+      "status": "BLOCKED_BY_ROBOTS",
+      "error": "robots.txt could not be read (HTTP 500); treated as not permitted",
+      "httpStatus": null,
+      "contentSha256": null,
+      "passagesUsed": []
+    },
+    {
+      "sourceKey": "fcdo_safety",
+      "sourceId": "gh-fcdo-security",
+      "sourceIdIsExisting": true,
+      "code": "FS",
+      "publisher": "UK Foreign, Commonwealth & Development Office",
+      "jurisdiction": "UK",
+      "tier": "A",
+      "title": "Foreign travel advice: safety and security",
+      "url": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
+      "retrievedAt": "2026-10-22T11:09:38+00:00",
+      "originalLanguage": "en",
+      "contentRights": "GOVERNMENT_OPEN",
+      "accessMethod": "WEB_PAGE",
+      "automationPermission": "PERMITTED",
+      "independenceGroupId": "uk-fcdo",
+      "currentCapable": true,
+      "staleAfterDays": 120,
+      "publicationDate": "2026-07-02",
+      "publicationDateStatus": "STATED",
+      "status": "RETRIEVED",
+      "error": null,
+      "httpStatus": 200,
+      "contentSha256": "61ba53b0ab217e9a77254e91c0dd0e33235c3bb02b9d50a0a2e0bd2121ccc455",
+      "publicationDateSource": "govuk:public-updated-at",
+      "pageTitle": "Safety and security - Ghana travel advice - GOV.UKGOV.UK",
+      "pageUpdatedAt": "2026-10-19T09:25:06+01:00",
+      "currencyDate": "2026-10-19",
+      "bytes": 100929,
+      "publicationAgeDays": 3,
+      "passagesUsed": [
+        {
+          "id": "FS.35",
+          "locator": "Safety and security > Transport risks > Flooding",
+          "text": "Flooding is common in the Upper West, North East, Northern and Savannah regions during the rainy season, from March to November.\nHeavy rainfall can also cause flooding in other parts of Ghana, including urban areas such as Accra and its surroundings. Flooding can disrupt road travel, public transport, electricity and other services, and conditions can change quickly following periods of intense rainfall.\nFollow the advice of local authorities, monitor local weather reports and expect difficulties when travelling to affected areas."
+        },
+        {
+          "id": "FS.36",
+          "locator": "Safety and security > Transport risks > Earthquakes",
+          "text": "Earthquakes and tremors are a risk in Ghana. The US Federal Emergency Management Agency website has advice about what to do before, during and after an earthquake.\nView a printable version of the whole guide"
+        }
+      ]
+    }
+  ],
+  "candidateBatch": {
+    "records": [
+      {
+        "id": "gh-environment-flooding-natural-hazards",
+        "countryId": "gh",
+        "category": "ENVIRONMENT",
+        "subcategory": "Flooding and natural hazards",
+        "dataType": "CONSIDERATION",
+        "title": "Flooding and natural hazards",
+        "content": "Flooding is common in the Upper West, North East, Northern and Savannah regions during the rainy season, from March to November. Heavy rainfall can also cause flooding in other parts of Ghana, including urban areas such as Accra and its surroundings. Flooding can disrupt road travel, public transport, electricity and other services, and conditions can change quickly following periods of intense rainfall. Earthquakes and tremors are a risk in Ghana. The US Federal Emergency Management Agency website has advice about what to do before, during and after an earthquake.",
+        "confidence": "MEDIUM",
+        "status": "DRAFT",
+        "sourceId": "gh-fcdo-security",
+        "locationId": null,
+        "dateChecked": "2026-10-22",
+        "reviewDate": "2027-04-20",
+        "notes": "DRAFT by 03AA-04_Country_Intelligence_Builder_TI; not independently verified or reviewed. Wording is the source's own. Other nationalities' governments may advise differently."
+      }
+    ],
+    "sources": [],
+    "sourceObservations": [
+      {
+        "id": "obs-gh-environment-flooding-natural-hazards-fcdo-safety",
+        "recordId": "gh-environment-flooding-natural-hazards",
+        "sourceId": "gh-fcdo-security",
+        "sourceUrl": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
+        "extractedClaim": "Flooding is common in the Upper West, North East, Northern and Savannah regions during the rainy season, from March to November. … Heavy rainfall can also cause flooding in other parts of Ghana, including urban areas such as Accra and its surroundings. Flooding can disrupt road travel, public transport, electricity and other services, and conditions can change quickly following periods of intense rainfall. … Earthquakes and tremors are a risk in Ghana. The US Federal Emergency Management Agency website has advice about what to do before, during and after an earthquake.",
+        "independenceGroupId": "uk-fcdo",
+        "dateChecked": "2026-10-22",
+        "observationStatus": "DRAFT_UNREVIEWED",
+        "originalLanguage": "en",
+        "translated": false,
+        "translationMethod": "NONE",
+        "retrievedAt": "2026-10-22T11:09:38+00:00",
+        "publicationDate": "2026-07-02",
+        "publicationDateStatus": "STATED",
+        "contentRights": "GOVERNMENT_OPEN",
+        "rightsStatus": "GOVERNMENT_OPEN",
+        "accessMethod": "WEB_PAGE",
+        "automationPermission": "PERMITTED",
+        "uncertainty": "Wording is the source's own. Other nationalities' governments may advise differently."
+      }
+    ]
+  },
+  "publicationItems": [
+    {
+      "recordId": "gh-environment-flooding-natural-hazards",
+      "contentHash": "b19885249e34f43b",
+      "record": {
+        "id": "gh-environment-flooding-natural-hazards",
+        "countryId": "gh",
+        "category": "ENVIRONMENT",
+        "subcategory": "Flooding and natural hazards",
+        "dataType": "CONSIDERATION",
+        "title": "Flooding and natural hazards",
+        "content": "UK FCDO travel advice (last updated 2 Jul 2026): Flooding is common in the Upper West, North East, Northern and Savannah regions during the rainy season, from March to November. Heavy rainfall can also cause flooding in other parts of Ghana, including urban areas such as Accra and its surroundings. Flooding can disrupt road travel, public transport, electricity and other services, and conditions can change quickly following periods of intense rainfall. Earthquakes and tremors are a risk in Ghana. The US Federal Emergency Management Agency website has advice about what to do before, during and after an earthquake.",
+        "confidence": "MEDIUM",
+        "status": "ACTIVE",
+        "sourceId": "gh-fcdo-security",
+        "locationId": null,
+        "dateChecked": "2026-10-22",
+        "reviewDate": "2027-01-20",
+        "sourcePublicationDate": "2026-07-02",
+        "notes": "Published automatically by 03AA-04_Country_Intelligence_Builder_TI after the TI publication rules passed. Source wording is quoted verbatim (last updated 2 Jul 2026; retrieved 2026-10-22). The advice is the named government's guidance and may differ for other nationalities.",
+        "provenance": {
+          "builder": "03AA-04_Country_Intelligence_Builder_TI",
+          "publicationId": "pub-20261022T110938Z-a0afa9",
+          "method": "EXTRACTIVE",
+          "contentHash": "b19885249e34f43b",
+          "topic": "FLOODING_NATURAL_HAZARDS"
+        }
+      }
+    }
+  ],
+  "validation": {
+    "candidateBatchMergesCleanly": true,
+    "detail": "VALID: schema 2.0 | countries=52 records=383 sources=190 locations=14 events=31 observations=146",
+    "claimsKept": 3,
+    "claimsRejected": 0
+  },
+  "cost": {
+    "model": null,
+    "calls": 0,
+    "inputTokens": 0,
+    "outputTokens": 0,
+    "estimatedUsd": 0.0,
+    "status": "no model call",
+    "wouldCostUsdIfRun": null
+  },
+  "publication": {
+    "publicationId": null,
+    "recordIds": [],
+    "verification": null,
+    "skipped": "publication_off (mode draft, TI_CB_PUBLISH unset)"
+  }
+}
