@@ -42,7 +42,7 @@ default and Sonnet only as a second opinion on a PARTIAL verdict, only if `sonne
 
 ## Publication path
 
-1. Gap detected (MISSING, or STALE: every active record past review or older than 365 days) for the active scope.
+1. Gap detected for the active scope: MISSING (no active record), STALE (every active record past review or older than 365 days), TOPIC_MISSING (the category has records but a configured publishable topic, such as seasonal climate or electrical supply, has none), or RECHECK_HELD (an open held item was last assessed under earlier rules or register entries, so it is assessed again; this runs only ordinary code and, with no model budget, costs nothing).
 2. Evidence collected (allow-listed HTTPS hosts, robots.txt, size/time/retry bounds, numbered verbatim passages).
 3. Claims built and assessed. Items that pass become publication items (record, any new source, one observation per source).
 4. **Publish** only from a scheduled or manual run on `refs/heads/main` with mode `publish`, `publication.enabled` true and

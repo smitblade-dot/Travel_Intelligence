@@ -762,6 +762,24 @@ class RuleChangesReassessHeldItems(unittest.TestCase):
                 self.assertEqual([g["gap"]["type"] for g in gaps], ["RECHECK_HELD"])
                 self.assertEqual(len(planned), 1)
 
+    def test_recheck_held_respects_scope_and_never_duplicates_an_existing_gap(self):
+        from unittest import mock
+        import ti_ops_director.country_rules as rules
+        with tempfile.TemporaryDirectory() as tmp:
+            h = PublishHarness(tmp)
+            b = h.builder(registered=True, categories=["EQUIPMENT"])
+            b.cfg.raw["scope"]["gap_types"] = ["MISSING", "STALE", "TOPIC_MISSING", "RECHECK_HELD"]
+            data = json.loads((h.work / "data.json").read_text())
+            st = {"exceptions": {}, "drafts": {}}
+            def held(cc, cat):
+                st["exceptions"][f"{cc}:{cat}"] = {"scope": "topic", "state": "HELD", "countryId": cc, "category": cat}
+            held("eg", "EQUIPMENT")                       # a country outside the configured scope
+            held("gh", "TRANSPORT")                       # a category outside the configured scope
+            held("gh", "EQUIPMENT")                       # in scope, but find_gaps already reports it (MISSING in the fixture)
+            with mock.patch.object(rules, "RULES_VERSION", "changed"):
+                gaps, _ = b.plan(data, cs.NOW.date(), st)
+            self.assertEqual([(g["countryId"], g["category"], g["gap"]["type"]) for g in gaps], [("gh", "EQUIPMENT", "MISSING")])
+
     def test_a_pending_publication_verified_by_recheck_keeps_its_commit(self):
         with tempfile.TemporaryDirectory() as tmp:
             h = PublishHarness(tmp, site_mode="stale")
