@@ -190,12 +190,19 @@
           "gh-equipment-plugs"
         ]
       },
-      "state": "running",
+      "state": "completed",
       "attempts": 1,
       "created_at": "2026-10-22T19:48:19+00:00",
       "updated_at": "2026-10-22T19:48:19+00:00",
-      "lease_owner": "runnervm8k3b6-2340-266f9a",
-      "lease_expires": "2026-10-22T20:08:19+00:00"
+      "lease_owner": null,
+      "lease_expires": null,
+      "outcome": "assessed",
+      "cost_usd": 0.0,
+      "blockingReason": null,
+      "error": null,
+      "published": [],
+      "held": [],
+      "draftId": "cib-gh-equipment-3a0cda8cc9"
     }
   },
   "drafts": {
@@ -218,23 +225,6 @@
         "gh-transport-road-travel",
         "gh-transport-taxis-and-public-transport"
       ]
-    },
-    "cib-gh-environment-49f34bc868": {
-      "draftId": "cib-gh-environment-49f34bc868",
-      "path": "drafts/gh/ENVIRONMENT/cib-gh-environment-49f34bc868.json",
-      "countryId": "gh",
-      "category": "ENVIRONMENT",
-      "evidenceFingerprint": "49f34bc868ade946be26130e5eb950ac",
-      "modelStatus": "NOT_NEEDED",
-      "reviewStatus": "ELIGIBLE_AWAITING_PUBLICATION_RUN",
-      "createdAt": "2026-10-22T17:44:23+00:00",
-      "costUsd": 0.0,
-      "claims": 9,
-      "rules": "d6bb6f02e8fd468bcd6846ba5444712c",
-      "publicationId": null,
-      "settled": false,
-      "published": [],
-      "supersededBy": "cib-gh-environment-21fa3f4dcf"
     },
     "cib-gh-equipment-49834200ea": {
       "draftId": "cib-gh-equipment-49834200ea",
@@ -287,7 +277,8 @@
       "settled": false,
       "published": [
         "gh-equipment-plugs"
-      ]
+      ],
+      "supersededBy": "cib-gh-equipment-3a0cda8cc9"
     },
     "cib-gh-equipment-3de3313bcd": {
       "draftId": "cib-gh-equipment-3de3313bcd",
@@ -305,6 +296,22 @@
       "settled": false,
       "published": [],
       "supersededBy": "cib-gh-equipment-e087b56a8f"
+    },
+    "cib-gh-equipment-3a0cda8cc9": {
+      "draftId": "cib-gh-equipment-3a0cda8cc9",
+      "path": "drafts/gh/EQUIPMENT/cib-gh-equipment-3a0cda8cc9.json",
+      "countryId": "gh",
+      "category": "EQUIPMENT",
+      "evidenceFingerprint": "3a0cda8cc9cdf10c02080cc6d3275ec8",
+      "modelStatus": "NOT_NEEDED",
+      "reviewStatus": "ELIGIBLE_AWAITING_PUBLICATION_RUN",
+      "createdAt": "2026-10-22T19:48:19+00:00",
+      "costUsd": 0.0,
+      "claims": 29,
+      "rules": "10532b8b7d47672be5b09af7f1b57ca3",
+      "publicationId": null,
+      "settled": false,
+      "published": []
     }
   },
   "runs": [
@@ -633,6 +640,20 @@
       "published": [],
       "publicationFailures": [],
       "outcomes": {}
+    },
+    {
+      "at": "2026-10-22T19:48:19+00:00",
+      "mode": "draft",
+      "tasksRun": 1,
+      "created": 1,
+      "reopened": 0,
+      "duplicatesSuppressed": 0,
+      "recovered": [],
+      "published": [],
+      "publicationFailures": [],
+      "outcomes": {
+        "Travel Intelligence|country_content_draft|gh:EQUIPMENT:RECHECK_HELD|c700b914fa0729b420e73550ae9a01d4|W42": "assessed"
+      }
     }
   ],
   "exceptions": {
@@ -765,11 +786,10 @@
       "action": "Held until a registry-backed source states a publication date inside its freshness limit. No action unless it persists.",
       "requiresHuman": false,
       "id": "cbx-3b5e34a9f5",
-      "state": "RESOLVED",
-      "firstSeen": "2026-10-22T17:47:04+00:00",
-      "lastSeen": "2026-10-22T17:47:04+00:00",
-      "occurrences": 1,
-      "resolvedAt": "2026-10-22T17:55:57+00:00"
+      "state": "HELD",
+      "firstSeen": "2026-10-22T19:48:19+00:00",
+      "lastSeen": "2026-10-22T19:48:19+00:00",
+      "occurrences": 1
     },
     "gh:EQUIPMENT:PLUGS:no_external_source": {
       "key": "gh:EQUIPMENT:PLUGS:no_external_source",
@@ -825,10 +845,11 @@
       "action": "The new text points the opposite way from an existing record. The existing record was kept untouched. Held until a registry-backed source states a publication date inside its freshness limit. No action unless it persists.",
       "requiresHuman": true,
       "id": "cbx-0115b7fad0",
-      "state": "HELD",
+      "state": "RESOLVED",
       "firstSeen": "2026-10-22T17:55:57+00:00",
       "lastSeen": "2026-10-22T18:11:39+00:00",
-      "occurrences": 3
+      "occurrences": 3,
+      "resolvedAt": "2026-10-22T19:48:19+00:00"
     },
     "gh:EQUIPMENT:PLUGS:evidence_missing:d7f37337": {
       "key": "gh:EQUIPMENT:PLUGS:evidence_missing:d7f37337",
@@ -990,7 +1011,7 @@
     "currency": "USD",
     "status": "estimated from API usage fields x configured list prices; not invoice-confirmed",
     "mode": "dry_run",
-    "updated": "2026-10-22T18:27:21+00:00"
+    "updated": "2026-10-22T19:48:36+00:00"
   },
   "triageCache": {}
 }
