@@ -842,6 +842,13 @@ class LastKnownGoodIsPreserved(unittest.TestCase):
                 b2.run()
                 self.assertEqual(records(h)["gh-equipment-plugs"]["content"], full, blocked)           # untouched
 
+    def test_a_stale_backing_source_also_counts_as_lost(self):
+        from ti_ops_director.country_pipeline import lost_source_for_existing
+        data = {"records": [{"id": "gh-equipment-plugs", "provenance": {"builder": "x"}}],
+                "sourceObservations": [{"recordId": "gh-equipment-plugs", "sourceId": "src-a"}]}
+        self.assertTrue(lost_source_for_existing(data, "gh-equipment-plugs", [{"sourceId": "src-a", "status": "STALE"}]))
+        self.assertFalse(lost_source_for_existing(data, "gh-equipment-plugs", [{"sourceId": "src-b", "status": "STALE"}]))
+
     def test_an_unreadable_robots_file_is_a_retry_not_a_human_decision(self):
         from ti_ops_director.country_pipeline import source_exceptions
         ev = [{"status": "BLOCKED_BY_ROBOTS", "sourceKey": "gsa_plugs", "error": "robots.txt could not be read (HTTP 403); treated as not permitted"},

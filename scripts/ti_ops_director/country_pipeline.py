@@ -137,7 +137,7 @@ def lost_source_for_existing(data, record_id, evidence):
     if not rec:
         return False
     backed = {o.get("sourceId") for o in data.get("sourceObservations", []) if o.get("recordId") == record_id}
-    return any(e["sourceId"] in backed and e["status"] in ("UNAVAILABLE", "BLOCKED_BY_ROBOTS", "PARSE_FAILED") for e in evidence)
+    return any(e["sourceId"] in backed and e["status"] in ("UNAVAILABLE", "BLOCKED_BY_ROBOTS", "PARSE_FAILED", "STALE") for e in evidence)
 
 
 def assess_all(builder, items, evidence, data, inputs, today, pub_id):
