@@ -246,10 +246,11 @@ def check_claim(claim, evidence_by_key, sources_cfg, registry, pub_cfg, today, e
     return list(dict.fromkeys(reasons))
 
 
-def polarity_for(claim, records, sources_cfg, topic=None):
-    """Texts a claim is compared against for reversed advice: every hand-written record in the category (their topic is unknown),
-    and builder-published records only when they cover the SAME topic. A builder record for a different topic (clothing vs mosquito
-    protection) is about a different subject, and the keyword heuristic only produced false alarms there."""
+def polarity_for(records, topic=None):
+    """Texts a claim is compared against for reversed advice: every hand-written record in the category (their topic is unknown,
+    so they stay protected), and builder-published records only when they cover the SAME topic. A builder record for a different
+    topic (clothing vs mosquito protection) is about a different subject, and the keyword heuristic only produced false alarms there.
+    Known trade-off: a contradiction between two different builder-written topics in one category is out of this heuristic's scope."""
     return [r["content"] for r in records
             if (r.get("provenance") or {}).get("builder") != AGENT_NAME or (topic and (r.get("provenance") or {}).get("topic") == topic)]
 
@@ -320,7 +321,7 @@ def assess_item(item, evidence, sources_cfg, registry, pub_cfg, today, existing_
     existing_texts = [r["content"] for r in same]
     keep, excluded, held_reasons = [], list(item.get("excluded", [])), []
     for c in item["claims"]:
-        reasons = check_claim(c, ev_by_key, sources_cfg, registry, pub_cfg, today, existing_texts, polarity_for(c, same, sources_cfg, item["topic"]))
+        reasons = check_claim(c, ev_by_key, sources_cfg, registry, pub_cfg, today, existing_texts, polarity_for(same, item["topic"]))
         if not reasons:
             keep.append(c)
         else:

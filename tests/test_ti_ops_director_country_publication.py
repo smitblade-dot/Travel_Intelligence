@@ -711,8 +711,8 @@ class SiblingRecordsDoNotRaiseFalseConflicts(unittest.TestCase):
         clothing = {"content": "US CDC: wear loose clothing.", "provenance": {"builder": AGENT_NAME, "topic": "CLOTHING"}}
         mosquito = {"content": "US CDC: use a bed net.", "provenance": {"builder": AGENT_NAME, "topic": "MOSQUITO"}}
         hand = {"content": "Hand-written note.", "provenance": {}}
-        self.assertEqual(polarity_for(claim, [clothing, mosquito, hand], cfg.sources, "MOSQUITO"), [mosquito["content"], hand["content"]])
-        self.assertEqual(polarity_for(claim, [clothing, mosquito, hand], cfg.sources, None), [hand["content"]])
+        self.assertEqual(polarity_for([clothing, mosquito, hand], "MOSQUITO"), [mosquito["content"], hand["content"]])
+        self.assertEqual(polarity_for([clothing, mosquito, hand], None), [hand["content"]])
 
     def test_hand_written_records_are_still_compared_for_reversed_advice(self):
         from ti_ops_director.country_rules import check_claim
