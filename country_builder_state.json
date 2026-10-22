@@ -1102,12 +1102,35 @@
     "pub-20261022T210636Z-0fc6b4": {
       "id": "pub-20261022T210636Z-0fc6b4",
       "at": "2026-10-22T21:06:36+00:00",
-      "state": "PENDING",
+      "state": "VERIFIED",
       "records": [
         "gh-equipment-clothing",
         "gh-equipment-mosquito",
         "gh-equipment-plugs"
-      ]
+      ],
+      "commit": "35b856ea60e4dcef5fc89bb99c50840a1be17731",
+      "verifiedAt": "2026-10-22T21:07:57+00:00",
+      "summary": {
+        "added": [],
+        "updated": [
+          "gh-equipment-plugs"
+        ],
+        "unchanged": [
+          "gh-equipment-clothing",
+          "gh-equipment-mosquito"
+        ],
+        "refreshed": [],
+        "skipped": [],
+        "generated": "2026-10-22T21:06:36+00:00",
+        "commit": "35b856ea60e4dcef5fc89bb99c50840a1be17731"
+      },
+      "served": {
+        "ok": true,
+        "attempts": 4,
+        "served_generated": "2026-10-22T21:06:36+00:00",
+        "served_sha256": "08033d2c37e9d73c9b12c4b286c496a4aef19bb126e0037a49c3d3ede1579739",
+        "url": "https://travelintelligence22.com/"
+      }
     }
   },
   "pending": {},
