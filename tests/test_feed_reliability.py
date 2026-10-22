@@ -110,17 +110,35 @@ class FeedRecoveryTests(unittest.TestCase):
             self.assertFalse(result['ok'])
             self.assertIn('timespan=24h', fetch.call_args.args[0])
 
-    def test_gdelt_recovers_from_non_json_200_without_retaining_error_body(self):
-        with patch.object(collector, 'fetch', side_effect=[b'<html>temporary error</html>', b'{"articles":[]}']) as request, patch.object(collector.time, 'sleep') as sleep:
-            result = collector.collect_gdelt()
-            self.assertTrue(result['ok'])
-            self.assertEqual(request.call_count, 2)
-            sleep.assert_called_once_with(15)
-        with patch.object(collector, 'fetch', return_value=b'<html>secret reflected URL</html>') as request, patch.object(collector.time, 'sleep'):
+    def test_gdelt_malformed_reply_waits_until_next_refresh(self):
+        with patch.object(collector, 'fetch', return_value=b'<html>secret reflected URL</html>') as request, patch.object(collector.time, 'sleep') as sleep:
             result = collector.collect_gdelt()
             self.assertFalse(result['ok'])
-            self.assertEqual(request.call_count, 3)
+            self.assertEqual(request.call_count, 1)
+            self.assertEqual(request.call_args.kwargs['attempts'], 1)
+            sleep.assert_not_called()
             self.assertNotIn('secret', json.dumps(result))
+
+    def test_gdelt_rate_limit_makes_one_http_request(self):
+        error = HTTPError('https://api.gdeltproject.org', 429, '', {'Retry-After': '5'}, None)
+        with patch.object(support, 'urlopen', side_effect=error) as request, patch.object(support.time, 'sleep') as sleep:
+            result = collector.collect_gdelt()
+            self.assertEqual(result['status'], 'unavailable')
+            self.assertIn('429', result['error'])
+            self.assertEqual(request.call_count, 1)
+            sleep.assert_not_called()
+
+    def test_gdelt_success_still_supplies_discovery_articles(self):
+        with patch.object(collector, 'fetch', return_value=b'{"articles":[{"url":"https://example.org/news"}]}'):
+            result = collector.collect_gdelt()
+            self.assertTrue(result['ok'])
+            self.assertEqual(len(result['data']['articles']), 1)
+
+    def test_review_uses_other_sources_without_retrying_gdelt(self):
+        workflow = (Path(__file__).resolve().parents[1] / '.github/workflows/daily-data-refresh.yml').read_text()
+        self.assertIn('Search for current reporting directly', workflow)
+        self.assertIn('do not call GDELT again', workflow)
+        self.assertIn('report unverified', workflow)
 
     def test_retry_after_cannot_exceed_sampling_deadline(self):
         error = HTTPError('https://example.org', 429, '', {'Retry-After': '7'}, None)

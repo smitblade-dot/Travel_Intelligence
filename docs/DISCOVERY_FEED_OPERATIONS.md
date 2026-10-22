@@ -18,9 +18,16 @@ this final coverage check. Never describe such a run as a fully healthy refresh.
   countries. If refreshing fails, retain previous airport nodes with their
   original fetch timestamp and explicitly stale status. With no previous
   non-empty network, fail without overwriting the output.
-- **GDELT:** bounded 24-hour news query, at most three requests on transient
-  failures, with backoff and Retry-After handling. A persistent provider outage
-  or rate limit remains a reported failure; no attempt to evade it.
+- **GDELT:** supplementary bounded 24-hour news query, one request per collector
+  invocation, including on rate limits, transport errors or malformed replies.
+  Wait until the next scheduled refresh rather than retrying. This reduces
+  traffic; it does not guarantee acceptance or establish a published daily quota.
+  Use existing registered reputable news and official/local-language sources
+  directly for the intelligence review; the reviewer must not call GDELT again.
+  Missing GDELT results never establish no news or no change. A provider outage
+  remains visible in the strict feed audit; publication evidence and validation
+  gates remain mandatory. No alternative source is automatically a substitute
+  for all GDELT coverage.
 - **GDACS:** validate the current GeoJSON features array before accepting it.
 - **ADSB.lol:** the unsupported `/v2/all` call is replaced by documented point
   queries, at most one per second, around one scheduled large/medium airport
@@ -95,8 +102,10 @@ two coverage gaps instead of declaring the entire refresh healthy.
 [Read-only main-branch probe 39377032375](https://github.com/smitblade-dot/Travel_Intelligence/actions/runs/39377032375)
 at commit `45f9bef6420ca5d01bf918953d61fbb770aa0a03` completed collection
 at 05:51 UTC. GDELT was healthy at 05:50:40 UTC; the earlier HTTP 503 was
-therefore transient, not evidence of a continuing outage. Keep the existing
-bounded retries, Retry-After handling and 24-hour query. No alternate endpoint,
+therefore transient, not evidence of a continuing outage. At that time the
+recommendation was to keep bounded retries and Retry-After handling; this is
+superseded by the 22 October one-request policy in the source guidance above.
+The 24-hour query is retained. No alternate endpoint,
 unbounded retry or cached-success substitution is justified by this evidence.
 
 OurAirports, GDACS, NASA FIRMS and all 52 ADS-B sample areas also passed;
@@ -157,6 +166,8 @@ still fails the strict audit. No concurrency, alternate identity or rate-limit
 bypass is used. Persistent limits require a later run or provider agreement,
 not an invented healthy result.
 
+Historical GDELT behaviour below is superseded by the 22 October one-request
+policy in the source guidance above; it is retained as an implementation log.
 GDELT transport errors retain bounded retries. HTTP-200 HTML/plain-text replies
 now receive a fixed non-JSON diagnostic without retaining the response body,
 and up to two further requests spaced by 15 seconds. The initial transport

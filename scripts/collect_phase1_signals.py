@@ -47,16 +47,10 @@ def collect_gdelt():
     # Bound the query to the recent refresh window, not the default long search.
     url = ('https://api.gdeltproject.org/api/v2/doc/doc?query=' + quote(query) +
            '&mode=artlist&format=json&maxrecords=50&sort=datedesc&timespan=24h')
-    result = safe_json(url, 'articles')
-    # GDELT sometimes returns a temporary HTML/plain-text error with HTTP 200.
-    # HTTP retries already happen in fetch(); only malformed successful replies
-    # receive up to two further, spaced requests. No alternate endpoint or cache.
-    for _ in range(2):
-        if result.get('errorKind') != 'invalid_json':
-            break
-        time.sleep(15)
-        result = safe_json(url, 'articles', attempts=1)
-    return result
+    # Supplementary discovery only: one request per collector invocation.
+    # A refusal or malformed response waits until the next scheduled refresh;
+    # do not multiply traffic with transport or content retries.
+    return safe_json(url, 'articles', attempts=1)
 
 
 def collect_gdacs():
