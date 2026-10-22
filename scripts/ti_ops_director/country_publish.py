@@ -85,13 +85,14 @@ def build_publication_item(cc, category, tname, tdef, assessed, evidence, source
             "retrievedAt": e["retrievedAt"], "publicationDate": e.get("publicationDate"),
             "publicationDateStatus": e["publicationDateStatus"], "contentRights": e["contentRights"], "rightsStatus": e["contentRights"],
             "accessMethod": e["accessMethod"], "automationPermission": e["automationPermission"], "publisherName": e["publisher"],
-            "legalReviewStatus": "NOT_REQUIRED", "publicationId": pub_id})
+            "legalReviewStatus": "NOT_REQUIRED" if e["contentRights"] in OPEN_RIGHTS else "REQUIRED", "publicationId": pub_id})
     needed = {record["sourceId"]} | {o["sourceId"] for o in observations}
     return {"recordId": rid, "record": record, "sources": list(new_sources.values()), "observations": observations,
             "contentHash": chash, "topic": tname, "countryId": cc, "category": category, "needsSources": sorted(needed)}
 
 
 # ---- applying to data.json ----------------------------------------------------------------------------------
+OPEN_RIGHTS = ("GOVERNMENT_OPEN", "OPEN_LICENCE", "PUBLIC_DOMAIN")
 SOURCE_CONFIDENCE = {"A": "HIGH", "B": "MEDIUM", "C": "MEDIUM", "D": "LOW", "E": "LOW", "F": "LOW"}
 
 
@@ -186,6 +187,7 @@ def rollback_items(data, pub_id, now):
         if c["category"] == "Update":
             d["records"][idx] = c["previousRecord"]
             restored.append(rid)
+            drop_sources.update(c.get("addedSourceIds", []))
         else:
             d["records"].pop(idx)
             removed.append(rid)

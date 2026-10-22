@@ -26,7 +26,8 @@ class CountryContentWorker(Worker):
     task_types = (TASK_TYPE, EXC_TASK_TYPE)
     capabilities = frozenset({"network_read"})
     description = ("Country content builder: finds a missing or stale country/category, collects permitted evidence and "
-                   "writes a source-checked DRAFT (never published) (03AA-04_Country_Intelligence_Builder_TI).")
+                   "assesses it against the TI publication rules, records what passes and holds the rest as routed exceptions "
+                   "(publication to main happens only in the guarded scheduled run) (03AA-04_Country_Intelligence_Builder_TI).")
     transport = staticmethod(http_get)       # replaced in tests
 
     def hosts_for(self, inputs, cfg):

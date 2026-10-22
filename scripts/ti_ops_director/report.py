@@ -205,7 +205,7 @@ def render_markdown(r):
     if not cb.get("available"):
         L += [f"- Not available here: {cb.get('detail')}", ""]
     else:
-        L += [f"- Last run: {cb['last_run_utc']}; tasks: {cb['task_counts']}; drafts held (never published): {cb['drafts']}; "
+        L += [f"- Last run: {cb['last_run_utc']}; tasks: {cb['task_counts']}; drafts and assessments recorded (publication state per run in its report): {cb['drafts']}; "
               f"controls: {cb['controls']}; spend recorded: {cb['spend_usd']} USD (estimated)", ""]
     L += ["## API usage and expenditure (this database)", ""]
     s = r["spend"]
