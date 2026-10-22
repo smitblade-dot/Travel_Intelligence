@@ -780,7 +780,7 @@ class RuleChangesReassessHeldItems(unittest.TestCase):
                 gaps, _ = b.plan(data, cs.NOW.date(), st)
             self.assertEqual([(g["countryId"], g["category"], g["gap"]["type"]) for g in gaps], [("gh", "EQUIPMENT", "MISSING")])
 
-    def test_eligible_content_left_unpublished_by_a_draft_run_is_published_by_the_next_publish_run(self):
+    def test_eligible_content_left_unpublished_by_a_draft_run_is_requeued_for_the_next_publish_run(self):
         with tempfile.TemporaryDirectory() as tmp:
             h = PublishHarness(tmp)
             shared = LocalBackend(Path(tmp) / "ledger")
@@ -801,6 +801,7 @@ class RuleChangesReassessHeldItems(unittest.TestCase):
             st["drafts"] = {k: dict(v, reviewStatus="ELIGIBLE_AWAITING_PUBLICATION_RUN", settled=False) for k, v in st["drafts"].items()}
             gaps, _ = trial.plan(json.loads((h.work / "data.json").read_text()), cs.NOW.date(), st)
             self.assertEqual([(g["category"], g["gap"]["type"]) for g in gaps], [("EQUIPMENT", "RECHECK_HELD")])
+            self.assertIn("never published", gaps[0]["gap"]["detail"])
 
     def test_a_pending_publication_verified_by_recheck_keeps_its_commit(self):
         with tempfile.TemporaryDirectory() as tmp:

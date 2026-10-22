@@ -156,8 +156,10 @@ class Builder:
         return gaps, [task_for(g, today, self.cfg.raw["schedule"]["recheck_after_days"]) | {"gap": g} for g in gaps]
 
     def _held_under_old_rules(self, data, countries, state, already, gap_types):
-        """Work that is still held (an open non-publication exception) but was last assessed under older rules or register entries is
-        looked at again even when its country/category has no gap, so a corrected rule clears a wrongly held item and its exception."""
+        """Looks again, even when a country/category has no gap, at (1) work that is still held (an open non-publication exception) but was
+        last assessed under older rules or register entries, so a corrected rule clears a wrongly held item and its exception, and
+        (2) a latest draft left ELIGIBLE_AWAITING_PUBLICATION_RUN, content that passed the rules but was never published (for example
+        assessed in a draft-mode run), so the next publish run publishes it."""
         if "RECHECK_HELD" not in gap_types or not state:
             return []
         names = {str(c["id"]).lower(): c for c in data.get("countries", [])}
@@ -175,8 +177,11 @@ class Builder:
             if latest and latest.get("rules") == self.rules_fingerprint(cat) and latest.get("reviewStatus") != "ELIGIBLE_AWAITING_PUBLICATION_RUN":
                 continue
             ids = sorted(r["id"] for r in data["records"] if r.get("countryId") == cc and r.get("category") == cat and r.get("status", "ACTIVE") == "ACTIVE")
+            eligible = bool(latest and latest.get("reviewStatus") == "ELIGIBLE_AWAITING_PUBLICATION_RUN")
+            detail = (f"Eligible {cat} content for {names[cc]['name']} was assessed but never published (for example in a draft-mode run); queued for publication."
+                      if eligible else f"Held {cat} items for {names[cc]['name']} were assessed under earlier rules; assessed again.")
             out.append({"countryId": cc, "country": names[cc]["name"], "category": cat, "existingRecordIds": ids,
-                        "gap": {"type": "RECHECK_HELD", "detail": f"Held {cat} items for {names[cc]['name']} were assessed under earlier rules; assessed again."}})
+                        "gap": {"type": "RECHECK_HELD", "detail": detail}})
         return out
 
     # -- model and publication preconditions --
