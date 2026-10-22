@@ -118,6 +118,8 @@
       "parser": "worldbank_cckp", "existing_source_id": null, "independence_group": "wb-cckp-cru",
       "content_rights": "OPEN_LICENCE", "access_method": "API", "automation_permission": "PERMITTED",
       "original_language": "en", "stale_after_days": 1500, "current_capable": false,
+      "robots_exception": {"approved_by": null, "approved_on": null, "scope": "this API URL only, one request per run",
+        "_note": "https://cckpapi.worldbank.org/robots.txt answered with an error (HTTP 5xx with a 404 page) on 22 Oct 2026, so the builder treats the API as not permitted (RFC 9309). The API is publicly documented under CC BY 4.0. Using it needs Marc's written decision: set approved_by to Marc and approved_on to the date."},
       "_note": "Data under CC BY 4.0: attribute the World Bank Climate Change Knowledge Portal and the CRU TS dataset. National mean, so regional contrast is not shown."
     }
   },

@@ -291,12 +291,15 @@ class Robots:
             elif res is not None and res.status in (404, 410):
                 self.cache[host] = True
             else:
-                self.cache[host] = False
+                self.cache[host] = f"robots.txt could not be read (HTTP {getattr(res, 'status', None) or getattr(res, 'error_kind', 'no response')}); treated as not permitted"
         entry = self.cache[host]
-        if entry is True or entry is False:
-            return entry, ("no robots.txt" if entry else "robots.txt unavailable")
+        if entry is True:
+            return True, "no robots.txt"
+        if isinstance(entry, str):
+            return False, entry
         target = parts.path + ("?" + parts.query if parts.query else "")
-        return entry.can_fetch(ROBOTS_TOKEN, target), "robots.txt"
+        ok = entry.can_fetch(ROBOTS_TOKEN, target)
+        return ok, ("robots.txt allows" if ok else "robots.txt disallows this path for generic agents")
 
 
 # ---- collection ----------------------------------------------------------------------------------------------

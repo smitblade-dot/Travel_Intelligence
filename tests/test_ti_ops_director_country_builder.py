@@ -166,6 +166,13 @@ class Evidence(unittest.TestCase):
         net = FakeNet(fail={"robots.txt": 503})
         self.assertTrue(all(e["status"] == "BLOCKED_BY_ROBOTS" for e in self.collect("EQUIPMENT", net)))
 
+    def test_blocked_reason_names_the_robots_problem(self):
+        th = [e for e in self.collect("EQUIPMENT", FakeNet(fail={"robots.txt": 500})) if e["sourceKey"] == "travelhealthpro"][0]
+        self.assertIn("HTTP 500", th["error"])
+        d = [e for e in self.collect("ENVIRONMENT", FakeNet(robots={"power.larc.nasa.gov": "User-agent: *\nDisallow: /api/"}))
+             if e["sourceKey"] == "nasa_power"][0]
+        self.assertEqual((d["status"], d["error"]), ("BLOCKED_BY_ROBOTS", "robots.txt disallows this path for generic agents"))
+
     def test_unavailable_and_failing_sources_are_recorded_not_hidden(self):
         net = FakeNet(fail={"destinations/traveler": 503, "foreign-travel-advice": 0})
         ev = {e["sourceKey"]: e for e in self.collect("TRANSPORT", net)}

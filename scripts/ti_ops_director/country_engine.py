@@ -305,7 +305,8 @@ class Builder:
                 rows.append(f"- {t['inputs']['country']} / {t['inputs']['category']}: already {existing['state']} (draft {existing.get('draftId')}); nothing to do")
                 continue
             o = self.process_task(t["inputs"], state, data, now)
-            sources = ", ".join(f"{e['sourceKey']}={e['status']}" for e in o["evidence"])
+            sources = ", ".join(f"{e['sourceKey']}={e['status']}" + (f" ({e['error']})" if e["status"] != "RETRIEVED" and e.get("error") else "")
+                                for e in o["evidence"])
             rows.append(f"- {t['inputs']['country']} / {t['inputs']['category']}: would draft; evidence {sources}; "
                         f"{len(o['passages'])} passages selected; model call {'would be' if self.model_topics_hint(o) else 'not'} needed; "
                         f"cost this run $0 (observe mode)")
@@ -470,7 +471,8 @@ class Builder:
             inp = t["inputs"]
             lines += [f"## {inp['country']} / {inp['category']}: {t['state'].upper()} ({o['reason']})", "",
                       f"- Gap addressed: {inp['gap']['type']}: {inp['gap']['detail']}",
-                      f"- Evidence: " + ", ".join(f"{e['sourceKey']}={e['status']}" for e in o.get("evidence", [])) ,
+                      "- Evidence: " + ", ".join(f"{e['sourceKey']}={e['status']}" + (f" ({e['error']})" if e["status"] != "RETRIEVED" and e.get("error") else "")
+                                                for e in o.get("evidence", [])),
                       f"- Cost this task: {_cost_line(o['cost'])}"]
             if o.get("draft"):
                 lines += _preview(o["draft"], branch)
