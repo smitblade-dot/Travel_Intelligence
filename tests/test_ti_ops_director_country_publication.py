@@ -820,6 +820,43 @@ class RuleChangesReassessHeldItems(unittest.TestCase):
             self.assertTrue(pub.get("commit"))
 
 
+class LastKnownGoodIsPreserved(unittest.TestCase):
+    """The register rule sourceFailureMustPreserveLastKnownGoodData: a source failure never shrinks published content."""
+    WMO_ROBOTS = {"worldweather.wmo.int": (cs.FX / "wmo_robots.txt").read_text()}
+
+    def test_a_source_outage_does_not_replace_a_fuller_published_record_with_a_reduced_one(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            h = PublishHarness(tmp)
+            shared = LocalBackend(Path(tmp) / "ledger")
+            b = h.builder(wmo=True, registered=True, categories=["EQUIPMENT"], ledger=shared, net=FakeNet(robots=self.WMO_ROBOTS))
+            run_all(b)
+            full = records(h)["gh-equipment-plugs"]["content"]
+            self.assertIn("type G", full)
+            self.assertIn("230 volts", full)
+            h.git(h.work, "fetch", "--quiet", "origin", "main")
+            h.git(h.work, "reset", "--quiet", "--hard", "FETCH_HEAD")
+            for blocked in ("ADVERT-socket", "719588"):              # the standards notice and the regulations answer 403 on a later run
+                net = FakeNet(robots=self.WMO_ROBOTS, fail={blocked: 403})
+                b2 = h.builder(wmo=True, registered=True, categories=["EQUIPMENT"], ledger=shared, net=net, now=cs.NOW + timedelta(days=8))
+                b2.cfg.raw["scope"]["gap_types"] = ["MISSING", "STALE", "TOPIC_MISSING", "RECHECK_HELD"]
+                b2.run()
+                self.assertEqual(records(h)["gh-equipment-plugs"]["content"], full, blocked)           # untouched
+
+    def test_a_stale_backing_source_also_counts_as_lost(self):
+        from ti_ops_director.country_pipeline import lost_source_for_existing
+        data = {"records": [{"id": "gh-equipment-plugs", "provenance": {"builder": "x"}}],
+                "sourceObservations": [{"recordId": "gh-equipment-plugs", "sourceId": "src-a"}]}
+        self.assertTrue(lost_source_for_existing(data, "gh-equipment-plugs", [{"sourceId": "src-a", "status": "STALE"}]))
+        self.assertFalse(lost_source_for_existing(data, "gh-equipment-plugs", [{"sourceId": "src-b", "status": "STALE"}]))
+
+    def test_an_unreadable_robots_file_is_a_retry_not_a_human_decision(self):
+        from ti_ops_director.country_pipeline import source_exceptions
+        ev = [{"status": "BLOCKED_BY_ROBOTS", "sourceKey": "gsa_plugs", "error": "robots.txt could not be read (HTTP 403); treated as not permitted"},
+              {"status": "BLOCKED_BY_ROBOTS", "sourceKey": "nasa_power", "error": "robots.txt disallows this path for generic agents"}]
+        got = {e["key"].split(":")[3]: e["requiresHuman"] for e in source_exceptions({"countryId": "gh", "category": "EQUIPMENT"}, ev)}
+        self.assertEqual(got, {"gsa_plugs": False, "nasa_power": True})
+
+
 class WmoClimateAndElectricalSupply(unittest.TestCase):
     """The live configuration: WMO WWIS seasonal climate averages and official Ghana plug/voltage/frequency sources."""
     WMO_ROBOTS = {"worldweather.wmo.int": (cs.FX / "wmo_robots.txt").read_text()}
