@@ -439,8 +439,9 @@ class Builder:
         if not drafts:
             return True
         d = max(drafts, key=lambda d: d["createdAt"])
-        if d.get("published") and not d.get("settled"):
-            return False                      # on main, verification pending: rechecked by the ledger, never republished
+        pub = st["publications"].get(d.get("publicationId") or "", {})
+        if pub.get("state") in ("VERIFICATION_PENDING", "ROLLBACK_PENDING"):
+            return False                      # on main with verification pending: rechecked by the ledger, never republished
         return (not d.get("settled")) or d.get("rules") != self.rules_fingerprint(inp["category"])
 
     def _publish_phase(self, results, now):
@@ -641,7 +642,7 @@ class Builder:
                         "draftId": d["draftId"], "path": path, "countryId": d["countryId"], "category": d["category"],
                         "evidenceFingerprint": d["evidenceFingerprint"], "modelStatus": d["modelStatus"], "reviewStatus": d["reviewStatus"],
                         "createdAt": d["generatedAt"], "costUsd": d["cost"].get("estimatedUsd", 0), "claims": d["validation"]["claimsKept"],
-                        "rules": self.rules_fingerprint(d["category"]),
+                        "rules": self.rules_fingerprint(d["category"]), "publicationId": publication.get("publicationId") if published & set(eligible) else None,
                         "settled": bool(not unpublished and not failed_pub and not o.get("pending") and not publication.get("pending")),
                         "published": sorted(published & set(eligible))}
                     t["draftId"] = d["draftId"]

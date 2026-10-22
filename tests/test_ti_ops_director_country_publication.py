@@ -364,6 +364,29 @@ class FailureAndRollback(unittest.TestCase):
             self.assertIn("(edited)", records(h)["gh-transport-road-travel"]["content"])      # the edit survives
             self.assertFalse([c for c in h.main_data()["change_log"] if c.get("rollbackOf") and "edited" in json.dumps(c)])
 
+    def test_a_gap_emptied_by_a_rollback_is_reopened_and_filled_again(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            h = PublishHarness(tmp, site_mode="stale")
+            shared = LocalBackend(Path(tmp) / "ledger")
+            b = h.builder(categories=["TRANSPORT"], ledger=shared)
+            restore = self._short_window(b)
+            try:
+                b.run()                                            # published, verification pending
+            finally:
+                restore()
+            h.site.mode = "newer"                                  # then demonstrably wrong: rolled back off main
+            b2 = h.builder(categories=["TRANSPORT"], ledger=shared)
+            restore = self._short_window(b2)
+            try:
+                b2.run()
+            finally:
+                restore()
+            self.assertNotIn("gh-transport-road-travel", records(h))
+            h.site.mode = "live"
+            b3 = h.builder(categories=["TRANSPORT"], ledger=shared)
+            b3.run()
+            self.assertIn("gh-transport-road-travel", records(h))   # the gap is refilled, not stuck
+
     def test_pages_lag_is_tolerated_within_the_timeout(self):
         with tempfile.TemporaryDirectory() as tmp:
             h = PublishHarness(tmp, site_mode="lag", lag=2)
