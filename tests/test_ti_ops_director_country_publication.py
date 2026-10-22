@@ -780,6 +780,29 @@ class RuleChangesReassessHeldItems(unittest.TestCase):
                 gaps, _ = b.plan(data, cs.NOW.date(), st)
             self.assertEqual([(g["countryId"], g["category"], g["gap"]["type"]) for g in gaps], [("gh", "EQUIPMENT", "MISSING")])
 
+    def test_eligible_content_left_unpublished_by_a_draft_run_is_requeued_for_the_next_publish_run(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            h = PublishHarness(tmp)
+            shared = LocalBackend(Path(tmp) / "ledger")
+            run_all(h.builder(registered=True, categories=["EQUIPMENT"], ledger=shared))          # publishes clothing, mosquito, plugs
+            h.git(h.work, "fetch", "--quiet", "origin", "main")
+            h.git(h.work, "reset", "--quiet", "--hard", "FETCH_HEAD")
+            data = json.loads((h.work / "data.json").read_text())
+            for r in data["records"]:                                                  # an older version, so the next assessment is an update
+                if r["id"] == "gh-equipment-clothing":
+                    r["content"] = "CDC (old): wear light clothing."
+                    r["provenance"]["contentHash"] = "old"
+            (h.work / "data.json").write_text(json.dumps(data), encoding="utf-8")
+            h.git(h.work, "add", "-A"); h.git(h.work, "commit", "-m", "older clothing text"); h.git(h.work, "push", "origin", "HEAD:main")
+            trial = h.builder(mode="draft", registered=True, categories=["EQUIPMENT"], ledger=shared, now=cs.NOW + timedelta(days=1),
+                              env={"GITHUB_EVENT_NAME": "pull_request", "GITHUB_REF": "refs/pull/1/merge"})
+            trial.cfg.raw["scope"]["gap_types"] = ["MISSING", "STALE", "TOPIC_MISSING", "RECHECK_HELD"]
+            st = _sections(shared.snapshot().state())
+            st["drafts"] = {k: dict(v, reviewStatus="ELIGIBLE_AWAITING_PUBLICATION_RUN", settled=False) for k, v in st["drafts"].items()}
+            gaps, _ = trial.plan(json.loads((h.work / "data.json").read_text()), cs.NOW.date(), st)
+            self.assertEqual([(g["category"], g["gap"]["type"]) for g in gaps], [("EQUIPMENT", "RECHECK_HELD")])
+            self.assertIn("never published", gaps[0]["gap"]["detail"])
+
     def test_a_pending_publication_verified_by_recheck_keeps_its_commit(self):
         with tempfile.TemporaryDirectory() as tmp:
             h = PublishHarness(tmp, site_mode="stale")

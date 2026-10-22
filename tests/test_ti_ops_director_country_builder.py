@@ -943,6 +943,7 @@ class WorkflowFile(unittest.TestCase):
         self.assertIn("vars.TI_CB_MODE != 'off'", text)
         self.assertNotIn("git push", text)                                    # all writes go through the tested compare-and-swap code
         self.assertIn("github.event_name != 'pull_request' && secrets.ANTHROPIC_API_KEY || ''", text)
+        self.assertIn("github.event_name == 'pull_request' && 'ti-country-drafts-trial' || vars.TI_CB_STATE_BRANCH", text)   # trials never touch the production ledger
         self.assertNotIn("&& '' ||", text)
         self.assertIn("github.event_name == 'pull_request' && 'draft' || vars.TI_CB_MODE", text)
         self.assertIn("github.event_name == 'pull_request' && 'true' || vars.TI_CB_DRY_RUN", text)
