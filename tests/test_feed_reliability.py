@@ -110,6 +110,34 @@ class FeedRecoveryTests(unittest.TestCase):
             self.assertFalse(result['ok'])
             self.assertIn('timespan=24h', fetch.call_args.args[0])
 
+    def test_gdelt_recovers_from_non_json_200_without_retaining_error_body(self):
+        with patch.object(collector, 'fetch', side_effect=[b'<html>temporary error</html>', b'{"articles":[]}']) as request, patch.object(collector.time, 'sleep') as sleep:
+            result = collector.collect_gdelt()
+            self.assertTrue(result['ok'])
+            self.assertEqual(request.call_count, 2)
+            sleep.assert_called_once_with(15)
+        with patch.object(collector, 'fetch', return_value=b'<html>secret reflected URL</html>') as request, patch.object(collector.time, 'sleep'):
+            result = collector.collect_gdelt()
+            self.assertFalse(result['ok'])
+            self.assertEqual(request.call_count, 3)
+            self.assertNotIn('secret', json.dumps(result))
+
+    def test_retry_after_cannot_exceed_sampling_deadline(self):
+        error = HTTPError('https://example.org', 429, '', {'Retry-After': '7'}, None)
+        with patch.object(support, 'urlopen', side_effect=error) as request, patch.object(support.time, 'monotonic', return_value=95), patch.object(support.time, 'sleep') as sleep:
+            with self.assertRaisesRegex(RuntimeError, 'sampling time budget'):
+                support.fetch('https://example.org', attempts=2, deadline=100)
+            self.assertEqual(request.call_count, 1)
+            sleep.assert_not_called()
+
+    def test_adsb_transient_rate_limit_recovers_with_retry_after(self):
+        error = HTTPError('https://example.org', 429, '', {'Retry-After': '5'}, None)
+        with patch.object(support, 'urlopen', side_effect=[error, contextlib.nullcontext(io.BytesIO(b'{"ac":[]}'))]) as request, patch.object(support.time, 'sleep') as sleep:
+            result = collector.safe_json('https://example.org', 'ac', attempts=2)
+            self.assertTrue(result['ok'])
+            self.assertEqual(request.call_count, 2)
+            sleep.assert_called_once_with(5)
+
     def test_adsb_is_explicit_geographic_sample_and_partial_is_degraded(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

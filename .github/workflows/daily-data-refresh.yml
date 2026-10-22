@@ -68,12 +68,32 @@ jobs:
       - name: Refresh oil & gas summary (deterministic)
         run: python3 scripts/refresh_oilgas.py
 
+      - name: Prepare review completion contract
+        id: review_contract
+        run: python3 scripts/refresh_review.py prepare >> "$GITHUB_OUTPUT"
+
       - uses: anthropics/claude-code-action@v1
+        id: intelligence_review
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           show_full_output: true
           prompt: >
             Run the normal Travel Intelligence daily refresh from CLAUDE.md.
+            This is a one-shot production job: complete research, synthesis and
+            all data edits before your final response. Use only the available
+            tools directly; do not delegate, spawn agents or start background
+            work. Never finish with a promise to continue or wait for agents.
+            Return the required structured review report with runId
+            ${{ github.run_id }}, pendingTasks 0 and status COMPLETE only after
+            actually reviewing every tracked country and both continuing Hot
+            Topics. countryReviews must include each data.json country.id
+            exactly once. Read ${{ runner.temp }}/ti-refresh-input.json for the
+            exact country and active Hot Topic IDs required. Each review needs
+            the actual sourceUrls checked, an outcome and a concise note.
+            If a review cannot be completed, report INCOMPLETE and unverified;
+            never manufacture evidence or mark a country reviewed merely
+            because a discovery signal or old record exists.
+
             Treat the country records as a live intelligence layer as well as
             Current Intelligence events. Inspect all tracked countries for
             material, currently verified changes to traveller-relevant
@@ -98,8 +118,21 @@ jobs:
             and leave them uncommitted; do not push during this step. Leave publication to the validated safety-net step. Review security redeployments, alleged plots, tanker casualties and coastal restrictions as well as transport closures. Retain unresolved geographic leads for review. Review continuing Hot Topics explicitly, including Fairford and Sochi; event age alone is not grounds for deletion. Allegations require review and must not be promoted to confirmed attribution.
           claude_args: |
             --model claude-sonnet-5
+            --tools "Bash,Read,Write,Edit,Glob,Grep,WebSearch,WebFetch"
             --allowedTools "Bash,Read,Write,Edit,Glob,Grep,WebSearch,WebFetch"
+            --json-schema '${{ steps.review_contract.outputs.schema }}'
             --max-turns 120
+
+      - name: Preserve unapproved candidate for recovery
+        if: always()
+        run: cp data.json "$RUNNER_TEMP/ti-refresh-candidate.json"
+
+      - name: Verify intelligence review completed
+        if: always()
+        env:
+          REVIEW_OUTPUT: ${{ steps.intelligence_review.outputs.structured_output }}
+          EXECUTION_FILE: ${{ steps.intelligence_review.outputs.execution_file }}
+        run: python3 scripts/refresh_review.py
 
       - name: Build traveller impact graph
         run: python3 scripts/build_traveller_impact_graph.py
@@ -157,3 +190,17 @@ jobs:
       - name: Audit discovery feed health
         if: always()
         run: python3 scripts/audit_feed_health.py
+
+      - name: Retain refresh diagnostics even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-refresh-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            data/phase1_signals.json
+            data/transport_network.json
+            ${{ runner.temp }}/ti-refresh-review.json
+            ${{ runner.temp }}/ti-refresh-input.json
+            ${{ runner.temp }}/ti-refresh-candidate.json
+          retention-days: 7
+          if-no-files-found: warn

@@ -19,10 +19,14 @@ def source_config(source_id):
     return next(s for s in json.loads(CONFIG.read_text())['sources'] if s['id'] == source_id)
 
 
-def fetch(url, attempts=3):
+def fetch(url, attempts=3, deadline=None):
     for attempt in range(attempts):
+        remaining = None if deadline is None else deadline - time.monotonic()
+        if remaining is not None and remaining <= 0:
+            raise RuntimeError('Sampling time budget exhausted')
         try:
-            with urlopen(Request(url, headers={'User-Agent': 'TravelIntelligence/1.0'}), timeout=20) as response:
+            with urlopen(Request(url, headers={'User-Agent': 'TravelIntelligence/1.0'}),
+                         timeout=20 if remaining is None else min(20, remaining)) as response:
                 return response.read()
         except HTTPError as exc:
             # Never include request URLs: FIRMS keys are embedded in their path.
@@ -39,11 +43,16 @@ def fetch(url, attempts=3):
                     pass
             if delay > 60:
                 raise RuntimeError(f'HTTP {exc.code}; provider requested a later retry') from None
+            if deadline is not None and delay >= deadline - time.monotonic():
+                raise RuntimeError(f'HTTP {exc.code}; retry exceeds sampling time budget') from None
             time.sleep(delay)
         except (URLError, TimeoutError, OSError):
             if attempt == attempts - 1:
                 raise RuntimeError('Network request failed after bounded retries') from None
-            time.sleep(5 * (attempt + 1))
+            delay = 5 * (attempt + 1)
+            if deadline is not None and delay >= deadline - time.monotonic():
+                raise RuntimeError('Network retry exceeds sampling time budget') from None
+            time.sleep(delay)
 
 
 def csv_rows(raw, required):
