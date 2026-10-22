@@ -148,7 +148,8 @@ class Builder:
     def plan(self, data, today, state=None):
         scope = self.cfg.raw["scope"]
         countries, _ = self.active_countries(state)
-        gaps = find_gaps(data, countries, self.cfg.categories, today, scope["stale_after_days_since_checked"], tuple(scope["gap_types"]))
+        topics = {c: [t for t, d in self.cfg.category_defs[c]["topics"].items() if d["kind"] in ("deterministic", "model")] for c in self.cfg.categories}
+        gaps = find_gaps(data, countries, self.cfg.categories, today, scope["stale_after_days_since_checked"], tuple(scope["gap_types"]), topics)
         return gaps, [task_for(g, today, self.cfg.raw["schedule"]["recheck_after_days"]) | {"gap": g} for g in gaps]
 
     # -- model and publication preconditions --

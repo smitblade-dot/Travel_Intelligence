@@ -19,7 +19,8 @@
     "batch_size_tasks_per_run": 3,
     "gap_types": [
       "MISSING",
-      "STALE"
+      "STALE",
+      "TOPIC_MISSING"
     ],
     "stale_after_days_since_checked": 365,
     "expansion": {

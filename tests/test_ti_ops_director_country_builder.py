@@ -120,6 +120,17 @@ class Gaps(unittest.TestCase):
         gaps = find_gaps(data, ["gh"], ["ENVIRONMENT", "TRANSPORT", "EQUIPMENT"], datetime(2026, 10, 22).date())
         self.assertEqual([g["gap"]["type"] for g in gaps], ["MISSING"] * 3)
 
+    def test_a_populated_category_still_has_a_gap_for_a_configured_topic_with_no_record(self):
+        data = cs.base_data()
+        data["records"].append({"id": "gh-environment-flooding-natural-hazards", "countryId": "gh", "category": "ENVIRONMENT", "status": "ACTIVE",
+                                "dateChecked": "2026-10-22", "reviewDate": "2027-01-20", "content": "x", "title": "x", "sourceId": "gh-fcdo-security"})
+        topics = {"ENVIRONMENT": ["CLIMATE_SEASONAL", "FLOODING_NATURAL_HAZARDS"]}
+        gaps = find_gaps(data, ["gh"], ["ENVIRONMENT"], datetime(2026, 10, 22).date(), 365, ("MISSING", "STALE", "TOPIC_MISSING"), topics)
+        self.assertEqual([(g["gap"]["type"], g["gap"]["topics"]) for g in gaps], [("TOPIC_MISSING", ["CLIMATE_SEASONAL"])])
+        data["records"].append(dict(data["records"][-1], id="gh-environment-climate-seasonal"))
+        self.assertEqual(find_gaps(data, ["gh"], ["ENVIRONMENT"], datetime(2026, 10, 22).date(), 365, ("MISSING", "STALE", "TOPIC_MISSING"), topics), [])
+        self.assertEqual(find_gaps(data, ["gh"], ["ENVIRONMENT"], datetime(2026, 10, 22).date(), 365, ("MISSING", "STALE"), topics), [])
+
     def test_baseline_audit_script_parses_and_agrees(self):
         import subprocess
         p = subprocess.run([sys.executable, str(ROOT / "scripts" / "audit_baseline_coverage.py")], capture_output=True, text=True)
