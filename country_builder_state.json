@@ -118,17 +118,19 @@
           "gh-environment-flooding-natural-hazards"
         ]
       },
-      "state": "running",
+      "state": "completed",
       "attempts": 1,
       "created_at": "2026-10-22T17:44:23+00:00",
       "updated_at": "2026-10-22T18:11:39+00:00",
-      "lease_owner": "runnervm8k3b6-2347-c4b3e7",
-      "lease_expires": "2026-10-22T18:31:39+00:00",
+      "lease_owner": null,
+      "lease_expires": null,
       "outcome": "assessed",
       "cost_usd": 0.0,
       "blockingReason": null,
       "error": null,
-      "published": [],
+      "published": [
+        "gh-environment-climate-seasonal"
+      ],
       "held": [],
       "draftId": "cib-gh-environment-21fa3f4dcf"
     },
@@ -152,21 +154,23 @@
           "gh-equipment-mosquito"
         ]
       },
-      "state": "running",
+      "state": "completed",
       "attempts": 1,
       "created_at": "2026-10-22T17:44:23+00:00",
       "updated_at": "2026-10-22T18:11:39+00:00",
-      "lease_owner": "runnervm8k3b6-2347-c4b3e7",
-      "lease_expires": "2026-10-22T18:31:39+00:00",
+      "lease_owner": null,
+      "lease_expires": null,
       "outcome": "assessed",
       "cost_usd": 0.0,
       "blockingReason": null,
       "error": null,
-      "published": [],
+      "published": [
+        "gh-equipment-plugs"
+      ],
       "held": [
         "MOSQUITO"
       ],
-      "draftId": "cib-gh-equipment-3de3313bcd"
+      "draftId": "cib-gh-equipment-e087b56a8f"
     }
   },
   "drafts": {
@@ -231,14 +235,16 @@
       "category": "ENVIRONMENT",
       "evidenceFingerprint": "21fa3f4dcfcce2b9785ab1d9fed11b2d",
       "modelStatus": "NOT_NEEDED",
-      "reviewStatus": "ELIGIBLE_AWAITING_PUBLICATION_RUN",
-      "createdAt": "2026-10-22T18:03:32+00:00",
+      "reviewStatus": "AUTO_PUBLISHED_VERIFICATION_PENDING",
+      "createdAt": "2026-10-22T18:11:39+00:00",
       "costUsd": 0.0,
       "claims": 9,
       "rules": "c466ba82776a5cd51c26d1cd0cfb9b47",
-      "publicationId": null,
+      "publicationId": "pub-20261022T181139Z-21fa3f",
       "settled": false,
-      "published": []
+      "published": [
+        "gh-environment-climate-seasonal"
+      ]
     },
     "cib-gh-equipment-e087b56a8f": {
       "draftId": "cib-gh-equipment-e087b56a8f",
@@ -247,15 +253,16 @@
       "category": "EQUIPMENT",
       "evidenceFingerprint": "e087b56a8fa44da0e4361fcaf306a5da",
       "modelStatus": "NOT_NEEDED",
-      "reviewStatus": "HELD_EXCEPTIONS_ROUTED",
-      "createdAt": "2026-10-22T17:55:57+00:00",
+      "reviewStatus": "AUTO_PUBLISHED_VERIFICATION_PENDING",
+      "createdAt": "2026-10-22T18:11:39+00:00",
       "costUsd": 0.0,
       "claims": 29,
       "rules": "2fe109167307767794d84a37176694cb",
-      "publicationId": null,
+      "publicationId": "pub-20261022T181139Z-21fa3f",
       "settled": false,
-      "published": [],
-      "supersededBy": "cib-gh-equipment-3de3313bcd"
+      "published": [
+        "gh-equipment-plugs"
+      ]
     },
     "cib-gh-equipment-3de3313bcd": {
       "draftId": "cib-gh-equipment-3de3313bcd",
@@ -271,7 +278,8 @@
       "rules": "2fe109167307767794d84a37176694cb",
       "publicationId": null,
       "settled": false,
-      "published": []
+      "published": [],
+      "supersededBy": "cib-gh-equipment-e087b56a8f"
     }
   },
   "runs": [
@@ -522,6 +530,24 @@
         "Travel Intelligence|country_content_draft|gh:ENVIRONMENT:TOPIC_MISSING|7a929f2bc7b1730469b607518c74a6f3|W42": "assessed",
         "Travel Intelligence|country_content_draft|gh:EQUIPMENT:TOPIC_MISSING|eac9425a6a54efcca2aabe86e799d47b|W42": "assessed"
       }
+    },
+    {
+      "at": "2026-10-22T18:11:39+00:00",
+      "mode": "publish",
+      "tasksRun": 2,
+      "created": 0,
+      "reopened": 2,
+      "duplicatesSuppressed": 0,
+      "recovered": [],
+      "published": [
+        "gh-environment-climate-seasonal",
+        "gh-equipment-plugs"
+      ],
+      "publicationFailures": [],
+      "outcomes": {
+        "Travel Intelligence|country_content_draft|gh:ENVIRONMENT:TOPIC_MISSING|7a929f2bc7b1730469b607518c74a6f3|W42": "assessed",
+        "Travel Intelligence|country_content_draft|gh:EQUIPMENT:TOPIC_MISSING|eac9425a6a54efcca2aabe86e799d47b|W42": "assessed"
+      }
     }
   ],
   "exceptions": {
@@ -716,8 +742,8 @@
       "id": "cbx-0115b7fad0",
       "state": "HELD",
       "firstSeen": "2026-10-22T17:55:57+00:00",
-      "lastSeen": "2026-10-22T18:03:32+00:00",
-      "occurrences": 2
+      "lastSeen": "2026-10-22T18:11:39+00:00",
+      "occurrences": 3
     },
     "gh:EQUIPMENT:PLUGS:evidence_missing:d7f37337": {
       "key": "gh:EQUIPMENT:PLUGS:evidence_missing:d7f37337",
@@ -751,10 +777,11 @@
       "action": "Source cannot be used as configured: robots.txt could not be read (HTTP 403); treated as not permitted. Needs Marc's decision (robots exception or another source).",
       "requiresHuman": true,
       "id": "cbx-568a3ffd13",
-      "state": "HELD",
+      "state": "RESOLVED",
       "firstSeen": "2026-10-22T18:03:32+00:00",
       "lastSeen": "2026-10-22T18:03:32+00:00",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-22T18:11:39+00:00"
     },
     "gh:EQUIPMENT:source:ecg_technical:UNAVAILABLE": {
       "key": "gh:EQUIPMENT:source:ecg_technical:UNAVAILABLE",
@@ -769,10 +796,11 @@
       "action": "Source cannot be used as configured: empty:202. Retried automatically each run.",
       "requiresHuman": false,
       "id": "cbx-265c661b7b",
-      "state": "HELD",
+      "state": "RESOLVED",
       "firstSeen": "2026-10-22T18:03:32+00:00",
       "lastSeen": "2026-10-22T18:03:32+00:00",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-22T18:11:39+00:00"
     },
     "gh:EQUIPMENT:PLUGS:evidence_missing:0370f58c": {
       "key": "gh:EQUIPMENT:PLUGS:evidence_missing:0370f58c",
@@ -787,10 +815,11 @@
       "action": "Held: voltage: source not retrieved (not published: no source of the required standing states it). Retried automatically each run; source problems are listed separately.",
       "requiresHuman": false,
       "id": "cbx-5f0892e9a2",
-      "state": "HELD",
+      "state": "RESOLVED",
       "firstSeen": "2026-10-22T18:03:32+00:00",
       "lastSeen": "2026-10-22T18:03:32+00:00",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-22T18:11:39+00:00"
     }
   },
   "publications": {
@@ -927,7 +956,7 @@
     "currency": "USD",
     "status": "estimated from API usage fields x configured list prices; not invoice-confirmed",
     "mode": "dry_run",
-    "updated": "2026-10-22T18:03:52+00:00"
+    "updated": "2026-10-22T18:27:21+00:00"
   },
   "triageCache": {}
 }

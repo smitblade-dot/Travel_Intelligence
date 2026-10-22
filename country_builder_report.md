@@ -1,6 +1,6 @@
 # 03AA-04_Country_Intelligence_Builder_TI
 
-Run: 22 Oct 2026 21:03 Cyprus time | mode: draft | automatic publication: OFF (publication_off (mode draft, TI_CB_PUBLISH unset)) | paid model use: OFF (awaiting_paid_authorisation)
+Run: 22 Oct 2026 21:11 Cyprus time | mode: publish | automatic publication: ON | paid model use: OFF (awaiting_paid_authorisation)
 
 Coverage (whole product): 187/728 combinations; gaps in scope: 2. Tasks this run: 2; new 0; reopened 2; duplicates suppressed 0; interrupted tasks recovered 0.
 
@@ -8,7 +8,8 @@ Spend recorded (all time, USD): 0 (estimated from API usage fields x configured 
 
 ## Publication
 
-- NOT published: publication_off (mode draft, TI_CB_PUBLISH unset). Would publish: gh-environment-climate-seasonal, gh-environment-flooding-natural-hazards, gh-equipment-clothing, gh-equipment-plugs.
+- PUBLISHED to main, live verification PENDING (deployment not yet visible; content not judged wrong, nothing removed): gh-environment-climate-seasonal, gh-equipment-plugs | served data.json does not match yet: ['gh-environment-climate-seasonal', 'gh-equipment-plugs']
+- Already published and unchanged (duplicate prevented): gh-environment-flooding-natural-hazards, gh-equipment-clothing
 
 ## Ghana / ENVIRONMENT: COMPLETED (assessed)
 
@@ -41,13 +42,13 @@ Missing evidence:
 ## Ghana / EQUIPMENT: COMPLETED (assessed)
 
 - Gap addressed: TOPIC_MISSING: No active EQUIPMENT record yet for Ghana on: PLUGS.
-- Evidence: cdc_travel=RETRIEVED, travelhealthpro=RETRIEVED, fcdo_health=RETRIEVED, fcdo_safety=RETRIEVED, gsa_plugs=RETRIEVED, li_1935=BLOCKED_BY_ROBOTS (robots.txt could not be read (HTTP 403); treated as not permitted), grid_code=RETRIEVED, ecg_technical=UNAVAILABLE (empty:202)
+- Evidence: cdc_travel=RETRIEVED, travelhealthpro=RETRIEVED, fcdo_health=RETRIEVED, fcdo_safety=RETRIEVED, gsa_plugs=RETRIEVED, li_1935=RETRIEVED, grid_code=RETRIEVED, ecg_technical=RETRIEVED
 - Cost this task: $0.00 (no model call)
 - CLOTHING: **PUBLISH**, confidence MEDIUM, 7 claim(s)
 - MOSQUITO: **HOLD** (conflicts_with_existing_record)
-- PLUGS: **PUBLISH**, confidence MEDIUM, 2 claim(s)
-- Draft: cib-gh-equipment-3de3313bcd | status **AWAITING_PUBLICATION_DECISION** | publication NOT_PUBLISHED | model: NOT_NEEDED
-- Link: https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-3de3313bcd.json
+- PLUGS: **PUBLISH**, confidence MEDIUM, 3 claim(s)
+- Draft: cib-gh-equipment-e087b56a8f | status **AWAITING_PUBLICATION_DECISION** | publication NOT_PUBLISHED | model: NOT_NEEDED
+- Link: https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-e087b56a8f.json
 
 ### Clothing  [CLOTHING] PUBLISH
 - PUBLISHABLE: Prepare for activities by wearing the right clothes and packing protective items, such as bug spray, sunscreen, and a basic first aid kit.  _[US Centers for Disease Control and Prevention (CD.45)]_
@@ -72,18 +73,14 @@ Missing evidence:
 
 ### Electrical plugs and supply  [PLUGS] PUBLISH
 - PUBLISHABLE: The Ghana Standards Authority requires imported household plugs to be type G (13-amp, three rectangular pins), effective 1 January 2019.  _[Ghana Standards Authority (GS.02)]_
-- PUBLISHABLE: Ghana's National Electricity Grid Code treats 50 Hz as the nominal system frequency.  _[Energy Commission of Ghana (GC.06)]_
-- Uncertainty: Official statements as of their stated dates; not re-confirmed against any later amendment. Held: voltage: source not retrieved.
+- PUBLISHABLE: Ghana's supply regulations (L.I. 1935) require the voltage at a customer's premises to stay within plus or minus ten percent of 230 volts or 400 volts (or of the higher network voltages they list).  _[Electricity Company of Ghana (EC.02); Ghana Public Utilities Regulatory Commission (LI.01)]_
+- PUBLISHABLE: Ghana's National Electricity Grid Code treats 50 Hz as the nominal system frequency.  _[Electricity Company of Ghana (EC.02); Energy Commission of Ghana (GC.06)]_
+- Uncertainty: Official statements as of their stated dates; not re-confirmed against any later amendment. 
 
-Missing evidence:
-- PLUGS: voltage: source not retrieved (not published: no source of the required standing states it)
 
 ## Exceptions held (routed to the Master Agent)
 
-- [NEEDS DECISION] gh/EQUIPMENT/MOSQUITO: conflicts_with_existing_record, no_dated_source_within_freshness_limit. The new text points the opposite way from an existing record. The existing record was kept untouched. Held until a registry-backed source states a publication date inside its freshness limit. No action unless it persists. (seen 2x since 22 Oct 2026 20:55 Cyprus time)
-- [NEEDS DECISION] gh/EQUIPMENT: source_blocked_by_robots. Source cannot be used as configured: robots.txt could not be read (HTTP 403); treated as not permitted. Needs Marc's decision (robots exception or another source). (seen 1x since 22 Oct 2026 21:03 Cyprus time)
-- [automatic retry] gh/EQUIPMENT: source_unavailable. Source cannot be used as configured: empty:202. Retried automatically each run. (seen 1x since 22 Oct 2026 21:03 Cyprus time)
-- [automatic retry] gh/EQUIPMENT/PLUGS: evidence_missing. Held: voltage: source not retrieved (not published: no source of the required standing states it). Retried automatically each run; source problems are listed separately. (seen 1x since 22 Oct 2026 21:03 Cyprus time)
+- [NEEDS DECISION] gh/EQUIPMENT/MOSQUITO: conflicts_with_existing_record, no_dated_source_within_freshness_limit. The new text points the opposite way from an existing record. The existing record was kept untouched. Held until a registry-backed source states a publication date inside its freshness limit. No action unless it persists. (seen 3x since 22 Oct 2026 20:55 Cyprus time)
 
 ## Awaiting budget authorisation (model-written topics; not exceptions)
 
@@ -99,9 +96,9 @@ Missing evidence:
 
 ## Drafts and assessments held on this branch
 
-- gh/ENVIRONMENT: cib-gh-environment-21fa3f4dcf | ELIGIBLE_AWAITING_PUBLICATION_RUN | model: NOT_NEEDED | claims 9 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/ENVIRONMENT/cib-gh-environment-21fa3f4dcf.json
-- gh/EQUIPMENT: cib-gh-equipment-3de3313bcd | HELD_EXCEPTIONS_ROUTED | model: NOT_NEEDED | claims 28 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-3de3313bcd.json
-- gh/EQUIPMENT: cib-gh-equipment-e087b56a8f | HELD_EXCEPTIONS_ROUTED | model: NOT_NEEDED | claims 29 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-e087b56a8f.json | superseded by cib-gh-equipment-3de3313bcd
+- gh/ENVIRONMENT: cib-gh-environment-21fa3f4dcf | AUTO_PUBLISHED_VERIFICATION_PENDING | model: NOT_NEEDED | claims 9 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/ENVIRONMENT/cib-gh-environment-21fa3f4dcf.json
+- gh/EQUIPMENT: cib-gh-equipment-e087b56a8f | AUTO_PUBLISHED_VERIFICATION_PENDING | model: NOT_NEEDED | claims 29 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-e087b56a8f.json
+- gh/EQUIPMENT: cib-gh-equipment-3de3313bcd | HELD_EXCEPTIONS_ROUTED | model: NOT_NEEDED | claims 28 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-3de3313bcd.json | superseded by cib-gh-equipment-e087b56a8f
 - gh/ENVIRONMENT: cib-gh-environment-49f34bc868 | ELIGIBLE_AWAITING_PUBLICATION_RUN | model: NOT_NEEDED | claims 9 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/ENVIRONMENT/cib-gh-environment-49f34bc868.json | superseded by cib-gh-environment-21fa3f4dcf
 - gh/EQUIPMENT: cib-gh-equipment-49834200ea | HELD_EXCEPTIONS_ROUTED | model: NOT_NEEDED | claims 28 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-49834200ea.json | superseded by cib-gh-equipment-e087b56a8f
 - gh/TRANSPORT: cib-gh-transport-21272f0ba2 | AUTO_PUBLISHED_AND_VERIFIED | model: NOT_NEEDED | claims 31 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/TRANSPORT/cib-gh-transport-21272f0ba2.json

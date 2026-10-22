@@ -13,10 +13,10 @@
       "CLIMATE_SEASONAL"
     ]
   },
-  "generatedAt": "2026-10-22T18:03:32+00:00",
+  "generatedAt": "2026-10-22T18:11:39+00:00",
   "evidenceFingerprint": "21fa3f4dcfcce2b9785ab1d9fed11b2d",
-  "reviewStatus": "ELIGIBLE_AWAITING_PUBLICATION_RUN",
-  "publicationStatus": "NOT_PUBLISHED",
+  "reviewStatus": "AUTO_PUBLISHED_VERIFICATION_PENDING",
+  "publicationStatus": "PUBLISHED",
   "modelStatus": "NOT_NEEDED",
   "model": null,
   "verification": null,
@@ -35,7 +35,7 @@
               "url": "https://worldweather.wmo.int/en/json/921_en.json",
               "publisher": "World Meteorological Organization (World Weather Information Service)",
               "quote": "FEB: mean daily maximum 33.1 C, mean daily minimum 25.0 C, rainfall 14.2 mm, 1 rain days",
-              "retrievedAt": "2026-10-22T18:03:32+00:00",
+              "retrievedAt": "2026-10-22T18:11:39+00:00",
               "publicationDate": "2010-12-31",
               "independenceGroupId": "wmo-wwis"
             },
@@ -46,7 +46,7 @@
               "url": "https://worldweather.wmo.int/en/json/921_en.json",
               "publisher": "World Meteorological Organization (World Weather Information Service)",
               "quote": "AUG: mean daily maximum 28.3 C, mean daily minimum 22.7 C, rainfall 22.2 mm, 4 rain days",
-              "retrievedAt": "2026-10-22T18:03:32+00:00",
+              "retrievedAt": "2026-10-22T18:11:39+00:00",
               "publicationDate": "2010-12-31",
               "independenceGroupId": "wmo-wwis"
             }
@@ -69,7 +69,7 @@
               "url": "https://worldweather.wmo.int/en/json/921_en.json",
               "publisher": "World Meteorological Organization (World Weather Information Service)",
               "quote": "JUN: mean daily maximum 29.7 C, mean daily minimum 23.6 C, rainfall 175.5 mm, 10 rain days",
-              "retrievedAt": "2026-10-22T18:03:32+00:00",
+              "retrievedAt": "2026-10-22T18:11:39+00:00",
               "publicationDate": "2010-12-31",
               "independenceGroupId": "wmo-wwis"
             },
@@ -80,7 +80,7 @@
               "url": "https://worldweather.wmo.int/en/json/921_en.json",
               "publisher": "World Meteorological Organization (World Weather Information Service)",
               "quote": "MAY: mean daily maximum 31.6 C, mean daily minimum 24.4 C, rainfall 148.0 mm, 8 rain days",
-              "retrievedAt": "2026-10-22T18:03:32+00:00",
+              "retrievedAt": "2026-10-22T18:11:39+00:00",
               "publicationDate": "2010-12-31",
               "independenceGroupId": "wmo-wwis"
             },
@@ -91,7 +91,7 @@
               "url": "https://worldweather.wmo.int/en/json/921_en.json",
               "publisher": "World Meteorological Organization (World Weather Information Service)",
               "quote": "JAN: mean daily maximum 32.4 C, mean daily minimum 24.1 C, rainfall 9.5 mm, 1 rain days",
-              "retrievedAt": "2026-10-22T18:03:32+00:00",
+              "retrievedAt": "2026-10-22T18:11:39+00:00",
               "publicationDate": "2010-12-31",
               "independenceGroupId": "wmo-wwis"
             },
@@ -102,7 +102,7 @@
               "url": "https://worldweather.wmo.int/en/json/921_en.json",
               "publisher": "World Meteorological Organization (World Weather Information Service)",
               "quote": "FEB: mean daily maximum 33.1 C, mean daily minimum 25.0 C, rainfall 14.2 mm, 1 rain days",
-              "retrievedAt": "2026-10-22T18:03:32+00:00",
+              "retrievedAt": "2026-10-22T18:11:39+00:00",
               "publicationDate": "2010-12-31",
               "independenceGroupId": "wmo-wwis"
             }
@@ -125,7 +125,7 @@
               "url": "https://worldweather.wmo.int/en/json/922_en.json",
               "publisher": "World Meteorological Organization (World Weather Information Service)",
               "quote": "FEB: mean daily maximum 34.4 C, mean daily minimum 22.6 C, rainfall 47.5 mm, 4 rain days",
-              "retrievedAt": "2026-10-22T18:03:32+00:00",
+              "retrievedAt": "2026-10-22T18:11:39+00:00",
               "publicationDate": "2010-12-31",
               "independenceGroupId": "wmo-wwis"
             },
@@ -136,7 +136,7 @@
               "url": "https://worldweather.wmo.int/en/json/922_en.json",
               "publisher": "World Meteorological Organization (World Weather Information Service)",
               "quote": "AUG: mean daily maximum 28.2 C, mean daily minimum 21.3 C, rainfall 85.4 mm, 8 rain days",
-              "retrievedAt": "2026-10-22T18:03:32+00:00",
+              "retrievedAt": "2026-10-22T18:11:39+00:00",
               "publicationDate": "2010-12-31",
               "independenceGroupId": "wmo-wwis"
             }
@@ -159,7 +159,7 @@
               "url": "https://worldweather.wmo.int/en/json/922_en.json",
               "publisher": "World Meteorological Organization (World Weather Information Service)",
               "quote": "JUN: mean daily maximum 30.2 C, mean daily minimum 22.1 C, rainfall 208.5 mm, 12 rain days",
-              "retrievedAt": "2026-10-22T18:03:32+00:00",
+              "retrievedAt": "2026-10-22T18:11:39+00:00",
               "publicationDate": "2010-12-31",
               "independenceGroupId": "wmo-wwis"
             },
@@ -170,7 +170,7 @@
               "url": "https://worldweather.wmo.int/en/json/922_en.json",
               "publisher": "World Meteorological Organization (World Weather Information Service)",
               "quote": "SEP: mean daily maximum 29.3 C, mean daily minimum 21.6 C, rainfall 167.5 mm, 12 rain days",
-              "retrievedAt": "2026-10-22T18:03:32+00:00",
+              "retrievedAt": "2026-10-22T18:11:39+00:00",
               "publicationDate": "2010-12-31",
               "independenceGroupId": "wmo-wwis"
             },
@@ -181,7 +181,7 @@
               "url": "https://worldweather.wmo.int/en/json/922_en.json",
               "publisher": "World Meteorological Organization (World Weather Information Service)",
               "quote": "JAN: mean daily maximum 32.8 C, mean daily minimum 21.1 C, rainfall 20.1 mm, 1 rain days",
-              "retrievedAt": "2026-10-22T18:03:32+00:00",
+              "retrievedAt": "2026-10-22T18:11:39+00:00",
               "publicationDate": "2010-12-31",
               "independenceGroupId": "wmo-wwis"
             },
@@ -192,7 +192,7 @@
               "url": "https://worldweather.wmo.int/en/json/922_en.json",
               "publisher": "World Meteorological Organization (World Weather Information Service)",
               "quote": "DEC: mean daily maximum 31.6 C, mean daily minimum 21.7 C, rainfall 28.7 mm, 2 rain days",
-              "retrievedAt": "2026-10-22T18:03:32+00:00",
+              "retrievedAt": "2026-10-22T18:11:39+00:00",
               "publicationDate": "2010-12-31",
               "independenceGroupId": "wmo-wwis"
             }
@@ -215,7 +215,7 @@
               "url": "https://worldweather.wmo.int/en/json/1387_en.json",
               "publisher": "World Meteorological Organization (World Weather Information Service)",
               "quote": "MAR: mean daily maximum 37.9 C, mean daily minimum 25.3 C, rainfall 23.0 mm, 2 rain days",
-              "retrievedAt": "2026-10-22T18:03:32+00:00",
+              "retrievedAt": "2026-10-22T18:11:39+00:00",
               "publicationDate": "2010-12-31",
               "independenceGroupId": "wmo-wwis"
             },
@@ -226,7 +226,7 @@
               "url": "https://worldweather.wmo.int/en/json/1387_en.json",
               "publisher": "World Meteorological Organization (World Weather Information Service)",
               "quote": "AUG: mean daily maximum 29.7 C, mean daily minimum 22.0 C, rainfall 208.9 mm, 13 rain days",
-              "retrievedAt": "2026-10-22T18:03:32+00:00",
+              "retrievedAt": "2026-10-22T18:11:39+00:00",
               "publicationDate": "2010-12-31",
               "independenceGroupId": "wmo-wwis"
             }
@@ -249,7 +249,7 @@
               "url": "https://worldweather.wmo.int/en/json/1387_en.json",
               "publisher": "World Meteorological Organization (World Weather Information Service)",
               "quote": "AUG: mean daily maximum 29.7 C, mean daily minimum 22.0 C, rainfall 208.9 mm, 13 rain days",
-              "retrievedAt": "2026-10-22T18:03:32+00:00",
+              "retrievedAt": "2026-10-22T18:11:39+00:00",
               "publicationDate": "2010-12-31",
               "independenceGroupId": "wmo-wwis"
             },
@@ -260,7 +260,7 @@
               "url": "https://worldweather.wmo.int/en/json/1387_en.json",
               "publisher": "World Meteorological Organization (World Weather Information Service)",
               "quote": "SEP: mean daily maximum 30.6 C, mean daily minimum 22.0 C, rainfall 182.0 mm, 14 rain days",
-              "retrievedAt": "2026-10-22T18:03:32+00:00",
+              "retrievedAt": "2026-10-22T18:11:39+00:00",
               "publicationDate": "2010-12-31",
               "independenceGroupId": "wmo-wwis"
             },
@@ -271,7 +271,7 @@
               "url": "https://worldweather.wmo.int/en/json/1387_en.json",
               "publisher": "World Meteorological Organization (World Weather Information Service)",
               "quote": "DEC: mean daily maximum 35.0 C, mean daily minimum 19.9 C, rainfall 1.9 mm, 1 rain days",
-              "retrievedAt": "2026-10-22T18:03:32+00:00",
+              "retrievedAt": "2026-10-22T18:11:39+00:00",
               "publicationDate": "2010-12-31",
               "independenceGroupId": "wmo-wwis"
             },
@@ -282,7 +282,7 @@
               "url": "https://worldweather.wmo.int/en/json/1387_en.json",
               "publisher": "World Meteorological Organization (World Weather Information Service)",
               "quote": "JAN: mean daily maximum 34.7 C, mean daily minimum 20.0 C, rainfall 4.7 mm, 1 rain days",
-              "retrievedAt": "2026-10-22T18:03:32+00:00",
+              "retrievedAt": "2026-10-22T18:11:39+00:00",
               "publicationDate": "2010-12-31",
               "independenceGroupId": "wmo-wwis"
             }
@@ -324,7 +324,7 @@
               "url": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
               "publisher": "UK Foreign, Commonwealth & Development Office",
               "quote": "Flooding is common in the Upper West, North East, Northern and Savannah regions during the rainy season, from March to November.",
-              "retrievedAt": "2026-10-22T18:03:32+00:00",
+              "retrievedAt": "2026-10-22T18:11:39+00:00",
               "publicationDate": "2026-07-02",
               "independenceGroupId": "uk-fcdo"
             }
@@ -348,7 +348,7 @@
               "url": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
               "publisher": "UK Foreign, Commonwealth & Development Office",
               "quote": "Heavy rainfall can also cause flooding in other parts of Ghana, including urban areas such as Accra and its surroundings. Flooding can disrupt road travel, public transport, electricity and other services, and conditions can change quickly following periods of intense rainfall.",
-              "retrievedAt": "2026-10-22T18:03:32+00:00",
+              "retrievedAt": "2026-10-22T18:11:39+00:00",
               "publicationDate": "2026-07-02",
               "independenceGroupId": "uk-fcdo"
             }
@@ -372,7 +372,7 @@
               "url": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
               "publisher": "UK Foreign, Commonwealth & Development Office",
               "quote": "Earthquakes and tremors are a risk in Ghana.",
-              "retrievedAt": "2026-10-22T18:03:32+00:00",
+              "retrievedAt": "2026-10-22T18:11:39+00:00",
               "publicationDate": "2026-07-02",
               "independenceGroupId": "uk-fcdo"
             }
@@ -431,7 +431,7 @@
       "tier": "A",
       "title": "WMO World Weather Information Service: Accra climate averages",
       "url": "https://worldweather.wmo.int/en/json/921_en.json",
-      "retrievedAt": "2026-10-22T18:03:32+00:00",
+      "retrievedAt": "2026-10-22T18:11:39+00:00",
       "originalLanguage": "en",
       "contentRights": "ATTRIBUTION_REQUIRED",
       "accessMethod": "API",
@@ -478,7 +478,7 @@
       "tier": "A",
       "title": "WMO World Weather Information Service: Kumasi climate averages",
       "url": "https://worldweather.wmo.int/en/json/922_en.json",
-      "retrievedAt": "2026-10-22T18:03:32+00:00",
+      "retrievedAt": "2026-10-22T18:11:39+00:00",
       "originalLanguage": "en",
       "contentRights": "ATTRIBUTION_REQUIRED",
       "accessMethod": "API",
@@ -530,7 +530,7 @@
       "tier": "A",
       "title": "WMO World Weather Information Service: Wa climate averages",
       "url": "https://worldweather.wmo.int/en/json/1387_en.json",
-      "retrievedAt": "2026-10-22T18:03:32+00:00",
+      "retrievedAt": "2026-10-22T18:11:39+00:00",
       "originalLanguage": "en",
       "contentRights": "ATTRIBUTION_REQUIRED",
       "accessMethod": "API",
@@ -577,7 +577,7 @@
       "tier": "A",
       "title": "Foreign travel advice: safety and security",
       "url": "https://www.gov.uk/foreign-travel-advice/ghana/safety-and-security",
-      "retrievedAt": "2026-10-22T18:03:32+00:00",
+      "retrievedAt": "2026-10-22T18:11:39+00:00",
       "originalLanguage": "en",
       "contentRights": "GOVERNMENT_OPEN",
       "accessMethod": "WEB_PAGE",
@@ -719,7 +719,7 @@
         "originalLanguage": "en",
         "translated": false,
         "translationMethod": "NONE",
-        "retrievedAt": "2026-10-22T18:03:32+00:00",
+        "retrievedAt": "2026-10-22T18:11:39+00:00",
         "publicationDate": "2010-12-31",
         "publicationDateStatus": "STATED",
         "contentRights": "ATTRIBUTION_REQUIRED",
@@ -740,7 +740,7 @@
         "originalLanguage": "en",
         "translated": false,
         "translationMethod": "NONE",
-        "retrievedAt": "2026-10-22T18:03:32+00:00",
+        "retrievedAt": "2026-10-22T18:11:39+00:00",
         "publicationDate": "2010-12-31",
         "publicationDateStatus": "STATED",
         "contentRights": "ATTRIBUTION_REQUIRED",
@@ -761,7 +761,7 @@
         "originalLanguage": "en",
         "translated": false,
         "translationMethod": "NONE",
-        "retrievedAt": "2026-10-22T18:03:32+00:00",
+        "retrievedAt": "2026-10-22T18:11:39+00:00",
         "publicationDate": "2010-12-31",
         "publicationDateStatus": "STATED",
         "contentRights": "ATTRIBUTION_REQUIRED",
@@ -782,7 +782,7 @@
         "originalLanguage": "en",
         "translated": false,
         "translationMethod": "NONE",
-        "retrievedAt": "2026-10-22T18:03:32+00:00",
+        "retrievedAt": "2026-10-22T18:11:39+00:00",
         "publicationDate": "2026-07-02",
         "publicationDateStatus": "STATED",
         "contentRights": "GOVERNMENT_OPEN",
@@ -815,7 +815,7 @@
         "notes": "Published automatically by 03AA-04_Country_Intelligence_Builder_TI after the TI publication rules passed (retrieved 2026-10-22). Long-term climate averages for the 1981-2010 reference period at Accra, Kumasi, Wa, from WMO's World Weather Information Service (data from the national meteorological service). These are seasonal averages, not current conditions or a forecast, and the reference period is not the most recent WMO normal period. WMO's disclaimer applies. WMO World Weather Information Service is acknowledged as the source; its disclaimer applies (worldweather.wmo.int/en/disclaimer.html).",
         "provenance": {
           "builder": "03AA-04_Country_Intelligence_Builder_TI",
-          "publicationId": "pub-20261022T180332Z-21fa3f",
+          "publicationId": "pub-20261022T181139Z-21fa3f",
           "method": "MODEL_VERIFIED",
           "contentHash": "a00626ad470e7e9b",
           "topic": "CLIMATE_SEASONAL"
@@ -843,7 +843,7 @@
         "notes": "Published automatically by 03AA-04_Country_Intelligence_Builder_TI after the TI publication rules passed. Source wording is quoted verbatim (last updated 2 Jul 2026; retrieved 2026-10-22). The advice is the named government's guidance and may differ for other nationalities.",
         "provenance": {
           "builder": "03AA-04_Country_Intelligence_Builder_TI",
-          "publicationId": "pub-20261022T180332Z-21fa3f",
+          "publicationId": "pub-20261022T181139Z-21fa3f",
           "method": "EXTRACTIVE",
           "contentHash": "4bc0116aeb01cdc8",
           "topic": "FLOODING_NATURAL_HAZARDS"
@@ -867,9 +867,17 @@
     "wouldCostUsdIfRun": null
   },
   "publication": {
-    "publicationId": null,
-    "recordIds": [],
-    "verification": null,
-    "skipped": "publication_off (mode draft, TI_CB_PUBLISH unset)"
+    "publicationId": "pub-20261022T181139Z-21fa3f",
+    "recordIds": [
+      "gh-environment-climate-seasonal"
+    ],
+    "verification": {
+      "ok": false,
+      "attempts": 46,
+      "detail": "served data.json does not match yet: ['gh-environment-climate-seasonal', 'gh-equipment-plugs']",
+      "url": "https://travelintelligence22.com/",
+      "served_generated": "2026-10-22T14:27:41+00:00"
+    },
+    "skipped": null
   }
 }
