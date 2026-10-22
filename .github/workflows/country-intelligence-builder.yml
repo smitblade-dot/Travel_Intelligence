@@ -41,6 +41,8 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
+      - name: Install PDF text reader
+        run: python -m pip install pypdf==6.17.0
       - name: Configure git identity
         run: |
           git config --global user.name "Travel Intelligence Bot"

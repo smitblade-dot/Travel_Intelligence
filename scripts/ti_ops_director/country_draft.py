@@ -13,7 +13,7 @@ import importlib.util
 import json
 import re
 import tempfile
-from datetime import timedelta
+from datetime import datetime, timedelta
 from pathlib import Path
 
 from .store import fingerprint
@@ -162,8 +162,66 @@ def _claim_problem(c, by_id, ev_by_code, lo, hi):
 
 
 # ---- deterministic items ------------------------------------------------------------------------------------
+FULL_MONTH = {"JAN": "January", "FEB": "February", "MAR": "March", "APR": "April", "MAY": "May", "JUN": "June", "JUL": "July",
+              "AUG": "August", "SEP": "September", "OCT": "October", "NOV": "November", "DEC": "December"}
+
+
+def wmo_climate_item(evidence, tdef):
+    """Seasonal climate averages from WMO WWIS stations, computed in code. Every configured station must be retrieved so the
+    record never describes the whole country from one place. Short-range forecasts and current weather are never used."""
+    wanted = [k for k in tdef.get("sources", []) if k.startswith("wmo_")]
+    got = {e["sourceKey"]: e for e in evidence if e["sourceKey"] in wanted and e["status"] == "RETRIEVED" and e.get("structured")}
+    if not wanted or set(got) != set(wanted):
+        return None, [f"{k}: {next((e['status'] for e in evidence if e['sourceKey'] == k), 'not configured for this country')}"
+                      for k in wanted if k not in got]
+    claims, places = [], []
+    for k in wanted:
+        e, st = got[k], got[k]["structured"]
+        rows, unit = st["months"], st["rain_unit"]
+        pas = {}
+        for p in e["passages"]:
+            for part in p["text"].split("; "):
+                pas[part.split(":")[0]] = (p["id"], part)
+
+        def ev(m, e=e, pas=pas):
+            pid, part = pas[m]
+            return {"passageId": pid, "sourceKey": e["sourceKey"], "sourceId": e["sourceId"], "url": e["url"], "publisher": e["publisher"],
+                    "quote": part, "retrievedAt": e["retrievedAt"], "publicationDate": e["publicationDate"],
+                    "independenceGroupId": e["independenceGroupId"]}
+        hot = max(rows, key=lambda m: rows[m]["tmax"])
+        cool = min(rows, key=lambda m: rows[m]["tmax"])
+        wet = sorted(rows, key=lambda m: -rows[m]["rain"])[:2]
+        dry = sorted(rows, key=lambda m: rows[m]["rain"])[:2]
+        period = f"{st['period_from']}-{st['period_to']}"
+        claims.append({"text": (f"{st['station']}, {period} averages: the mean daily maximum temperature is highest in {FULL_MONTH[hot]} "
+                                f"({rows[hot]['tmax']} C) and lowest in {FULL_MONTH[cool]} ({rows[cool]['tmax']} C)."),
+                       "evidence": [ev(hot), ev(cool)]})
+        claims.append({"text": (f"{st['station']}: the wettest months are {FULL_MONTH[wet[0]]} ({rows[wet[0]]['rain']} {unit}, "
+                                f"{rows[wet[0]]['raindays']} rain days) and {FULL_MONTH[wet[1]]} ({rows[wet[1]]['rain']} {unit}, "
+                                f"{rows[wet[1]]['raindays']} rain days); the driest are {FULL_MONTH[dry[0]]} ({rows[dry[0]]['rain']} {unit}) "
+                                f"and {FULL_MONTH[dry[1]]} ({rows[dry[1]]['rain']} {unit})."),
+                       "evidence": [ev(wet[0]), ev(wet[1]), ev(dry[0]), ev(dry[1])]})
+        places.append(st["station"])
+    for c in claims:
+        c.update(status="VERIFIED", temporal="STABLE", independentSources=1, method="COMPUTED",
+                 note="computed from the source's published monthly climate averages")
+    periods = sorted({f"{got[k]['structured']['period_from']}-{got[k]['structured']['period_to']}" for k in wanted})
+    supply = sorted({d for k in wanted for d in got[k]["structured"].get("supply_dates", [])})
+    return {"topic": "CLIMATE_SEASONAL", "title": f"Climate and seasons ({', '.join(places)})", "claims": claims,
+            "recordNote": (f"Long-term climate averages for the {' and '.join(periods)} reference period at {', '.join(places)}, from WMO's World Weather "
+                           "Information Service (data from the national meteorological service). These are seasonal averages, not current "
+                           "conditions or a forecast, and the reference period is not the most recent WMO normal period. WMO's disclaimer applies."),
+            "uncertainty": (f"Station averages for {', '.join(places)} only; conditions elsewhere in the country differ. Reference period {', '.join(periods)}. "
+                            "Not a forecast and not current conditions. "
+                            + (f"The feed lists data-supply dates of {', '.join(supply)}, which predate the end of the stated reference period; "
+                               "the stated reference period is used and the supply date is not relied on." if supply and min(supply) < f"{max(p.split('-')[1] for p in periods)}-01-01" else "")).strip(),
+            "derivation": "COMPUTED_FROM_SOURCE_DATA"}, []
+
+
 def climate_item(evidence, tdef, today):
     """Climate and seasons from the first retrievable climatology source (config order), computed in code. No model."""
+    if any(k.startswith("wmo_") for k in tdef.get("sources", [])):
+        return wmo_climate_item(evidence, tdef)[0]
     order = {k: i for i, k in enumerate(tdef.get("sources", []))}
     e = next(iter(sorted((x for x in evidence if x["sourceKey"] in order and x["status"] == "RETRIEVED" and x.get("structured")),
                          key=lambda x: order[x["sourceKey"]])), None)
@@ -201,6 +259,93 @@ def climate_item(evidence, tdef, today):
             "uncertainty": f"{scope}{s['model']} {s['period'].split('(')[-1].rstrip(')') if s.get('lat') is not None else s['period']}. "
                            "Regional variation and year-to-year variability are not covered. This is a long-term average, not a forecast.",
             "derivation": "COMPUTED_FROM_SOURCE_DATA"}
+
+
+def _sentence(text, pattern):
+    """The shortest verbatim span of ``text`` matching ``pattern`` (so the quote is a real substring of the passage)."""
+    m = re.search(pattern, text, re.I | re.S)
+    return m.group(0).strip() if m else None
+
+
+def electrical_item(evidence, tdef, today):
+    """Plug type, supply voltage and frequency from official Ghana instruments, computed in code. Each fact is stated only
+    if its own source says it. -> (item or None, [reasons for facts that could not be established])."""
+    by = {e["sourceKey"]: e for e in evidence if e["status"] == "RETRIEVED"}
+    claims, held = [], []
+
+    def ev(sk, quote):
+        e = by[sk]
+        pid = next((p["id"] for p in e["passages"] if quote in p["text"]), None)
+        return None if pid is None else {"passageId": pid, "sourceKey": sk, "sourceId": e["sourceId"], "url": e["url"], "publisher": e["publisher"],
+                                         "quote": quote, "retrievedAt": e["retrievedAt"], "publicationDate": e.get("publicationDate"),
+                                         "independenceGroupId": e["independenceGroupId"]}
+
+    def passage_quote(sk, pattern):
+        for p in (by.get(sk) or {}).get("passages", []):
+            q = _sentence(p["text"], pattern)
+            if q and len(q) <= 400:
+                return q
+        return None
+
+    def add(text, sources):
+        evs = [x for x in (ev(sk, q) for sk, q in sources) if x]
+        if evs:
+            claims.append({"text": text, "evidence": evs, "status": "VERIFIED", "temporal": "STABLE", "independentSources": len({x["independenceGroupId"] for x in evs}),
+                           "method": "COMPUTED", "note": "stated by the cited source(s); wording composed in code"})
+            return True
+        return False
+
+    # Plug type: the national standards body's notice.
+    q = passage_quote("gsa_plugs", r"the plugs should be type\s+[A-Z]\b[^.]*\.")
+    if q:
+        letter = re.search(r"type\s+([A-Z])\b", q, re.I).group(1).upper()
+        detail = passage_quote("gsa_plugs", r"\d+-amp plug with three rectangular prongs")
+        amp = re.search(r"(\d+)-amp", detail or "", re.I)
+        eff = by["gsa_plugs"].get("publicationDate")
+        when = f", effective {date_text(eff)}" if eff else ""
+        add(f"The Ghana Standards Authority requires imported household plugs to be type {letter}"
+            + (f" ({amp.group(1)}-amp, three rectangular pins)" if amp else "") + when + ".",
+            [("gsa_plugs", q)] + ([("gsa_plugs", detail)] if detail else []))
+    else:
+        held.append("plug_type: " + ("source not retrieved" if "gsa_plugs" not in by else "no plug-type statement found in the notice"))
+
+    # Voltage: the electricity supply regulations; the utility page corroborates.
+    q = passage_quote("li_1935", r"within plus or minus ten percent of the following voltage levels:\s*\(a\)\s*230 Volts;\s*\(b\)\s*400 Volts")
+    if q:
+        srcs = [("li_1935", q)]
+        qe = passage_quote("ecg_technical", r"standard voltages are 230 volts[^.]*?three phase 4 wire")
+        if qe:
+            srcs.append(("ecg_technical", qe))
+        add("Ghana's supply regulations (L.I. 1935) require the voltage at a customer's premises to stay within plus or minus ten percent of "
+            "230 volts or 400 volts (or of the higher network voltages they list).", srcs)
+    else:
+        held.append("voltage: " + ("source not retrieved" if "li_1935" not in by else "no voltage-level statement found in the regulations"))
+
+    # Frequency: the grid code (dated, official). The utility page alone is undated and cannot establish it.
+    q = passage_quote("grid_code", r"[^.]{0,120}frequency[^.]{0,80}nominal[^.]{0,40}50\s*Hz[^.]{0,80}") or \
+        passage_quote("grid_code", r"[^.]{0,80}nominal[^.]{0,40}frequency[^.]{0,60}50\s*Hz[^.]{0,80}")
+    if q:
+        srcs = [("grid_code", q)]
+        qe = passage_quote("ecg_technical", r"frequency of 50\s*hertz")
+        if qe:
+            srcs.append(("ecg_technical", qe))
+        add("Ghana's National Electricity Grid Code treats 50 Hz as the nominal system frequency.", srcs)
+    else:
+        held.append("frequency: " + ("source not retrieved" if "grid_code" not in by else "no nominal-frequency statement found in the grid code"))
+
+    if not claims:
+        return None, held
+    return {"topic": tdef.get("topic", "PLUGS"), "title": "Electrical plugs and supply", "claims": claims,
+            "recordNote": ("Plug type and supply voltage are as stated by Ghana's standards body and electricity regulations on the dates shown; "
+                           "instruments may have been amended since. Other plug types that may be found in older buildings are not covered by these sources."),
+            "uncertainty": "Official statements as of their stated dates; not re-confirmed against any later amendment. " +
+                           ("Held: " + "; ".join(held) + "." if held else ""),
+            "derivation": "COMPUTED_FROM_SOURCE_DATA"}, held
+
+
+def date_text(iso):
+    d = datetime.fromisoformat(iso).date()
+    return f"{d.day} {d.strftime('%B %Y')}"
 
 
 def reference_item(country_record, tdef):

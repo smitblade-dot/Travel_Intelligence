@@ -41,6 +41,17 @@ def content_hash(text, source_date):
     return hashlib.sha256(f"{text}|{source_date}".encode("utf-8")).hexdigest()[:16]
 
 
+def _notes(assessed, cited, sources_cfg, pe, primary):
+    base = (f"Published automatically by {AGENT_NAME} after the TI publication rules passed. Source wording is quoted verbatim "
+            f"({date_phrase(sources_cfg[primary].get('date_verb', 'published'), pe.get('publicationDate'), pe.get('publicationDatePrecision', 'DAY'))}; retrieved "
+            f"{pe['retrievedAt'][:10]}). The advice is the named government's guidance and may differ for other nationalities.")
+    if assessed.get("recordNote"):
+        base = (f"Published automatically by {AGENT_NAME} after the TI publication rules passed (retrieved {pe['retrievedAt'][:10]}). "
+                + assessed["recordNote"])
+    caveats = [sources_cfg[k]["caveat"] for k in cited if sources_cfg[k].get("caveat")]
+    return " ".join([base] + list(dict.fromkeys(caveats)))
+
+
 # ---- building publication items -----------------------------------------------------------------------------
 def build_publication_item(cc, category, tname, tdef, assessed, evidence, sources_cfg, today, pub_cfg, pub_id):
     ev_by_key = {e["sourceKey"]: e for e in evidence}
@@ -62,17 +73,15 @@ def build_publication_item(cc, category, tname, tdef, assessed, evidence, source
         "title": tdef["subcategory"], "content": content, "confidence": assessed["confidence"], "status": "ACTIVE",
         "sourceId": pe["sourceId"], "locationId": None, "dateChecked": today.isoformat(),
         "reviewDate": (today + timedelta(days=pub_cfg["review_days"])).isoformat(), "sourcePublicationDate": src_date,
-        "notes": (f"Published automatically by {AGENT_NAME} after the TI publication rules passed. Source wording is quoted verbatim "
-                  f"({date_phrase(sources_cfg[primary].get('date_verb', 'published'), pe.get('publicationDate'))}; retrieved "
-                  f"{pe['retrievedAt'][:10]}). The advice is the named government's guidance and may differ for other nationalities."),
+        "notes": _notes(assessed, cited, sources_cfg, pe, primary),
         "provenance": {"builder": AGENT_NAME, "publicationId": pub_id, "method": method, "contentHash": chash, "topic": tname}}
     new_sources, observations = {}, []
     for sk, quotes in cited.items():
         e = ev_by_key[sk]
-        if not e["sourceIdIsExisting"] and sources_cfg[sk].get("registry_id"):
+        if not e["sourceIdIsExisting"]:
             s = sources_cfg[sk]
             new_sources[e["sourceId"]] = {
-                "id": e["sourceId"], "countryId": cc, "sourceName": s["title"], "organisation": s["publisher"], "sourceType": "GOVERNMENT",
+                "id": e["sourceId"], "countryId": cc, "sourceName": s["title"], "organisation": s["publisher"], "sourceType": s.get("source_type", "GOVERNMENT"),
                 "url": e["url"], "jurisdiction": s["jurisdiction"], "confidence": SOURCE_CONFIDENCE.get(s.get("tier"), "LOW"), "active": True, "accessMethod": s["access_method"],
                 "contentRights": s["content_rights"], "automationPermission": s["automation_permission"],
                 "originalLanguage": s["original_language"], "geographicScope": "NATIONAL", "dateChecked": today.isoformat(),
@@ -92,7 +101,7 @@ def build_publication_item(cc, category, tname, tdef, assessed, evidence, source
 
 
 # ---- applying to data.json ----------------------------------------------------------------------------------
-OPEN_RIGHTS = ("GOVERNMENT_OPEN", "OPEN_LICENCE", "PUBLIC_DOMAIN")
+OPEN_RIGHTS = ("GOVERNMENT_OPEN", "OPEN_LICENCE", "PUBLIC_DOMAIN", "ATTRIBUTION_REQUIRED", "FACTUAL_SUMMARY_ONLY")
 SOURCE_CONFIDENCE = {"A": "HIGH", "B": "MEDIUM", "C": "MEDIUM", "D": "LOW", "E": "LOW", "F": "LOW"}
 
 

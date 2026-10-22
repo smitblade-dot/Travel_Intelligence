@@ -92,6 +92,11 @@
         "name": "Accra",
         "lat": 5.6,
         "lon": -0.19
+      },
+      "wmo_cities": {
+        "wmo_wwis_accra": 921,
+        "wmo_wwis_kumasi": 922,
+        "wmo_wwis_wa": 1387
       }
     }
   },
@@ -229,14 +234,201 @@
       "registry_id": null,
       "attribution_label": "World Bank CCKP climatology",
       "date_verb": "data period"
+    },
+    "wmo_wwis_accra": {
+      "code": "WA",
+      "publisher": "World Meteorological Organization (World Weather Information Service)",
+      "jurisdiction": "INTERNATIONAL",
+      "tier": "A",
+      "title": "WMO World Weather Information Service: Accra climate averages",
+      "url": "https://worldweather.wmo.int/en/json/{wmo_city}_en.json",
+      "parser": "wmo_wwis",
+      "existing_source_id": null,
+      "independence_group": "wmo-wwis",
+      "content_rights": "ATTRIBUTION_REQUIRED",
+      "access_method": "API",
+      "automation_permission": "PERMITTED",
+      "original_language": "en",
+      "stale_after_days": 7305,
+      "current_capable": false,
+      "registry_id": "wmo-wwis",
+      "attribution_label": "WMO World Weather Information Service climate averages for Accra, not current conditions or a forecast",
+      "date_verb": "reference period ended",
+      "source_type": "INTERNATIONAL_ORGANISATION",
+      "only_countries": [
+        "gh"
+      ],
+      "caveat": "WMO World Weather Information Service is acknowledged as the source; its disclaimer applies (worldweather.wmo.int/en/disclaimer.html).",
+      "_note": "Freshness is the end of the stated climate reference period (limit 20 years); WMO's current standard normal period is later, and the text says which period is shown. Only climate.climateMonth is read; the forecast block is ignored."
+    },
+    "wmo_wwis_kumasi": {
+      "code": "WK",
+      "publisher": "World Meteorological Organization (World Weather Information Service)",
+      "jurisdiction": "INTERNATIONAL",
+      "tier": "A",
+      "title": "WMO World Weather Information Service: Kumasi climate averages",
+      "url": "https://worldweather.wmo.int/en/json/{wmo_city}_en.json",
+      "parser": "wmo_wwis",
+      "existing_source_id": null,
+      "independence_group": "wmo-wwis",
+      "content_rights": "ATTRIBUTION_REQUIRED",
+      "access_method": "API",
+      "automation_permission": "PERMITTED",
+      "original_language": "en",
+      "stale_after_days": 7305,
+      "current_capable": false,
+      "registry_id": "wmo-wwis",
+      "attribution_label": "WMO World Weather Information Service climate averages for Kumasi, not current conditions or a forecast",
+      "date_verb": "reference period ended",
+      "source_type": "INTERNATIONAL_ORGANISATION",
+      "only_countries": [
+        "gh"
+      ],
+      "caveat": "WMO World Weather Information Service is acknowledged as the source; its disclaimer applies (worldweather.wmo.int/en/disclaimer.html).",
+      "_note": "Freshness is the end of the stated climate reference period (limit 20 years); WMO's current standard normal period is later, and the text says which period is shown. Only climate.climateMonth is read; the forecast block is ignored."
+    },
+    "wmo_wwis_wa": {
+      "code": "WW",
+      "publisher": "World Meteorological Organization (World Weather Information Service)",
+      "jurisdiction": "INTERNATIONAL",
+      "tier": "A",
+      "title": "WMO World Weather Information Service: Wa climate averages",
+      "url": "https://worldweather.wmo.int/en/json/{wmo_city}_en.json",
+      "parser": "wmo_wwis",
+      "existing_source_id": null,
+      "independence_group": "wmo-wwis",
+      "content_rights": "ATTRIBUTION_REQUIRED",
+      "access_method": "API",
+      "automation_permission": "PERMITTED",
+      "original_language": "en",
+      "stale_after_days": 7305,
+      "current_capable": false,
+      "registry_id": "wmo-wwis",
+      "attribution_label": "WMO World Weather Information Service climate averages for Wa, not current conditions or a forecast",
+      "date_verb": "reference period ended",
+      "source_type": "INTERNATIONAL_ORGANISATION",
+      "only_countries": [
+        "gh"
+      ],
+      "caveat": "WMO World Weather Information Service is acknowledged as the source; its disclaimer applies (worldweather.wmo.int/en/disclaimer.html).",
+      "_note": "Freshness is the end of the stated climate reference period (limit 20 years); WMO's current standard normal period is later, and the text says which period is shown. Only climate.climateMonth is read; the forecast block is ignored."
+    },
+    "gsa_plugs": {
+      "code": "GS",
+      "publisher": "Ghana Standards Authority",
+      "jurisdiction": "GH",
+      "tier": "A",
+      "title": "Ghana Standards Authority public notice: plugs and socket-outlets",
+      "url": "https://www.gsa.gov.gh/wp-content/uploads/2018/11/ADVERT-socket-and-plugs.pdf",
+      "parser": "pdf",
+      "existing_source_id": null,
+      "independence_group": "gh-gsa",
+      "content_rights": "FACTUAL_SUMMARY_ONLY",
+      "access_method": "WEB_PAGE",
+      "automation_permission": "PERMITTED",
+      "original_language": "en",
+      "stale_after_days": 3650,
+      "current_capable": false,
+      "registry_id": "gh-standards-authority",
+      "attribution_label": "Ghana Standards Authority public notice",
+      "date_verb": "effective",
+      "date_regex": "EFFECTIVE\\s+(?P<d>\\d{1,2})(?:ST|ND|RD|TH)?\\s+(?P<m>[A-Za-z]+)\\s+(?P<y>\\d{4})",
+      "only_countries": [
+        "gh"
+      ],
+      "caveat": "The notice sets a requirement for imported plugs; it does not describe plug types in older installations."
+    },
+    "li_1935": {
+      "code": "LI",
+      "publisher": "Ghana Public Utilities Regulatory Commission (publishing L.I. 1935)",
+      "jurisdiction": "GH",
+      "tier": "A",
+      "title": "Electricity Supply and Distribution (Standards of Performance) Regulations, 2008 (L.I. 1935)",
+      "url": "https://www.purc.com.gh/attachment/719588-20201123111126.pdf",
+      "parser": "pdf",
+      "existing_source_id": null,
+      "independence_group": "gh-li-1935",
+      "content_rights": "FACTUAL_SUMMARY_ONLY",
+      "access_method": "WEB_PAGE",
+      "automation_permission": "PERMITTED",
+      "original_language": "en",
+      "stale_after_days": 7305,
+      "current_capable": false,
+      "registry_id": "gh-purc",
+      "attribution_label": "Ghana Electricity Supply and Distribution (Standards of Performance) Regulations, L.I. 1935",
+      "date_verb": "gazetted",
+      "keep": [
+        "volt"
+      ],
+      "date_regex": "Date of Gazette notification:\\s*(?P<d>\\d{1,2})(?:st|nd|rd|th)?\\s+(?P<m>[A-Za-z]+),?\\s+(?P<y>\\d{4})",
+      "only_countries": [
+        "gh"
+      ],
+      "caveat": "A legal instrument may have been amended since the date shown; check the issuing authority."
+    },
+    "grid_code": {
+      "code": "GC",
+      "publisher": "Energy Commission of Ghana",
+      "jurisdiction": "GH",
+      "tier": "A",
+      "title": "National Electricity Grid Code (Republic of Ghana)",
+      "url": "https://www.energycom.gov.gh/index.php/regulation/codes-sub-codes?download=13:national-elect-grid-code-2009",
+      "parser": "pdf",
+      "existing_source_id": null,
+      "independence_group": "gh-energy-commission",
+      "content_rights": "FACTUAL_SUMMARY_ONLY",
+      "access_method": "WEB_PAGE",
+      "automation_permission": "PERMITTED",
+      "original_language": "en",
+      "stale_after_days": 9000,
+      "current_capable": false,
+      "registry_id": "gh-energy-commission",
+      "attribution_label": "Ghana National Electricity Grid Code",
+      "date_verb": "edition dated",
+      "keep": [
+        "nominal"
+      ],
+      "max_bytes": 40000000,
+      "timeout_seconds": 120,
+      "date_regex": "GRID\\s+CODE.{0,160}?(?P<m>[A-Z][a-z]+),?\\s+(?P<y>20\\d{2})",
+      "only_countries": [
+        "gh"
+      ],
+      "caveat": "A grid code may have been revised since the edition shown; check the issuing authority.",
+      "_note": "Large PDF (about 190 pages); read once per run with a raised size limit, keeping only paragraphs containing 'nominal'."
+    },
+    "ecg_technical": {
+      "code": "EC",
+      "publisher": "Electricity Company of Ghana",
+      "jurisdiction": "GH",
+      "tier": "A",
+      "title": "ECG Technical Information & Tariff",
+      "url": "https://ecg.com.gh/index.php/en/history/technical-information-tariff",
+      "parser": "html",
+      "existing_source_id": null,
+      "independence_group": "gh-ecg",
+      "content_rights": "FACTUAL_SUMMARY_ONLY",
+      "access_method": "WEB_PAGE",
+      "automation_permission": "PERMITTED",
+      "original_language": "en",
+      "stale_after_days": 3650,
+      "current_capable": false,
+      "registry_id": null,
+      "attribution_label": "Electricity Company of Ghana technical information",
+      "date_verb": "page date not stated",
+      "only_countries": [
+        "gh"
+      ],
+      "_note": "State-owned distribution utility: directly affected party within its remit, but undated and not a register entry, so it corroborates only."
     }
   },
   "categories": {
     "ENVIRONMENT": {
       "brief": "Climate and seasons, regional variation, natural hazards and operational implications. Include month/season context where useful.",
       "sources": [
-        "nasa_power",
-        "worldbank_cckp",
+        "wmo_wwis_accra",
+        "wmo_wwis_kumasi",
+        "wmo_wwis_wa",
         "fcdo_safety"
       ],
       "topics": {
@@ -245,11 +437,12 @@
           "subcategory": "Climate and seasons",
           "data_type": "FACT",
           "sources": [
-            "nasa_power",
-            "worldbank_cckp"
+            "wmo_wwis_accra",
+            "wmo_wwis_kumasi",
+            "wmo_wwis_wa"
           ],
           "freshness": "STABLE",
-          "_note": "First retrievable source in this order is used."
+          "_note": "Seasonal climate averages only (WMO reference period). Current conditions and forecasts are never used here. NASA POWER and World Bank CCKP stay configured but unused: their robots.txt disallow the API and no exception is approved."
         },
         "FLOODING_NATURAL_HAZARDS": {
           "kind": "model",
@@ -388,7 +581,11 @@
         "cdc_travel",
         "travelhealthpro",
         "fcdo_health",
-        "fcdo_safety"
+        "fcdo_safety",
+        "gsa_plugs",
+        "li_1935",
+        "grid_code",
+        "ecg_technical"
       ],
       "topics": {
         "CLOTHING": {
@@ -447,12 +644,18 @@
           ]
         },
         "PLUGS": {
-          "kind": "reference",
+          "kind": "deterministic",
+          "builder": "electrical",
           "subcategory": "Electrical plugs and supply",
           "data_type": "FACT",
-          "sources": [],
+          "sources": [
+            "gsa_plugs",
+            "li_1935",
+            "grid_code",
+            "ecg_technical"
+          ],
           "freshness": "STABLE",
-          "_note": "Taken from the TI country reference fields (plugTypes, voltage, frequency). No external source is retrieved, so the draft says so and is marked unverified."
+          "_note": "Plug type from the national standards body, voltage from the supply regulations, frequency from the grid code; the utility page corroborates only. Each fact is published only if its own dated official source states it."
         }
       }
     }

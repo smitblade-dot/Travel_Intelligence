@@ -690,3 +690,112 @@ class MasterAgentAndScope(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class WmoClimateAndElectricalSupply(unittest.TestCase):
+    """The live configuration: WMO WWIS seasonal climate averages and official Ghana plug/voltage/frequency sources."""
+    WMO_ROBOTS = {"worldweather.wmo.int": (cs.FX / "wmo_robots.txt").read_text()}
+
+    def run_publish(self, h, categories, net=None):
+        b = h.builder(wmo=True, registered=True, categories=categories, net=net or FakeNet(robots=self.WMO_ROBOTS))
+        run_all(b)
+        return b
+
+    def test_the_wmo_feed_is_allowed_by_robots_and_only_climate_averages_are_read(self):
+        from ti_ops_director.country_evidence import collect_category
+        cfg = load_builder_config({}, ROOT)
+        ev = {e["sourceKey"]: e for e in collect_category(cfg, "gh", "ENVIRONMENT", FakeNet(robots=self.WMO_ROBOTS), cs.NOW, [])}
+        for k in ("wmo_wwis_accra", "wmo_wwis_kumasi", "wmo_wwis_wa"):
+            self.assertEqual(ev[k]["status"], "RETRIEVED", ev[k].get("error"))
+            self.assertEqual((ev[k]["publicationDate"], ev[k]["dataPeriod"]), ("2010-12-31", "1981-2010"))
+            self.assertNotIn("Thunderstorm", json.dumps(ev[k]))                  # the feed's forecast block is never read
+        self.assertNotIn("nasa_power", ev)                                         # no robots exception is approved: not requested
+
+    def test_seasonal_climate_is_published_labelled_as_averages_not_forecast_or_current_conditions(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            h = PublishHarness(tmp)
+            self.run_publish(h, ["ENVIRONMENT"])
+            r = records(h)["gh-environment-climate-seasonal"]
+            self.assertIn("not current conditions or a forecast", r["content"])
+            self.assertIn("reference period ended 31 Dec 2010", r["content"])
+            for place in ("Accra", "Kumasi", "Wa,"):
+                self.assertIn(place, r["content"])
+            self.assertIn("Accra, 1981-2010 averages", r["content"])
+            self.assertNotIn("Thunderstorm", r["content"])
+            self.assertEqual((r["category"], r["dataType"], r["confidence"], r["sourcePublicationDate"]), ("ENVIRONMENT", "FACT", "MEDIUM", "2010-12-31"))
+            self.assertIn("not the most recent WMO normal period", r["notes"])
+            self.assertIn("worldweather.wmo.int/en/disclaimer.html", r["notes"])
+            d = h.main_data()
+            src = [s for s in d["sources"] if s["id"] == "cb-gh-wmo-wwis-accra"][0]
+            self.assertEqual((src["sourceType"], src["confidence"]), ("INTERNATIONAL_ORGANISATION", "HIGH"))
+            obs = [o for o in d["sourceObservations"] if o.get("recordId") == r["id"]]
+            self.assertEqual({o["sourceId"] for o in obs}, {"cb-gh-wmo-wwis-accra", "cb-gh-wmo-wwis-kumasi", "cb-gh-wmo-wwis-wa"})
+            self.assertTrue(all(o["legalReviewStatus"] == "NOT_REQUIRED" for o in obs))
+
+    def test_one_missing_station_holds_the_whole_climate_record_rather_than_describing_the_country_from_less(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            h = PublishHarness(tmp)
+            net = FakeNet(robots=self.WMO_ROBOTS, fail={"/1387_en.json": 503})
+            b = self.run_publish(h, ["ENVIRONMENT"], net)
+            self.assertNotIn("gh-environment-climate-seasonal", records(h))
+            held = [e for e in ledger(h)["exceptions"].values() if e.get("topic") == "CLIMATE_SEASONAL" or "CLIMATE" in e["key"]]
+            self.assertTrue(held)
+
+    def test_climate_that_claims_a_forecast_is_not_possible_because_the_forecast_block_is_dropped(self):
+        from ti_ops_director.country_evidence import parse_wmo
+        structured, passages = parse_wmo((cs.FX / "wmo_921_en.json").read_bytes(), 921)
+        self.assertNotIn("forecast", json.dumps(structured).lower())
+        self.assertNotIn("Thunderstorm", json.dumps(passages))
+        with self.assertRaises(ValueError):
+            parse_wmo((cs.FX / "wmo_921_en.json").read_bytes(), 922)          # wrong station is refused
+
+    def test_plug_voltage_and_frequency_publish_only_from_dated_official_sources_and_type_d_is_not_claimed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            h = PublishHarness(tmp)
+            self.run_publish(h, ["EQUIPMENT"])
+            r = records(h)["gh-equipment-plugs"]
+            self.assertIn("type G (13-amp, three rectangular pins), effective 1 January 2019", r["content"])
+            self.assertIn("230 volts or 400 volts", r["content"])
+            self.assertIn("50 Hz as the nominal system frequency", r["content"])
+            self.assertIn("gazetted 13 Jun 2008", r["content"])
+            self.assertIn("edition dated Oct 2009", r["content"])                 # month precision: no invented day
+            self.assertNotIn("type D", r["content"])
+            self.assertIn("may have been amended", r["notes"])
+            d = h.main_data()
+            ids = {o["sourceId"] for o in d["sourceObservations"] if o.get("recordId") == r["id"]}
+            self.assertIn("cb-gh-ecg-technical", ids)                              # the utility corroborates voltage/frequency
+            self.assertEqual(r["sourceId"] in {"cb-gh-li-1935", "cb-gh-gsa-plugs", "cb-gh-grid-code"}, True)
+
+    def test_an_undated_utility_page_cannot_establish_frequency_when_the_grid_code_is_unavailable(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            h = PublishHarness(tmp)
+            net = FakeNet(robots=self.WMO_ROBOTS, fail={"national-elect-grid-code": 503})
+            self.run_publish(h, ["EQUIPMENT"], net)
+            r = records(h)["gh-equipment-plugs"]
+            self.assertIn("type G", r["content"])
+            self.assertNotIn("50 Hz", r["content"])
+            reasons = json.dumps(list(ledger(h)["exceptions"].values()))
+            self.assertIn("frequency: source not retrieved", reasons)
+
+    def test_without_the_standards_notice_no_plug_type_is_published(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            h = PublishHarness(tmp)
+            net = FakeNet(robots=self.WMO_ROBOTS, fail={"ADVERT-socket": 404})
+            self.run_publish(h, ["EQUIPMENT"], net)
+            r = records(h)["gh-equipment-plugs"]
+            self.assertNotIn("type G", r["content"])
+            self.assertIn("230 volts", r["content"])
+            self.assertIn("plug_type: source not retrieved", json.dumps(list(ledger(h)["exceptions"].values())))
+
+    def test_a_corrupt_pdf_is_a_parse_failure_not_a_crash(self):
+        from ti_ops_director.country_evidence import collect_category
+        cfg = load_builder_config({}, ROOT)
+        net = FakeNet(robots=self.WMO_ROBOTS, overrides={"ADVERT-socket": b"%PDF-1.4 truncated"})
+        ev = {e["sourceKey"]: e for e in collect_category(cfg, "gh", "EQUIPMENT", net, cs.NOW, [])}
+        self.assertEqual(ev["gsa_plugs"]["status"], "PARSE_FAILED")
+
+    def test_the_new_sources_are_in_the_register_with_a_review_trail(self):
+        reg = load_registry(ROOT)
+        for rid in ("wmo-wwis", "gh-standards-authority", "gh-purc", "gh-energy-commission"):
+            self.assertEqual((reg[rid]["tier"], reg[rid]["status"]), ("TIER_1", "INTEGRATION_READY"), rid)
+            self.assertTrue(reg[rid]["evidenceUrls"] and "no human review recorded" in reg[rid]["reviewedBy"], rid)

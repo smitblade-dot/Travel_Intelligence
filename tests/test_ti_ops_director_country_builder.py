@@ -115,8 +115,8 @@ class Gaps(unittest.TestCase):
         self.assertEqual(s["combinations"], 28)
         self.assertEqual(s["covered"] + s["missing"], 28)
 
-    def test_real_data_has_the_ghana_gaps(self):
-        data = json.loads((ROOT / "data.json").read_text(encoding="utf-8"))
+    def test_fixture_data_has_the_ghana_gaps(self):
+        data = cs.base_data()                       # the live data.json has since been filled by automatic publication
         gaps = find_gaps(data, ["gh"], ["ENVIRONMENT", "TRANSPORT", "EQUIPMENT"], datetime(2026, 10, 22).date())
         self.assertEqual([g["gap"]["type"] for g in gaps], ["MISSING"] * 3)
 
@@ -131,7 +131,7 @@ class Gaps(unittest.TestCase):
 
 class Evidence(unittest.TestCase):
     def collect(self, cat, net=None):
-        cfg = load_builder_config({}, ROOT)
+        cfg = cs.legacy(load_builder_config({}, ROOT))
         return collect_category(cfg, "gh", cat, net or FakeNet(), cs.NOW, cs.base_data()["sources"])
 
     def test_pages_are_reduced_to_verbatim_passages_without_page_chrome(self):
@@ -431,7 +431,7 @@ NASA_ROBOTS = "User-agent: *\nAllow: /api/pages/\nDisallow: /api/\nDisallow: /be
 class ClimateSources(unittest.TestCase):
     """Found live on 22 Oct 2026: NASA POWER's robots.txt disallows /api/ for generic agents."""
     def evidence(self, net, cfg=None):
-        cfg = cfg or load_builder_config({}, ROOT)
+        cfg = cfg or cs.legacy(load_builder_config({}, ROOT))
         return collect_category(cfg, "gh", "ENVIRONMENT", net, cs.NOW, cs.base_data()["sources"]), cfg
 
     def test_nasa_api_is_blocked_by_its_robots_txt_and_the_world_bank_series_is_used(self):
@@ -465,7 +465,7 @@ class ClimateSources(unittest.TestCase):
 
     def test_robots_exception_only_counts_with_marcs_written_approval(self):
         net = FakeNet(robots={"power.larc.nasa.gov": NASA_ROBOTS})
-        cfg = load_builder_config({}, ROOT)
+        cfg = cs.legacy(load_builder_config({}, ROOT))
         cfg.raw["sources"]["nasa_power"]["robots_exception"] = {"approved_by": "Someone", "approved_on": "2026-10-22"}
         ev, _ = self.evidence(net, cfg)
         self.assertEqual({e["sourceKey"]: e["status"] for e in ev}["nasa_power"], "BLOCKED_BY_ROBOTS")
@@ -856,7 +856,7 @@ class MasterAgentIntegration(unittest.TestCase):
         from ti_ops_director.controller import Controller
         from ti_ops_director.store import Store
         cfg = make_cfg(tmp)
-        cfg.repo_root = str(ROOT)
+        cfg.repo_root = str(cs.make_repo(tmp))
         store = Store(cfg.db_path)
         return Controller(cfg, store, http=net), cfg
 

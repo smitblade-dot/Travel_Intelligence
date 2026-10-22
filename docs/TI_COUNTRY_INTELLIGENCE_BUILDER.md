@@ -102,11 +102,23 @@ schedule or a manual dispatch on main.
 - CDC Travelers' Health and TravelHealthPro were registered on 22 Oct 2026 (robots.txt allows the paths; CDC Crawl-delay 20 is
   respected by the one-page-per-run fetch; TravelHealthPro states OGL v3.0). TravelHealthPro pages carry no stated date, so they
   corroborate but cannot establish freshness.
-- Climate: NASA POWER's robots.txt disallows its API and the World Bank API's robots.txt errors, so neither is fetched. The WMO
-  World Weather Information Service (robots.txt allows `/en/`) is the permitted alternative but is script-rendered, so it needs a
-  parser and a Ghana city id before it can be used; climate stays held with that reason.
-- Plugs and voltage: no per-country page with a permitted, authoritative, dated source was found (IEC World Plugs has no
-  Ghana page at the URL tried), so the item stays held as `no_external_source_for_reference_value`.
+- **Climate (WMO WWIS, registered 22 Oct 2026):** WMO documents programmatic download of `/en/json/[cityId]_en.json` (acknowledge WWIS,
+  reproduce accurately, disclaimer applies) and robots.txt allows `/en/`. The builder reads **only** the long-term monthly climate
+  averages for Accra (921), Kumasi (922) and Wa (1387), never the feed's short-range forecast, and publishes one seasonal record only
+  if all three stations are retrieved (one station would misdescribe a country whose north has a different rainy season). The text says
+  "climate averages ... not current conditions or a forecast", names the reference period (1981-2010), and the record note says that
+  period is not the most recent WMO normal. Freshness is the end of the stated reference period (limit 20 years); this is an
+  interpretation of the freshness rule for climate normals, applied openly. The feed's data-supply dates (2003, 2020) predate or
+  conflict with the stated period and are not relied on. NASA POWER and World Bank CCKP stay configured but unused: no robots
+  exception is approved.
+- **Plugs and electricity (registered 22 Oct 2026):** plug type from the Ghana Standards Authority notice (effective 1 Jan 2019),
+  voltage from L.I. 1935 (gazetted 13 Jun 2008, via the PURC), nominal frequency from the Energy Commission's National Electricity
+  Grid Code (October 2009, month precision, no day invented). The ECG technical page (undated, not in the register) corroborates
+  voltage and frequency but cannot establish them. Each fact publishes only if its own dated source states it; otherwise it is held
+  with the reason. Type D is listed in TI's reference fields but no official source states it, so it is not published. These are
+  text PDFs read with pypdf (pinned in the workflows); an unreadable PDF is a recorded parse failure, not a crash. Instruments may
+  have been amended since the date shown and the record says so.
+- Reports show times in Cyprus local time (Europe/Nicosia); stored ledger and data timestamps remain UTC.
 - The model path (writer, verifier, Sonnet second opinion) is proven only with scripted replies. Haiku's quality is not
   measured; see `scripts/country_builder.py eval`.
 - Only English government pages are used; no translation is performed.

@@ -14,7 +14,8 @@ import os
 import socket
 import time
 import uuid
-from datetime import timedelta
+from datetime import datetime, timedelta, timezone
+from zoneinfo import ZoneInfo
 from pathlib import Path
 
 from .country_config import AGENT_NAME, BuilderConfig, load_builder_config
@@ -239,6 +240,12 @@ class Builder:
         exceptions = source_exceptions(inputs, evidence)
         for a in assessments:
             exceptions += topic_exceptions(inputs, a["topic"], a)
+        for m in missing:                     # a computed topic (climate, electrical supply) that could not be established is a held item with its reason
+            if m.get("origin") == "collector" and topics.get(m["topic"], {}).get("kind") == "deterministic":
+                exceptions.append({"key": f"{cc}:{category}:{m['topic']}:evidence_missing:{fingerprint(m['reason'])[:8]}", "scope": "topic", "countryId": cc,
+                                   "category": category, "topic": m["topic"], "reasons": ["evidence_missing"], "detail": m["reason"],
+                                   "action": "Held: " + m["reason"] + ". Retried automatically each run; source problems are listed separately.",
+                                   "requiresHuman": False})
         exceptions = unique_exceptions(exceptions)
         draft = self._assemble(data, inputs, country, evidence, passages, items, missing, rejected, current, model_status, model_info, cost,
                                fp, now, assessments, pub_items, verify_info)
@@ -724,7 +731,7 @@ class Builder:
     def _render(self, st, summary, results, now, stats, publication):
         branch = self.cfg.state_branch or "ti-country-drafts"
         pa = self.publication_allowed()
-        lines = [f"# {AGENT_NAME}", "", f"Run: {iso(now)} | mode: {self.cfg.mode} | automatic publication: "
+        lines = [f"# {AGENT_NAME}", "", f"Run: {cyprus_time(iso(now))} | mode: {self.cfg.mode} | automatic publication: "
                  f"{'ON' if pa[0] else 'OFF (' + pa[1] + ')'} | paid model use: {'ON' if self.model_allowed()[0] else 'OFF (' + (self.model_allowed()[1] or '') + ')'}", "",
                  f"Coverage (whole product): {summary['coverage']['covered']}/{summary['coverage']['combinations']} combinations; "
                  f"gaps in scope: {len(summary['gaps'])}. Tasks this run: {len(results)}; new {stats['created']}; reopened {stats['reopened']}; "
@@ -754,16 +761,16 @@ class Builder:
         open_ex = [e for e in st["exceptions"].values() if e["state"] == "HELD"]
         lines += ["## Exceptions held (routed to the Master Agent)", ""]
         lines += [f"- [{'NEEDS DECISION' if e['requiresHuman'] else 'automatic retry'}] {e['countryId']}/{e['category']}"
-                  f"{'/' + e['topic'] if e.get('topic') else ''}: {', '.join(e['reasons'])}. {e['action']} (seen {e['occurrences']}x since {e['firstSeen'][:10]})"
+                  f"{'/' + e['topic'] if e.get('topic') else ''}: {', '.join(e['reasons'])}. {e['action']} (seen {e['occurrences']}x since {cyprus_time(e['firstSeen'])})"
                   for e in open_ex] or ["- none"]
         lines += ["", "## Awaiting budget authorisation (model-written topics; not exceptions)", ""]
-        lines += [f"- {p['countryId']}/{p['category']}/{p['topic']}: {p['reason']} (since {p['since'][:10]})" for p in st["pending"].values()] or ["- none"]
+        lines += [f"- {p['countryId']}/{p['category']}/{p['topic']}: {p['reason']} (since {cyprus_time(p['since'])})" for p in st["pending"].values()] or ["- none"]
         _, gate = self.active_countries(st)
         lines += ["", "## Scope", "", f"- Validation scope: {', '.join(self.cfg.countries)} / {', '.join(self.cfg.categories)}. Expansion: "
                   f"{'ON' if self.cfg.raw['scope'].get('expansion', {}).get('enabled') else 'OFF (needs confirmation of coverage and budget)'}; proof gate: "
                   f"{'MET' if gate['open'] else 'not met'} ({gate['detail']})", "", "## Records published by this agent", ""]
         pubs = [p for p in st["publications"].values() if p["state"] == "VERIFIED"]
-        lines += [f"- {p['id']}: {', '.join(p['records'])} | commit {p.get('commit')} | verified live {p.get('verifiedAt')}" for p in pubs[-10:]] or ["- none yet"]
+        lines += [f"- {p['id']}: {', '.join(p['records'])} | commit {p.get('commit')} | verified live {cyprus_time(p.get('verifiedAt'))}" for p in pubs[-10:]] or ["- none yet"]
         lines += ["", "## Drafts and assessments held on this branch", ""]
         for d in sorted(st["drafts"].values(), key=lambda d: d["createdAt"], reverse=True)[:10]:
             lines.append(f"- {d['countryId']}/{d['category']}: {d['draftId']} | {d['reviewStatus']} | model: {d['modelStatus']} | "
@@ -781,7 +788,7 @@ class Builder:
             v = pub["verification"]
             out += [f"- PUBLISHED and verified on the live site: {', '.join(pub['published'])}",
                     f"- Commit: {REPO_URL}/commit/{pub['summary'].get('commit')} | live check: {v['url']}data.json served the new content after {v['attempts']} check(s); "
-                    f"served data generated {v.get('served_generated')}"]
+                    f"served data generated {cyprus_time(v.get('served_generated'))}"]
         if pub.get("verification_pending"):
             vp = pub["verification_pending"]
             out.append(f"- PUBLISHED to main, live verification PENDING (deployment not yet visible; content not judged wrong, nothing removed): "
@@ -821,6 +828,19 @@ ACTION_FOR = {
     "existing_record_not_owned": "A hand-written or earlier record already uses this id; it was not touched.",
     "max_records_per_run": "Per-run publication limit reached; the rest publish next run.",
 }
+
+
+def cyprus_time(ts):
+    """Report-only display of a stored UTC timestamp in Cyprus local time (Europe/Nicosia). Stored data stays UTC ISO."""
+    if not ts:
+        return "n/a"
+    try:
+        d = datetime.fromisoformat(str(ts).replace("Z", "+00:00"))
+        if d.tzinfo is None:
+            d = d.replace(tzinfo=timezone.utc)
+        return d.astimezone(ZoneInfo("Europe/Nicosia")).strftime("%d %b %Y %H:%M") + " Cyprus time"
+    except (ValueError, KeyError):
+        return str(ts)
 
 
 def scope_gate(state, expansion):

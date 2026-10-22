@@ -244,6 +244,71 @@
         "https://travelhealthpro.org.uk/robots.txt",
         "https://travelhealthpro.org.uk/widget.php"
       ]
+    },
+    {
+      "id": "wmo-wwis",
+      "name": "WMO World Weather Information Service",
+      "tier": "TIER_1",
+      "access": "GOVERNMENT_OPEN",
+      "automation": "YES",
+      "role": "Official climate averages (national meteorological services via WMO); forecasts are not used for baseline records",
+      "rights": "SOURCE_SPECIFIC",
+      "status": "INTEGRATION_READY",
+      "reviewedBy": "03AA-04 builder agent, automated robots/licence/terms check 22 Oct 2026 (Cyprus time 22 Oct 2026); no human review recorded",
+      "evidenceUrls": [
+        "https://worldweather.wmo.int/en/dataguide.html",
+        "https://worldweather.wmo.int/robots.txt",
+        "https://worldweather.wmo.int/en/disclaimer.html"
+      ],
+      "reviewNote": "WMO's download guidance documents programmatic access at /en/json/[cityId]_en.json on conditions: acknowledge WWIS as the source, reproduce the information accurately, and the disclaimer applies. robots.txt allows /en/. The feed's short-range forecast block is never read."
+    },
+    {
+      "id": "gh-standards-authority",
+      "name": "Ghana Standards Authority",
+      "tier": "TIER_1",
+      "access": "PUBLIC_WEB",
+      "automation": "REVIEWED",
+      "role": "National standards body: plug and socket requirements",
+      "rights": "SOURCE_SPECIFIC",
+      "status": "INTEGRATION_READY",
+      "reviewedBy": "03AA-04 builder agent, automated robots/licence/terms check 22 Oct 2026 (Cyprus time 22 Oct 2026); no human review recorded",
+      "evidenceUrls": [
+        "https://www.gsa.gov.gh/robots.txt",
+        "https://www.gsa.gov.gh/wp-content/uploads/2018/11/ADVERT-socket-and-plugs.pdf"
+      ],
+      "reviewNote": "Statutory national standards body. robots.txt disallows only /wp-admin/. The public notice states its effective date (1 Jan 2019); it is a requirement on importers and says nothing about older installed plug types."
+    },
+    {
+      "id": "gh-purc",
+      "name": "Ghana Public Utilities Regulatory Commission (legislative instruments it publishes)",
+      "tier": "TIER_1",
+      "access": "PUBLIC_WEB",
+      "automation": "REVIEWED",
+      "role": "Electricity regulator: supply voltage standards (L.I. 1935)",
+      "rights": "SOURCE_SPECIFIC",
+      "status": "INTEGRATION_READY",
+      "reviewedBy": "03AA-04 builder agent, automated robots/licence/terms check 22 Oct 2026 (Cyprus time 22 Oct 2026); no human review recorded",
+      "evidenceUrls": [
+        "https://www.purc.com.gh/robots.txt",
+        "https://www.purc.com.gh/attachment/719588-20201123111126.pdf"
+      ],
+      "reviewNote": "Statutory regulator. robots.txt disallows only /cgi-bin/, /tmp/, /junk/. The instrument states its Gazette date (13 Jun 2008); later amendments are not checked."
+    },
+    {
+      "id": "gh-energy-commission",
+      "name": "Energy Commission of Ghana",
+      "tier": "TIER_1",
+      "access": "PUBLIC_WEB",
+      "automation": "REVIEWED",
+      "role": "Electricity sector regulator: National Electricity Grid Code",
+      "rights": "SOURCE_SPECIFIC",
+      "status": "INTEGRATION_READY",
+      "reviewedBy": "03AA-04 builder agent, automated robots/licence/terms check 22 Oct 2026 (Cyprus time 22 Oct 2026); no human review recorded",
+      "evidenceUrls": [
+        "https://www.energycom.gov.gh/robots.txt",
+        "https://www.energycom.gov.gh/index.php/regulation/codes-sub-codes?download=13:national-elect-grid-code-2009"
+      ],
+      "reviewNote": "Statutory regulator. robots.txt allows all paths (Crawl-delay 3; one request per run). The Grid Code edition is dated October 2009 (month precision)."
     }
   ]
 }

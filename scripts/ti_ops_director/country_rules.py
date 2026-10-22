@@ -316,7 +316,8 @@ def assess_item(item, evidence, sources_cfg, registry, pub_cfg, today, existing_
     for a, b in conflicts_within(keep):
         held_reasons.append("conflict")
         excluded.append({"text": a, "reasons": ["conflict"], "against": b})
-    result = {"topic": item["topic"], "claims": keep, "excluded": excluded, "reasons": sorted(set(held_reasons))}
+    result = {"topic": item["topic"], "claims": keep, "excluded": excluded, "reasons": sorted(set(held_reasons)),
+              "recordNote": item.get("recordNote")}
     if held_reasons:
         return result | {"decision": "HOLD", "claims": [], "confidence": None}
     if not keep:
@@ -330,11 +331,11 @@ def assess_item(item, evidence, sources_cfg, registry, pub_cfg, today, existing_
     return result | {"decision": "PUBLISH", "confidence": conf, "claims": keep[:pub_cfg["max_claims_per_record"]]}
 
 
-def date_phrase(verb, iso):
+def date_phrase(verb, iso, precision="DAY"):
     if not iso:
         return "publication date not stated by the source"
     d = datetime.fromisoformat(iso).date()
-    return f"{verb} {d.day} {d.strftime('%b %Y')}"
+    return f"{verb} {d.strftime('%b %Y')}" if precision == "MONTH" else f"{verb} {d.day} {d.strftime('%b %Y')}"
 
 
 def compose_content(claims, evidence_by_key, sources_cfg):
@@ -346,6 +347,6 @@ def compose_content(claims, evidence_by_key, sources_cfg):
     parts = []
     for sk, texts in groups.items():
         cfg, ev = sources_cfg[sk], evidence_by_key[sk]
-        lead = f"{cfg['attribution_label']} ({date_phrase(cfg.get('date_verb', 'published'), ev.get('publicationDate'))}): "
+        lead = f"{cfg['attribution_label']} ({date_phrase(cfg.get('date_verb', 'published'), ev.get('publicationDate'), ev.get('publicationDatePrecision', 'DAY'))}): "
         parts.append(lead + " ".join(texts))
     return " ".join(parts)
