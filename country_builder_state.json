@@ -7,7 +7,20 @@
   },
   "tasks": {},
   "drafts": {},
-  "runs": [],
+  "runs": [
+    {
+      "at": "2026-10-22T20:07:29+00:00",
+      "mode": "draft",
+      "tasksRun": 0,
+      "created": 0,
+      "reopened": 0,
+      "duplicatesSuppressed": 0,
+      "recovered": [],
+      "published": [],
+      "publicationFailures": [],
+      "outcomes": {}
+    }
+  ],
   "exceptions": {},
   "publications": {},
   "pending": {}
