@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "agent": "03AA-04_Country_Intelligence_Builder_TI",
+  "controls": {
+    "paused": false,
+    "stopped": false
+  },
+  "tasks": {},
+  "drafts": {},
+  "runs": [],
+  "exceptions": {},
+  "publications": {},
+  "pending": {}
+}
