@@ -180,8 +180,7 @@ class Builder:
         passages, per_topic = select_passages(evidence, topics, cfg.limits_cfg)
         by_code = {e["code"]: e["publisher"] for e in evidence}
         reference = {k: country.get(k) for k in ("plugTypes", "voltage", "frequency")} if category == "EQUIPMENT" else None
-        rules_fp = fingerprint([cfg.publication_cfg, cfg.raw["categories"][category], {k: cfg.sources[k].get("registry_id") for k in cfg.sources},
-                                self.registry_fingerprint()])
+        rules_fp = self.rules_fingerprint(category)
         fp = evidence_fingerprint(passages, evidence, list(topics), {"reference": reference, "rules": rules_fp,
                                                                       "all": [[e["sourceKey"], e["contentSha256"]] for e in evidence if e.get("contentSha256")]})
         base = {"evidence": evidence, "fingerprint": fp, "passages": passages}
@@ -246,6 +245,10 @@ class Builder:
         gate_reason = "awaiting_paid_authorisation" if model_status == "NOT_RUN" and not pub_items else None
         return Outcome(state="blocked" if gate_reason else "completed", reason=gate_reason or "assessed", draft=draft, cost=cost, missing=missing,
                        assessments=assessments, publish_items=pub_items, exceptions=exceptions, pending=pending, pub_id=pub_id, **base)
+
+    def rules_fingerprint(self, category):
+        return fingerprint([self.cfg.publication_cfg, self.cfg.raw["categories"][category],
+                            {k: self.cfg.sources[k].get("registry_id") for k in self.cfg.sources}, self.registry_fingerprint()])
 
     def registry_fingerprint(self):
         from .country_rules import repo_file
@@ -342,7 +345,7 @@ class Builder:
     def _draft_run(self, state, data, planned, now, summary):
         cfg, out = self.cfg, self.out
         batch_ids = []
-        stats = {"created": 0, "duplicates": 0, "recovered": []}
+        stats = {"created": 0, "reopened": 0, "duplicates": 0, "recovered": []}
 
         def plan_tx(snap):
             st = _sections(snap.state() or empty_state())
@@ -355,7 +358,15 @@ class Builder:
                 return {"state": dump_state(st)}, st
             for t in planned:
                 key = t["dedupe_key"]
-                if key in st["tasks"] and st["tasks"][key]["state"] != "cancelled":
+                old = st["tasks"].get(key)
+                if old and old["state"] == "completed" and old["updated_at"][:10] < iso(now)[:10] and self._needs_another_look(st, old):
+                    # The gap is still open and the last result cannot be final: its draft never settled (for example a
+                    # draft-mode trial that could not publish) or the rules/register have changed since. Settled work waits
+                    # for its normal recheck bucket.
+                    old.update(state="pending", attempts=0, updated_at=iso(now))
+                    stats["reopened"] += 1
+                    continue
+                if old and old["state"] != "cancelled":
                     stats["duplicates"] += 1
                     continue
                 st["tasks"][key] = {"id": "cbt-" + uuid.uuid4().hex[:12], "dedupe_key": key, "task_type": TASK_TYPE,
@@ -421,6 +432,15 @@ class Builder:
         return EXIT_OK
 
     # -- publication --
+    def _needs_another_look(self, st, task):
+        inp = task["inputs"]
+        drafts = [d for d in st["drafts"].values() if d["countryId"] == inp["countryId"] and d["category"] == inp["category"]
+                  and not d.get("supersededBy")]
+        if not drafts:
+            return True
+        d = max(drafts, key=lambda d: d["createdAt"])
+        return (not d.get("settled")) or d.get("rules") != self.rules_fingerprint(inp["category"])
+
     def _publish_phase(self, results, now):
         """Publish every item that passed the rules, verify the live site, roll back if it does not serve them."""
         items = [p for _, o, _ in results for p in (o.get("publish_items") or [])]
@@ -619,6 +639,7 @@ class Builder:
                         "draftId": d["draftId"], "path": path, "countryId": d["countryId"], "category": d["category"],
                         "evidenceFingerprint": d["evidenceFingerprint"], "modelStatus": d["modelStatus"], "reviewStatus": d["reviewStatus"],
                         "createdAt": d["generatedAt"], "costUsd": d["cost"].get("estimatedUsd", 0), "claims": d["validation"]["claimsKept"],
+                        "rules": self.rules_fingerprint(d["category"]),
                         "settled": bool(not unpublished and not failed_pub and not o.get("pending") and not publication.get("pending")),
                         "published": sorted(published & set(eligible))}
                     t["draftId"] = d["draftId"]
@@ -647,7 +668,7 @@ class Builder:
     def _update_runs(self, st, results, now, stats, publication):
         keep = self.cfg.raw["retention"]["run_history_keep"]
         st["runs"] = (st["runs"] + [{"at": iso(now), "mode": self.cfg.mode, "tasksRun": len(results), "created": stats["created"],
-                                     "duplicatesSuppressed": stats["duplicates"], "recovered": stats["recovered"],
+                                     "reopened": stats["reopened"], "duplicatesSuppressed": stats["duplicates"], "recovered": stats["recovered"],
                                      "published": publication.get("published", []), "publicationFailures": publication.get("failures", []),
                                      "outcomes": {k: o["reason"] for k, o, _ in results}}])[-keep:]
 
@@ -700,7 +721,7 @@ class Builder:
         lines = [f"# {AGENT_NAME}", "", f"Run: {iso(now)} | mode: {self.cfg.mode} | automatic publication: "
                  f"{'ON' if pa[0] else 'OFF (' + pa[1] + ')'} | paid model use: {'ON' if self.model_allowed()[0] else 'OFF (' + (self.model_allowed()[1] or '') + ')'}", "",
                  f"Coverage (whole product): {summary['coverage']['covered']}/{summary['coverage']['combinations']} combinations; "
-                 f"gaps in scope: {len(summary['gaps'])}. Tasks this run: {len(results)}; new {stats['created']}; "
+                 f"gaps in scope: {len(summary['gaps'])}. Tasks this run: {len(results)}; new {stats['created']}; reopened {stats['reopened']}; "
                  f"duplicates suppressed {stats['duplicates']}; interrupted tasks recovered {len(stats['recovered'])}.", ""]
         c = st["controls"]
         if c.get("paused") or c.get("stopped"):
