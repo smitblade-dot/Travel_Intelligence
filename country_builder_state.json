@@ -835,13 +835,88 @@
     "pub-20261022T181139Z-21fa3f": {
       "id": "pub-20261022T181139Z-21fa3f",
       "at": "2026-10-22T18:11:39+00:00",
-      "state": "PENDING",
+      "state": "VERIFICATION_PENDING",
       "records": [
         "gh-environment-climate-seasonal",
         "gh-environment-flooding-natural-hazards",
         "gh-equipment-clothing",
         "gh-equipment-plugs"
-      ]
+      ],
+      "pending": {
+        "commit": "2331a6806165f2435bc4fd8c93b70a49a1559c96",
+        "generated": "2026-10-22T18:11:39+00:00",
+        "verifyItems": [
+          {
+            "recordId": "gh-environment-climate-seasonal",
+            "record": {
+              "content": "WMO World Weather Information Service climate averages for Accra, not current conditions or a forecast (reference period ended 31 Dec 2010): Accra, 1981-2010 averages: the mean daily maximum temperature is highest in February (33.1 C) and lowest in August (28.3 C). Accra: the wettest months are June (175.5 mm, 10 rain days) and May (148.0 mm, 8 rain days); the driest are January (9.5 mm) and February (14.2 mm). WMO World Weather Information Service climate averages for Kumasi, not current conditions or a forecast (reference period ended 31 Dec 2010): Kumasi, 1981-2010 averages: the mean daily maximum temperature is highest in February (34.4 C) and lowest in August (28.2 C). Kumasi: the wettest months are June (208.5 mm, 12 rain days) and September (167.5 mm, 12 rain days); the driest are January (20.1 mm) and December (28.7 mm). WMO World Weather Information Service climate averages for Wa, not current conditions or a forecast (reference period ended 31 Dec 2010): Wa, 1981-2010 averages: the mean daily maximum temperature is highest in March (37.9 C) and lowest in August (29.7 C). Wa: the wettest months are August (208.9 mm, 13 rain days) and September (182.0 mm, 14 rain days); the driest are December (1.9 mm) and January (4.7 mm)."
+            },
+            "contentHash": "a00626ad470e7e9b",
+            "needsSources": [
+              "cb-gh-wmo-wwis-accra",
+              "cb-gh-wmo-wwis-kumasi",
+              "cb-gh-wmo-wwis-wa"
+            ],
+            "observations": [
+              {
+                "id": "obs-gh-environment-climate-seasonal-wmo-wwis-accra-a00626"
+              },
+              {
+                "id": "obs-gh-environment-climate-seasonal-wmo-wwis-kumasi-a00626"
+              },
+              {
+                "id": "obs-gh-environment-climate-seasonal-wmo-wwis-wa-a00626"
+              }
+            ]
+          },
+          {
+            "recordId": "gh-equipment-plugs",
+            "record": {
+              "content": "Ghana Standards Authority public notice (effective 1 Jan 2019): The Ghana Standards Authority requires imported household plugs to be type G (13-amp, three rectangular pins), effective 1 January 2019. Ghana Electricity Supply and Distribution (Standards of Performance) Regulations, L.I. 1935 (gazetted 13 Jun 2008): Ghana's supply regulations (L.I. 1935) require the voltage at a customer's premises to stay within plus or minus ten percent of 230 volts or 400 volts (or of the higher network voltages they list). Ghana National Electricity Grid Code (edition dated Oct 2009): Ghana's National Electricity Grid Code treats 50 Hz as the nominal system frequency."
+            },
+            "contentHash": "0fcab864260302e3",
+            "needsSources": [
+              "cb-gh-ecg-technical",
+              "cb-gh-grid-code",
+              "cb-gh-gsa-plugs",
+              "cb-gh-li-1935"
+            ],
+            "observations": [
+              {
+                "id": "obs-gh-equipment-plugs-gsa-plugs-0fcab8"
+              },
+              {
+                "id": "obs-gh-equipment-plugs-li-1935-0fcab8"
+              },
+              {
+                "id": "obs-gh-equipment-plugs-ecg-technical-0fcab8"
+              },
+              {
+                "id": "obs-gh-equipment-plugs-grid-code-0fcab8"
+              }
+            ]
+          }
+        ],
+        "firstCheckedAt": "2026-10-22T18:27:18+00:00",
+        "rechecks": 0,
+        "lastDetail": "served data.json does not match yet: ['gh-environment-climate-seasonal', 'gh-equipment-plugs']",
+        "servedGenerated": "2026-10-22T14:27:41+00:00"
+      },
+      "summary": {
+        "added": [
+          "gh-environment-climate-seasonal",
+          "gh-equipment-plugs"
+        ],
+        "updated": [],
+        "unchanged": [
+          "gh-environment-flooding-natural-hazards",
+          "gh-equipment-clothing"
+        ],
+        "refreshed": [],
+        "skipped": [],
+        "generated": "2026-10-22T18:11:39+00:00",
+        "commit": "2331a6806165f2435bc4fd8c93b70a49a1559c96"
+      }
     }
   },
   "pending": {},
