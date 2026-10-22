@@ -124,12 +124,15 @@ class Gaps(unittest.TestCase):
         data = cs.base_data()
         data["records"].append({"id": "gh-environment-flooding-natural-hazards", "countryId": "gh", "category": "ENVIRONMENT", "status": "ACTIVE",
                                 "dateChecked": "2026-10-22", "reviewDate": "2027-01-20", "content": "x", "title": "x", "sourceId": "gh-fcdo-security"})
-        topics = {"ENVIRONMENT": ["CLIMATE_SEASONAL", "FLOODING_NATURAL_HAZARDS"]}
+        topics = {"ENVIRONMENT": [("CLIMATE_SEASONAL", "Climate and seasons"), ("FLOODING_NATURAL_HAZARDS", "Flooding and natural hazards")]}
         gaps = find_gaps(data, ["gh"], ["ENVIRONMENT"], datetime(2026, 10, 22).date(), 365, ("MISSING", "STALE", "TOPIC_MISSING"), topics)
         self.assertEqual([(g["gap"]["type"], g["gap"]["topics"]) for g in gaps], [("TOPIC_MISSING", ["CLIMATE_SEASONAL"])])
         data["records"].append(dict(data["records"][-1], id="gh-environment-climate-seasonal"))
         self.assertEqual(find_gaps(data, ["gh"], ["ENVIRONMENT"], datetime(2026, 10, 22).date(), 365, ("MISSING", "STALE", "TOPIC_MISSING"), topics), [])
         self.assertEqual(find_gaps(data, ["gh"], ["ENVIRONMENT"], datetime(2026, 10, 22).date(), 365, ("MISSING", "STALE"), topics), [])
+        data["records"].pop()                                                    # a hand-written record under another id covers the topic by subcategory
+        data["records"].append(dict(data["records"][-1], id="gh-environment-hand-written-climate", subcategory="Climate and seasons"))
+        self.assertEqual(find_gaps(data, ["gh"], ["ENVIRONMENT"], datetime(2026, 10, 22).date(), 365, ("MISSING", "STALE", "TOPIC_MISSING"), topics), [])
 
     def test_baseline_audit_script_parses_and_agrees(self):
         import subprocess

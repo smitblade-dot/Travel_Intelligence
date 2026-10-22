@@ -713,6 +713,8 @@ class SiblingRecordsDoNotRaiseFalseConflicts(unittest.TestCase):
         hand = {"content": "Hand-written note.", "provenance": {}}
         got = polarity_for(claim, [mine, same_source, hand], cfg.sources)
         self.assertEqual(got, [mine["content"], hand["content"]])
+        corroborated = {"content": "Electricity Company of Ghana technical information (page date not stated): standard voltages are 230 volts.", "provenance": {"builder": AGENT_NAME}}
+        self.assertEqual(polarity_for({"evidence": [{"sourceKey": "ecg_technical"}]}, [corroborated], cfg.sources), [corroborated["content"]])   # a corroborator is not lineage
 
     def test_hand_written_records_are_still_compared_for_reversed_advice(self):
         from ti_ops_director.country_rules import check_claim

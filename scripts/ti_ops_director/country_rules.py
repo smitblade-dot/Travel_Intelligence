@@ -256,7 +256,8 @@ def polarity_for(claim, records, sources_cfg):
         if (r.get("provenance") or {}).get("builder") != AGENT_NAME:
             out.append(r["content"])
             continue
-        labels = {k for k, c in sources_cfg.items() if c.get("attribution_label") and c["attribution_label"] in r["content"]}
+        labels = {k for k, c in sources_cfg.items()
+                  if c.get("registry_id") and c.get("attribution_label") and c["attribution_label"] in r["content"]}      # corroborators do not count as lineage
         if not (labels & cited):
             out.append(r["content"])
     return out

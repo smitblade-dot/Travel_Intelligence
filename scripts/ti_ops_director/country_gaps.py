@@ -57,7 +57,9 @@ def find_gaps(data, countries, categories, today=None, stale_after_days=365, gap
                     # The category has records, but a configured publishable topic (for example seasonal climate or electrical
                     # supply) may still have none. That is a smaller gap of its own, so new sources reach populated categories.
                     have_ids = {r["id"] for r in recs}
-                    absent = [t for t in (topics_by_category or {}).get(cat, []) if f"{cc}-{cat.lower()}-{slug(t)}" not in have_ids]
+                    have_sub = {str(r.get("subcategory", "")).strip().lower() for r in recs}
+                    absent = [t for t, sub in (topics_by_category or {}).get(cat, [])
+                              if f"{cc}-{cat.lower()}-{slug(t)}" not in have_ids and str(sub).strip().lower() not in have_sub]
                     if not absent:
                         continue
                     gap = {"type": "TOPIC_MISSING", "detail": f"No active {cat} record yet for {country['name']} on: {', '.join(absent)}.",

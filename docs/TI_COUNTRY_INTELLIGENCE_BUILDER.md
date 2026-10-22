@@ -119,6 +119,8 @@ schedule or a manual dispatch on main.
   text PDFs read with pypdf (pinned in the workflows); an unreadable PDF is a recorded parse failure, not a crash. Instruments may
   have been amended since the date shown and the record says so.
 - Observations built from sources whose rights are not a clear open licence (the WMO terms, and the Ghana standards, regulator and grid-code documents) carry `legalReviewStatus: REVIEW_RECOMMENDED` until a person confirms the rights reading; clear licences (government open, OGL, public domain) are `NOT_REQUIRED`. This is recorded, not a publication block.
+- Expansion note: the WMO, Ghana standards/regulator and grid-code sources are Ghana-specific (`only_countries`). Before another country is added, its climate and electrical-supply sources must be found and registered the same way; until then those topics are reported as missing for that country, not guessed.
+- Topic-level gaps: a populated category is still worked when a configured publishable topic has no record, unless a record with the same subcategory already exists.
 - Reports show times in Cyprus local time (Europe/Nicosia); stored ledger and data timestamps remain UTC.
 - The model path (writer, verifier, Sonnet second opinion) is proven only with scripted replies. Haiku's quality is not
   measured; see `scripts/country_builder.py eval`.
