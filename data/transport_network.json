@@ -1,11 +1,11 @@
 {
   "schemaVersion": "1.0",
-  "generated": "2026-10-21T21:24:32.440174+00:00",
+  "generated": "2026-10-22T04:41:02.895687+00:00",
   "purpose": "Conservative transport reference network. Not a live route database.",
   "airportReference": {
     "status": "healthy",
     "sourceUrl": "https://davidmegginson.github.io/ourairports-data/airports.csv",
-    "fetchedAt": "2026-10-21T21:22:31.892279+00:00",
+    "fetchedAt": "2026-10-22T04:35:26.510104+00:00",
     "scope": "Scheduled-service and large/medium airports in tracked countries"
   },
   "nodes": {
