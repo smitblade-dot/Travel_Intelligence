@@ -813,7 +813,24 @@ def run(env=None, root=None, data_root=None, now=None, api=None, http=http_reque
         with open(env["GITHUB_OUTPUT"], "a", encoding="utf-8") as fh:
             fh.write(f"dispatches={json.dumps([{'workflow': p['workflow'], 'ref': p['ref']} for p in planned])}\n")
             fh.write(f"verdict={verdict(results, new_state['tasks'])}\n")
-    return exit_code(cfg, new_state, delta)
+    code = exit_code(cfg, new_state, delta)
+    _write_agent_outcome(env, cfg, code, results, new_state, delta)
+    return code
+
+
+def _write_agent_outcome(env, cfg, code, results, state, delta):
+    """Optional ACC outcome record (inert unless TI_AGENT_OUTCOME_FILE is set). Never raises."""
+    try:
+        from .agent_outcome import write
+        open_ = [t for t in state.get("tasks", []) if t.get("state") == "blocked"]
+        write(env, AGENT_NAME, {"component": "production_controller", "exit_code": code, "mode": cfg.mode,
+                                "config_errors": len(cfg.errors or []), "verdict": verdict(results, state.get("tasks", [])),
+                                "checks": len(results), "detections_open": len(open_),
+                                "requires_human": sum(1 for t in open_ if t.get("requires_human")),
+                                "critical": sum(1 for t in open_ if t.get("severity") == "critical"),
+                                "opened": len(delta.get("opened", [])), "escalated": len(delta.get("escalated", []))})
+    except Exception:
+        pass
 
 
 def dispatch_commands(dispatches_json, cfg):

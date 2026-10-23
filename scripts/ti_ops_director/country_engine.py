@@ -809,6 +809,7 @@ class Builder:
                 lines += [f"- No new work: evidence and rules unchanged since draft {o['existing']}; no model call."]
             lines.append("")
         open_ex = [e for e in st["exceptions"].values() if e["state"] == "HELD"]
+        self.last_outcome = _outcome_facts(results, publication, open_ex, c)
         lines += ["## Exceptions held (routed to the Master Agent)", ""]
         lines += [f"- [{'NEEDS DECISION' if e['requiresHuman'] else 'automatic retry'}] {e['countryId']}/{e['category']}"
                   f"{'/' + e['topic'] if e.get('topic') else ''}: {', '.join(e['reasons'])}. {e['action']} (seen {e['occurrences']}x since {cyprus_time(e['firstSeen'])})"
@@ -964,4 +965,40 @@ def run_cli(env=None, root=None, out=print, **kw):
     backend = kw.pop("backend", None) or (make_backend(env, root, cfg, create) if cfg.mode != "off" else None)
     if cfg.mode in ("draft", "publish") and backend is None and not cfg.errors:
         cfg.errors.append("draft and publish modes need a state branch (TI_CB_STATE_BRANCH) or TI_CB_STATE_BACKEND=file")
-    return Builder(cfg, root, backend, env=env, out=out, **kw).run()
+    builder = Builder(cfg, root, backend, env=env, out=out, **kw)
+    code = builder.run()
+    _write_agent_outcome(env, builder, code)
+    return code
+
+
+def _outcome_facts(results, publication, open_ex, controls):
+    """Facts already computed for the report, kept for the optional ACC outcome record. Never raises."""
+    try:
+        states = {}
+        for _, o, _ in results:
+            states[o.get("state")] = states.get(o.get("state"), 0) + 1
+        return {"tasks": len(results), "task_states": states,
+                "published_records": len(publication.get("published", []) or []),
+                "publication_failures": sorted({f.get("reason") for f in (publication.get("failures") or []) + (publication.get("recheck_failures") or [])}),
+                "verification_pending": bool(publication.get("verification_pending")),
+                "exceptions_held": len(open_ex), "exceptions_need_decision": sum(1 for e in open_ex if e.get("requiresHuman")),
+                "paused_or_stopped": bool(controls.get("paused") or controls.get("stopped")),
+                "model_calls": sum(((o.get("cost") or {}).get("calls") or 0) for _, o, _ in results),
+                "models": sorted({(o.get("cost") or {}).get("model") for _, o, _ in results if (o.get("cost") or {}).get("calls")} - {None}),
+                "estimated_cost_usd": round(sum(((o.get("cost") or {}).get("estimatedUsd") or 0) for _, o, _ in results
+                                                if (o.get("cost") or {}).get("calls")), 6)}
+    except Exception:
+        return None
+
+
+def _write_agent_outcome(env, builder, code):
+    """Optional ACC outcome record (inert unless TI_AGENT_OUTCOME_FILE is set). Never raises."""
+    try:
+        from .agent_outcome import write
+        cfg = builder.cfg
+        write(env, AGENT_NAME, {"component": "country_builder", "exit_code": code, "mode": cfg.mode,
+                                "config_errors": len(cfg.errors or []),
+                                "paid_model_allowed": bool(builder.model_allowed()[0]) if cfg.mode in ("draft", "publish") and not cfg.errors else False,
+                                "facts": getattr(builder, "last_outcome", None)})
+    except Exception:
+        pass
