@@ -1,6 +1,6 @@
 # 03AA-04_Country_Intelligence_Builder_TI
 
-Run: 23 Oct 2026 21:25 Cyprus time | mode: draft | automatic publication: OFF (publication_off (mode draft, TI_CB_PUBLISH unset)) | paid model use: OFF (awaiting_paid_authorisation)
+Run: 23 Oct 2026 23:13 Cyprus time | mode: draft | automatic publication: OFF (publication_off (mode draft, TI_CB_PUBLISH unset)) | paid model use: OFF (awaiting_paid_authorisation)
 
 Coverage (whole product): 187/728 combinations; gaps in scope: 0. Tasks this run: 0; new 0; reopened 0; duplicates suppressed 0; interrupted tasks recovered 0.
 
