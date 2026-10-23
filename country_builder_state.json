@@ -1157,11 +1157,22 @@
     "pub-20261023T102853Z-00acaa": {
       "id": "pub-20261023T102853Z-00acaa",
       "at": "2026-10-23T10:28:53+00:00",
-      "state": "PENDING",
+      "state": "NO_CHANGE",
       "records": [
         "gh-equipment-clothing",
         "gh-equipment-mosquito"
-      ]
+      ],
+      "summary": {
+        "added": [],
+        "updated": [],
+        "unchanged": [
+          "gh-equipment-clothing",
+          "gh-equipment-mosquito"
+        ],
+        "refreshed": [],
+        "skipped": [],
+        "commit": null
+      }
     }
   },
   "pending": {},
