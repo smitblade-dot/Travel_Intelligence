@@ -190,12 +190,12 @@
           "gh-equipment-plugs"
         ]
       },
-      "state": "completed",
+      "state": "running",
       "attempts": 1,
       "created_at": "2026-10-22T19:48:19+00:00",
-      "updated_at": "2026-10-22T21:06:36+00:00",
-      "lease_owner": null,
-      "lease_expires": null,
+      "updated_at": "2026-10-23T10:28:53+00:00",
+      "lease_owner": "runnervm8k3b6-2110-5dba5c",
+      "lease_expires": "2026-10-23T10:48:53+00:00",
       "outcome": "assessed",
       "cost_usd": 0.0,
       "blockingReason": null,
