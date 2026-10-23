@@ -30,6 +30,40 @@ other workflows, jobs or repository events.
 - No report on pull requests (trials are not production activity, and secrets are unavailable there).
 - Plain `http://` is refused except to the local machine; the secret is never printed.
 
+## Outage buffer
+
+If the ACC cannot be reached, reports are kept and offered again on the agent's next run. They are never
+retried in a loop.
+- **Order of work in a run.**
+  1. The start step makes one attempt with a 3-second timeout. If it fails, the start event is written to a
+     per-run pending file.
+  2. After the agent has finished, the workflow restores the agent's buffer from the Actions cache
+     (`acc-outbox-<agent>-*`).
+  3. The end step adds the pending start, the end event and the buffered events, and makes **one** signed
+     delivery attempt (8-second timeout).
+  4. Whatever is still undelivered is saved back to the cache under this run's key.
+- **Bounded.**
+  - At most 200 events, 72 hours and 24 attempts per event. Start events are dropped first.
+  - The number dropped travels with the next delivered event (`delivery.dropped_before`) so the ACC can show
+    it.
+  - The Actions cache evicts unused entries on its own schedule; the 72-hour limit is enforced by the
+    reporter.
+- **No duplicates.** Events keep their run-based `event_id`. The ACC ignores repeats. Events the ACC accepted,
+  already holds or permanently rejected are removed and never resent. Authentication or server errors keep
+  events until the limits above.
+- **Times.**
+  - `timestamp` stays the original event time.
+  - Buffered events add `delivery.queued_at_utc` and `delivery.attempts`.
+  - The ACC records its own receipt time, so the dashboard can show both.
+- **Integrity.** The buffer carries an HMAC tag made with the agent's ACC secret. A buffer that is altered,
+  belongs to another agent or predates a key rotation is discarded, not sent. Requests are signed afresh at
+  every delivery.
+- **Content.** The buffer holds only the mapped ACC events (status, counts and enumerated reasons). It never
+  holds the agent's outcome record, error text, output or secrets. Note: in a public repository, workflows from
+  pull requests can read caches created on `main`, so the buffer is treated as public. It contains nothing
+  that is not already in the run's public job summary.
+- **Off means off.** With reporting off, or not configured, no buffer or pending file is created.
+
 ## Event mapping
 
 | Agent | Outcome | ACC status |
@@ -71,7 +105,7 @@ These settings live under Settings > Secrets and variables > Actions.
 | Stage | Status |
 |---|---|
 | Built | Yes: outcome records, reporter, gated workflow steps |
-| Tested | 23 offline tests (`tests/test_ti_ops_director_acc_reporting.py`); full suite otherwise unchanged; end-to-end against a local ACC server in the ACC repository (synthetic events) |
+| Tested | 33 offline tests (`tests/test_ti_ops_director_acc_reporting.py`); full suite otherwise unchanged; end-to-end against a local ACC server in the ACC repository (synthetic events) |
 | Merged | No: draft PR only |
 | Configured | No: needs the ACC hosted at an HTTPS address and the settings above |
 | Operational | No |

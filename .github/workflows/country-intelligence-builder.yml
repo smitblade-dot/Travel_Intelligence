@@ -59,7 +59,7 @@ jobs:
           ACC_AGENT_SECRET: ${{ secrets.ACC_AGENT_SECRET_COUNTRY_BUILDER }}
           ACC_EUR_PER_USD: ${{ vars.ACC_EUR_PER_USD }}
           ACC_EUR_RATE_DATE: ${{ vars.ACC_EUR_RATE_DATE }}
-        run: python3 scripts/acc_report.py start --agent 03AA-04_Country_Intelligence_Builder_TI
+        run: python3 scripts/acc_report.py start --agent 03AA-04_Country_Intelligence_Builder_TI --pending-file "$RUNNER_TEMP/acc_pending_start.json"
       - name: Country builder pass
         id: cb
         env:
@@ -81,7 +81,17 @@ jobs:
           TI_CB_MONTHLY_LIMIT_USD: ${{ vars.TI_CB_MONTHLY_LIMIT_USD }}
         # Exit 3: configuration error. 4: state could not be persisted. 5: a publication needs attention (push/validation refused, content demonstrably incorrect, rollback failed, or verification unresolved after bounded rechecks). A merely pending deployment and held exceptions exit 0.
         run: python3 scripts/country_builder.py run
+      - name: ACC outbox (restore)
+        if: always() && vars.ACC_REPORTING_ENABLED == 'true' && github.event_name != 'pull_request'
+        continue-on-error: true
+        timeout-minutes: 1
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ runner.temp }}/acc_outbox
+          key: acc-outbox-country-builder-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: acc-outbox-country-builder-
       - name: ACC report (end)
+        id: acc_end
         if: always() && vars.ACC_REPORTING_ENABLED == 'true' && github.event_name != 'pull_request'
         continue-on-error: true
         timeout-minutes: 1
@@ -91,4 +101,12 @@ jobs:
           ACC_AGENT_SECRET: ${{ secrets.ACC_AGENT_SECRET_COUNTRY_BUILDER }}
           ACC_EUR_PER_USD: ${{ vars.ACC_EUR_PER_USD }}
           ACC_EUR_RATE_DATE: ${{ vars.ACC_EUR_RATE_DATE }}
-        run: python3 scripts/acc_report.py end --agent 03AA-04_Country_Intelligence_Builder_TI --outcome-file "$RUNNER_TEMP/agent_outcome.json" --step-outcome "${{ steps.cb.outcome }}"
+        run: python3 scripts/acc_report.py end --agent 03AA-04_Country_Intelligence_Builder_TI --outcome-file "$RUNNER_TEMP/agent_outcome.json" --step-outcome "${{ steps.cb.outcome }}" --outbox-file "$RUNNER_TEMP/acc_outbox/outbox.json" --pending-file "$RUNNER_TEMP/acc_pending_start.json"
+      - name: ACC outbox (save)
+        if: always() && vars.ACC_REPORTING_ENABLED == 'true' && github.event_name != 'pull_request' && steps.acc_end.outputs.outbox_save == 'true'
+        continue-on-error: true
+        timeout-minutes: 1
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ runner.temp }}/acc_outbox
+          key: acc-outbox-country-builder-${{ github.run_id }}-${{ github.run_attempt }}

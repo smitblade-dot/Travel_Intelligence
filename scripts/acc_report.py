@@ -12,6 +12,19 @@ repository monitoring.
 Environment: ACC_REPORT_URL, ACC_KEY_ID, ACC_AGENT_SECRET (Actions secret), optional ACC_EUR_PER_USD and
 ACC_EUR_RATE_DATE for converting reported USD model spend. GITHUB_RUN_ID / GITHUB_RUN_ATTEMPT give each event a
 stable id so retries are not double counted. Standard library only.
+
+Outage buffer (--outbox-file, --pending-file). If the ACC cannot be reached, events are kept and offered again
+on the agent's next run, never in a loop:
+  - the start event waits in a per-run pending file; the end step adds it, the end event and any events kept
+    from earlier runs (restored by the workflow from the Actions cache) and makes ONE delivery attempt;
+  - bounded: at most 200 events, 72 hours and 24 attempts per event; start events are dropped first; drops are
+    counted and reported with the next delivered event;
+  - no duplicates: every event keeps its run-based event_id and the ACC ignores repeats; events are removed
+    when the ACC accepts, already holds, or permanently rejects them;
+  - event time is never changed; each buffered event carries delivery metadata (queued_at_utc, attempts,
+    dropped_before) so the ACC can show original time and delivery time separately;
+  - the buffer holds only the mapped ACC events (status, counts and enumerated reasons, no agent output text)
+    and an HMAC tag made with the agent's ACC secret; a buffer that fails the check is discarded, not sent.
 """
 import argparse
 import base64
@@ -32,6 +45,11 @@ CONTROLLER = "03AA-04_Production_Controller_TI"
 AGENTS = {MASTER: "Master Agent (gated Haiku monitor)", BUILDER: "Country Intelligence Builder", CONTROLLER: "Production Controller"}
 PATH = "/v1/events"
 TIMEOUT_S = 8
+START_TIMEOUT_S = 3          # the start step runs before the agent: keep it short
+OUTBOX_FORMAT = "acc-outbox/1"
+OUTBOX_MAX_EVENTS = 200
+OUTBOX_MAX_AGE_H = 72
+OUTBOX_MAX_ATTEMPTS = 24
 
 
 def utc_now():
@@ -224,29 +242,191 @@ def url_allowed(url):
     return u.scheme == "https" or (u.scheme == "http" and u.hostname in ("127.0.0.1", "localhost", "::1"))
 
 
-def post(env, event):
+def _config(env):
     url, key_id, secret = env.get("ACC_REPORT_URL"), env.get("ACC_KEY_ID"), env.get("ACC_AGENT_SECRET")
     if not (url and key_id and secret):
-        return "SKIPPED_NOT_CONFIGURED", None
+        return None, "SKIPPED_NOT_CONFIGURED"
     if not url_allowed(url):
-        return "SKIPPED_INSECURE_URL", None
-    body = json.dumps({"version": "1.1", "events": [event]}, separators=(",", ":")).encode()
-    ts, nonce = utc_now(), secrets.token_urlsafe(24)
+        return None, "SKIPPED_INSECURE_URL"
     try:
-        signature = sign(secret, "POST", PATH, ts, nonce, body)
+        _key(secret)
     except Exception:
-        return "SKIPPED_BAD_SECRET", None
+        return None, "SKIPPED_BAD_SECRET"
+    return (url, key_id, secret), None
+
+
+def _key(secret_b64url):
+    return base64.urlsafe_b64decode(secret_b64url + "=" * (-len(secret_b64url) % 4))
+
+
+def send_batch(env, events, timeout=TIMEOUT_S):
+    """One signed POST of up to OUTBOX_MAX_EVENTS events. Returns (status, response or None). Never raises."""
+    cfg, why = _config(env)
+    if not cfg:
+        return why, None
+    url, key_id, secret = cfg
+    body = json.dumps({"version": "1.1", "events": events}, separators=(",", ":")).encode()
+    ts, nonce = utc_now(), secrets.token_urlsafe(24)
     req = urllib.request.Request(url.rstrip("/") + PATH, data=body, method="POST", headers={
         "Content-Type": "application/json", "X-ACC-Key-Id": key_id, "X-ACC-Timestamp": ts, "X-ACC-Nonce": nonce,
-        "X-ACC-Signature": signature})
+        "X-ACC-Signature": sign(secret, "POST", PATH, ts, nonce, body)})
     try:
-        with urllib.request.urlopen(req, timeout=TIMEOUT_S) as r:
-            res = json.loads(r.read() or b"{}")
-            return ("ACCEPTED" if res.get("accepted") else "DUPLICATE" if res.get("duplicates") else "REJECTED"), res
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            return "DELIVERED", json.loads(r.read() or b"{}")
     except urllib.error.HTTPError as e:
         return f"HTTP_{e.code}", None
     except Exception as e:
         return "UNREACHABLE_" + type(e).__name__, None
+
+
+def post(env, event, timeout=TIMEOUT_S):
+    status, res = send_batch(env, [event], timeout)
+    if status != "DELIVERED":
+        return status, res
+    return ("ACCEPTED" if res.get("accepted") else "DUPLICATE" if res.get("duplicates") else "REJECTED"), res
+
+
+# ---------- outage buffer ----------
+
+def _now():
+    return datetime.now(timezone.utc)
+
+
+def _iso(dt):
+    return dt.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def _parse(ts):
+    return datetime.strptime(ts, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+
+
+def _tag(secret, agent, entries, dropped):
+    canon = json.dumps({"agent": agent, "entries": entries, "dropped": dropped}, sort_keys=True, separators=(",", ":"))
+    return hmac.new(_key(secret), (OUTBOX_FORMAT + "\n" + canon).encode(), hashlib.sha256).hexdigest()
+
+
+def load_outbox(path, agent, secret):
+    """(entries, dropped, note). A missing file is empty; a file that fails the integrity check is discarded."""
+    if not path or not os.path.exists(path):
+        return [], 0, None
+    try:
+        with open(path, encoding="utf-8") as fh:
+            doc = json.load(fh)
+        entries, dropped = doc["entries"], int(doc.get("dropped", 0))
+        ok = (doc.get("format") == OUTBOX_FORMAT and doc.get("agent") == agent and isinstance(entries, list)
+              and hmac.compare_digest(_tag(secret, agent, entries, dropped), str(doc.get("tag", ""))))
+        if not ok:
+            return [], 0, "outbox_discarded_integrity"
+        return entries, dropped, None
+    except Exception:
+        return [], 0, "outbox_discarded_unreadable"
+
+
+def save_outbox(path, agent, secret, entries, dropped):
+    os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)
+    doc = {"format": OUTBOX_FORMAT, "agent": agent, "entries": entries, "dropped": dropped,
+           "tag": _tag(secret, agent, entries, dropped)}
+    tmp = path + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as fh:
+        json.dump(doc, fh, separators=(",", ":"))
+    os.chmod(tmp, 0o600)
+    os.replace(tmp, path)
+
+
+def prune(entries, now):
+    """Apply retention. Returns (kept, dropped_count). Start events go first when over the size limit."""
+    limit = now.timestamp() - OUTBOX_MAX_AGE_H * 3600
+    kept = [e for e in entries if _parse(e["queued_at_utc"]).timestamp() >= limit and e.get("attempts", 0) < OUTBOX_MAX_ATTEMPTS]
+    dropped = len(entries) - len(kept)
+    if len(kept) > OUTBOX_MAX_EVENTS:
+        excess = len(kept) - OUTBOX_MAX_EVENTS
+        starts = [i for i, e in enumerate(kept) if e["event"].get("status") == "working"][:excess]
+        kept = [e for i, e in enumerate(kept) if i not in set(starts)]
+        excess = len(kept) - OUTBOX_MAX_EVENTS
+        if excess > 0:
+            kept = kept[excess:]
+        dropped += len(entries) - dropped - len(kept)
+    return kept, dropped
+
+
+def with_delivery(entry, dropped_before):
+    ev = dict(entry["event"])
+    if entry.get("attempts", 0) > 0 or dropped_before:
+        ev["delivery"] = {"queued_at_utc": entry["queued_at_utc"], "attempts": entry.get("attempts", 0) + 1}
+        if dropped_before:
+            ev["delivery"]["dropped_before"] = dropped_before
+    return ev
+
+
+def deliver(env, entries, dropped, timeout=TIMEOUT_S):
+    """ONE attempt for the whole buffer. Returns (status, remaining_entries, dropped, results_by_event_id)."""
+    if not entries:
+        return "NOTHING_TO_SEND", [], dropped, {}
+    events = [with_delivery(e, dropped if i == 0 else 0) for i, e in enumerate(entries)]
+    status, res = send_batch(env, events, timeout)
+    if status != "DELIVERED" or not isinstance((res or {}).get("results"), list) or len(res["results"]) != len(entries):
+        for e in entries:
+            e["attempts"] = e.get("attempts", 0) + 1
+        return status if status != "DELIVERED" else "BAD_RESPONSE", entries, dropped, {}
+    outcomes = {}
+    for e, r in zip(entries, res["results"]):
+        outcomes[e["event"].get("event_id") or id(e)] = r.get("outcome")
+    # accepted, duplicate and rejected are final: never resend. The dropped count travelled with event 0.
+    return "DELIVERED", [], 0, outcomes
+
+
+def write_output(env, name, value):
+    path = env.get("GITHUB_OUTPUT")
+    if path:
+        try:
+            with open(path, "a", encoding="utf-8") as fh:
+                fh.write(f"{name}={value}\n")
+        except Exception:
+            pass
+
+
+def run_end_buffered(agent, event, env, outbox_path, pending_path):
+    cfg, why = _config(env)
+    if not cfg:
+        return why, None
+    secret = cfg[2]
+    now = _now()
+    entries, dropped, note = load_outbox(outbox_path, agent, secret)
+    restored = len(entries)
+    pending = read_pending(pending_path, agent)
+    if pending:
+        entries.append(pending)
+    entries.append({"event": event, "queued_at_utc": _iso(now), "attempts": 0})
+    entries, pruned = prune(entries, now)
+    dropped += pruned
+    status, remaining, dropped, outcomes = deliver(env, entries, dropped)
+    if remaining or restored or note:
+        save_outbox(outbox_path, agent, secret, remaining, dropped)
+        write_output(env, "outbox_save", "true")
+    end_outcome = outcomes.get(event.get("event_id") or "", None) if outcomes else None
+    summary = {"status": status, "end": end_outcome, "delivered": len(outcomes), "queued": len(remaining),
+               "dropped": dropped, "restored": restored, "note": note}
+    return status, summary
+
+
+def write_pending(path, event):
+    try:
+        os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)
+        with open(path, "w", encoding="utf-8") as fh:
+            json.dump({"event": event, "queued_at_utc": _iso(_now()), "attempts": 1}, fh)
+    except Exception:
+        pass
+
+
+def read_pending(path, agent):
+    try:
+        if not path or not os.path.exists(path):
+            return None
+        with open(path, encoding="utf-8") as fh:
+            p = json.load(fh)
+        return p if p.get("event", {}).get("agent_id") == agent else None
+    except Exception:
+        return None
 
 
 def main(argv=None, env=None):
@@ -257,10 +437,24 @@ def main(argv=None, env=None):
         ap.add_argument("--agent", required=True)
         ap.add_argument("--outcome-file")
         ap.add_argument("--step-outcome", default="")
+        ap.add_argument("--outbox-file", help="end: outage buffer restored from and saved to the Actions cache")
+        ap.add_argument("--pending-file", help="start writes, end reads: start event not yet delivered")
         a = ap.parse_args(argv)
         rec = read_outcome(a.outcome_file, a.agent) if a.phase == "end" else None
         event = build_event(a.phase, a.agent, env, rec, a.step_outcome)
-        status, res = post(env, event)
+        if a.phase == "end" and a.outbox_file:
+            status, summary = run_end_buffered(a.agent, event, env, a.outbox_file, a.pending_file)
+            if summary is None:
+                print(f"ACC_REPORT {status} {a.agent} {event['status']}")
+            else:
+                shown = {"accepted": "ACCEPTED", "duplicate": "DUPLICATE", "rejected": "REJECTED"}.get(summary["end"], "QUEUED" if summary["queued"] else status)
+                print(f"ACC_REPORT {shown} {a.agent} {event['status']} delivery={summary['status']} delivered={summary['delivered']} "
+                      f"queued={summary['queued']} dropped={summary['dropped']}" + (f" note={summary['note']}" if summary["note"] else ""))
+            return 0
+        status, res = post(env, event, START_TIMEOUT_S if a.phase == "start" else TIMEOUT_S)
+        if a.phase == "start" and a.pending_file and status not in ("ACCEPTED", "DUPLICATE", "REJECTED") and not status.startswith("SKIPPED"):
+            write_pending(a.pending_file, event)
+            status = "QUEUED_" + status
         flags = sorted({f for r in (res or {}).get("results", []) for f in r.get("flags", []) or []})
         print(f"ACC_REPORT {status} {a.agent} {event['status']}" + (f" flags={','.join(flags)}" if flags else ""))
     except SystemExit:

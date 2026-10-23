@@ -34,7 +34,7 @@ jobs:
           ACC_AGENT_SECRET: ${{ secrets.ACC_AGENT_SECRET_MASTER }}
           ACC_EUR_PER_USD: ${{ vars.ACC_EUR_PER_USD }}
           ACC_EUR_RATE_DATE: ${{ vars.ACC_EUR_RATE_DATE }}
-        run: python3 scripts/acc_report.py start --agent 03AA-04_Master_Agent_TI_Ops_Director
+        run: python3 scripts/acc_report.py start --agent 03AA-04_Master_Agent_TI_Ops_Director --pending-file "$RUNNER_TEMP/acc_pending_start.json"
       - name: Run discovery and Haiku triage
         id: monitor
         env:
@@ -62,7 +62,17 @@ jobs:
             exit 1
           fi
           python3 scripts/continuous_intelligence_monitor.py
+      - name: ACC outbox (restore)
+        if: always() && vars.ACC_REPORTING_ENABLED == 'true' && github.event_name != 'pull_request'
+        continue-on-error: true
+        timeout-minutes: 1
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ runner.temp }}/acc_outbox
+          key: acc-outbox-master-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: acc-outbox-master-
       - name: ACC report (end)
+        id: acc_end
         if: always() && vars.ACC_REPORTING_ENABLED == 'true' && github.event_name != 'pull_request'
         continue-on-error: true
         timeout-minutes: 1
@@ -72,7 +82,15 @@ jobs:
           ACC_AGENT_SECRET: ${{ secrets.ACC_AGENT_SECRET_MASTER }}
           ACC_EUR_PER_USD: ${{ vars.ACC_EUR_PER_USD }}
           ACC_EUR_RATE_DATE: ${{ vars.ACC_EUR_RATE_DATE }}
-        run: python3 scripts/acc_report.py end --agent 03AA-04_Master_Agent_TI_Ops_Director --outcome-file "$RUNNER_TEMP/agent_outcome.json" --step-outcome "${{ steps.monitor.outcome }}"
+        run: python3 scripts/acc_report.py end --agent 03AA-04_Master_Agent_TI_Ops_Director --outcome-file "$RUNNER_TEMP/agent_outcome.json" --step-outcome "${{ steps.monitor.outcome }}" --outbox-file "$RUNNER_TEMP/acc_outbox/outbox.json" --pending-file "$RUNNER_TEMP/acc_pending_start.json"
+      - name: ACC outbox (save)
+        if: always() && vars.ACC_REPORTING_ENABLED == 'true' && github.event_name != 'pull_request' && steps.acc_end.outputs.outbox_save == 'true'
+        continue-on-error: true
+        timeout-minutes: 1
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ runner.temp }}/acc_outbox
+          key: acc-outbox-master-${{ github.run_id }}-${{ github.run_attempt }}
       - name: Re-validate canonical intelligence data as pushed
         if: always()
         run: python3 scripts/validate_ti_data.py

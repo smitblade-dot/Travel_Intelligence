@@ -297,6 +297,184 @@ class Transport(unittest.TestCase):
             srv.shutdown()
 
 
+class Buffer(unittest.TestCase):
+    """Outage buffer: bounded, single attempt per run, no duplicates, original event time kept."""
+    SECRET = Transport.SECRET
+
+    def stub(self, mode="accept"):
+        """mode: accept | duplicate | reject | 401 | hang. Records every batch received."""
+        seen = []
+        test = self
+
+        class H(BaseHTTPRequestHandler):
+            def do_POST(self):
+                body = json.loads(self.rfile.read(int(self.headers["Content-Length"])))
+                seen.append(body["events"])
+                if test.mode == "hang":
+                    import time; time.sleep(6); return
+                if test.mode == "401":
+                    self.send_response(401); self.end_headers(); self.wfile.write(b'{"error":"authentication_failed"}'); return
+                outcome = {"accept": "accepted", "duplicate": "duplicate", "reject": "rejected"}[test.mode]
+                res = {"accepted": 0, "results": [{"index": i, "outcome": outcome} for i in range(len(body["events"]))]}
+                self.send_response(200); self.send_header("Content-Type", "application/json"); self.end_headers()
+                self.wfile.write(json.dumps(res).encode())
+
+            def log_message(self, *a):
+                pass
+        self.mode = mode
+        srv = HTTPServer(("127.0.0.1", 0), H)
+        srv.daemon_threads = True
+        threading.Thread(target=srv.serve_forever, daemon=True).start()
+        self.addCleanup(srv.server_close)
+        self.addCleanup(srv.shutdown)
+        return srv, seen
+
+    def setUp(self):
+        self.dir = tempfile.mkdtemp()
+        self.outbox = os.path.join(self.dir, "acc_outbox", "outbox.json")
+        self.pending = os.path.join(self.dir, "pending.json")
+        self.ghout = os.path.join(self.dir, "gh_output")
+
+    def env(self, url, run="1"):
+        return dict(GITHUB_RUN_ID=run, GITHUB_RUN_ATTEMPT="1", GITHUB_OUTPUT=self.ghout, ACC_REPORT_URL=url,
+                    ACC_KEY_ID="k_test", ACC_AGENT_SECRET=self.SECRET)
+
+    def run_agent(self, url, run, rec=None):
+        import io, contextlib
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            acc_report.main(["start", "--agent", PC, "--pending-file", self.pending], self.env(url, run))
+            acc_report.main(["end", "--agent", PC, "--outcome-file", "/nonexistent", "--step-outcome", "success",
+                             "--outbox-file", self.outbox, "--pending-file", self.pending], self.env(url, run))
+        try:
+            os.remove(self.pending)   # per-run temp file, as on a fresh runner
+        except FileNotFoundError:
+            pass
+        return out.getvalue()
+
+    def outbox_doc(self):
+        return json.load(open(self.outbox))
+
+    def test_outage_queues_then_recovery_delivers_once_with_original_times(self):
+        down = "http://127.0.0.1:9"
+        o1 = self.run_agent(down, "101")
+        self.assertIn("ACC_REPORT QUEUED_UNREACHABLE", o1)
+        self.assertIn("queued=2", o1)
+        self.assertIn("outbox_save=true", open(self.ghout).read())
+        self.run_agent(down, "102")
+        doc = self.outbox_doc()
+        self.assertEqual(len(doc["entries"]), 4)
+        times = {e["event"]["event_id"]: e["event"]["timestamp"] for e in doc["entries"]}
+        self.assertEqual(oct(os.stat(self.outbox).st_mode & 0o777), "0o600")
+        srv, seen = self.stub("accept")
+        o3 = self.run_agent(f"http://127.0.0.1:{srv.server_port}", "103")
+        self.assertIn("ACC_REPORT ACCEPTED", o3)
+        batch = seen[-1]
+        ids = [e["event_id"] for e in batch]
+        self.assertEqual(ids, ["gh-run-101-1-start", "gh-run-101-1-end", "gh-run-102-1-start", "gh-run-102-1-end", "gh-run-103-1-end"])
+        self.assertEqual(seen[0][0]["event_id"], "gh-run-103-1-start", "run 103 start went straight through")
+        for e in batch[:4]:
+            self.assertEqual(e["timestamp"], times[e["event_id"]], "event time never changes")
+            self.assertGreaterEqual(e["delivery"]["attempts"], 2)
+            self.assertIn("queued_at_utc", e["delivery"])
+        self.assertNotIn("delivery", batch[4], "a fresh event has no delivery metadata")
+        self.assertEqual(self.outbox_doc()["entries"], [], "buffer emptied after delivery")
+        seen.clear()
+        self.run_agent(f"http://127.0.0.1:{srv.server_port}", "104")
+        self.assertEqual([e["event_id"] for b in seen for e in b], ["gh-run-104-1-start", "gh-run-104-1-end"], "nothing resent")
+
+    def test_duplicates_and_rejections_are_final_401_is_kept(self):
+        for mode, kept in (("duplicate", 0), ("reject", 0), ("401", 4)):
+            self.setUp()
+            self.run_agent("http://127.0.0.1:9", "201")
+            srv, seen = self.stub(mode)
+            self.run_agent(f"http://127.0.0.1:{srv.server_port}", "202")
+            self.assertEqual(len(self.outbox_doc()["entries"]), kept, mode)
+
+    def test_one_attempt_per_run(self):
+        srv, seen = self.stub("401")
+        self.run_agent(f"http://127.0.0.1:{srv.server_port}", "301")
+        self.assertEqual(len(seen), 2, "start once, end batch once; no retry loop")
+
+    def test_retention_age_and_attempt_limits_with_drop_count_reported(self):
+        now = acc_report._now()
+        old = acc_report._iso(now - timedelta(hours=73))
+        recent = acc_report._iso(now - timedelta(hours=1))
+        entries = [{"event": {"agent_id": PC, "event_id": "a", "status": "idle", "timestamp": old}, "queued_at_utc": old, "attempts": 3},
+                   {"event": {"agent_id": PC, "event_id": "b", "status": "idle", "timestamp": recent}, "queued_at_utc": recent, "attempts": 24},
+                   {"event": {"agent_id": PC, "event_id": "c", "status": "idle", "timestamp": recent}, "queued_at_utc": recent, "attempts": 2}]
+        acc_report.save_outbox(self.outbox, PC, self.SECRET, entries, 0)
+        srv, seen = self.stub("accept")
+        o = self.run_agent(f"http://127.0.0.1:{srv.server_port}", "401")
+        batch = seen[-1]
+        self.assertEqual([e["event_id"] for e in batch], ["c", "gh-run-401-1-end"])
+        self.assertEqual(batch[0]["delivery"]["dropped_before"], 2)
+        self.assertEqual(self.outbox_doc()["dropped"], 0, "drop count cleared once reported")
+
+    def test_size_limit_drops_start_events_first(self):
+        now = acc_report._iso(acc_report._now())
+        entries = [{"event": {"agent_id": PC, "event_id": f"e{i}", "status": "working" if i % 2 == 0 else "idle", "timestamp": now},
+                    "queued_at_utc": now, "attempts": 1} for i in range(acc_report.OUTBOX_MAX_EVENTS + 10)]
+        kept, dropped = acc_report.prune(entries, acc_report._now())
+        self.assertEqual(len(kept), acc_report.OUTBOX_MAX_EVENTS)
+        self.assertEqual(dropped, 10)
+        self.assertTrue(all(e["event"]["status"] == "idle" for e in entries[:20] if e in kept and int(e["event"]["event_id"][1:]) < 20))
+        self.assertEqual(sum(1 for e in kept if e["event"]["status"] == "working"), (acc_report.OUTBOX_MAX_EVENTS + 10) // 2 - 10)
+
+    def test_integrity_tampered_foreign_or_rotated_buffers_are_discarded(self):
+        acc_report.save_outbox(self.outbox, PC, self.SECRET, [{"event": {"agent_id": PC, "event_id": "x", "status": "idle", "timestamp": "2026-10-23T00:00:00Z"}, "queued_at_utc": "2026-10-23T00:00:00Z", "attempts": 1}], 0)
+        doc = self.outbox_doc(); doc["entries"][0]["event"]["status"] = "failed"
+        json.dump(doc, open(self.outbox, "w"))
+        self.assertEqual(acc_report.load_outbox(self.outbox, PC, self.SECRET)[2], "outbox_discarded_integrity")
+        acc_report.save_outbox(self.outbox, PC, self.SECRET, [], 0)
+        self.assertEqual(acc_report.load_outbox(self.outbox, BUILDER, self.SECRET)[2], "outbox_discarded_integrity")
+        self.assertEqual(acc_report.load_outbox(self.outbox, PC, "b3RoZXItc2VjcmV0LW90aGVyLXNlY3JldC0xMjM0NTY")[2], "outbox_discarded_integrity")
+        open(self.outbox, "w").write("{not json")
+        self.assertEqual(acc_report.load_outbox(self.outbox, PC, self.SECRET)[2], "outbox_discarded_unreadable")
+
+    def test_buffer_holds_only_mapped_events(self):
+        rec = {"agent": BUILDER, "exit_code": 5, "mode": "publish", "error": "Traceback secret path /home/x",
+               "facts": {"publication_failures": ["rollback_failed"], "tasks": 1, "raw_text": "CONFIDENTIAL item text"}}
+        ev = acc_report.build_event("end", BUILDER, ENV_RUN, rec, "failure")
+        acc_report.save_outbox(self.outbox, BUILDER, self.SECRET, [{"event": ev, "queued_at_utc": "2026-10-23T00:00:00Z", "attempts": 1}], 0)
+        raw = open(self.outbox).read()
+        for leak in ("CONFIDENTIAL", "Traceback", "/home/x", "raw_text", "facts", self.SECRET):
+            self.assertNotIn(leak, raw)
+
+    def test_not_configured_creates_nothing(self):
+        import io, contextlib
+        with contextlib.redirect_stdout(io.StringIO()):
+            acc_report.main(["start", "--agent", PC, "--pending-file", self.pending], ENV_RUN)
+            acc_report.main(["end", "--agent", PC, "--outbox-file", self.outbox, "--pending-file", self.pending], ENV_RUN)
+        self.assertFalse(os.path.exists(self.outbox))
+        self.assertFalse(os.path.exists(self.pending))
+
+    def test_start_step_is_bounded_when_the_acc_hangs(self):
+        import time, io, contextlib
+        srv, seen = self.stub("hang")
+        t0 = time.monotonic()
+        with contextlib.redirect_stdout(io.StringIO()) as out:
+            acc_report.main(["start", "--agent", PC, "--pending-file", self.pending], self.env(f"http://127.0.0.1:{srv.server_port}"))
+        self.assertLess(time.monotonic() - t0, acc_report.START_TIMEOUT_S + 1.5)
+        self.assertIn("QUEUED_UNREACHABLE", out.getvalue())
+        self.assertTrue(os.path.exists(self.pending))
+
+    def test_workflows_restore_and_save_the_buffer_only_when_enabled(self):
+        for wf in ("continuous-intelligence-monitor.yml", "country-intelligence-builder.yml", "production-controller.yml"):
+            text = (ROOT / ".github/workflows" / wf).read_text()
+            steps = Workflows.steps(text)
+            names = [next((l.split("name: ", 1)[1] for l in st.splitlines() if "name: " in l), "") for st in steps]
+            i = names.index("ACC report (end)")
+            self.assertEqual(names[i - 1], "ACC outbox (restore)", wf)
+            self.assertEqual(names[i + 1], "ACC outbox (save)", wf)
+            for st in (steps[i - 1], steps[i + 1]):
+                self.assertIn("continue-on-error: true", st)
+                self.assertIn("vars.ACC_REPORTING_ENABLED == 'true'", st)
+                self.assertIn("timeout-minutes: 1", st)
+            self.assertIn("steps.acc_end.outputs.outbox_save == 'true'", steps[i + 1])
+            self.assertIn("--outbox-file", steps[i])
+
+
 class Workflows(unittest.TestCase):
     """Text checks (no YAML dependency in CI): the report steps are gated, optional and cannot fail the job."""
 
