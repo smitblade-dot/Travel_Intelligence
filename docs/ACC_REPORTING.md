@@ -42,6 +42,9 @@ retried in a loop.
   3. The end step adds the pending start, the end event and the buffered events, and makes **one** signed
      delivery attempt (8-second timeout).
   4. Whatever is still undelivered is saved back to the cache under this run's key.
+- Every delivery attempt has one hard deadline (the same 3 or 8 seconds) covering DNS, connect, headers and body, so a
+  service that hangs or drips bytes cannot hold the step open. Redirects are refused (the signed request goes only to the
+  configured address) and replies over 256 KB are refused.
 - **Bounded.**
   - At most 200 events, 72 hours and 24 attempts per event. Start events are dropped first.
   - The number dropped travels with the next delivered event (`delivery.dropped_before`) so the ACC can show

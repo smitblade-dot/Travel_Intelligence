@@ -34,6 +34,7 @@ import json
 import os
 import secrets
 import sys
+import threading
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -50,6 +51,7 @@ OUTBOX_FORMAT = "acc-outbox/1"
 OUTBOX_MAX_EVENTS = 200
 OUTBOX_MAX_AGE_H = 72
 OUTBOX_MAX_ATTEMPTS = 24
+MAX_RESPONSE_BYTES = 256 * 1024   # the ACC answers with a few hundred bytes; anything bigger is refused
 
 
 def utc_now():
@@ -259,6 +261,14 @@ def _key(secret_b64url):
     return base64.urlsafe_b64decode(secret_b64url + "=" * (-len(secret_b64url) % 4))
 
 
+class _NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, *args, **kwargs):
+        return None
+
+
+_OPENER = urllib.request.build_opener(_NoRedirect)
+
+
 def send_batch(env, events, timeout=TIMEOUT_S):
     """One signed POST of up to OUTBOX_MAX_EVENTS events. Returns (status, response or None). Never raises."""
     cfg, why = _config(env)
@@ -270,13 +280,35 @@ def send_batch(env, events, timeout=TIMEOUT_S):
     req = urllib.request.Request(url.rstrip("/") + PATH, data=body, method="POST", headers={
         "Content-Type": "application/json", "X-ACC-Key-Id": key_id, "X-ACC-Timestamp": ts, "X-ACC-Nonce": nonce,
         "X-ACC-Signature": sign(secret, "POST", PATH, ts, nonce, body)})
-    try:
-        with urllib.request.urlopen(req, timeout=timeout) as r:
-            return "DELIVERED", json.loads(r.read() or b"{}")
-    except urllib.error.HTTPError as e:
-        return f"HTTP_{e.code}", None
-    except Exception as e:
-        return "UNREACHABLE_" + type(e).__name__, None
+    # One hard deadline covers DNS, connect, headers and body, so a service that hangs or drips bytes cannot hold the step open.
+    # Redirects are refused (the signed request goes only to the configured address) and the reply is size-capped.
+    def attempt():
+        with _OPENER.open(req, timeout=timeout) as r:
+            chunks, size = [], 0
+            while True:
+                chunk = r.read1(4096)
+                if not chunk:
+                    break
+                size += len(chunk)
+                if size > MAX_RESPONSE_BYTES:
+                    raise ValueError("response too large")
+                chunks.append(chunk)
+            return "DELIVERED", json.loads(b"".join(chunks) or b"{}")
+    box = {}
+
+    def runner():
+        try:
+            box["ok"] = attempt()
+        except urllib.error.HTTPError as e:
+            box["ok"] = (f"HTTP_{e.code}", None)
+        except BaseException as e:   # never let the reporter raise
+            box["ok"] = ("UNREACHABLE_" + type(e).__name__, None)
+    t = threading.Thread(target=runner, daemon=True)
+    t.start()
+    t.join(timeout)
+    if t.is_alive():
+        return "UNREACHABLE_Deadline", None
+    return box.get("ok", ("UNREACHABLE_Unknown", None))
 
 
 def post(env, event, timeout=TIMEOUT_S):

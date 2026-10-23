@@ -264,6 +264,86 @@ class Transport(unittest.TestCase):
         finally:
             srv.shutdown()
 
+    def raw_server(self, handler):
+        """A TCP server running `handler(conn)` per connection, for hostile behaviours HTTPServer cannot express."""
+        import socket
+        sock = socket.socket(); sock.bind(("127.0.0.1", 0)); sock.listen(5)
+        stop = threading.Event()
+
+        def loop():
+            sock.settimeout(0.2)
+            while not stop.is_set():
+                try:
+                    conn, _ = sock.accept()
+                except OSError:
+                    continue
+                threading.Thread(target=handler, args=(conn, stop), daemon=True).start()
+        threading.Thread(target=loop, daemon=True).start()
+        self.addCleanup(lambda: (stop.set(), sock.close()))
+        return sock.getsockname()[1]
+
+    def test_a_service_that_never_answers_cannot_hold_the_reporter_past_its_deadline(self):
+        import time
+        port = self.raw_server(lambda conn, stop: stop.wait(30))
+        t0 = time.monotonic()
+        status, _ = acc_report.send_batch(self.env(port), [{"agent_id": PC}], timeout=1)
+        # the socket timeout and the hard deadline fire together; either is correct, an unbounded wait is not
+        self.assertIn(status, ("UNREACHABLE_Deadline", "UNREACHABLE_TimeoutError", "UNREACHABLE_timeout"))
+        self.assertLess(time.monotonic() - t0, 3)
+
+    def test_a_service_that_drips_bytes_forever_cannot_hold_the_reporter_past_its_deadline(self):
+        import time
+
+        def drip(conn, stop):
+            try:
+                conn.recv(65536)
+                conn.sendall(b"HTTP/1.1 200 OK\r\nContent-Length: 1000000\r\n\r\n")
+                while not stop.is_set():
+                    conn.sendall(b"x"); time.sleep(0.1)
+            except OSError:
+                pass
+        port = self.raw_server(drip)
+        t0 = time.monotonic()
+        status, _ = acc_report.send_batch(self.env(port), [{"agent_id": PC}], timeout=1)
+        self.assertTrue(status.startswith("UNREACHABLE_"), status)
+        self.assertLess(time.monotonic() - t0, 3)
+
+    def test_a_redirect_is_refused_and_the_signed_request_goes_nowhere_else(self):
+        hits = []
+
+        class Other(BaseHTTPRequestHandler):
+            def do_GET(self):
+                hits.append(("GET", dict(self.headers))); self.send_response(200); self.end_headers()
+
+            def do_POST(self):
+                hits.append(("POST", dict(self.headers))); self.send_response(200); self.end_headers()
+
+            def log_message(self, *a):
+                pass
+        other = HTTPServer(("127.0.0.1", 0), Other)
+        self.addCleanup(other.server_close)
+        threading.Thread(target=other.serve_forever, daemon=True).start()
+        for code in (301, 302, 303, 307, 308):
+            port = self.raw_server(lambda conn, stop, code=code: (conn.recv(65536), conn.sendall(
+                f"HTTP/1.1 {code} Moved\r\nLocation: http://127.0.0.1:{other.server_port}/steal\r\nContent-Length: 0\r\n\r\n".encode()), conn.close()))
+            status, _ = acc_report.send_batch(self.env(port), [{"agent_id": PC}])
+            self.assertEqual(status, f"HTTP_{code}", f"redirect {code} must be refused, not followed")
+        other.shutdown()
+        self.assertEqual(hits, [], "no redirect target may ever receive the signed request headers")
+
+    def test_an_oversized_reply_is_refused(self):
+        def big(conn, stop):
+            try:
+                conn.recv(65536)
+                conn.sendall(b"HTTP/1.1 200 OK\r\nContent-Length: 5000000\r\n\r\n" + b"A" * 5000000)
+            except OSError:
+                pass
+            finally:
+                conn.close()
+        port = self.raw_server(big)
+        status, _ = acc_report.send_batch(self.env(port), [{"agent_id": PC}], timeout=5)
+        self.assertEqual(status, "UNREACHABLE_ValueError")
+
     def test_malformed_secret_is_skipped_not_raised(self):
         env = dict(ENV_RUN, ACC_REPORT_URL="http://127.0.0.1:9", ACC_KEY_ID="k", ACC_AGENT_SECRET="x")
         self.assertEqual(acc_report.post(env, {})[0], "SKIPPED_BAD_SECRET")
