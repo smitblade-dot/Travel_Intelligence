@@ -20,7 +20,7 @@ from country_support import ROOT, FakeNet, Replies, make_builder, reply_for  # n
 
 from ti_ops_director.country_config import load_builder_config           # noqa: E402
 from ti_ops_director.country_draft import ground_claims, structural_valid  # noqa: E402
-from ti_ops_director.country_engine import EXIT_CONFIG, EXIT_OK, _sections  # noqa: E402
+from ti_ops_director.country_engine import EXIT_CONFIG, EXIT_OK, BuilderSpend, _sections  # noqa: E402
 from ti_ops_director.country_evidence import (collect_category, html_blocks, parse_nasa, passages_from_blocks,  # noqa: E402
                                               select_passages)
 from ti_ops_director.country_gaps import coverage_summary, find_gaps      # noqa: E402
@@ -646,12 +646,18 @@ class FailureModes(unittest.TestCase):
                 def complete(self, **kw):
                     Boom.calls += 1
                     raise TimeoutError("slow")
+            class FixedClockSpend(BuilderSpend):
+                """The run clock is fixed (cs.NOW) but the spend ledger defaults to the real clock; pin it so the
+                ledger day is the same fixed date on every day the test runs."""
+                def __init__(self, *a, **kw):
+                    super().__init__(*a, clock=lambda: cs.NOW, **kw)
             b = make_builder(tmp, provider=Boom(), **PAID)
             b.cfg.categories = ["TRANSPORT"]
-            b.run()
+            with mock.patch("ti_ops_director.country_engine.BuilderSpend", FixedClockSpend):
+                b.run()
             self.assertEqual(Boom.calls, 1)
             st = load_state(b)
-            self.assertGreater(st["spend"]["daily"]["2026-10-22"], 0)
+            self.assertGreater(st["spend"]["daily"][cs.NOW.strftime("%Y-%m-%d")], 0)
             self.assertIn("provider_error", list(st["tasks"].values())[0]["blockingReason"])
 
 
