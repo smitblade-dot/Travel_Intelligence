@@ -605,6 +605,8 @@ def main(env=None):
     outcome.setdefault("consecutiveUntriaged", int(state.get("consecutiveUntriaged", 0)))
     outcome.setdefault("consecutiveFailed", int(state.get("consecutiveFailed", 0)))
     print("OUTCOME", json.dumps(outcome))
+    global _LAST_OUTCOME
+    _LAST_OUTCOME = outcome
     note = annotate(outcome)
     if note:
         print(note)
@@ -621,9 +623,25 @@ def main(env=None):
     return EXIT_OK
 
 
+_LAST_OUTCOME = None
+
+
+def _write_agent_outcome(code, error=None):
+    """Optional ACC outcome record (inert unless TI_AGENT_OUTCOME_FILE is set). Never raises."""
+    try:
+        from ti_ops_director import agent_outcome
+        agent_outcome.write(os.environ, "03AA-04_Master_Agent_TI_Ops_Director",
+                            {"component": "gated_haiku_monitor", "exit_code": code, "error": error, "outcome": _LAST_OUTCOME})
+    except Exception:
+        pass
+
+
 if __name__ == "__main__":
     try:
-        sys.exit(main())
+        _code = main()
     except Exception as exc:
         print("MONITOR_FAILED", type(exc).__name__, str(exc), file=sys.stderr)
+        _write_agent_outcome(1, type(exc).__name__)
         sys.exit(1)
+    _write_agent_outcome(_code)
+    sys.exit(_code)

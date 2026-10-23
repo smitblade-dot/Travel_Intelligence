@@ -36,9 +36,23 @@ jobs:
         with:
           ref: main
           fetch-depth: 1
+      # Optional Agent Command Centre report (docs/ACC_REPORTING.md). Skipped unless ACC_REPORTING_ENABLED is "true";
+      # continue-on-error and a 1-minute limit mean it can never change this run's result.
+      - name: ACC report (start)
+        if: vars.ACC_REPORTING_ENABLED == 'true' && github.event_name != 'pull_request'
+        continue-on-error: true
+        timeout-minutes: 1
+        env:
+          ACC_REPORT_URL: ${{ vars.ACC_REPORT_URL }}
+          ACC_KEY_ID: ${{ vars.ACC_KEY_ID_PRODUCTION_CONTROLLER }}
+          ACC_AGENT_SECRET: ${{ secrets.ACC_AGENT_SECRET_PRODUCTION_CONTROLLER }}
+          ACC_EUR_PER_USD: ${{ vars.ACC_EUR_PER_USD }}
+          ACC_EUR_RATE_DATE: ${{ vars.ACC_EUR_RATE_DATE }}
+        run: python3 scripts/acc_report.py start --agent 03AA-04_Production_Controller_TI --pending-file "$RUNNER_TEMP/acc_pending_start.json"
       - id: pc
         name: Production checks
         env:
+          TI_AGENT_OUTCOME_FILE: ${{ vars.ACC_REPORTING_ENABLED == 'true' && github.event_name != 'pull_request' && format('{0}/agent_outcome.json', runner.temp) || '' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TI_PC_EVENT: ${{ github.event_name }}
           TI_PC_MODE: ${{ vars.TI_PC_MODE }}
@@ -48,6 +62,35 @@ jobs:
           TI_PC_MAX_DISPATCHES_PER_DAY: ${{ vars.TI_PC_MAX_DISPATCHES_PER_DAY }}
         # Exit 1: a new or escalated critical exception (active mode). 3: configuration. 4: state not persisted.
         run: python3 scripts/ops_director.py production-check
+      - name: ACC outbox (restore)
+        if: always() && vars.ACC_REPORTING_ENABLED == 'true' && github.event_name != 'pull_request'
+        continue-on-error: true
+        timeout-minutes: 1
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ runner.temp }}/acc_outbox
+          key: acc-outbox-production-controller-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: acc-outbox-production-controller-
+      - name: ACC report (end)
+        id: acc_end
+        if: always() && vars.ACC_REPORTING_ENABLED == 'true' && github.event_name != 'pull_request'
+        continue-on-error: true
+        timeout-minutes: 1
+        env:
+          ACC_REPORT_URL: ${{ vars.ACC_REPORT_URL }}
+          ACC_KEY_ID: ${{ vars.ACC_KEY_ID_PRODUCTION_CONTROLLER }}
+          ACC_AGENT_SECRET: ${{ secrets.ACC_AGENT_SECRET_PRODUCTION_CONTROLLER }}
+          ACC_EUR_PER_USD: ${{ vars.ACC_EUR_PER_USD }}
+          ACC_EUR_RATE_DATE: ${{ vars.ACC_EUR_RATE_DATE }}
+        run: python3 scripts/acc_report.py end --agent 03AA-04_Production_Controller_TI --outcome-file "$RUNNER_TEMP/agent_outcome.json" --step-outcome "${{ steps.pc.outcome }}" --outbox-file "$RUNNER_TEMP/acc_outbox/outbox.json" --pending-file "$RUNNER_TEMP/acc_pending_start.json"
+      - name: ACC outbox (save)
+        if: always() && vars.ACC_REPORTING_ENABLED == 'true' && github.event_name != 'pull_request' && steps.acc_end.outputs.outbox_save == 'true'
+        continue-on-error: true
+        timeout-minutes: 1
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ runner.temp }}/acc_outbox
+          key: acc-outbox-production-controller-${{ github.run_id }}-${{ github.run_attempt }}
 
   recover:
     # Bounded recovery. Runs only for workflows Marc listed in TI_PC_RECOVERY_WORKFLOWS; each dispatch was
