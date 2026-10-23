@@ -1,6 +1,6 @@
 # 03AA-04_Country_Intelligence_Builder_TI
 
-Run: 23 Oct 2026 00:06 Cyprus time | mode: publish | automatic publication: ON | paid model use: OFF (awaiting_paid_authorisation)
+Run: 23 Oct 2026 13:28 Cyprus time | mode: publish | automatic publication: ON | paid model use: OFF (awaiting_paid_authorisation)
 
 Coverage (whole product): 187/728 combinations; gaps in scope: 1. Tasks this run: 1; new 0; reopened 1; duplicates suppressed 0; interrupted tasks recovered 0.
 
@@ -8,20 +8,18 @@ Spend recorded (all time, USD): 0 (estimated from API usage fields x configured 
 
 ## Publication
 
-- PUBLISHED and verified on the live site: gh-equipment-plugs
-- Commit: https://github.com/smitblade-dot/Travel_Intelligence/commit/35b856ea60e4dcef5fc89bb99c50840a1be17731 | live check: https://travelintelligence22.com/data.json served the new content after 4 check(s); served data generated 23 Oct 2026 00:06 Cyprus time
 - Already published and unchanged (duplicate prevented): gh-equipment-clothing, gh-equipment-mosquito
 
 ## Ghana / EQUIPMENT: COMPLETED (assessed)
 
 - Gap addressed: RECHECK_HELD: Held EQUIPMENT items for Ghana were assessed under earlier rules; assessed again.
-- Evidence: cdc_travel=RETRIEVED, travelhealthpro=RETRIEVED, fcdo_health=RETRIEVED, fcdo_safety=RETRIEVED, gsa_plugs=RETRIEVED, li_1935=RETRIEVED, grid_code=RETRIEVED, ecg_technical=RETRIEVED
+- Evidence: cdc_travel=RETRIEVED, travelhealthpro=RETRIEVED, fcdo_health=RETRIEVED, fcdo_safety=RETRIEVED, gsa_plugs=UNAVAILABLE (http_error:404), li_1935=RETRIEVED, grid_code=RETRIEVED, ecg_technical=RETRIEVED
 - Cost this task: $0.00 (no model call)
 - CLOTHING: **PUBLISH**, confidence MEDIUM, 7 claim(s)
 - MOSQUITO: **PUBLISH**, confidence MEDIUM, 8 claim(s)
-- PLUGS: **PUBLISH**, confidence MEDIUM, 3 claim(s)
-- Draft: cib-gh-equipment-0fc6b4df3a | status **AWAITING_PUBLICATION_DECISION** | publication NOT_PUBLISHED | model: NOT_NEEDED
-- Link: https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-0fc6b4df3a.json
+- PLUGS: **HOLD** (source_unavailable_preserving_last_known_good)
+- Draft: cib-gh-equipment-00acaa0f49 | status **AWAITING_PUBLICATION_DECISION** | publication NOT_PUBLISHED | model: NOT_NEEDED
+- Link: https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-00acaa0f49.json
 
 ### Clothing  [CLOTHING] PUBLISH
 - PUBLISHABLE: Prepare for activities by wearing the right clothes and packing protective items, such as bug spray, sunscreen, and a basic first aid kit.  _[US Centers for Disease Control and Prevention (CD.45)]_
@@ -44,16 +42,20 @@ Spend recorded (all time, USD): 0 (estimated from API usage fields x configured 
 - PUBLISHABLE: Although bed bugs do not carry disease, they are an annoyance. See our information page about avoiding bug bites for some easy tips to avoid them.  _[US Centers for Disease Control and Prevention (CD.44)]_
 - Uncertainty: Wording is the source's own. Other nationalities' governments may advise differently.
 
-### Electrical plugs and supply  [PLUGS] PUBLISH
-- PUBLISHABLE: The Ghana Standards Authority requires imported household plugs to be type G (13-amp, three rectangular pins), effective 1 January 2019.  _[Ghana Standards Authority (GS.02)]_
-- PUBLISHABLE: Ghana's supply regulations (L.I. 1935) require the voltage at a customer's premises to stay within plus or minus ten percent of 230 volts or 400 volts (or of the higher network voltages they list).  _[Electricity Company of Ghana (EC.02); Ghana Public Utilities Regulatory Commission (LI.01)]_
-- PUBLISHABLE: Ghana's National Electricity Grid Code treats 50 Hz as the nominal system frequency.  _[Electricity Company of Ghana (EC.02); Energy Commission of Ghana (GC.06)]_
-- Uncertainty: Official statements as of their stated dates; not re-confirmed against any later amendment. 
+### Electrical plugs and supply  [PLUGS] HOLD
+- HELD (item_held): Ghana's supply regulations (L.I. 1935) require the voltage at a customer's premises to stay within plus or minus ten percent of 230 volts or 400 volts (or of the higher network voltages they list).  _[Electricity Company of Ghana (EC.02); Ghana Public Utilities Regulatory Commission (LI.01)]_
+- HELD (item_held): Ghana's National Electricity Grid Code treats 50 Hz as the nominal system frequency.  _[Electricity Company of Ghana (EC.02); Energy Commission of Ghana (GC.06)]_
+- Uncertainty: Official statements as of their stated dates; not re-confirmed against any later amendment. Held: plug_type: source not retrieved.
 
+Missing evidence:
+- PLUGS: plug_type: source not retrieved (not published: no source of the required standing states it)
 
 ## Exceptions held (routed to the Master Agent)
 
-- [automatic retry] gh/EQUIPMENT/MOSQUITO: no_dated_source_within_freshness_limit. Held until a registry-backed source states a publication date inside its freshness limit. No action unless it persists. (seen 3x since 22 Oct 2026 22:48 Cyprus time)
+- [automatic retry] gh/EQUIPMENT/MOSQUITO: no_dated_source_within_freshness_limit. Held until a registry-backed source states a publication date inside its freshness limit. No action unless it persists. (seen 4x since 22 Oct 2026 22:48 Cyprus time)
+- [automatic retry] gh/EQUIPMENT/PLUGS: evidence_missing. Held: plug_type: source not retrieved (not published: no source of the required standing states it). Retried automatically each run; source problems are listed separately. (seen 1x since 23 Oct 2026 13:28 Cyprus time)
+- [automatic retry] gh/EQUIPMENT: source_unavailable. Source cannot be used as configured: http_error:404. Retried automatically each run. (seen 1x since 23 Oct 2026 13:28 Cyprus time)
+- [automatic retry] gh/EQUIPMENT/PLUGS: source_unavailable_preserving_last_known_good. A source behind the published record could not be retrieved this run, so the record was left exactly as it was (a source failure never shrinks or replaces published content). Retried automatically. (seen 1x since 23 Oct 2026 13:28 Cyprus time)
 
 ## Awaiting budget authorisation (model-written topics; not exceptions)
 
@@ -72,9 +74,9 @@ Spend recorded (all time, USD): 0 (estimated from API usage fields x configured 
 
 ## Drafts and assessments held on this branch
 
-- gh/EQUIPMENT: cib-gh-equipment-0fc6b4df3a | AUTO_PUBLISHED_AND_VERIFIED | model: NOT_NEEDED | claims 29 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-0fc6b4df3a.json
+- gh/EQUIPMENT: cib-gh-equipment-00acaa0f49 | HELD_EXCEPTIONS_ROUTED | model: NOT_NEEDED | claims 28 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-00acaa0f49.json
+- gh/EQUIPMENT: cib-gh-equipment-0fc6b4df3a | AUTO_PUBLISHED_AND_VERIFIED | model: NOT_NEEDED | claims 29 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-0fc6b4df3a.json | superseded by cib-gh-equipment-00acaa0f49
 - gh/EQUIPMENT: cib-gh-equipment-a48d6e4474 | AUTO_PUBLISHED_AND_VERIFIED | model: NOT_NEEDED | claims 27 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-a48d6e4474.json | superseded by cib-gh-equipment-0fc6b4df3a
 - gh/EQUIPMENT: cib-gh-equipment-3a0cda8cc9 | ELIGIBLE_AWAITING_PUBLICATION_RUN | model: NOT_NEEDED | claims 29 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-3a0cda8cc9.json | superseded by cib-gh-equipment-a48d6e4474
 - gh/ENVIRONMENT: cib-gh-environment-21fa3f4dcf | AUTO_PUBLISHED_VERIFICATION_PENDING | model: NOT_NEEDED | claims 9 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/ENVIRONMENT/cib-gh-environment-21fa3f4dcf.json
-- gh/EQUIPMENT: cib-gh-equipment-e087b56a8f | AUTO_PUBLISHED_VERIFICATION_PENDING | model: NOT_NEEDED | claims 29 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-e087b56a8f.json | superseded by cib-gh-equipment-3a0cda8cc9
 - gh/TRANSPORT: cib-gh-transport-21272f0ba2 | AUTO_PUBLISHED_AND_VERIFIED | model: NOT_NEEDED | claims 31 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/TRANSPORT/cib-gh-transport-21272f0ba2.json

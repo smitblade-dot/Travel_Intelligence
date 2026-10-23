@@ -190,21 +190,21 @@
           "gh-equipment-plugs"
         ]
       },
-      "state": "running",
+      "state": "completed",
       "attempts": 1,
       "created_at": "2026-10-22T19:48:19+00:00",
       "updated_at": "2026-10-23T10:28:53+00:00",
-      "lease_owner": "runnervm8k3b6-2110-5dba5c",
-      "lease_expires": "2026-10-23T10:48:53+00:00",
+      "lease_owner": null,
+      "lease_expires": null,
       "outcome": "assessed",
       "cost_usd": 0.0,
       "blockingReason": null,
       "error": null,
-      "published": [
-        "gh-equipment-plugs"
+      "published": [],
+      "held": [
+        "PLUGS"
       ],
-      "held": [],
-      "draftId": "cib-gh-equipment-0fc6b4df3a"
+      "draftId": "cib-gh-equipment-00acaa0f49"
     }
   },
   "drafts": {
@@ -245,25 +245,6 @@
       "published": [
         "gh-environment-climate-seasonal"
       ]
-    },
-    "cib-gh-equipment-e087b56a8f": {
-      "draftId": "cib-gh-equipment-e087b56a8f",
-      "path": "drafts/gh/EQUIPMENT/cib-gh-equipment-e087b56a8f.json",
-      "countryId": "gh",
-      "category": "EQUIPMENT",
-      "evidenceFingerprint": "e087b56a8fa44da0e4361fcaf306a5da",
-      "modelStatus": "NOT_NEEDED",
-      "reviewStatus": "AUTO_PUBLISHED_VERIFICATION_PENDING",
-      "createdAt": "2026-10-22T18:11:39+00:00",
-      "costUsd": 0.0,
-      "claims": 29,
-      "rules": "2fe109167307767794d84a37176694cb",
-      "publicationId": "pub-20261022T181139Z-21fa3f",
-      "settled": false,
-      "published": [
-        "gh-equipment-plugs"
-      ],
-      "supersededBy": "cib-gh-equipment-3a0cda8cc9"
     },
     "cib-gh-equipment-3a0cda8cc9": {
       "draftId": "cib-gh-equipment-3a0cda8cc9",
@@ -317,7 +298,24 @@
       "settled": true,
       "published": [
         "gh-equipment-plugs"
-      ]
+      ],
+      "supersededBy": "cib-gh-equipment-00acaa0f49"
+    },
+    "cib-gh-equipment-00acaa0f49": {
+      "draftId": "cib-gh-equipment-00acaa0f49",
+      "path": "drafts/gh/EQUIPMENT/cib-gh-equipment-00acaa0f49.json",
+      "countryId": "gh",
+      "category": "EQUIPMENT",
+      "evidenceFingerprint": "00acaa0f491eb68c381a042b7c089200",
+      "modelStatus": "NOT_NEEDED",
+      "reviewStatus": "HELD_EXCEPTIONS_ROUTED",
+      "createdAt": "2026-10-23T10:28:53+00:00",
+      "costUsd": 0.0,
+      "claims": 28,
+      "rules": "10532b8b7d47672be5b09af7f1b57ca3",
+      "publicationId": null,
+      "settled": true,
+      "published": []
     }
   },
   "runs": [
@@ -740,6 +738,20 @@
       "outcomes": {
         "Travel Intelligence|country_content_draft|gh:EQUIPMENT:RECHECK_HELD|c700b914fa0729b420e73550ae9a01d4|W42": "assessed"
       }
+    },
+    {
+      "at": "2026-10-23T10:28:53+00:00",
+      "mode": "publish",
+      "tasksRun": 1,
+      "created": 0,
+      "reopened": 1,
+      "duplicatesSuppressed": 0,
+      "recovered": [],
+      "published": [],
+      "publicationFailures": [],
+      "outcomes": {
+        "Travel Intelligence|country_content_draft|gh:EQUIPMENT:RECHECK_HELD|c700b914fa0729b420e73550ae9a01d4|W42": "assessed"
+      }
     }
   ],
   "exceptions": {
@@ -874,8 +886,8 @@
       "id": "cbx-3b5e34a9f5",
       "state": "HELD",
       "firstSeen": "2026-10-22T19:48:19+00:00",
-      "lastSeen": "2026-10-22T21:06:36+00:00",
-      "occurrences": 3
+      "lastSeen": "2026-10-23T10:28:53+00:00",
+      "occurrences": 4
     },
     "gh:EQUIPMENT:PLUGS:no_external_source": {
       "key": "gh:EQUIPMENT:PLUGS:no_external_source",
@@ -950,11 +962,10 @@
       "action": "Held: plug_type: source not retrieved (not published: no source of the required standing states it). Retried automatically each run; source problems are listed separately.",
       "requiresHuman": false,
       "id": "cbx-c1229e4d05",
-      "state": "RESOLVED",
-      "firstSeen": "2026-10-22T20:20:28+00:00",
-      "lastSeen": "2026-10-22T20:20:28+00:00",
-      "occurrences": 1,
-      "resolvedAt": "2026-10-22T21:06:36+00:00"
+      "state": "HELD",
+      "firstSeen": "2026-10-23T10:28:53+00:00",
+      "lastSeen": "2026-10-23T10:28:53+00:00",
+      "occurrences": 1
     },
     "gh:EQUIPMENT:source:li_1935:BLOCKED_BY_ROBOTS": {
       "key": "gh:EQUIPMENT:source:li_1935:BLOCKED_BY_ROBOTS",
@@ -1012,6 +1023,43 @@
       "lastSeen": "2026-10-22T20:20:28+00:00",
       "occurrences": 1,
       "resolvedAt": "2026-10-22T21:06:36+00:00"
+    },
+    "gh:EQUIPMENT:source:gsa_plugs:UNAVAILABLE": {
+      "key": "gh:EQUIPMENT:source:gsa_plugs:UNAVAILABLE",
+      "scope": "source",
+      "countryId": "gh",
+      "category": "EQUIPMENT",
+      "topic": null,
+      "reasons": [
+        "source_unavailable"
+      ],
+      "detail": "gsa_plugs: http_error:404",
+      "action": "Source cannot be used as configured: http_error:404. Retried automatically each run.",
+      "requiresHuman": false,
+      "id": "cbx-24b16d937d",
+      "state": "HELD",
+      "firstSeen": "2026-10-23T10:28:53+00:00",
+      "lastSeen": "2026-10-23T10:28:53+00:00",
+      "occurrences": 1
+    },
+    "gh:EQUIPMENT:PLUGS:source_unavailable_preserving_last_known_good": {
+      "key": "gh:EQUIPMENT:PLUGS:source_unavailable_preserving_last_known_good",
+      "scope": "topic",
+      "countryId": "gh",
+      "category": "EQUIPMENT",
+      "topic": "PLUGS",
+      "reasons": [
+        "source_unavailable_preserving_last_known_good"
+      ],
+      "decision": "HOLD",
+      "detail": "",
+      "action": "A source behind the published record could not be retrieved this run, so the record was left exactly as it was (a source failure never shrinks or replaces published content). Retried automatically.",
+      "requiresHuman": false,
+      "id": "cbx-ac742ffcd8",
+      "state": "HELD",
+      "firstSeen": "2026-10-23T10:28:53+00:00",
+      "lastSeen": "2026-10-23T10:28:53+00:00",
+      "occurrences": 1
     }
   },
   "publications": {
@@ -1183,7 +1231,7 @@
     "currency": "USD",
     "status": "estimated from API usage fields x configured list prices; not invoice-confirmed",
     "mode": "dry_run",
-    "updated": "2026-10-22T21:07:59+00:00"
+    "updated": "2026-10-23T10:29:11+00:00"
   },
   "triageCache": {}
 }
