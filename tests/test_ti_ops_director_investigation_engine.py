@@ -66,6 +66,18 @@ class PublishAndVerify(unittest.TestCase):
             self.assertEqual(h.git(h.work, "ls-remote", "origin", "refs/heads/main").split()[0], sha)      # no further commit to main
             self.assertEqual(len(h.ledger()["publications"]), 1)
 
+    def test_idle_run_writes_only_its_own_run_record_to_the_ledger(self):
+        with tempfile.TemporaryDirectory() as t:
+            h = Harness(t)
+            h.engine(edit=fast).run()
+            before = h.ledger()
+            eng = h.engine(net=net_at(NOW), now=NOW + timedelta(minutes=30), edit=fast)
+            eng.run()
+            after = h.ledger()
+            self.assertEqual(len(after["runs"]), len(before["runs"]) + 1)
+            for k in ("candidates", "tasks", "events", "publications", "exceptions"):
+                self.assertEqual(after[k], before[k], k)                       # no churn in the ledger sections
+
     def test_unchanged_evidence_costs_nothing_and_writes_nothing_to_main(self):
         with tempfile.TemporaryDirectory() as t:
             h = Harness(t)

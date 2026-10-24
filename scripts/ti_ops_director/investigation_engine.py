@@ -147,7 +147,10 @@ class Engine:
     def _tx(self, mutate, message="ledger"):
         def fn(snap):
             st = sections(snap.state() or empty_state())
+            before = json.dumps(st, sort_keys=True)
             result = mutate(st)
+            if snap.text("state") and json.dumps(st, sort_keys=True) == before:
+                return None, result                  # nothing changed: no commit to the state branch
             return {"state": dump_state(st)}, result
         return self.backend.transact(fn, message=f"{AGENT_NAME}: {message}")[1]
 
@@ -316,7 +319,8 @@ class Engine:
                 elif known:
                     C[c["id"]].update(status="PUBLISHED", reason="known_event")
             else:
-                e["lastSeen"] = iso_utc(now)
+                if now - (parse_dt(e["lastSeen"]) or now) > timedelta(hours=12):
+                    e["lastSeen"] = iso_utc(now)          # throttled: only prune bookkeeping, so an idle run writes nothing here
                 if e["signalFingerprint"] != c["signalFingerprint"]:
                     e["signalFingerprint"], e["payload"] = c["signalFingerprint"], {**c}
                     if e["status"] == "INELIGIBLE":
@@ -326,7 +330,8 @@ class Engine:
                             info["reopened"] += 1
         for c in leads:
             if c["id"] in C:
-                C[c["id"]]["lastSeen"] = iso_utc(now)
+                if now - (parse_dt(C[c["id"]]["lastSeen"]) or now) > timedelta(hours=12):
+                    C[c["id"]]["lastSeen"] = iso_utc(now)
                 continue
             if info["new"] >= cap:
                 info["deferred"] += 1
