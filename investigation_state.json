@@ -22,7 +22,7 @@
       "firstSeen": "2026-10-22T06:00:00Z",
       "lastSeen": "2026-10-22T06:00:00Z",
       "signalFingerprint": "8917ba32d1e688",
-      "assessedFingerprint": null,
+      "assessedFingerprint": "8917ba32d1e688",
       "payload": {
         "id": "cand-gdacs-TC-1001338",
         "producer": "discovery_signal_gdacs",
@@ -59,7 +59,38 @@
         }
       },
       "leads": [],
-      "retries": 0
+      "retries": 0,
+      "lastAssessment": {
+        "at": "2026-10-22T06:00:00Z",
+        "decision": "PUBLISH",
+        "outcome": "READY",
+        "reasons": [],
+        "eventStatus": "REPORTED",
+        "lifecycle": "ALERT",
+        "independentChains": 1,
+        "claims": {
+          "occurrence": "SUPPORTED",
+          "period": "SUPPORTED",
+          "location": "SUPPORTED",
+          "name": "SUPPORTED",
+          "intensity": "SUPPORTED",
+          "alert_level": "SUPPORTED",
+          "status": "SUPPORTED",
+          "impact": "MISSING"
+        },
+        "changedSinceSignal": [],
+        "evidence": {
+          "status": "RETRIEVED",
+          "retrievedAt": "2026-10-22T06:00:00Z",
+          "retrieval": "fixture",
+          "hash": "cc4775579167bddecd1b",
+          "alertLevel": "Red",
+          "modified": "2026-10-22T04:00:32",
+          "to": "2026-10-22T00:00:00",
+          "isCurrent": true
+        }
+      },
+      "lastAssessedAt": "2026-10-22T06:00:00Z"
     }
   },
   "tasks": {
@@ -69,7 +100,7 @@
       "type": "event_reassessment",
       "candidateId": "cand-gdacs-TC-1001338",
       "groupKey": "gdacs:TC:1001338",
-      "state": "running",
+      "state": "completed",
       "attempts": 1,
       "createdAt": "2026-10-22T06:00:00Z",
       "priority": 40,
@@ -81,8 +112,11 @@
       "business_application": "Travel Intelligence",
       "substream": "03AA-04 Intelligence Automation Agents",
       "startedAt": "2026-10-22T06:00:00Z",
-      "leaseOwner": "runnervmr9t6g-2386-7a685f",
-      "leaseExpires": "2026-10-22T06:20:00Z"
+      "leaseOwner": null,
+      "leaseExpires": "2026-10-22T06:20:00Z",
+      "finishedAt": "2026-10-22T06:00:00Z",
+      "outcome": "READY",
+      "reasons": []
     }
   },
   "events": {
