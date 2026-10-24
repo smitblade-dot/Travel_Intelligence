@@ -30,6 +30,9 @@ publication are disabled (no `TI_OPS_*` limits, `TI_OPS_DRY_RUN` and `TI_MONITOR
 This work package delivers the **controller foundation, one working diagnostic worker, and (second
 package) routing of the existing Haiku monitor through the spending gateway**. It is not the agent team.
 
+**Current totals (24 October 2026): 11 workers registered, 4 implemented** (`feed_health_diagnostic`, `production_verification`, `country_content_builder`,
+`investigation_verification`). The 21 October figures further down are the historical record.
+
 **Update 24 October 2026:** `investigation_verification` (`docs/TI_INVESTIGATION_VERIFICATION.md`, 03AA-04_Investigation_Verification_TI)
 is now registered and implemented (with the Country Builder's `country_content_builder`, eleven workers are registered and four are implemented); it takes the
 `investigation` task type from the planned `investigation_content` role (only `content_building` stays planned) and leaves the planned
