@@ -385,6 +385,27 @@ class Reassessment(unittest.TestCase):
             eng.run()
             self.assertEqual(eng.stats["tasks"], 0)                                  # reassessment stops once archived
 
+    def test_event_edited_by_another_process_is_never_overwritten(self):
+        with tempfile.TemporaryDirectory() as t:
+            h = self.published(t)
+            d = json.loads((h.work / "data.json").read_text())
+            ev = next(e for e in d["events"] if e["id"] == EID)
+            ev["summary"] = ev["summary"] + " Reviewer addition: airport closures reported by the operator."
+            (h.work / "data.json").write_text(json.dumps(d))
+            h.git(h.work, "commit", "-am", "nightly reviewer edit")
+            h.git(h.work, "push", "origin", "HEAD:main")
+            before = json.dumps(h.main_data()["events"], sort_keys=True)
+            eng = h.engine(net=net_at(at(4), alertlevel="Orange"), now=at(4), edit=fast)       # evidence changed: would normally update
+            self.assertEqual(eng.run(), 0)
+            self.assertEqual(json.dumps(h.main_data()["events"], sort_keys=True), before)       # the edit stands
+            led = h.ledger()
+            self.assertEqual(led["events"][EID]["state"], "STOOD_DOWN")
+            ex = led["exceptions"]["gdacs:TC:1001338"]
+            self.assertEqual((ex["reasons"], ex["class"], ex["requiresHuman"]), (["published_event_modified_by_another_process"], "decision", True))
+            later = h.engine(net=net_at(at(8)), now=at(8), edit=fast)
+            later.run()
+            self.assertEqual(later.stats["tasks"], 0)                                          # and it is not retried in a loop
+
     def test_old_published_event_is_not_treated_as_a_stale_new_candidate(self):
         with tempfile.TemporaryDirectory() as t:
             h = self.published(t)

@@ -64,7 +64,10 @@
 2. **Triage (Haiku):** country relevance, materiality and potential duplicates.
 3. **Early publisher (Python):** provenance-preserving PUBLISHED EARLY_REPORT,
    controlled by the explicit publish switch.
-4. **Verifier/updater (planned):** corroboration, corrections, developing events.
+4. **Verifier/updater:** partly implemented for GDACS-alerted natural hazards by `03AA-04_Investigation_Verification_TI`
+   (`docs/TI_INVESTIGATION_VERIFICATION.md`). The monitor now stores the leads Haiku triaged (`candidates` in its state file) so that agent can
+   investigate them; while triage is disabled no lead is stored. Corroboration of headline leads, corrections of other event types and
+   developing security events remain planned.
 5. **Lifecycle manager (planned):** Alert → Current → Hot Topic → Archived.
 6. **Consolidator (existing):** 21:00 full-site refresh.
 

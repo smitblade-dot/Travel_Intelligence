@@ -24,7 +24,7 @@ from zoneinfo import ZoneInfo
 
 from .feed_health import HttpResult
 from .investigation_assess import assess_hazard, attach_leads
-from .investigation_build import build_item
+from .investigation_build import build_item, content_hash
 from .investigation_candidates import (event_id_for, gdacs_signal_candidates, match_lead, pre_eligibility, represented_event_id,
                                        triage_lead_candidates)
 from .investigation_config import AGENT_NAME, WORKER_NAME, IVConfig, load_config
@@ -442,7 +442,12 @@ class Engine:
             reassess = known is not None and known["state"] == "PUBLISHED"
             previous = by_id.get(eid) if reassess else None
             if reassess and previous is None:
-                res.update(outcome="HOLD", exceptionClass="decision", reasons=["published_event_missing_from_data"], reassess=True)
+                res.update(outcome="HOLD", exceptionClass="decision", reasons=["published_event_missing_from_data"], reassess=True, eventId=eid)
+                continue
+            if reassess and not self._untouched(previous):
+                # another process (a person, the nightly reviewer) edited the event after we published it: never overwrite that
+                res.update(outcome="HOLD", exceptionClass="decision", reasons=["published_event_modified_by_another_process"], reassess=True,
+                           eventId=eid, standDown=True)
                 continue
             try:
                 doc = fetch_gdacs(cfg, self.root, http, robots, now, cand["eventTypeKey"], cand["gdacs"]["eventId"], t["id"], budget,
@@ -472,6 +477,16 @@ class Engine:
                 res.update(outcome="HOLD", exceptionClass=a.get("exceptionClass") or "retry", reasons=a["reasons"] or ["held"])
         self.stats["requests"] = budget.run_used
         return results
+
+    @staticmethod
+    def _untouched(event):
+        """True when the event still carries exactly the content this agent published (provenance hash matches its fields)."""
+        pv = event.get("provenance") or {}
+        try:
+            return content_hash(event["title"], event["summary"], event["eventStatus"], event.get("lifecycleStage"),
+                                pv.get("evidenceHashes") or {}) == pv.get("contentHash")
+        except KeyError:
+            return False
 
     # ---- recording ---------------------------------------------------------------------------------------------------
     def _action(self, reasons, cls):
@@ -546,6 +561,8 @@ class Engine:
                     if ev:
                         ev["reassessFailures"] = ev.get("reassessFailures", 0) + 1
                         ev["nextAssessmentAt"] = iso_utc(now + timedelta(hours=self.cfg.fresh["reassess_after_hours"]["ALERT"]))
+                        if r.get("standDown"):
+                            ev.update(state="STOOD_DOWN", nextAssessmentAt=None)      # not reassessed or overwritten again
                 self._upsert_exception(st, key, c["id"] if c else None, r.get("exceptionClass", "retry"), r["reasons"], now)
             elif out == "READY":
                 self.stats["ready"] += 1

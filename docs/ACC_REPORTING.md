@@ -13,6 +13,7 @@ An optional step that tells the ACC what each 03AA-04 agent did in its run, unde
 | Master Agent (its gated Haiku monitor) | `03AA-04_Master_Agent_TI_Ops_Director` | continuous-intelligence-monitor.yml | the monitor's own outcome: triage result, dry run or live, model calls, spend |
 | Country Intelligence Builder | `03AA-04_Country_Intelligence_Builder_TI` | country-intelligence-builder.yml | tasks, records published, exceptions held and needing a decision, model calls |
 | Production Controller | `03AA-04_Production_Controller_TI` | production-controller.yml | verdict, mode, open exceptions, those needing a decision |
+| Investigation and Verification worker | `03AA-04_Investigation_Verification_TI` | investigation-verification.yml (production job only) | tasks, events published, exceptions held and needing a decision, pending verification. **The ACC register entry for this role has no code yet: the ACC must assign or confirm it and issue a key before reporting is enabled.** |
 
 Each run sends two events: `working` when the run starts, then `idle`, `failed`, `unknown`, `offline` or
 `awaiting_approval` from the agent's own outcome record. It reports agent activity only. It does not report
@@ -99,8 +100,8 @@ These settings live under Settings > Secrets and variables > Actions.
 |---|---|---|
 | `ACC_REPORTING_ENABLED` | variable | `true` to enable; unset = off |
 | `ACC_REPORT_URL` | variable | the ACC server's HTTPS address (needs hosting approval) |
-| `ACC_KEY_ID_MASTER`, `ACC_KEY_ID_COUNTRY_BUILDER`, `ACC_KEY_ID_PRODUCTION_CONTROLLER` | variables | key ids issued by the ACC (`acc_admin.js issue-agent-key <code>`) |
-| `ACC_AGENT_SECRET_MASTER`, `ACC_AGENT_SECRET_COUNTRY_BUILDER`, `ACC_AGENT_SECRET_PRODUCTION_CONTROLLER` | secrets | the matching key secrets; never commit |
+| `ACC_KEY_ID_MASTER`, `ACC_KEY_ID_COUNTRY_BUILDER`, `ACC_KEY_ID_PRODUCTION_CONTROLLER`, `ACC_KEY_ID_INVESTIGATION_VERIFICATION` | variables | key ids issued by the ACC (`acc_admin.js issue-agent-key <code>`) |
+| `ACC_AGENT_SECRET_MASTER`, `ACC_AGENT_SECRET_COUNTRY_BUILDER`, `ACC_AGENT_SECRET_PRODUCTION_CONTROLLER`, `ACC_AGENT_SECRET_INVESTIGATION_VERIFICATION` | secrets | the matching key secrets; never commit |
 | `ACC_EUR_PER_USD`, `ACC_EUR_RATE_DATE` | variables, optional | conversion rate for reported USD spend |
 
 ## Stages
