@@ -511,6 +511,16 @@ class Engine:
             key = t["groupKey"]
             out = r.get("outcome")
             t.update(finishedAt=iso_utc(now), outcome=out, reasons=r.get("reasons", []), leaseOwner=None)
+            a = r.get("assessment")
+            if a and c is not None:
+                doc = (r.get("docs") or [{}])[0]
+                c["lastAssessment"] = {"at": iso_utc(now), "decision": a["decision"], "outcome": out, "reasons": a["reasons"][:6],
+                                       "eventStatus": a.get("eventStatus"), "lifecycle": a.get("lifecycle"), "independentChains": a["independentChains"],
+                                       "claims": {x["type"]: x["status"] for x in a["claims"]}, "changedSinceSignal": a["changedSinceSignal"],
+                                       "evidence": {"status": doc.get("status"), "retrievedAt": doc.get("retrievedAt"), "retrieval": doc.get("retrieval"),
+                                                    "hash": doc.get("evidenceHash"), "alertLevel": (doc.get("structured") or {}).get("alertLevel"),
+                                                    "modified": (doc.get("structured") or {}).get("modified"), "to": (doc.get("structured") or {}).get("to"),
+                                                    "isCurrent": (doc.get("structured") or {}).get("isCurrent")}}
             if out == "DEFERRED":
                 t.update(state="pending")              # not attempted; the next run takes it
                 continue
@@ -805,7 +815,8 @@ class Engine:
                  f"| New candidates taken in | {intake.get('new', 0)} (deferred {intake.get('deferred', 0)}, reopened {intake.get('reopened', 0)}) |",
                  f"| Tasks started | {stats['tasks']} (recovered from an interrupted run: {stats['recovered']}) |",
                  f"| Assessed | {stats['assessed']} |", f"| Passed the rules | {stats['ready']} |", f"| Held (exceptions) | {stats['held']} |",
-                 f"| Not eligible | {stats['ineligible']} |", f"| Unchanged on reassessment | {stats['unchanged']} |",
+                 f"| Not eligible (at intake {intake.get('ineligible', 0)}, after evidence {stats['ineligible']}) | {intake.get('ineligible', 0) + stats['ineligible']} |",
+                 f"| Unchanged on reassessment | {stats['unchanged']} |",
                  f"| Provider requests | {stats['requests']} of {cfg.evidence['max_requests_per_run']} |",
                  "| Model calls / spend | 0 / none (ordinary code) |", ""]
         lines += ["## Publication", ""]
@@ -818,6 +829,18 @@ class Engine:
             lines.append(f"- Nothing was published this run" + (f" ({publication['skipped']})." if publication.get("skipped") else "."))
         for v in stats.get("verifications", []):
             lines.append(f"- Recheck `{v['publicationId']}`: {v['result']}" + (f" ({v.get('detail')})" if v.get("detail") else ""))
+        lines += ["", "## Assessed this run", ""]
+        assessed = [c for c in st["candidates"].values() if (c.get("lastAssessment") or {}).get("at") == iso_utc(now)]
+        for c in sorted(assessed, key=lambda c: c["id"]):
+            la = c["lastAssessment"]
+            ev = la["evidence"]
+            lines.append(f"- `{c['id']}` ({(c['payload'].get('signal') or {}).get('name') or 'unnamed'}): **{la['decision']}** -> {la['outcome']}"
+                         f"{' ' + str(la['eventStatus']) + '/' + str(la['lifecycle']) if la.get('eventStatus') else ''}; evidence {ev['status']} "
+                         f"({ev.get('retrieval')}, retrieved {cyprus_time(ev.get('retrievedAt'))} Cyprus; provider last modified {ev.get('modified')} UTC; "
+                         f"provider alert {ev.get('alertLevel')}); claims: " + ", ".join(f"{k} {v}" for k, v in la["claims"].items())
+                         + (f"; changed since the discovery signal: {', '.join(la['changedSinceSignal'])}" if la["changedSinceSignal"] else "")
+                         + (f"; reasons: {', '.join(la['reasons'])}" if la["reasons"] else ""))
+        lines += (["- none"] if not assessed else [])
         lines += ["", "## Published events under reassessment", ""]
         evs = sorted(st["events"].values(), key=lambda e: e["eventId"])
         lines += ([f"- `{e['eventId']}` {e.get('eventStatus')} / {e.get('lifecycle')}: next check {cyprus_time(e.get('nextAssessmentAt'))}"
