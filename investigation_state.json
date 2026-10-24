@@ -440,6 +440,27 @@
       "finishedAt": "2026-10-24T16:33:05Z",
       "outcome": "READY",
       "reasons": []
+    },
+    "Travel Intelligence|event_reassessment|gdacs:TC:1001338|a1d65d5434169204861814ac02af0dde|2026-10-24T16": {
+      "id": "ivt-7c5d0da5c4",
+      "dedupeKey": "Travel Intelligence|event_reassessment|gdacs:TC:1001338|a1d65d5434169204861814ac02af0dde|2026-10-24T16",
+      "type": "event_reassessment",
+      "candidateId": "cand-gdacs-TC-1001338",
+      "groupKey": "gdacs:TC:1001338",
+      "state": "running",
+      "attempts": 1,
+      "createdAt": "2026-10-24T16:55:24Z",
+      "priority": 40,
+      "inputs": {
+        "eventId": "iv-tc-gdacs-1001338",
+        "signal": "8917ba32d1e688"
+      },
+      "worker": "investigation_verification",
+      "business_application": "Travel Intelligence",
+      "substream": "03AA-04 Intelligence Automation Agents",
+      "startedAt": "2026-10-24T16:55:24Z",
+      "leaseOwner": "runnervmr9t6g-2352-a59b9b",
+      "leaseExpires": "2026-10-24T17:15:24Z"
     }
   },
   "events": {
