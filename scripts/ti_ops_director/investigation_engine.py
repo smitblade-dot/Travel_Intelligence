@@ -494,6 +494,9 @@ class Engine:
             return "The provider's robots.txt does not permit automated access to this endpoint. Decision: approve a documented exception in config (as for other agents) or name another permitted source."
         if "NOT_PERMITTED" in r:
             return "The source is not usable under the source-register rules (see reason). Decision: review the register entry; nothing else can change this."
+        if "published_event_modified_by_another_process" in r:
+            return ("Someone or something else edited this published event after the agent published it, so the agent has stopped reassessing it and left the "
+                    "edit in place. Decision: keep the edited event as it is (nothing to do), or have the edit reverted if it was not intended.")
         if "published_event_missing_from_data" in r:
             return "A published event is no longer in data.json although the ledger holds it. Decision: confirm whether it was removed deliberately."
         return ("Retried automatically on every run; it clears when the evidence is readable, consistent and current, or the event ages out."
@@ -558,10 +561,11 @@ class Engine:
                 else:
                     ev = st["events"].get(r.get("eventId") or "")
                     if ev:
-                        ev["reassessFailures"] = ev.get("reassessFailures", 0) + 1
-                        ev["nextAssessmentAt"] = iso_utc(now + timedelta(hours=self.cfg.fresh["reassess_after_hours"]["ALERT"]))
                         if r.get("standDown"):
-                            ev.update(state="STOOD_DOWN", nextAssessmentAt=None)      # not reassessed or overwritten again
+                            ev.update(state="STOOD_DOWN", nextAssessmentAt=None)      # deliberate: not a failed recheck, never reassessed or overwritten again
+                        else:
+                            ev["reassessFailures"] = ev.get("reassessFailures", 0) + 1
+                            ev["nextAssessmentAt"] = iso_utc(now + timedelta(hours=self.cfg.fresh["reassess_after_hours"]["ALERT"]))
                 self._upsert_exception(st, key, c["id"] if c else None, r.get("exceptionClass", "retry"), r["reasons"], now)
             elif out == "READY":
                 self.stats["ready"] += 1

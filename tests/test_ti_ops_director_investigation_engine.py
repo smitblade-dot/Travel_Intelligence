@@ -399,8 +399,9 @@ class Reassessment(unittest.TestCase):
             self.assertEqual(eng.run(), 0)
             self.assertEqual(json.dumps(h.main_data()["events"], sort_keys=True), before)       # the edit stands
             led = h.ledger()
-            self.assertEqual(led["events"][EID]["state"], "STOOD_DOWN")
+            self.assertEqual((led["events"][EID]["state"], led["events"][EID]["reassessFailures"]), ("STOOD_DOWN", 0))   # a deliberate stand-down is not a failed recheck
             ex = led["exceptions"]["gdacs:TC:1001338"]
+            self.assertIn("edited this published event", ex["action"])
             self.assertEqual((ex["reasons"], ex["class"], ex["requiresHuman"]), (["published_event_modified_by_another_process"], "decision", True))
             later = h.engine(net=net_at(at(8)), now=at(8), edit=fast)
             later.run()
