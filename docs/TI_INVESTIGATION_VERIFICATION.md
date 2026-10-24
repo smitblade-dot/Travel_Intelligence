@@ -143,6 +143,14 @@ evidence updates the event (history kept). A source outage, malformed answer or 
 and raises a retry exception. Ageing moves the lifecycle (ALERT, CURRENT, ARCHIVED after 336 h) and never unpublishes. Archived events
 are no longer checked.
 
+**Externally edited events (`STOOD_DOWN`).** Every published event carries a hash of the content the agent wrote (`provenance.contentHash`).
+Before reassessing, the agent recomputes that hash from the live event in `data.json`. If it no longer matches, someone or something else
+(a person, the nightly reviewer) edited the event: the agent keeps the edit, stops reassessing that event (ledger state `STOOD_DOWN`, no
+next check), raises one `decision` exception and never overwrites it. The decision for the owner is either to leave the edited event as it is,
+which needs no action and leaves the exception open until acknowledged in the ledger, or to have the edit reverted. The stand-down is permanent by design: the open `decision` exception, shown in every report until it is resolved, is the
+only prompt, so an owner who leaves it unanswered also leaves that event un-reassessed. An event that disappears from
+`data.json` is treated the same way (`published_event_missing_from_data`, decision, throttled, never silently re-published).
+
 ## Security
 
 Provider text is untrusted data: it passes an allowlist and an instruction-pattern screen, never becomes TI prose (public text is a

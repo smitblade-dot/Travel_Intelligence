@@ -90,6 +90,23 @@ class Config(unittest.TestCase):
         self.assertEqual(cfg(TI_IV_DAILY_LIMIT_USD="inf").errors != [], True)
 
 
+class CyprusTime(unittest.TestCase):
+    """Everything shown to Marc is Europe/Nicosia time; schedules are UTC cron and need no summer/winter handling."""
+
+    def test_reports_follow_the_cyprus_clock_across_the_october_2026_change(self):
+        from datetime import datetime, timezone
+        from ti_ops_director.investigation_engine import cyprus_time
+        self.assertEqual(cyprus_time(datetime(2026, 10, 24, 16, 48, tzinfo=timezone.utc)), "2026-10-24 19:48 EEST")          # summer time
+        self.assertEqual(cyprus_time(datetime(2026, 10, 25, 0, 30, tzinfo=timezone.utc)), "2026-10-25 03:30 EEST")          # last summer hour
+        self.assertEqual(cyprus_time(datetime(2026, 10, 25, 1, 30, tzinfo=timezone.utc)), "2026-10-25 03:30 EET")           # winter time begins
+        self.assertEqual(cyprus_time("2026-12-01T10:00:00Z"), "2026-12-01 12:00 EET")
+        self.assertEqual(cyprus_time(None), "n/a")
+
+    def test_schedule_is_utc_and_does_not_depend_on_local_time(self):
+        self.assertEqual(cfg().raw["schedule"]["cron_utc"], "17 */2 * * *")
+        self.assertNotIn("timezone:", (ROOT / ".github" / "workflows" / "investigation-verification.yml").read_text())
+
+
 class Candidates(unittest.TestCase):
     def test_signal_becomes_one_candidate_with_scope_and_fingerprint(self):
         cands, st = C.gdacs_signal_candidates(signals_doc([fresh_feature()]), base_data(), cfg(), NOW)

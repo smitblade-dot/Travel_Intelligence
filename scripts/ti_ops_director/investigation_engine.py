@@ -24,7 +24,7 @@ from zoneinfo import ZoneInfo
 
 from .feed_health import HttpResult
 from .investigation_assess import assess_hazard, attach_leads
-from .investigation_build import build_item
+from .investigation_build import build_item, content_hash
 from .investigation_candidates import (event_id_for, gdacs_signal_candidates, match_lead, pre_eligibility, represented_event_id,
                                        triage_lead_candidates)
 from .investigation_config import AGENT_NAME, WORKER_NAME, IVConfig, load_config
@@ -234,7 +234,7 @@ class Engine:
         stats["adopted"] = self._adopt(data, now)
         # 2. intake discovery candidates, 3. plan tasks
         self._tx(lambda st: stats["intake"].update(self._intake(st, data, now)), "intake")
-        tasks = self._tx(lambda st: self._plan(st, data, now), "plan")
+        tasks = self._tx(lambda st: self._plan(st, now), "plan")
         # 4. investigate and assess (bounded), then persist outcomes before any publication
         results = self._investigate(tasks, data, now)
         self._tx(lambda st: self._record_results(st, results, now), "assessment results")
@@ -388,11 +388,10 @@ class Engine:
         st["tasks"][key] = task
         return task, True
 
-    def _plan(self, st, data, now):
+    def _plan(self, st, now):
         """Create at most one task per candidate per window; return the tasks to run now (pending, bounded)."""
         cfg = self.cfg
         bucket = self._bucket(now)
-        by_id = {e["id"]: e for e in data["events"]}
         for cid, c in st["candidates"].items():
             if c["kind"] != "hazard_signal":
                 continue
@@ -400,7 +399,7 @@ class Engine:
             level = {"Red": 0, "Orange": 1}.get((c["payload"].get("signal") or {}).get("alertLevel"), 2)
             if known:
                 due = (parse_dt(known.get("nextAssessmentAt")) or now) <= now or c["signalFingerprint"] != c.get("assessedFingerprint")
-                if due and known["eventId"] in by_id:
+                if due:                              # a published event missing from data.json is investigated too: it becomes a decision
                     self._task(st, TASK_VERIFICATION, cid, c["groupKey"], {"eventId": known["eventId"], "signal": c["signalFingerprint"]},
                                now, bucket, 40 + level)
                 continue
@@ -442,7 +441,12 @@ class Engine:
             reassess = known is not None and known["state"] == "PUBLISHED"
             previous = by_id.get(eid) if reassess else None
             if reassess and previous is None:
-                res.update(outcome="HOLD", exceptionClass="decision", reasons=["published_event_missing_from_data"], reassess=True)
+                res.update(outcome="HOLD", exceptionClass="decision", reasons=["published_event_missing_from_data"], reassess=True, eventId=eid)
+                continue
+            if reassess and not self._untouched(previous):
+                # another process (a person, the nightly reviewer) edited the event after we published it: never overwrite that
+                res.update(outcome="HOLD", exceptionClass="decision", reasons=["published_event_modified_by_another_process"], reassess=True,
+                           eventId=eid, standDown=True)
                 continue
             try:
                 doc = fetch_gdacs(cfg, self.root, http, robots, now, cand["eventTypeKey"], cand["gdacs"]["eventId"], t["id"], budget,
@@ -473,6 +477,16 @@ class Engine:
         self.stats["requests"] = budget.run_used
         return results
 
+    @staticmethod
+    def _untouched(event):
+        """True when the event still carries exactly the content this agent published (provenance hash matches its fields)."""
+        pv = event.get("provenance") or {}
+        try:
+            return content_hash(event["title"], event["summary"], event["eventStatus"], event.get("lifecycleStage"),
+                                pv.get("evidenceHashes") or {}) == pv.get("contentHash")
+        except KeyError:
+            return False
+
     # ---- recording ---------------------------------------------------------------------------------------------------
     def _action(self, reasons, cls):
         r = " ".join(reasons)
@@ -480,6 +494,9 @@ class Engine:
             return "The provider's robots.txt does not permit automated access to this endpoint. Decision: approve a documented exception in config (as for other agents) or name another permitted source."
         if "NOT_PERMITTED" in r:
             return "The source is not usable under the source-register rules (see reason). Decision: review the register entry; nothing else can change this."
+        if "published_event_modified_by_another_process" in r:
+            return ("Someone or something else edited this published event after the agent published it, so the agent has stopped reassessing it and left the "
+                    "edit in place. Decision: keep the edited event as it is (nothing to do), or have the edit reverted if it was not intended.")
         if "published_event_missing_from_data" in r:
             return "A published event is no longer in data.json although the ledger holds it. Decision: confirm whether it was removed deliberately."
         return ("Retried automatically on every run; it clears when the evidence is readable, consistent and current, or the event ages out."
@@ -544,8 +561,11 @@ class Engine:
                 else:
                     ev = st["events"].get(r.get("eventId") or "")
                     if ev:
-                        ev["reassessFailures"] = ev.get("reassessFailures", 0) + 1
-                        ev["nextAssessmentAt"] = iso_utc(now + timedelta(hours=self.cfg.fresh["reassess_after_hours"]["ALERT"]))
+                        if r.get("standDown"):
+                            ev.update(state="STOOD_DOWN", nextAssessmentAt=None)      # deliberate: not a failed recheck, never reassessed or overwritten again
+                        else:
+                            ev["reassessFailures"] = ev.get("reassessFailures", 0) + 1
+                            ev["nextAssessmentAt"] = iso_utc(now + timedelta(hours=self.cfg.fresh["reassess_after_hours"]["ALERT"]))
                 self._upsert_exception(st, key, c["id"] if c else None, r.get("exceptionClass", "retry"), r["reasons"], now)
             elif out == "READY":
                 self.stats["ready"] += 1
@@ -814,7 +834,10 @@ class Engine:
                  f"- Discovery signals (GDACS, `data/phase1_signals.json` generated {cyprus_time(g.get('signalGenerated'))}): {g.get('snapshot', 'n/a')}; "
                  f"{g.get('items', 0)} items, {g.get('out_of_scope_type', 0)} other hazard types, {g.get('below_alert', 0)} below alert threshold, "
                  f"{g.get('no_tracked_country', 0)} outside the scope countries.",
-                 f"- Haiku-triaged leads: {l.get('items', 0)} stored. {l.get('note') or ''} Paid triage is a separate agent's switch; this agent never changes it.", "",
+                 f"- Haiku-triaged leads: {l.get('items', 0)} stored. {l.get('note') or ''} Paid triage is a separate agent's switch; this agent never changes it.",
+                 f"- **Intake path this run:** direct GDACS discovery signals ({g.get('items', 0)} items) only; monitor/triage leads: {l.get('items', 0)}. "
+                 + ("The monitor -> Haiku triage -> candidates chain is **not operating** (triage has not completed), so the full discovery chain is not connected end to end."
+                    if l.get('items', 0) == 0 else "Triaged leads are flowing from the monitor."), "",
                  "## This run", "",
                  "| Step | Count |", "|---|---|",
                  f"| New candidates taken in | {intake.get('new', 0)} (deferred {intake.get('deferred', 0)}, reopened {intake.get('reopened', 0)}) |",
@@ -848,9 +871,15 @@ class Engine:
         lines += (["- none"] if not assessed else [])
         lines += ["", "## Published events under reassessment", ""]
         evs = sorted(st["events"].values(), key=lambda e: e["eventId"])
+        live = [e for e in evs if e["state"] == "PUBLISHED"]
         lines += ([f"- `{e['eventId']}` {e.get('eventStatus')} / {e.get('lifecycle')}: next check {cyprus_time(e.get('nextAssessmentAt'))}"
-                   + (f"; {e['reassessFailures']} consecutive failed rechecks (last valid content kept)" if e.get("reassessFailures") else "") for e in evs]
+                   + (f"; {e['reassessFailures']} consecutive failed rechecks (last valid content kept)" if e.get("reassessFailures") else "") for e in live]
                   or ["- none yet"])
+        done = [e for e in evs if e["state"] != "PUBLISHED"]
+        if done:
+            lines += ["", "Not under reassessment: " + "; ".join(
+                f"`{e['eventId']}` {e['state'].replace('_', ' ').lower()}" + (" (edited by another process: left as edited, decision needed)" if e["state"] == "STOOD_DOWN" else "")
+                for e in done)]
         lines += ["", "## Exceptions", ""]
         open_ex = [e for e in st["exceptions"].values() if e["state"] == "HELD"]
         lines += ([f"- `{e['key']}` **{'NEEDS DECISION' if e.get('requiresHuman') else 'retrying automatically'}**: {', '.join(e['reasons'])}. {e['action']}"
