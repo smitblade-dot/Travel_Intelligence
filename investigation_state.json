@@ -17,12 +17,12 @@
       "kind": "hazard_signal",
       "groupKey": "gdacs:TC:1001338",
       "eventTypeKey": "TROPICAL_CYCLONE",
-      "status": "NEW",
+      "status": "READY",
       "reason": null,
       "firstSeen": "2026-10-24T16:48:47Z",
       "lastSeen": "2026-10-24T16:48:47Z",
       "signalFingerprint": "8917ba32d1e688",
-      "assessedFingerprint": null,
+      "assessedFingerprint": "8917ba32d1e688",
       "payload": {
         "id": "cand-gdacs-TC-1001338",
         "producer": "discovery_signal_gdacs",
@@ -59,7 +59,40 @@
         }
       },
       "leads": [],
-      "retries": 0
+      "retries": 0,
+      "lastAssessment": {
+        "at": "2026-10-24T16:48:47Z",
+        "decision": "PUBLISH",
+        "outcome": "READY",
+        "reasons": [],
+        "eventStatus": "REPORTED",
+        "lifecycle": "ALERT",
+        "independentChains": 1,
+        "claims": {
+          "occurrence": "SUPPORTED",
+          "period": "SUPPORTED",
+          "location": "SUPPORTED",
+          "name": "SUPPORTED",
+          "intensity": "SUPPORTED",
+          "alert_level": "SUPPORTED",
+          "status": "SUPPORTED",
+          "impact": "MISSING"
+        },
+        "changedSinceSignal": [
+          "to"
+        ],
+        "evidence": {
+          "status": "RETRIEVED",
+          "retrievedAt": "2026-10-24T16:48:47Z",
+          "retrieval": "live",
+          "hash": "1b5f5e937bd353ab8135",
+          "alertLevel": "Red",
+          "modified": "2026-10-23T03:00:34",
+          "to": "2026-10-23T00:00:00",
+          "isCurrent": true
+        }
+      },
+      "lastAssessedAt": "2026-10-24T16:48:47Z"
     },
     "cand-gdacs-TC-1001305": {
       "id": "cand-gdacs-TC-1001305",
@@ -422,7 +455,7 @@
       "type": "investigation",
       "candidateId": "cand-gdacs-TC-1001338",
       "groupKey": "gdacs:TC:1001338",
-      "state": "running",
+      "state": "completed",
       "attempts": 1,
       "createdAt": "2026-10-24T16:48:47Z",
       "priority": 30,
@@ -434,8 +467,11 @@
       "business_application": "Travel Intelligence",
       "substream": "03AA-04 Intelligence Automation Agents",
       "startedAt": "2026-10-24T16:48:47Z",
-      "leaseOwner": "runnervmr9t6g-2351-f52c22",
-      "leaseExpires": "2026-10-24T17:08:47Z"
+      "leaseOwner": null,
+      "leaseExpires": "2026-10-24T17:08:47Z",
+      "finishedAt": "2026-10-24T16:48:47Z",
+      "outcome": "READY",
+      "reasons": []
     }
   },
   "events": {},
