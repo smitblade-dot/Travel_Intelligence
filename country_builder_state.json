@@ -190,12 +190,12 @@
           "gh-equipment-plugs"
         ]
       },
-      "state": "running",
+      "state": "completed",
       "attempts": 1,
       "created_at": "2026-10-22T19:48:19+00:00",
       "updated_at": "2026-10-24T09:46:05+00:00",
-      "lease_owner": "runnervmdkmh8-2417-bbf393",
-      "lease_expires": "2026-10-24T10:06:05+00:00",
+      "lease_owner": null,
+      "lease_expires": null,
       "outcome": "assessed",
       "cost_usd": 0.0,
       "blockingReason": null,
@@ -204,7 +204,7 @@
       "held": [
         "PLUGS"
       ],
-      "draftId": "cib-gh-equipment-614da46555"
+      "draftId": "cib-gh-equipment-a6fc5b87f4"
     }
   },
   "drafts": {
@@ -245,25 +245,6 @@
       "published": [
         "gh-environment-climate-seasonal"
       ]
-    },
-    "cib-gh-equipment-a48d6e4474": {
-      "draftId": "cib-gh-equipment-a48d6e4474",
-      "path": "drafts/gh/EQUIPMENT/cib-gh-equipment-a48d6e4474.json",
-      "countryId": "gh",
-      "category": "EQUIPMENT",
-      "evidenceFingerprint": "a48d6e44744890ff57f54abf8a0015d2",
-      "modelStatus": "NOT_NEEDED",
-      "reviewStatus": "AUTO_PUBLISHED_AND_VERIFIED",
-      "createdAt": "2026-10-22T20:20:28+00:00",
-      "costUsd": 0.0,
-      "claims": 27,
-      "rules": "10532b8b7d47672be5b09af7f1b57ca3",
-      "publicationId": "pub-20261022T202028Z-a48d6e",
-      "settled": true,
-      "published": [
-        "gh-equipment-plugs"
-      ],
-      "supersededBy": "cib-gh-equipment-0fc6b4df3a"
     },
     "cib-gh-equipment-0fc6b4df3a": {
       "draftId": "cib-gh-equipment-0fc6b4df3a",
@@ -310,6 +291,23 @@
       "modelStatus": "NOT_NEEDED",
       "reviewStatus": "HELD_EXCEPTIONS_ROUTED",
       "createdAt": "2026-10-23T22:29:53+00:00",
+      "costUsd": 0.0,
+      "claims": 29,
+      "rules": "10532b8b7d47672be5b09af7f1b57ca3",
+      "publicationId": null,
+      "settled": true,
+      "published": [],
+      "supersededBy": "cib-gh-equipment-a6fc5b87f4"
+    },
+    "cib-gh-equipment-a6fc5b87f4": {
+      "draftId": "cib-gh-equipment-a6fc5b87f4",
+      "path": "drafts/gh/EQUIPMENT/cib-gh-equipment-a6fc5b87f4.json",
+      "countryId": "gh",
+      "category": "EQUIPMENT",
+      "evidenceFingerprint": "a6fc5b87f43571921a218475dca434b6",
+      "modelStatus": "NOT_NEEDED",
+      "reviewStatus": "HELD_EXCEPTIONS_ROUTED",
+      "createdAt": "2026-10-24T09:46:05+00:00",
       "costUsd": 0.0,
       "claims": 29,
       "rules": "10532b8b7d47672be5b09af7f1b57ca3",
@@ -766,6 +764,20 @@
       "outcomes": {
         "Travel Intelligence|country_content_draft|gh:EQUIPMENT:RECHECK_HELD|c700b914fa0729b420e73550ae9a01d4|W42": "assessed"
       }
+    },
+    {
+      "at": "2026-10-24T09:46:05+00:00",
+      "mode": "publish",
+      "tasksRun": 1,
+      "created": 0,
+      "reopened": 1,
+      "duplicatesSuppressed": 0,
+      "recovered": [],
+      "published": [],
+      "publicationFailures": [],
+      "outcomes": {
+        "Travel Intelligence|country_content_draft|gh:EQUIPMENT:RECHECK_HELD|c700b914fa0729b420e73550ae9a01d4|W42": "assessed"
+      }
     }
   ],
   "exceptions": {
@@ -900,8 +912,8 @@
       "id": "cbx-3b5e34a9f5",
       "state": "HELD",
       "firstSeen": "2026-10-22T19:48:19+00:00",
-      "lastSeen": "2026-10-23T22:29:53+00:00",
-      "occurrences": 5
+      "lastSeen": "2026-10-24T09:46:05+00:00",
+      "occurrences": 6
     },
     "gh:EQUIPMENT:PLUGS:no_external_source": {
       "key": "gh:EQUIPMENT:PLUGS:no_external_source",
@@ -1010,14 +1022,14 @@
       "reasons": [
         "source_unavailable"
       ],
-      "detail": "ecg_technical: empty:202",
+      "detail": "ecg_technical: http_error:500",
       "action": "Source cannot be used as configured: empty:202. Retried automatically each run.",
       "requiresHuman": false,
       "id": "cbx-265c661b7b",
       "state": "HELD",
       "firstSeen": "2026-10-23T22:29:53+00:00",
-      "lastSeen": "2026-10-23T22:29:53+00:00",
-      "occurrences": 1
+      "lastSeen": "2026-10-24T09:46:05+00:00",
+      "occurrences": 2
     },
     "gh:EQUIPMENT:PLUGS:evidence_missing:0370f58c": {
       "key": "gh:EQUIPMENT:PLUGS:evidence_missing:0370f58c",
@@ -1073,8 +1085,8 @@
       "id": "cbx-ac742ffcd8",
       "state": "HELD",
       "firstSeen": "2026-10-23T10:28:53+00:00",
-      "lastSeen": "2026-10-23T22:29:53+00:00",
-      "occurrences": 2
+      "lastSeen": "2026-10-24T09:46:05+00:00",
+      "occurrences": 3
     }
   },
   "publications": {
@@ -1286,7 +1298,7 @@
     "currency": "USD",
     "status": "estimated from API usage fields x configured list prices; not invoice-confirmed",
     "mode": "dry_run",
-    "updated": "2026-10-23T22:30:15+00:00"
+    "updated": "2026-10-24T09:46:26+00:00"
   },
   "triageCache": {}
 }

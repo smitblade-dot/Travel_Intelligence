@@ -1,6 +1,6 @@
 # 03AA-04_Country_Intelligence_Builder_TI
 
-Run: 24 Oct 2026 01:29 Cyprus time | mode: publish | automatic publication: ON | paid model use: OFF (awaiting_paid_authorisation)
+Run: 24 Oct 2026 12:46 Cyprus time | mode: publish | automatic publication: ON | paid model use: OFF (awaiting_paid_authorisation)
 
 Coverage (whole product): 187/728 combinations; gaps in scope: 1. Tasks this run: 1; new 0; reopened 1; duplicates suppressed 0; interrupted tasks recovered 0.
 
@@ -13,13 +13,13 @@ Spend recorded (all time, USD): 0 (estimated from API usage fields x configured 
 ## Ghana / EQUIPMENT: COMPLETED (assessed)
 
 - Gap addressed: RECHECK_HELD: Held EQUIPMENT items for Ghana were assessed under earlier rules; assessed again.
-- Evidence: cdc_travel=RETRIEVED, travelhealthpro=RETRIEVED, fcdo_health=RETRIEVED, fcdo_safety=RETRIEVED, gsa_plugs=RETRIEVED, li_1935=RETRIEVED, grid_code=RETRIEVED, ecg_technical=UNAVAILABLE (empty:202)
+- Evidence: cdc_travel=RETRIEVED, travelhealthpro=RETRIEVED, fcdo_health=RETRIEVED, fcdo_safety=RETRIEVED, gsa_plugs=RETRIEVED, li_1935=RETRIEVED, grid_code=RETRIEVED, ecg_technical=UNAVAILABLE (http_error:500)
 - Cost this task: $0.00 (no model call)
 - CLOTHING: **PUBLISH**, confidence MEDIUM, 7 claim(s)
 - MOSQUITO: **PUBLISH**, confidence MEDIUM, 8 claim(s)
 - PLUGS: **HOLD** (source_unavailable_preserving_last_known_good)
-- Draft: cib-gh-equipment-614da46555 | status **AWAITING_PUBLICATION_DECISION** | publication NOT_PUBLISHED | model: NOT_NEEDED
-- Link: https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-614da46555.json
+- Draft: cib-gh-equipment-a6fc5b87f4 | status **AWAITING_PUBLICATION_DECISION** | publication NOT_PUBLISHED | model: NOT_NEEDED
+- Link: https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-a6fc5b87f4.json
 
 ### Clothing  [CLOTHING] PUBLISH
 - PUBLISHABLE: Prepare for activities by wearing the right clothes and packing protective items, such as bug spray, sunscreen, and a basic first aid kit.  _[US Centers for Disease Control and Prevention (CD.45)]_
@@ -51,9 +51,9 @@ Spend recorded (all time, USD): 0 (estimated from API usage fields x configured 
 
 ## Exceptions held (routed to the Master Agent)
 
-- [automatic retry] gh/EQUIPMENT/MOSQUITO: no_dated_source_within_freshness_limit. Held until a registry-backed source states a publication date inside its freshness limit. No action unless it persists. (seen 5x since 22 Oct 2026 22:48 Cyprus time)
-- [automatic retry] gh/EQUIPMENT: source_unavailable. Source cannot be used as configured: empty:202. Retried automatically each run. (seen 1x since 24 Oct 2026 01:29 Cyprus time)
-- [automatic retry] gh/EQUIPMENT/PLUGS: source_unavailable_preserving_last_known_good. A source behind the published record could not be retrieved this run, so the record was left exactly as it was (a source failure never shrinks or replaces published content). Retried automatically. (seen 2x since 23 Oct 2026 13:28 Cyprus time)
+- [automatic retry] gh/EQUIPMENT/MOSQUITO: no_dated_source_within_freshness_limit. Held until a registry-backed source states a publication date inside its freshness limit. No action unless it persists. (seen 6x since 22 Oct 2026 22:48 Cyprus time)
+- [automatic retry] gh/EQUIPMENT: source_unavailable. Source cannot be used as configured: empty:202. Retried automatically each run. (seen 2x since 24 Oct 2026 01:29 Cyprus time)
+- [automatic retry] gh/EQUIPMENT/PLUGS: source_unavailable_preserving_last_known_good. A source behind the published record could not be retrieved this run, so the record was left exactly as it was (a source failure never shrinks or replaces published content). Retried automatically. (seen 3x since 23 Oct 2026 13:28 Cyprus time)
 
 ## Awaiting budget authorisation (model-written topics; not exceptions)
 
@@ -72,9 +72,9 @@ Spend recorded (all time, USD): 0 (estimated from API usage fields x configured 
 
 ## Drafts and assessments held on this branch
 
-- gh/EQUIPMENT: cib-gh-equipment-614da46555 | HELD_EXCEPTIONS_ROUTED | model: NOT_NEEDED | claims 29 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-614da46555.json
+- gh/EQUIPMENT: cib-gh-equipment-a6fc5b87f4 | HELD_EXCEPTIONS_ROUTED | model: NOT_NEEDED | claims 29 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-a6fc5b87f4.json
+- gh/EQUIPMENT: cib-gh-equipment-614da46555 | HELD_EXCEPTIONS_ROUTED | model: NOT_NEEDED | claims 29 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-614da46555.json | superseded by cib-gh-equipment-a6fc5b87f4
 - gh/EQUIPMENT: cib-gh-equipment-00acaa0f49 | HELD_EXCEPTIONS_ROUTED | model: NOT_NEEDED | claims 28 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-00acaa0f49.json | superseded by cib-gh-equipment-614da46555
 - gh/EQUIPMENT: cib-gh-equipment-0fc6b4df3a | AUTO_PUBLISHED_AND_VERIFIED | model: NOT_NEEDED | claims 29 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-0fc6b4df3a.json | superseded by cib-gh-equipment-00acaa0f49
-- gh/EQUIPMENT: cib-gh-equipment-a48d6e4474 | AUTO_PUBLISHED_AND_VERIFIED | model: NOT_NEEDED | claims 27 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/EQUIPMENT/cib-gh-equipment-a48d6e4474.json | superseded by cib-gh-equipment-0fc6b4df3a
 - gh/ENVIRONMENT: cib-gh-environment-21fa3f4dcf | AUTO_PUBLISHED_VERIFICATION_PENDING | model: NOT_NEEDED | claims 9 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/ENVIRONMENT/cib-gh-environment-21fa3f4dcf.json
 - gh/TRANSPORT: cib-gh-transport-21272f0ba2 | AUTO_PUBLISHED_AND_VERIFIED | model: NOT_NEEDED | claims 31 | https://github.com/smitblade-dot/Travel_Intelligence/blob/ti-country-drafts/drafts/gh/TRANSPORT/cib-gh-transport-21272f0ba2.json
