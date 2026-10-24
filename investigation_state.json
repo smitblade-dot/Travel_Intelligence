@@ -10,7 +10,411 @@
     "acquiredAt": "2026-10-24T16:33:05Z",
     "expiresAt": "2026-10-24T16:53:05Z"
   },
-  "candidates": {},
+  "candidates": {
+    "cand-gdacs-TC-1001338": {
+      "id": "cand-gdacs-TC-1001338",
+      "producer": "discovery_signal_gdacs",
+      "kind": "hazard_signal",
+      "groupKey": "gdacs:TC:1001338",
+      "eventTypeKey": "TROPICAL_CYCLONE",
+      "status": "NEW",
+      "reason": null,
+      "firstSeen": "2026-10-24T16:33:05Z",
+      "lastSeen": "2026-10-24T16:33:05Z",
+      "signalFingerprint": "8917ba32d1e688",
+      "assessedFingerprint": null,
+      "payload": {
+        "id": "cand-gdacs-TC-1001338",
+        "producer": "discovery_signal_gdacs",
+        "kind": "hazard_signal",
+        "groupKey": "gdacs:TC:1001338",
+        "eventTypeKey": "TROPICAL_CYCLONE",
+        "countryIds": [
+          "jp"
+        ],
+        "gdacs": {
+          "type": "TC",
+          "eventId": 1001338,
+          "episodeId": 31
+        },
+        "signal": {
+          "alertLevel": "Red",
+          "severity": 296.2944,
+          "from": "2026-10-14T12:00:00",
+          "to": "2026-10-22T00:00:00",
+          "modified": "2026-10-22T04:00:32",
+          "isCurrent": true,
+          "name": "CHAMPI-26",
+          "affected": [
+            "ph",
+            "gu",
+            "jp"
+          ]
+        },
+        "signalFingerprint": "8917ba32d1e688",
+        "signalGenerated": "2026-10-22T04:35:26.002204+00:00",
+        "lineage": {
+          "file": "data/phase1_signals.json",
+          "source": "gdacs-alerts"
+        }
+      },
+      "leads": [],
+      "retries": 0
+    },
+    "cand-gdacs-TC-1001305": {
+      "id": "cand-gdacs-TC-1001305",
+      "producer": "discovery_signal_gdacs",
+      "kind": "hazard_signal",
+      "groupKey": "gdacs:TC:1001305",
+      "eventTypeKey": "TROPICAL_CYCLONE",
+      "status": "INELIGIBLE",
+      "reason": "already_represented_by:gdacs-tc-1001305",
+      "firstSeen": "2026-10-24T16:33:05Z",
+      "lastSeen": "2026-10-24T16:33:05Z",
+      "signalFingerprint": "df81fba1e93972",
+      "assessedFingerprint": null,
+      "payload": {
+        "id": "cand-gdacs-TC-1001305",
+        "producer": "discovery_signal_gdacs",
+        "kind": "hazard_signal",
+        "groupKey": "gdacs:TC:1001305",
+        "eventTypeKey": "TROPICAL_CYCLONE",
+        "countryIds": [
+          "jp",
+          "cn"
+        ],
+        "gdacs": {
+          "type": "TC",
+          "eventId": 1001305,
+          "episodeId": 47
+        },
+        "signal": {
+          "alertLevel": "Orange",
+          "severity": 212.9616,
+          "from": "2026-08-18T12:00:00",
+          "to": "2026-09-03T00:00:00",
+          "modified": "2026-09-23T13:50:51",
+          "isCurrent": false,
+          "name": "SAUDEL-26",
+          "affected": [
+            "jp",
+            "cn"
+          ]
+        },
+        "signalFingerprint": "df81fba1e93972",
+        "signalGenerated": "2026-10-22T04:35:26.002204+00:00",
+        "lineage": {
+          "file": "data/phase1_signals.json",
+          "source": "gdacs-alerts"
+        }
+      },
+      "leads": [],
+      "retries": 0
+    },
+    "cand-gdacs-TC-1001297": {
+      "id": "cand-gdacs-TC-1001297",
+      "producer": "discovery_signal_gdacs",
+      "kind": "hazard_signal",
+      "groupKey": "gdacs:TC:1001297",
+      "eventTypeKey": "TROPICAL_CYCLONE",
+      "status": "INELIGIBLE",
+      "reason": "stale_event_activity_date",
+      "firstSeen": "2026-10-24T16:33:05Z",
+      "lastSeen": "2026-10-24T16:33:05Z",
+      "signalFingerprint": "df8b350e5c5e44",
+      "assessedFingerprint": null,
+      "payload": {
+        "id": "cand-gdacs-TC-1001297",
+        "producer": "discovery_signal_gdacs",
+        "kind": "hazard_signal",
+        "groupKey": "gdacs:TC:1001297",
+        "eventTypeKey": "TROPICAL_CYCLONE",
+        "countryIds": [
+          "jp",
+          "cn"
+        ],
+        "gdacs": {
+          "type": "TC",
+          "eventId": 1001297,
+          "episodeId": 55
+        },
+        "signal": {
+          "alertLevel": "Orange",
+          "severity": 268.5168,
+          "from": "2026-07-27T00:00:00",
+          "to": "2026-08-09T12:00:00",
+          "modified": "2026-09-23T12:50:40",
+          "isCurrent": false,
+          "name": "DOLPHIN-26",
+          "affected": [
+            "jp",
+            "cn"
+          ]
+        },
+        "signalFingerprint": "df8b350e5c5e44",
+        "signalGenerated": "2026-10-22T04:35:26.002204+00:00",
+        "lineage": {
+          "file": "data/phase1_signals.json",
+          "source": "gdacs-alerts"
+        }
+      },
+      "leads": [],
+      "retries": 0
+    },
+    "cand-gdacs-TC-1001294": {
+      "id": "cand-gdacs-TC-1001294",
+      "producer": "discovery_signal_gdacs",
+      "kind": "hazard_signal",
+      "groupKey": "gdacs:TC:1001294",
+      "eventTypeKey": "TROPICAL_CYCLONE",
+      "status": "INELIGIBLE",
+      "reason": "stale_event_activity_date",
+      "firstSeen": "2026-10-24T16:33:05Z",
+      "lastSeen": "2026-10-24T16:33:05Z",
+      "signalFingerprint": "9111af03b10d3c",
+      "assessedFingerprint": null,
+      "payload": {
+        "id": "cand-gdacs-TC-1001294",
+        "producer": "discovery_signal_gdacs",
+        "kind": "hazard_signal",
+        "groupKey": "gdacs:TC:1001294",
+        "eventTypeKey": "TROPICAL_CYCLONE",
+        "countryIds": [
+          "cn"
+        ],
+        "gdacs": {
+          "type": "TC",
+          "eventId": 1001294,
+          "episodeId": 13
+        },
+        "signal": {
+          "alertLevel": "Orange",
+          "severity": 157.4064,
+          "from": "2026-07-23T06:00:00",
+          "to": "2026-07-26T00:00:00",
+          "modified": "2026-07-27T00:37:14",
+          "isCurrent": false,
+          "name": "NOUL-26",
+          "affected": [
+            "cn",
+            "ph"
+          ]
+        },
+        "signalFingerprint": "9111af03b10d3c",
+        "signalGenerated": "2026-10-22T04:35:26.002204+00:00",
+        "lineage": {
+          "file": "data/phase1_signals.json",
+          "source": "gdacs-alerts"
+        }
+      },
+      "leads": [],
+      "retries": 0
+    },
+    "cand-gdacs-TC-1001279": {
+      "id": "cand-gdacs-TC-1001279",
+      "producer": "discovery_signal_gdacs",
+      "kind": "hazard_signal",
+      "groupKey": "gdacs:TC:1001279",
+      "eventTypeKey": "TROPICAL_CYCLONE",
+      "status": "INELIGIBLE",
+      "reason": "stale_event_activity_date",
+      "firstSeen": "2026-10-24T16:33:05Z",
+      "lastSeen": "2026-10-24T16:33:05Z",
+      "signalFingerprint": "b1d5621fe077e8",
+      "assessedFingerprint": null,
+      "payload": {
+        "id": "cand-gdacs-TC-1001279",
+        "producer": "discovery_signal_gdacs",
+        "kind": "hazard_signal",
+        "groupKey": "gdacs:TC:1001279",
+        "eventTypeKey": "TROPICAL_CYCLONE",
+        "countryIds": [
+          "jp",
+          "cn"
+        ],
+        "gdacs": {
+          "type": "TC",
+          "eventId": 1001279,
+          "episodeId": 44
+        },
+        "signal": {
+          "alertLevel": "Red",
+          "severity": 287.0352,
+          "from": "2026-07-01T00:00:00",
+          "to": "2026-07-11T18:00:00",
+          "modified": "2026-09-30T09:40:31",
+          "isCurrent": false,
+          "name": "BAVI-26",
+          "affected": [
+            "gu",
+            "jp",
+            "tw",
+            "cn"
+          ]
+        },
+        "signalFingerprint": "b1d5621fe077e8",
+        "signalGenerated": "2026-10-22T04:35:26.002204+00:00",
+        "lineage": {
+          "file": "data/phase1_signals.json",
+          "source": "gdacs-alerts"
+        }
+      },
+      "leads": [],
+      "retries": 0
+    },
+    "cand-gdacs-TC-1001281": {
+      "id": "cand-gdacs-TC-1001281",
+      "producer": "discovery_signal_gdacs",
+      "kind": "hazard_signal",
+      "groupKey": "gdacs:TC:1001281",
+      "eventTypeKey": "TROPICAL_CYCLONE",
+      "status": "INELIGIBLE",
+      "reason": "stale_event_activity_date",
+      "firstSeen": "2026-10-24T16:33:05Z",
+      "lastSeen": "2026-10-24T16:33:05Z",
+      "signalFingerprint": "9a400300c9240c",
+      "assessedFingerprint": null,
+      "payload": {
+        "id": "cand-gdacs-TC-1001281",
+        "producer": "discovery_signal_gdacs",
+        "kind": "hazard_signal",
+        "groupKey": "gdacs:TC:1001281",
+        "eventTypeKey": "TROPICAL_CYCLONE",
+        "countryIds": [
+          "cn"
+        ],
+        "gdacs": {
+          "type": "TC",
+          "eventId": 1001281,
+          "episodeId": 13
+        },
+        "signal": {
+          "alertLevel": "Orange",
+          "severity": 92.592,
+          "from": "2026-07-01T18:00:00",
+          "to": "2026-07-04T18:00:00",
+          "modified": "2026-07-04T22:01:20",
+          "isCurrent": false,
+          "name": "MAYSAK-26",
+          "affected": [
+            "cn",
+            "la"
+          ]
+        },
+        "signalFingerprint": "9a400300c9240c",
+        "signalGenerated": "2026-10-22T04:35:26.002204+00:00",
+        "lineage": {
+          "file": "data/phase1_signals.json",
+          "source": "gdacs-alerts"
+        }
+      },
+      "leads": [],
+      "retries": 0
+    },
+    "cand-gdacs-TC-1001234": {
+      "id": "cand-gdacs-TC-1001234",
+      "producer": "discovery_signal_gdacs",
+      "kind": "hazard_signal",
+      "groupKey": "gdacs:TC:1001234",
+      "eventTypeKey": "TROPICAL_CYCLONE",
+      "status": "INELIGIBLE",
+      "reason": "stale_event_activity_date",
+      "firstSeen": "2026-10-24T16:33:05Z",
+      "lastSeen": "2026-10-24T16:33:05Z",
+      "signalFingerprint": "ee104eab528d90",
+      "assessedFingerprint": null,
+      "payload": {
+        "id": "cand-gdacs-TC-1001234",
+        "producer": "discovery_signal_gdacs",
+        "kind": "hazard_signal",
+        "groupKey": "gdacs:TC:1001234",
+        "eventTypeKey": "TROPICAL_CYCLONE",
+        "countryIds": [
+          "cn",
+          "jp"
+        ],
+        "gdacs": {
+          "type": "TC",
+          "eventId": 1001234,
+          "episodeId": 38
+        },
+        "signal": {
+          "alertLevel": "Red",
+          "severity": 212.9616,
+          "from": "2025-11-04T06:00:00",
+          "to": "2025-11-13T12:00:00",
+          "modified": "2026-02-11T15:18:59.037",
+          "isCurrent": false,
+          "name": "FUNG-WONG-25",
+          "affected": [
+            "ph",
+            "cn",
+            "jp"
+          ]
+        },
+        "signalFingerprint": "ee104eab528d90",
+        "signalGenerated": "2026-10-22T04:35:26.002204+00:00",
+        "lineage": {
+          "file": "data/phase1_signals.json",
+          "source": "gdacs-alerts"
+        }
+      },
+      "leads": [],
+      "retries": 0
+    },
+    "cand-gdacs-TC-1001229": {
+      "id": "cand-gdacs-TC-1001229",
+      "producer": "discovery_signal_gdacs",
+      "kind": "hazard_signal",
+      "groupKey": "gdacs:TC:1001229",
+      "eventTypeKey": "TROPICAL_CYCLONE",
+      "status": "INELIGIBLE",
+      "reason": "stale_event_activity_date",
+      "firstSeen": "2026-10-24T16:33:05Z",
+      "lastSeen": "2026-10-24T16:33:05Z",
+      "signalFingerprint": "90ab1ed439b60a",
+      "assessedFingerprint": null,
+      "payload": {
+        "id": "cand-gdacs-TC-1001229",
+        "producer": "discovery_signal_gdacs",
+        "kind": "hazard_signal",
+        "groupKey": "gdacs:TC:1001229",
+        "eventTypeKey": "TROPICAL_CYCLONE",
+        "countryIds": [
+          "cn"
+        ],
+        "gdacs": {
+          "type": "TC",
+          "eventId": 1001229,
+          "episodeId": 21
+        },
+        "signal": {
+          "alertLevel": "Orange",
+          "severity": 92.592,
+          "from": "2025-10-18T00:00:00",
+          "to": "2025-10-23T00:00:00",
+          "modified": "2026-02-11T15:18:59.037",
+          "isCurrent": false,
+          "name": "FENGSHEN-25",
+          "affected": [
+            "cn",
+            "kh",
+            "ph",
+            "la",
+            "th"
+          ]
+        },
+        "signalFingerprint": "90ab1ed439b60a",
+        "signalGenerated": "2026-10-22T04:35:26.002204+00:00",
+        "lineage": {
+          "file": "data/phase1_signals.json",
+          "source": "gdacs-alerts"
+        }
+      },
+      "leads": [],
+      "retries": 0
+    }
+  },
   "tasks": {},
   "events": {},
   "publications": {},
