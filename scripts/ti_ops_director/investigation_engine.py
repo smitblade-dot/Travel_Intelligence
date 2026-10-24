@@ -392,7 +392,6 @@ class Engine:
         """Create at most one task per candidate per window; return the tasks to run now (pending, bounded)."""
         cfg = self.cfg
         bucket = self._bucket(now)
-        by_id = {e["id"]: e for e in data["events"]}
         for cid, c in st["candidates"].items():
             if c["kind"] != "hazard_signal":
                 continue
@@ -400,7 +399,7 @@ class Engine:
             level = {"Red": 0, "Orange": 1}.get((c["payload"].get("signal") or {}).get("alertLevel"), 2)
             if known:
                 due = (parse_dt(known.get("nextAssessmentAt")) or now) <= now or c["signalFingerprint"] != c.get("assessedFingerprint")
-                if due and known["eventId"] in by_id:
+                if due:                              # a published event missing from data.json is investigated too: it becomes a decision
                     self._task(st, TASK_VERIFICATION, cid, c["groupKey"], {"eventId": known["eventId"], "signal": c["signalFingerprint"]},
                                now, bucket, 40 + level)
                 continue
@@ -831,7 +830,10 @@ class Engine:
                  f"- Discovery signals (GDACS, `data/phase1_signals.json` generated {cyprus_time(g.get('signalGenerated'))}): {g.get('snapshot', 'n/a')}; "
                  f"{g.get('items', 0)} items, {g.get('out_of_scope_type', 0)} other hazard types, {g.get('below_alert', 0)} below alert threshold, "
                  f"{g.get('no_tracked_country', 0)} outside the scope countries.",
-                 f"- Haiku-triaged leads: {l.get('items', 0)} stored. {l.get('note') or ''} Paid triage is a separate agent's switch; this agent never changes it.", "",
+                 f"- Haiku-triaged leads: {l.get('items', 0)} stored. {l.get('note') or ''} Paid triage is a separate agent's switch; this agent never changes it.",
+                 f"- **Intake path this run:** direct GDACS discovery signals ({g.get('items', 0)} items) only; monitor/triage leads: {l.get('items', 0)}. "
+                 + ("The monitor -> Haiku triage -> candidates chain is **not operating** (triage has not completed), so the full discovery chain is not connected end to end."
+                    if l.get('items', 0) == 0 else "Triaged leads are flowing from the monitor."), "",
                  "## This run", "",
                  "| Step | Count |", "|---|---|",
                  f"| New candidates taken in | {intake.get('new', 0)} (deferred {intake.get('deferred', 0)}, reopened {intake.get('reopened', 0)}) |",
@@ -865,9 +867,15 @@ class Engine:
         lines += (["- none"] if not assessed else [])
         lines += ["", "## Published events under reassessment", ""]
         evs = sorted(st["events"].values(), key=lambda e: e["eventId"])
+        live = [e for e in evs if e["state"] == "PUBLISHED"]
         lines += ([f"- `{e['eventId']}` {e.get('eventStatus')} / {e.get('lifecycle')}: next check {cyprus_time(e.get('nextAssessmentAt'))}"
-                   + (f"; {e['reassessFailures']} consecutive failed rechecks (last valid content kept)" if e.get("reassessFailures") else "") for e in evs]
+                   + (f"; {e['reassessFailures']} consecutive failed rechecks (last valid content kept)" if e.get("reassessFailures") else "") for e in live]
                   or ["- none yet"])
+        done = [e for e in evs if e["state"] != "PUBLISHED"]
+        if done:
+            lines += ["", "Not under reassessment: " + "; ".join(
+                f"`{e['eventId']}` {e['state'].replace('_', ' ').lower()}" + (" (edited by another process: left as edited, decision needed)" if e["state"] == "STOOD_DOWN" else "")
+                for e in done)]
         lines += ["", "## Exceptions", ""]
         open_ex = [e for e in st["exceptions"].values() if e["state"] == "HELD"]
         lines += ([f"- `{e['key']}` **{'NEEDS DECISION' if e.get('requiresHuman') else 'retrying automatically'}**: {', '.join(e['reasons'])}. {e['action']}"
