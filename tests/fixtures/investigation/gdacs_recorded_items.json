@@ -1,0 +1,134 @@
+{
+ "champi_tc": {
+  "type": "Feature",
+  "bbox": [
+   126.0,
+   20.3,
+   126.0,
+   20.3
+  ],
+  "geometry": {
+   "type": "Point",
+   "coordinates": [
+    126.0,
+    20.3
+   ]
+  },
+  "properties": {
+   "eventtype": "TC",
+   "eventid": 1001338,
+   "episodeid": 31,
+   "eventname": "CHAMPI-26",
+   "glide": "TC-2026-000192-GUM",
+   "name": "Tropical Cyclone CHAMPI-26",
+   "description": "Tropical Cyclone CHAMPI-26",
+   "htmldescription": "Red Tropical Cyclone CHAMPI-26 in Philippines, Guam, Northern Mariana Islands, Japan from: 14 Oct 2026  to: 22 Oct 2026 .",
+   "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Green/TC.png",
+   "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Red/TC.png",
+   "url": {
+    "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=TC&eventid=1001338&episodeid=31",
+    "report": "https://www.gdacs.org/report.aspx?eventid=1001338&episodeid=31&eventtype=TC",
+    "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=TC&eventid=1001338"
+   },
+   "alertlevel": "Red",
+   "alertscore": 3,
+   "episodealertlevel": "Green",
+   "episodealertscore": 1.0,
+   "istemporary": "false",
+   "iscurrent": "true",
+   "country": "Philippines, Guam, Northern Mariana Islands, Japan",
+   "fromdate": "2026-10-14T12:00:00",
+   "todate": "2026-10-22T00:00:00",
+   "datemodified": "2026-10-22T04:00:32",
+   "iso3": "GUM",
+   "source": "JTWC",
+   "sourceid": "",
+   "polygonlabel": "Centroid",
+   "Class": "Point_Centroid",
+   "countryonland": "",
+   "affectedcountries": [
+    {
+     "iso2": "PH",
+     "iso3": "PHL",
+     "countryname": "Philippines"
+    },
+    {
+     "iso2": "GU",
+     "iso3": "GUM",
+     "countryname": "Guam"
+    },
+    {
+     "iso2": "JP",
+     "iso3": "JPN",
+     "countryname": "Japan"
+    }
+   ],
+   "severitydata": {
+    "severity": 296.2944,
+    "severitytext": "Hurricane/Typhoon > 74 mph (maximum wind speed of 296 km/h)",
+    "severityunit": "km/h"
+   }
+  }
+ },
+ "eq_indonesia_old": {
+  "type": "Feature",
+  "bbox": [
+   121.3517,
+   -8.3101,
+   121.3517,
+   -8.3101
+  ],
+  "geometry": {
+   "type": "Point",
+   "coordinates": [
+    121.3517,
+    -8.3101
+   ]
+  },
+  "properties": {
+   "eventtype": "EQ",
+   "eventid": 1558059,
+   "episodeid": 1725109,
+   "eventname": "",
+   "glide": "",
+   "name": "Earthquake in Indonesia",
+   "description": "Earthquake in Indonesia",
+   "htmldescription": "Red M 7.7 Earthquake in Indonesia at: 14 Aug 2026 21:58:21.",
+   "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Red/EQ.png",
+   "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Red/EQ.png",
+   "url": {
+    "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=EQ&eventid=1558059&episodeid=1725109",
+    "report": "https://www.gdacs.org/report.aspx?eventid=1558059&episodeid=1725109&eventtype=EQ",
+    "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=EQ&eventid=1558059"
+   },
+   "alertlevel": "Red",
+   "alertscore": 3,
+   "episodealertlevel": "Red",
+   "episodealertscore": 2.14589742473401,
+   "istemporary": "false",
+   "iscurrent": "false",
+   "country": "Indonesia",
+   "fromdate": "2026-08-14T21:58:21",
+   "todate": "2026-08-14T21:58:21",
+   "datemodified": "2026-09-30T09:40:22",
+   "iso3": "IDN",
+   "source": "NEIC",
+   "sourceid": "",
+   "polygonlabel": "Centroid",
+   "Class": "Point_Centroid",
+   "affectedcountries": [
+    {
+     "iso2": "ID",
+     "iso3": "IDN",
+     "countryname": "Indonesia"
+    }
+   ],
+   "severitydata": {
+    "severity": 7.7,
+    "severitytext": "Magnitude 7.7M, Depth:10km",
+    "severityunit": "M"
+   }
+  }
+ },
+ "all_features_sample": []
+}

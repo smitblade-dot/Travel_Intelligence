@@ -1,0 +1,163 @@
+{
+ "_comment": "RECORDED GDACS items copied unchanged from data/phase1_signals.json (generated 2026-10-22T04:35Z). FIXTURE for rehearsal and tests; not live data. 'now' is the fixture clock.",
+ "now": "2026-10-22T06:00:00+00:00",
+ "signals": {
+  "schemaVersion": "1.0",
+  "generated": "2026-10-22T04:35:26+00:00",
+  "sources": {
+   "gdacs-alerts": {
+    "ok": true,
+    "status": "healthy",
+    "data": {
+     "type": "FeatureCollection",
+     "features": [
+      {
+       "type": "Feature",
+       "bbox": [
+        126.0,
+        20.3,
+        126.0,
+        20.3
+       ],
+       "geometry": {
+        "type": "Point",
+        "coordinates": [
+         126.0,
+         20.3
+        ]
+       },
+       "properties": {
+        "eventtype": "TC",
+        "eventid": 1001338,
+        "episodeid": 31,
+        "eventname": "CHAMPI-26",
+        "glide": "TC-2026-000192-GUM",
+        "name": "Tropical Cyclone CHAMPI-26",
+        "description": "Tropical Cyclone CHAMPI-26",
+        "htmldescription": "Red Tropical Cyclone CHAMPI-26 in Philippines, Guam, Northern Mariana Islands, Japan from: 14 Oct 2026  to: 22 Oct 2026 .",
+        "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Green/TC.png",
+        "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Red/TC.png",
+        "url": {
+         "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=TC&eventid=1001338&episodeid=31",
+         "report": "https://www.gdacs.org/report.aspx?eventid=1001338&episodeid=31&eventtype=TC",
+         "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=TC&eventid=1001338"
+        },
+        "alertlevel": "Red",
+        "alertscore": 3,
+        "episodealertlevel": "Green",
+        "episodealertscore": 1.0,
+        "istemporary": "false",
+        "iscurrent": "true",
+        "country": "Philippines, Guam, Northern Mariana Islands, Japan",
+        "fromdate": "2026-10-14T12:00:00",
+        "todate": "2026-10-22T00:00:00",
+        "datemodified": "2026-10-22T04:00:32",
+        "iso3": "GUM",
+        "source": "JTWC",
+        "sourceid": "",
+        "polygonlabel": "Centroid",
+        "Class": "Point_Centroid",
+        "countryonland": "",
+        "affectedcountries": [
+         {
+          "iso2": "PH",
+          "iso3": "PHL",
+          "countryname": "Philippines"
+         },
+         {
+          "iso2": "GU",
+          "iso3": "GUM",
+          "countryname": "Guam"
+         },
+         {
+          "iso2": "JP",
+          "iso3": "JPN",
+          "countryname": "Japan"
+         }
+        ],
+        "severitydata": {
+         "severity": 296.2944,
+         "severitytext": "Hurricane/Typhoon > 74 mph (maximum wind speed of 296 km/h)",
+         "severityunit": "km/h"
+        }
+       }
+      }
+     ]
+    }
+   }
+  }
+ },
+ "gdacs_events": {
+  "TC:1001338": {
+   "type": "Feature",
+   "bbox": [
+    126.0,
+    20.3,
+    126.0,
+    20.3
+   ],
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     126.0,
+     20.3
+    ]
+   },
+   "properties": {
+    "eventtype": "TC",
+    "eventid": 1001338,
+    "episodeid": 31,
+    "eventname": "CHAMPI-26",
+    "glide": "TC-2026-000192-GUM",
+    "name": "Tropical Cyclone CHAMPI-26",
+    "description": "Tropical Cyclone CHAMPI-26",
+    "htmldescription": "Red Tropical Cyclone CHAMPI-26 in Philippines, Guam, Northern Mariana Islands, Japan from: 14 Oct 2026  to: 22 Oct 2026 .",
+    "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Green/TC.png",
+    "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Red/TC.png",
+    "url": {
+     "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=TC&eventid=1001338&episodeid=31",
+     "report": "https://www.gdacs.org/report.aspx?eventid=1001338&episodeid=31&eventtype=TC",
+     "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=TC&eventid=1001338"
+    },
+    "alertlevel": "Red",
+    "alertscore": 3,
+    "episodealertlevel": "Green",
+    "episodealertscore": 1.0,
+    "istemporary": "false",
+    "iscurrent": "true",
+    "country": "Philippines, Guam, Northern Mariana Islands, Japan",
+    "fromdate": "2026-10-14T12:00:00",
+    "todate": "2026-10-22T00:00:00",
+    "datemodified": "2026-10-22T04:00:32",
+    "iso3": "GUM",
+    "source": "JTWC",
+    "sourceid": "",
+    "polygonlabel": "Centroid",
+    "Class": "Point_Centroid",
+    "countryonland": "",
+    "affectedcountries": [
+     {
+      "iso2": "PH",
+      "iso3": "PHL",
+      "countryname": "Philippines"
+     },
+     {
+      "iso2": "GU",
+      "iso3": "GUM",
+      "countryname": "Guam"
+     },
+     {
+      "iso2": "JP",
+      "iso3": "JPN",
+      "countryname": "Japan"
+     }
+    ],
+    "severitydata": {
+     "severity": 296.2944,
+     "severitytext": "Hurricane/Typhoon > 74 mph (maximum wind speed of 296 km/h)",
+     "severityunit": "km/h"
+    }
+   }
+  }
+ }
+}

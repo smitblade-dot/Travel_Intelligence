@@ -188,6 +188,13 @@ class Controller:
                 from .country_worker import enqueue_gaps
                 done["country_builder"] = enqueue_gaps(self, now)
                 self.store.set_meta("last_slot:country_builder", cslot)
+        iv_every = self.cfg.investigation_interval_minutes
+        if iv_every and mode == "live":
+            islot = interval_slot(now, iv_every).isoformat()
+            if self.store.get_meta("last_slot:investigation") != islot:
+                tid, created = self.enqueue(task_type="investigation", inputs={"slot_utc": islot}, dedupe_subject=islot, priority=45)
+                self.store.set_meta("last_slot:investigation", islot)
+                done["investigation"] = {"task": tid, "created": created}
         dslot = last_daily_slot(now, self.cfg.daily_consolidation_local, self.cfg.timezone)
         if self.store.get_meta("last_slot:daily_consolidation") != dslot.isoformat():
             tid, created = self.enqueue(task_type="daily_consolidation", inputs={"slot_utc": dslot.isoformat()},

@@ -69,6 +69,9 @@ class Config:
     production_check_interval_minutes: Optional[int] = None
     # Country builder (03AA-04_Country_Intelligence_Builder_TI) gap enqueueing. None = not scheduled by the queue.
     country_builder_interval_minutes: Optional[int] = None
+    # Investigation and verification (03AA-04_Investigation_Verification_TI) pass as a queue responsibility. None = not scheduled by the queue;
+    # on GitHub Actions it has its own workflow (docs/TI_INVESTIGATION_VERIFICATION.md).
+    investigation_interval_minutes: Optional[int] = None
     daily_consolidation_local: str = "21:00"
     timezone: str = "Europe/Nicosia"
     # Spending limits in provider currency (USD). None means NOT configured: paid work blocked.

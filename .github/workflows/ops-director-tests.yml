@@ -21,6 +21,12 @@ on:
       - ".github/workflows/country-intelligence-builder.yml"
       - ".github/workflows/ops-director-tests.yml"
       - "scripts/acc_report.py"
+      - "scripts/investigation_worker.py"
+      - "config/investigation_verification.json"
+      - "config/source_registry.json"
+      - "tests/investigation_support.py"
+      - "tests/fixtures/investigation/**"
+      - ".github/workflows/investigation-verification.yml"
       - ".github/workflows/continuous-intelligence-monitor.yml"
   workflow_dispatch: {}
 permissions:
