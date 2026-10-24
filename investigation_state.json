@@ -498,11 +498,30 @@
     "pub-20261024T164847Z-16bf75": {
       "id": "pub-20261024T164847Z-16bf75",
       "at": "2026-10-24T16:48:47Z",
-      "state": "PENDING",
+      "state": "VERIFIED",
       "records": [
         "iv-tc-gdacs-1001338"
       ],
-      "target": "main"
+      "target": "main",
+      "commit": "85bfff7017a07f5971d2868609c394367cce20c5",
+      "verifiedAt": "2026-10-24T16:50:07Z",
+      "summary": {
+        "added": [
+          "iv-tc-gdacs-1001338"
+        ],
+        "updated": [],
+        "unchanged": [],
+        "skipped": [],
+        "generated": "2026-10-24T16:48:47Z",
+        "commit": "85bfff7017a07f5971d2868609c394367cce20c5"
+      },
+      "served": {
+        "ok": true,
+        "attempts": 4,
+        "served_generated": "2026-10-24T16:48:47Z",
+        "served_sha256": "764db54e27d58b3148f1a1287ff38709d89e9f4718137b502b6295a5ef1e8d2b",
+        "url": "https://travelintelligence22.com/"
+      }
     }
   },
   "exceptions": {},
