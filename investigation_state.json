@@ -144,32 +144,12 @@
     "pub-20261024T164847Z-16bf75": {
       "id": "pub-20261024T164847Z-16bf75",
       "at": "2026-10-22T06:00:00Z",
-      "state": "VERIFICATION_PENDING",
+      "state": "SUPERSEDED",
       "records": [
         "iv-tc-gdacs-1001338"
       ],
       "adopted": true,
-      "pending": {
-        "verifyItems": [
-          {
-            "eventId": "iv-tc-gdacs-1001338",
-            "event": {
-              "summary": "GDACS reports tropical cyclone CHAMPI-26, with Philippines, Guam, Japan listed by GDACS as affected, active from 14 Oct 2026 to 23 Oct 2026 (UTC). GDACS marks the event as ongoing at its last update. GDACS gives a maximum wind speed of 296 km/h. The alert level shown (Red) is GDACS's own classification, not a TI assessment. GDACS tropical-cyclone notifications are automatic and have not been reviewed by human experts before issue. TI has not independently confirmed this event. TI holds no verified information on this event's effect on travel, transport or safety; the absence of that information does not mean travel is unaffected."
-            },
-            "contentHash": "a81baa57f47c363c",
-            "needsSources": [],
-            "observations": [
-              {
-                "id": "obs-iv-tc-gdacs-1001338-gdacs-1b5f5e"
-              }
-            ]
-          }
-        ],
-        "rechecks": 0,
-        "generated": null,
-        "firstCheckedAt": "2026-10-22T06:00:00Z",
-        "commit": null
-      }
+      "pending": null
     },
     "pub-20261022T060000Z-172b64": {
       "id": "pub-20261022T060000Z-172b64",
