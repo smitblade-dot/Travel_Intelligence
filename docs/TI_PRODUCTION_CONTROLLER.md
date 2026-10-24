@@ -32,12 +32,12 @@ sanitising, and the Haiku monitor's committed state for spending-control outcome
 | PR #27 (Master Agent) | Merged 21 Oct 12:17 UTC as squash `26e8321` | `merged_at` on the PR; commit on `main` |
 | PR #28 (monitor early reports) | Merged 21 Oct 14:02 UTC as squash `60fb910` | `merged_at` on the PR; commit on `main` |
 | PR #26 | Still open, draft | PR list |
-| Runs automatically | Daily refresh (cron `0 21 * * *`, `timezone: Europe/Nicosia`); Haiku monitor (`*/15`); baseline build (`30 20 * * *` UTC); `pages-build-deployment` on every push to `main` | workflow files; Actions run history |
+| Runs automatically | Daily refresh (crons `0 18 * * *` and `0 19 * * *` UTC; the gate keeps the one that is 21:00 Europe/Nicosia); Haiku monitor (`*/15`); baseline build (`30 20 * * *` UTC); `pages-build-deployment` on every push to `main` | workflow files; Actions run history |
 | CLI or test only | Ops Director queue, daemon, feed-health worker (no workflow runs the queue; NUC not deployed); `eval-monitor` | workflow files |
 | Publication pipeline | Branch-based GitHub Pages from `main` (`pages-build-deployment`), custom domain `travelintelligence22.com` (`CNAME`). No Pages workflow in the repository | workflow list; `CNAME` |
 | Monitor gateway at last run (17:24 UTC) | Dry-run; per-task, daily and monthly limits **UNSET** (null); `TI_MONITOR_PUBLISH` **UNSET** | `data/continuous_monitor_state.json` → `lastOutcome` |
 | Monitor schedule delivery | 5 runs since 06:37 UTC, 2 of them scheduled (12:21, 17:24); about 45 were due | Actions run list |
-| Daily refresh | 20 Oct scheduled run started 21:21 UTC for an 18:00 UTC (21:00 Nicosia) slot: 201.6 minutes late. Whether GitHub honoured `timezone:` or delayed the run is **UNVERIFIED** until the controller observes more slots | run 39499702808 |
+| Daily refresh | 20 Oct scheduled run started 21:21 UTC for an 18:00 UTC (21:00 Nicosia) slot: 201.6 minutes late. 21 Oct (21:22 UTC, run 39678231653) and 22 Oct (21:17 UTC, run 39856042526) repeated it: three of three nights, GitHub fired the `timezone: Europe/Nicosia` cron at 21:00 UTC. Replaced by two UTC crons and a slot gate (`scripts/ti_ops_director/refresh_slot.py`) | runs 39499702808, 39678231653, 39856042526 |
 | Daily refresh conclusion | Last two runs red, but **after** the safety-net commit: only "Audit discovery feed health" failed (GDELT unavailable, ADSB.lol degraded). The data was published | jobs of runs 39499702808, 39600080368 |
 | Baseline build | Failed on each of the last 6 nights; every generate job fails at `upload-artifact` (no batch file written). `scripts/audit_baseline_coverage.py` has a syntax error, so the coverage gate always reports "needed" | run 39513877171; `python3 scripts/audit_baseline_coverage.py` |
 | Baseline coverage | 183 of 728 country/category combinations | computed from `data.json` |
@@ -53,7 +53,7 @@ internally; Nicosia time is shown alongside.
 
 | Workflow | Expected | Delayed (warning) | Missed (critical) | Stalled (critical) | Other |
 |---|---|---|---|---|---|
-| Daily refresh | 21:00 Europe/Nicosia (18:00 UTC summer, 19:00 UTC winter) | not started 60 min after the slot, or started more than 60 min late | no run 180 min after the slot | running more than 75 min | gate skipped the `refresh` job (critical); failed before `Safety-net commit and push` (critical, re-runnable); failed after it (warning: data published, a later step failed) |
+| Daily refresh | 21:00 Europe/Nicosia (18:00 UTC summer, 19:00 UTC winter) | not started 60 min after the slot, or started more than 60 min late | no run 180 min after the slot | running more than 75 min | gate skipped the `refresh` job (critical; the off-slot UTC cron's intentional skip, identified from the cron in the run name, is ignored); failed before `Safety-net commit and push` (critical, re-runnable); failed after it (warning: data published, a later step failed) |
 | Haiku monitor | every 15 min | last success more than 60 min ago | last success more than 180 min ago | running more than 15 min | latest run failed (critical); fewer than 50 percent of scheduled runs in 24 h (warning) |
 | Baseline build | 20:30 UTC | 240 min | 360 min | 120 min | failed (critical, never auto-dispatched: Sonnet cost) |
 

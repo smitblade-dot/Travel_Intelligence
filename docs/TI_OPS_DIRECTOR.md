@@ -77,7 +77,9 @@ Actions refresh remain the working pipeline and are not replaced or duplicated.
   production until the monitor uses it. In this branch the monitor does (next section), but that is
   **unmerged and undeployed**, so production is unprotected until this branch is merged and the
   repository variables are set.
-- The existing 21:00 Europe/Nicosia refresh uses GitHub's `timezone:` cron field and a schedule gate.
+- The existing 21:00 Europe/Nicosia refresh runs on two UTC crons (`0 18 * * *`, `0 19 * * *`) and a
+  slot gate (`scripts/ti_ops_director/refresh_slot.py`) that keeps the cron that is 21:00 in Cyprus on that
+  date. GitHub's `timezone:` key was dropped after it fired at 21:00 UTC on 20 and 21 October 2026.
   The Director reuses the same wall-clock rule and does not run a second consolidator.
 
 ## Monitor integration (work package 2)

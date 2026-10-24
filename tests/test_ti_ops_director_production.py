@@ -28,8 +28,9 @@ def ts(dt):
     return dt.strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def run(rid, created, conclusion="success", status="completed", event="schedule"):
+def run(rid, created, conclusion="success", status="completed", event="schedule", cron=None):
     return {"id": rid, "event": event, "status": status, "conclusion": conclusion if status == "completed" else None,
+            "display_title": "Daily travel intelligence data refresh" + (f" [{cron}]" if cron else ""),
             "created_at": ts(created), "run_started_at": ts(created), "html_url": f"https://example.invalid/{rid}",
             "head_sha": "a" * 40}
 
@@ -300,6 +301,37 @@ class DailyWorkflowTests(Harness):
         res = self.daily([run(1, datetime(2026, 10, 26, 19, 4, tzinfo=timezone.utc))], now=winter_now)
         self.assertEqual(res.facts["slot_utc"], "2026-10-26T19:00:00+00:00")
         self.assertEqual(res.findings, [])
+
+    # Dual UTC crons: the gate skips the cron that is not 21:00 Cyprus time that day. Fixture runs.
+    GATED = [job("schedule_gate"), job("refresh", "skipped")]
+
+    def test_summer_off_slot_cron_skip_is_not_a_gate_failure(self):
+        jobs = {2: self.GATED}
+        res = self.daily([run(2, self.SLOT + timedelta(hours=1, minutes=20), cron="0 19 * * *"),
+                          run(1, self.SLOT + timedelta(minutes=21), cron="0 18 * * *")], jobs=jobs)
+        self.assertEqual((res.status, res.findings), ("OK", []))
+        self.assertEqual(res.facts["runs_in_slot"], 1)
+
+    def test_winter_off_slot_cron_before_the_slot_is_ignored_inside_the_grace(self):
+        # 26 Oct 2026 (EET): 18:00 UTC is 20:00 Cyprus (skipped) and lands in the 25 Oct slot's window;
+        # 19:00 UTC is the 21:00 slot, still inside its grace, so the 25 Oct slot is judged.
+        jobs = {2: self.GATED}
+        res = self.daily([run(2, datetime(2026, 10, 26, 18, 21, tzinfo=timezone.utc), cron="0 18 * * *"),
+                          run(1, datetime(2026, 10, 25, 19, 22, tzinfo=timezone.utc), cron="0 19 * * *")],
+                         now=datetime(2026, 10, 26, 19, 30, tzinfo=timezone.utc), jobs=jobs)
+        self.assertEqual(res.facts["slot_utc"], "2026-10-25T19:00:00+00:00")
+        self.assertEqual((res.status, res.findings), ("OK", []))
+
+    def test_in_slot_cron_skipped_by_the_gate_is_still_critical(self):
+        jobs = {1: self.GATED}
+        res = self.daily([run(1, self.SLOT + timedelta(minutes=5), cron="0 18 * * *")], jobs=jobs)
+        self.assertEqual(self.keys(res), {"workflow:daily_refresh:gate_skipped": "critical"})
+
+    def test_off_slot_cron_alone_leaves_the_slot_missed(self):
+        jobs = {2: self.GATED}
+        res = self.daily([run(2, self.SLOT + timedelta(hours=1, minutes=4), cron="0 19 * * *")],
+                         now=self.SLOT + timedelta(hours=3, minutes=5), jobs=jobs)
+        self.assertEqual(self.keys(res), {"workflow:daily_refresh:missed": "critical"})
 
     def test_matrix_failures_are_named_once(self):
         jobs = {1: [job(f"generate ({c})", "failure", [("Run actions/upload-artifact@v4", "failure")])

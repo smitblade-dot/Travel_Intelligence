@@ -16,7 +16,8 @@
       "schedule": {
         "kind": "daily",
         "local_time": "21:00",
-        "timezone": "Europe/Nicosia"
+        "timezone": "Europe/Nicosia",
+        "utc_crons": ["0 18 * * *", "0 19 * * *"]
       },
       "required_job": "refresh",
       "output_step": "Safety-net commit and push",
