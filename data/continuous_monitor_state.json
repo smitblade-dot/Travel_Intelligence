@@ -25,7 +25,7 @@
     "seen-f6b1a5bb75415b8e04",
     "seen-f779c0b205a8da50c3"
   ],
-  "lastRun": "2026-10-24T06:26:18.357537+00:00",
+  "lastRun": "2026-10-24T11:20:39.506805+00:00",
   "sourceErrors": [],
   "budget": {
     "date": "2026-10-21",
@@ -39,30 +39,30 @@
     "currency": "USD",
     "status": "estimated from API usage fields x configured list prices; not invoice-confirmed",
     "mode": "dry_run",
-    "updated": "2026-10-24T06:26:18+00:00"
+    "updated": "2026-10-24T11:20:39+00:00"
   },
   "triageCache": {},
   "lastTriageBlocked": {
     "status": "NOT_RUN_DRY_RUN",
     "reason": "dry_run",
-    "at": "2026-10-24T06:26:18+00:00"
+    "at": "2026-10-24T11:20:39+00:00"
   },
-  "consecutiveUntriaged": 18,
+  "consecutiveUntriaged": 19,
   "consecutiveFailed": 0,
   "lastOutcome": {
-    "at": "2026-10-24T06:26:18+00:00",
+    "at": "2026-10-24T11:20:39+00:00",
     "workflowExecuted": true,
     "triage": "NOT_RUN_DRY_RUN",
     "triageCompleted": false,
     "reason": "dry_run",
     "headlines": {
-      "collected": 330,
+      "collected": 359,
       "new": 12,
       "pending": 12
     },
     "calls": 0,
     "model": "claude-haiku-5-5",
-    "estimatedUsd": 0.001689,
+    "estimatedUsd": 0.001691,
     "publication": {
       "setting": "unset",
       "enabled": false,
@@ -79,7 +79,7 @@
         "monthly": null
       }
     },
-    "consecutiveUntriaged": 18,
+    "consecutiveUntriaged": 19,
     "consecutiveFailed": 0
   }
 }
