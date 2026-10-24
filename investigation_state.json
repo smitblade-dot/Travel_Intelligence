@@ -10,7 +10,58 @@
     "acquiredAt": "2026-10-22T06:00:00Z",
     "expiresAt": "2026-10-22T06:20:00Z"
   },
-  "candidates": {},
+  "candidates": {
+    "cand-gdacs-TC-1001338": {
+      "id": "cand-gdacs-TC-1001338",
+      "producer": "discovery_signal_gdacs",
+      "kind": "hazard_signal",
+      "groupKey": "gdacs:TC:1001338",
+      "eventTypeKey": "TROPICAL_CYCLONE",
+      "status": "PUBLISHED",
+      "reason": "known_event",
+      "firstSeen": "2026-10-22T06:00:00Z",
+      "lastSeen": "2026-10-22T06:00:00Z",
+      "signalFingerprint": "8917ba32d1e688",
+      "assessedFingerprint": null,
+      "payload": {
+        "id": "cand-gdacs-TC-1001338",
+        "producer": "discovery_signal_gdacs",
+        "kind": "hazard_signal",
+        "groupKey": "gdacs:TC:1001338",
+        "eventTypeKey": "TROPICAL_CYCLONE",
+        "countryIds": [
+          "jp"
+        ],
+        "gdacs": {
+          "type": "TC",
+          "eventId": 1001338,
+          "episodeId": 31
+        },
+        "signal": {
+          "alertLevel": "Red",
+          "severity": 296.2944,
+          "from": "2026-10-14T12:00:00",
+          "to": "2026-10-22T00:00:00",
+          "modified": "2026-10-22T04:00:32",
+          "isCurrent": true,
+          "name": "CHAMPI-26",
+          "affected": [
+            "ph",
+            "gu",
+            "jp"
+          ]
+        },
+        "signalFingerprint": "8917ba32d1e688",
+        "signalGenerated": "2026-10-22T04:35:26+00:00",
+        "lineage": {
+          "file": "data/phase1_signals.json",
+          "source": "gdacs-alerts"
+        }
+      },
+      "leads": [],
+      "retries": 0
+    }
+  },
   "tasks": {},
   "events": {
     "iv-tc-gdacs-1001338": {
