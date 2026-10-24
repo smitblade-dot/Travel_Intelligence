@@ -187,3 +187,35 @@ demonstrably incorrect, rollback unresolved, verification unresolved after bound
 - The Master Agent queue is still not serviced anywhere; exceptions live in the ledger and are mirrored only when a host runs the queue.
 - The discovery snapshot is refreshed by the daily refresh; a stale snapshot delays discovery, not evidence freshness.
 - `reviewDate` of an unchanged event is not extended; it moves when the event is updated.
+
+## Verification record (24 October 2026, Cyprus time unless stated)
+
+| Item | Result |
+|---|---|
+| Worker merged | PR #47 `0a05abd` at 19:48; follow-up PR #48 `f879c2c` at 20:45 (independent QA: PASS on #47; PASS WITH ISSUES on #48, every finding resolved) |
+| First production run on `main` | Manual dispatch, [run 40113269640](https://github.com/smitblade-dot/Travel_Intelligence/actions/runs/40113269640), 19:48. Intake: 8 candidates from the GDACS discovery snapshot, 7 ineligible (6 stale, 1 already represented by the daily refresh's DRAFT event), 1 assessed. CHAMPI-26 was retrieved live from GDACS and published as `iv-tc-gdacs-1001338` (commit `85bfff7`, `REPORTED`, `ALERT`, single reporting chain). The runner then polled `travelintelligence22.com` until it served that event (4 attempts, 19:50), ledger state `VERIFIED`. GitHub Pages built that commit successfully. 0 model calls |
+| Persistence across separate runs | PR trial branch ledger: a second run read the first run's ledger and took in 0 new candidates, made 0 requests, created 0 tasks |
+| Intake path actually used | **Direct GDACS discovery signals** (`data/phase1_signals.json`, generated 22 Oct 07:35 and last refreshed by the daily refresh). The monitor -> Haiku triage -> candidates chain is **not connected end to end**: triage is disabled (`NOT_RUN_DRY_RUN`), so the monitor stores 0 leads and this agent reads 0 leads. The producer is built and tested but has never received a live lead |
+| Safeguard on `main` | Ops Director test workflow on `f879c2c`: [run 40117596414](https://github.com/smitblade-dot/Travel_Intelligence/actions/runs/40117596414) success. The guard evaluated read-only on the real published event returns "untouched"; the same event with an edited summary returns "edited" |
+| First **scheduled** run | **Not delivered yet** at 22:12 (the 21:17 slot has passed). GitHub delivered **no scheduled run of any workflow in this repository after 21:02** (the daily 21:00 refresh slot included). Across the day the scheduler delivered this repository's cron workflows only every 3 to 5 hours: the 15-minute monitor at 04:32, 09:26, 14:20, 17:40 and 20:34; the hourly production controller at 08:40, 13:47, 17:26 and 21:02. The cause is platform scheduling, not this workflow: it is active, on `main` and was registered at 19:48. A manual dispatch is not accepted as the scheduled proof |
+
+### How the outstanding scheduled-run verification is completed
+
+No timer or reminder exists. Whoever next opens this repository completes it by reading GitHub, not by waiting:
+
+1. Actions > "TI investigation and verification" > filter event `schedule` (or `GET /repos/smitblade-dot/Travel_Intelligence/actions/workflows/investigation-verification.yml/runs?event=schedule`). A run on `main` with conclusion `success` is the proof of automatic operation.
+2. Open `investigation_report.md` on branch `ti-investigation-state`. Its heading line must show that run's time in Cyprus time, mode `PUBLISH` (not TRIAL or FIXTURE), and the entry in `investigation_state.json` `runs` must have `trial: false`, `fixture: false` and a time later than 21:17 Cyprus time on 24 Oct. Check "Published events under reassessment": `iv-tc-gdacs-1001338` is reassessed (unchanged, updated, or aged) and nothing is published twice.
+3. Record the run id and time in this table. The feature is **operational** only when step 1 and 2 hold; until then it is merged and configured, and verified only by the manual run.
+
+### Stages (24 October 2026, 22:12 Cyprus time)
+
+| Stage | Status |
+|---|---|
+| Built | Yes |
+| Tested | Yes: 554 offline tests, two PR trials on Actions (live GDACS evidence; FIXTURE rehearsal on an isolated branch), independent QA |
+| Merged | Yes: #47 `0a05abd`, #48 `f879c2c` |
+| Configured | Yes: committed in `config/investigation_verification.json` (mode `publish`, tropical cyclones, Japan and China, no spending). Repository variables are unset and unverified; none is needed |
+| Operational | **Not yet verified in automatic operation.** Verified by one manual production run on `main` (real publication, live-site verification). The scheduled trigger has not yet delivered a run (see above) |
+
+Actual cost: runtime AI none (0 model calls, EUR 0); infrastructure: short Actions jobs (free at this size); build-time AI: Claude subscription session, plus the repository's QA workflow (OAuth token; list-price equivalent about USD 0.7 to 1.8 per run, 7 runs, roughly USD 8; at the ECB rate of 20 Oct 2026, 1 EUR = 1.1215 USD, about EUR 7; estimated from list prices, not invoiced).
+
