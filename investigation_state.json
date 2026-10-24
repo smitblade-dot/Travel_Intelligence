@@ -17,12 +17,12 @@
       "kind": "hazard_signal",
       "groupKey": "gdacs:TC:1001338",
       "eventTypeKey": "TROPICAL_CYCLONE",
-      "status": "NEW",
+      "status": "READY",
       "reason": null,
       "firstSeen": "2026-10-24T16:33:05Z",
       "lastSeen": "2026-10-24T16:33:05Z",
       "signalFingerprint": "8917ba32d1e688",
-      "assessedFingerprint": null,
+      "assessedFingerprint": "8917ba32d1e688",
       "payload": {
         "id": "cand-gdacs-TC-1001338",
         "producer": "discovery_signal_gdacs",
@@ -59,7 +59,8 @@
         }
       },
       "leads": [],
-      "retries": 0
+      "retries": 0,
+      "lastAssessedAt": "2026-10-24T16:33:05Z"
     },
     "cand-gdacs-TC-1001305": {
       "id": "cand-gdacs-TC-1001305",
@@ -422,7 +423,7 @@
       "type": "investigation",
       "candidateId": "cand-gdacs-TC-1001338",
       "groupKey": "gdacs:TC:1001338",
-      "state": "running",
+      "state": "completed",
       "attempts": 1,
       "createdAt": "2026-10-24T16:33:05Z",
       "priority": 30,
@@ -434,8 +435,11 @@
       "business_application": "Travel Intelligence",
       "substream": "03AA-04 Intelligence Automation Agents",
       "startedAt": "2026-10-24T16:33:05Z",
-      "leaseOwner": "runnervmr9t6g-2341-89a488",
-      "leaseExpires": "2026-10-24T16:53:05Z"
+      "leaseOwner": null,
+      "leaseExpires": "2026-10-24T16:53:05Z",
+      "finishedAt": "2026-10-24T16:33:05Z",
+      "outcome": "READY",
+      "reasons": []
     }
   },
   "events": {},
