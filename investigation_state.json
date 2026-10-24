@@ -445,5 +445,25 @@
   "events": {},
   "publications": {},
   "exceptions": {},
-  "runs": []
+  "runs": [
+    {
+      "at": "2026-10-24T16:33:05Z",
+      "atCyprus": "2026-10-24 19:33 EEST",
+      "mode": "draft",
+      "trial": true,
+      "fixture": false,
+      "tasks": 1,
+      "assessed": 1,
+      "ready": 1,
+      "held": 0,
+      "ineligible": 0,
+      "unchanged": 0,
+      "requests": 1,
+      "published": [],
+      "updated": [],
+      "publication": null,
+      "publicationSkipped": "publication_disabled_in_mode_or_configuration",
+      "exit": 0
+    }
+  ]
 }
