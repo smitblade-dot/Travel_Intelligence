@@ -17,7 +17,7 @@
       "kind": "hazard_signal",
       "groupKey": "gdacs:TC:1001338",
       "eventTypeKey": "TROPICAL_CYCLONE",
-      "status": "READY",
+      "status": "PUBLISHED",
       "reason": null,
       "firstSeen": "2026-10-24T16:48:47Z",
       "lastSeen": "2026-10-24T16:48:47Z",
@@ -474,7 +474,26 @@
       "reasons": []
     }
   },
-  "events": {},
+  "events": {
+    "iv-tc-gdacs-1001338": {
+      "eventId": "iv-tc-gdacs-1001338",
+      "groupKey": "gdacs:TC:1001338",
+      "candidateId": "cand-gdacs-TC-1001338",
+      "publishedAt": "2026-10-24T16:48:47Z",
+      "reassessFailures": 0,
+      "publicationId": "pub-20261024T164847Z-16bf75",
+      "contentHash": "a81baa57f47c363c",
+      "evidenceHashes": {
+        "gdacs": "1b5f5e937bd353ab8135"
+      },
+      "lifecycle": "ALERT",
+      "eventStatus": "REPORTED",
+      "state": "PUBLISHED",
+      "lastAssessedAt": "2026-10-24T16:48:47Z",
+      "commit": "85bfff7017a07f5971d2868609c394367cce20c5",
+      "nextAssessmentAt": "2026-10-24T19:48:47Z"
+    }
+  },
   "publications": {
     "pub-20261024T164847Z-16bf75": {
       "id": "pub-20261024T164847Z-16bf75",
