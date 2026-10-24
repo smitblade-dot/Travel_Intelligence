@@ -1,6 +1,6 @@
 # 03AA-04_Investigation_Verification_TI
 
-Run at 2026-10-24 19:33 EEST (Cyprus time); stored timestamps are UTC. Mode: **TRIAL (isolated target)**. Scope: TROPICAL_CYCLONE in jp, cn, GDACS alert Orange or higher.
+Run at 2026-10-24 19:35 EEST (Cyprus time); stored timestamps are UTC. Mode: **TRIAL (isolated target)**. Scope: TROPICAL_CYCLONE in jp, cn, GDACS alert Orange or higher.
 
 ## Upstream discovery
 
@@ -11,19 +11,23 @@ Run at 2026-10-24 19:33 EEST (Cyprus time); stored timestamps are UTC. Mode: **T
 
 | Step | Count |
 |---|---|
-| New candidates taken in | 8 (deferred 0, reopened 0) |
-| Tasks started | 1 (recovered from an interrupted run: 0) |
-| Assessed | 1 |
-| Passed the rules | 1 |
+| New candidates taken in | 0 (deferred 0, reopened 0) |
+| Tasks started | 0 (recovered from an interrupted run: 0) |
+| Assessed | 0 |
+| Passed the rules | 0 |
 | Held (exceptions) | 0 |
-| Not eligible | 0 |
+| Not eligible (at intake 0, after evidence 0) | 0 |
 | Unchanged on reassessment | 0 |
-| Provider requests | 1 of 12 |
+| Provider requests | 0 of 12 |
 | Model calls / spend | 0 / none (ordinary code) |
 
 ## Publication
 
-- Nothing was published this run (publication_disabled_in_mode_or_configuration).
+- Nothing was published this run.
+
+## Assessed this run
+
+- none
 
 ## Published events under reassessment
 

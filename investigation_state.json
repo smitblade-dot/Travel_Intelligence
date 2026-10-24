@@ -464,6 +464,25 @@
       "publication": null,
       "publicationSkipped": "publication_disabled_in_mode_or_configuration",
       "exit": 0
+    },
+    {
+      "at": "2026-10-24T16:35:53Z",
+      "atCyprus": "2026-10-24 19:35 EEST",
+      "mode": "draft",
+      "trial": true,
+      "fixture": false,
+      "tasks": 0,
+      "assessed": 0,
+      "ready": 0,
+      "held": 0,
+      "ineligible": 0,
+      "unchanged": 0,
+      "requests": 0,
+      "published": [],
+      "updated": [],
+      "publication": null,
+      "publicationSkipped": null,
+      "exit": 0
     }
   ]
 }
