@@ -1,0 +1,167 @@
+name: TI investigation and verification
+# 03AA-04_Investigation_Verification_TI (docs/TI_INVESTIGATION_VERIFICATION.md).
+# Takes discovery candidates, retrieves bounded evidence from register-backed sources, assesses each claim, and on a scheduled or
+# manual run on main publishes what passes through a compare-and-swap commit to main, then verifies that the public site serves it
+# (rolling back only on demonstrated wrong content). Failed cases are held with reasons; published events keep being reassessed.
+# State (ledger, report) lives on TI_IV_STATE_BRANCH, never on main. Operating mode comes from config/investigation_verification.json;
+# the repository variable TI_IV_MODE overrides it, TI_IV_PUBLISH=false switches publication off, and TI_IV_MODE=off (or disabling
+# this workflow) stops every run. This agent makes no model call and has no spending switch.
+# Production runs only from main. Pull requests and manual runs from any other ref are TRIALS: their own ledger branches, no write to
+# main. The rehearsal job publishes recorded (FIXTURE) data to an isolated target branch and verifies it through raw.githubusercontent.com.
+on:
+  schedule:
+    - cron: "17 */2 * * *"
+  workflow_dispatch: {}
+  pull_request:
+    paths:
+      - "scripts/ti_ops_director/investigation_*.py"
+      - "scripts/investigation_worker.py"
+      - "config/investigation_verification.json"
+      - "tests/fixtures/investigation/**"
+      - ".github/workflows/investigation-verification.yml"
+
+permissions: {}
+
+concurrency:
+  group: ti-investigation-verification-${{ github.event_name == 'pull_request' && 'trial' || github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  production:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.TI_IV_MODE != 'off'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: write   # main (publication, compare-and-swap) and the state branch; the code refuses to write main from any other event or ref
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 1
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Configure git identity
+        run: |
+          git config --global user.name "Travel Intelligence Bot"
+          git config --global user.email "actions@users.noreply.github.com"
+      # Optional Agent Command Centre report (docs/ACC_REPORTING.md). Skipped unless ACC_REPORTING_ENABLED is "true";
+      # continue-on-error and a 1-minute limit mean it can never change this run's result.
+      - name: ACC report (start)
+        if: vars.ACC_REPORTING_ENABLED == 'true'
+        continue-on-error: true
+        timeout-minutes: 1
+        env:
+          ACC_REPORT_URL: ${{ vars.ACC_REPORT_URL }}
+          ACC_KEY_ID: ${{ vars.ACC_KEY_ID_INVESTIGATION_VERIFICATION }}
+          ACC_AGENT_SECRET: ${{ secrets.ACC_AGENT_SECRET_INVESTIGATION_VERIFICATION }}
+          ACC_EUR_PER_USD: ${{ vars.ACC_EUR_PER_USD }}
+          ACC_EUR_RATE_DATE: ${{ vars.ACC_EUR_RATE_DATE }}
+        run: python3 scripts/acc_report.py start --agent 03AA-04_Investigation_Verification_TI --pending-file "$RUNNER_TEMP/acc_pending_start.json"
+      - name: Investigation and verification pass
+        id: iv
+        env:
+          TI_AGENT_OUTCOME_FILE: ${{ vars.ACC_REPORTING_ENABLED == 'true' && format('{0}/agent_outcome.json', runner.temp) || '' }}
+          TI_IV_MODE: ${{ vars.TI_IV_MODE }}
+          TI_IV_PUBLISH: ${{ vars.TI_IV_PUBLISH }}
+          TI_IV_STATE_BRANCH: ${{ vars.TI_IV_STATE_BRANCH }}
+          TI_IV_COUNTRIES: ${{ vars.TI_IV_COUNTRIES }}
+          TI_IV_EVENT_TYPES: ${{ vars.TI_IV_EVENT_TYPES }}
+          TI_IV_BATCH_SIZE: ${{ vars.TI_IV_BATCH_SIZE }}
+        # Exit 3: configuration error. 4: ledger could not be read or persisted. 5: a publication needs attention (push/validation
+        # refused, content demonstrably incorrect, rollback failed, or verification unresolved after bounded rechecks).
+        # A pending deployment and held exceptions exit 0.
+        run: python3 scripts/investigation_worker.py run
+      - name: ACC outbox (restore)
+        if: always() && vars.ACC_REPORTING_ENABLED == 'true'
+        continue-on-error: true
+        timeout-minutes: 1
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ runner.temp }}/acc_outbox
+          key: acc-outbox-investigation-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: acc-outbox-investigation-
+      - name: ACC report (end)
+        id: acc_end
+        if: always() && vars.ACC_REPORTING_ENABLED == 'true'
+        continue-on-error: true
+        timeout-minutes: 1
+        env:
+          ACC_REPORT_URL: ${{ vars.ACC_REPORT_URL }}
+          ACC_KEY_ID: ${{ vars.ACC_KEY_ID_INVESTIGATION_VERIFICATION }}
+          ACC_AGENT_SECRET: ${{ secrets.ACC_AGENT_SECRET_INVESTIGATION_VERIFICATION }}
+          ACC_EUR_PER_USD: ${{ vars.ACC_EUR_PER_USD }}
+          ACC_EUR_RATE_DATE: ${{ vars.ACC_EUR_RATE_DATE }}
+        run: python3 scripts/acc_report.py end --agent 03AA-04_Investigation_Verification_TI --outcome-file "$RUNNER_TEMP/agent_outcome.json" --step-outcome "${{ steps.iv.outcome }}" --outbox-file "$RUNNER_TEMP/acc_outbox/outbox.json" --pending-file "$RUNNER_TEMP/acc_pending_start.json"
+      - name: ACC outbox (save)
+        if: always() && vars.ACC_REPORTING_ENABLED == 'true' && steps.acc_end.outputs.outbox_save == 'true'
+        continue-on-error: true
+        timeout-minutes: 1
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ runner.temp }}/acc_outbox
+          key: acc-outbox-investigation-${{ github.run_id }}-${{ github.run_attempt }}
+
+  trial-live:
+    # Real provider, real discovery snapshot, no publication, own ledger branch: measured evidence for review. Never writes main.
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository || github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write   # the trial ledger branch only
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event_name == 'pull_request' && github.sha || github.ref }}
+          fetch-depth: 1
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Configure git identity
+        run: |
+          git config --global user.name "Travel Intelligence Bot"
+          git config --global user.email "actions@users.noreply.github.com"
+      - name: Trial pass (live evidence, draft mode, no publication)
+        env:
+          TI_IV_MODE: draft
+          TI_IV_TRIAL: "true"
+          TI_IV_STATE_BRANCH: ti-investigation-state-trial
+          TI_IV_TARGET_BRANCH: ti-investigation-trial-target
+          TI_IV_SITE_URL: https://raw.githubusercontent.com/${{ github.repository }}/ti-investigation-trial-target
+        run: python3 scripts/investigation_worker.py run
+
+  trial-rehearsal:
+    # Recorded (FIXTURE) GDACS data published to an isolated target branch and verified through raw.githubusercontent.com:
+    # exercises publish, live verification and the ledger without touching production. Labelled FIXTURE everywhere.
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository || github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write   # the isolated trial target and trial ledger branches only
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event_name == 'pull_request' && github.sha || github.ref }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Configure git identity
+        run: |
+          git config --global user.name "Travel Intelligence Bot"
+          git config --global user.email "actions@users.noreply.github.com"
+      - name: Reset the isolated target to the tip of main (trial branch only)
+        run: |
+          git fetch --depth=1 origin main
+          git push --force origin FETCH_HEAD:refs/heads/ti-investigation-rehearsal-target
+          # the rehearsal ledger is reset with its target, otherwise it would remember events the reset target no longer has
+          git push origin --delete ti-investigation-state-rehearsal || true
+      - name: Rehearsal pass (FIXTURE data, isolated target)
+        env:
+          TI_IV_MODE: publish
+          TI_IV_TRIAL: "true"
+          TI_IV_FIXTURE: tests/fixtures/investigation/gdacs_tc_champi_rehearsal.json
+          TI_IV_STATE_BRANCH: ti-investigation-state-rehearsal
+          TI_IV_TARGET_BRANCH: ti-investigation-rehearsal-target
+          TI_IV_SITE_URL: https://raw.githubusercontent.com/${{ github.repository }}/ti-investigation-rehearsal-target
+        run: python3 scripts/investigation_worker.py run

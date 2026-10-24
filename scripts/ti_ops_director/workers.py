@@ -70,7 +70,9 @@ class WorkContext:
 PLANNED = [
     ("discovery", ("discovery",), "Discovery. Python collectors exist in this repository but are not wired to the queue."),
     ("triage", ("triage",), "Triage (Haiku). Existing monitor script is not yet a queue worker."),
-    ("investigation_content", ("investigation", "content_building"), "Investigation and content building"),
+    ("investigation_content", ("content_building",),
+     "Content building. The investigation half of this role is implemented for natural-hazard events by investigation_verification "
+     "(03AA-04_Investigation_Verification_TI); general content building is not built."),
     ("verification", ("verification",), "Verification"),
     ("publication", ("publication",), "Publication (automatic publication disabled)"),
     ("production_recovery", ("production_diagnostic", "production_recovery"),
@@ -111,10 +113,12 @@ def default_registry():
     from .feed_health import FeedHealthWorker
     from .country_worker import CountryContentWorker
     from .production_worker import ProductionVerificationWorker
+    from .investigation_worker import InvestigationVerificationWorker
     reg = Registry()
     reg.register(FeedHealthWorker())
     reg.register(ProductionVerificationWorker())
     reg.register(CountryContentWorker())
+    reg.register(InvestigationVerificationWorker())
     for name, types, desc in PLANNED:
         reg.register(PlannedWorker(name, types, desc))
     return reg

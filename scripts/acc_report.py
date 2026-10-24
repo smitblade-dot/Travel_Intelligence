@@ -43,7 +43,9 @@ from datetime import datetime, timezone
 MASTER = "03AA-04_Master_Agent_TI_Ops_Director"
 BUILDER = "03AA-04_Country_Intelligence_Builder_TI"
 CONTROLLER = "03AA-04_Production_Controller_TI"
-AGENTS = {MASTER: "Master Agent (gated Haiku monitor)", BUILDER: "Country Intelligence Builder", CONTROLLER: "Production Controller"}
+INVESTIGATION = "03AA-04_Investigation_Verification_TI"
+AGENTS = {MASTER: "Master Agent (gated Haiku monitor)", BUILDER: "Country Intelligence Builder", CONTROLLER: "Production Controller",
+          INVESTIGATION: "Investigation and Verification worker"}
 PATH = "/v1/events"
 TIMEOUT_S = 8
 START_TIMEOUT_S = 3          # the start step runs before the agent: keep it short
@@ -205,7 +207,34 @@ def map_controller(rec, step_outcome, env):
     return ev
 
 
-MAPPERS = {MASTER: map_master, BUILDER: map_builder, CONTROLLER: map_controller}
+def map_investigation(rec, step_outcome, env):
+    if not rec:
+        return _no_outcome(step_outcome)
+    code, mode, f = rec.get("exit_code"), rec.get("mode"), rec.get("facts") or {}
+    ev = {"dry_run": mode != "publish" or bool(rec.get("trial")), "model_tier": "code", "cost_eur": 0.0, "cost_basis": "api"}
+    if code == 3 or rec.get("config_errors"):
+        ev.update(status="failed", task="Configuration error: nothing ran")
+    elif code == 4:
+        ev.update(status="failed", task="Ledger state could not be read or persisted")
+    elif mode == "off":
+        ev.update(status="offline", task="Mode off: nothing runs")
+    elif code == 5:
+        ev.update(status="failed", task="Publication needs attention: " + (", ".join(f.get("publication_failures") or []) or "see run report"))
+    elif not f:
+        ev.update(status="unknown" if code == 0 else "failed", task=f"Run ended (exit {code}) without run facts ({mode} mode)")
+    else:
+        summary = (f"{mode} mode: {f.get('tasks', 0)} task(s), {f.get('published_events', 0)} event(s) published, "
+                   f"{f.get('exceptions_held', 0)} exception(s) held")
+        if f.get("exceptions_need_decision"):
+            n = f["exceptions_need_decision"]
+            ev.update(status="awaiting_approval", task=summary,
+                      approval_request={"summary": f"{n} held exception(s) need Marc's decision (source access or governance). See the run report."})
+        else:
+            ev.update(status="idle", task=summary + ("; live verification pending" if f.get("verification_pending") else ""))
+    return ev
+
+
+MAPPERS = {MASTER: map_master, BUILDER: map_builder, CONTROLLER: map_controller, INVESTIGATION: map_investigation}
 
 
 def build_event(phase, agent, env, rec=None, step_outcome=None):

@@ -1,0 +1,124 @@
+{
+  "_comment": "03AA-04_Investigation_Verification_TI. Committed operating configuration (no secrets). Repository variables TI_IV_* override the values marked below. TI_IV_MODE=off or disabling the workflow stops the agent. See docs/TI_INVESTIGATION_VERIFICATION.md.",
+  "agent": "03AA-04_Investigation_Verification_TI",
+  "operation": {
+    "_approval": "Automatic publication of content that passes TI's rules is authorised (Marc, brief of 24 Oct 2026). Scope below was chosen by the build from actual pending candidates. Paid model use is NOT authorised: see spending.",
+    "mode": "publish",
+    "state_branch": "ti-investigation-state"
+  },
+  "scope": {
+    "_approval": "First proof: GDACS-alerted tropical cyclones affecting Japan or China. Chosen because the discovery snapshot's only current, relevant candidate is a tropical cyclone (CHAMPI-26, Japan, GDACS Red) and GDACS is the one registered, rights-reviewed source that can retrieve it. Earthquakes are implemented and tested but disabled until this scope has proved itself.",
+    "event_types": ["TROPICAL_CYCLONE"],
+    "countries": ["jp", "cn"],
+    "min_alert_level": "Orange",
+    "batch_size_tasks_per_run": 3,
+    "max_new_candidates_per_run": 25,
+    "candidate_producers": ["discovery_signal_gdacs", "triage_leads"],
+    "max_signal_age_days": 7
+  },
+  "schedule": {
+    "_note": "Every two hours at minute 17 UTC (independent of Cyprus summer/winter time; times shown to Marc are converted to Europe/Nicosia). GitHub may delay scheduled runs.",
+    "cron_utc": "17 */2 * * *"
+  },
+  "freshness": {
+    "_note": "Freshness is judged from the event's own activity dates, never from the date it was fetched or re-saved by the provider.",
+    "max_event_age_hours": 72,
+    "future_tolerance_minutes": 60,
+    "max_forecast_end_days": 7,
+    "republish_gap_days": 7,
+    "current_flag_max_idle_hours": 48,
+    "reassess_after_hours": {"ALERT": 3, "CURRENT": 24},
+    "alert_until_hours": 72,
+    "archive_after_hours": 336
+  },
+  "evidence_limits": {
+    "max_requests_per_run": 12,
+    "max_requests_per_task": 3,
+    "max_bytes_per_response": 2000000,
+    "http_timeout_seconds": 20,
+    "http_attempts": 2,
+    "max_redirects": 2,
+    "run_timeout_seconds": 600
+  },
+  "retries": {
+    "max_task_attempts": 3,
+    "conflict_rechecks_before_decision": 4,
+    "collection_failure_rechecks_before_decision": 6,
+    "lease_minutes": 20
+  },
+  "sources": {
+    "gdacs": {
+      "sourceId": "gdacs-ecjrc",
+      "registry_id": "gdacs-alerts",
+      "publisher": "GDACS - Global Disaster Alert and Coordination System",
+      "organisation": "GDACS (cooperation framework: UN OCHA, UNOSAT, European Commission JRC and ECHO)",
+      "hosts": ["www.gdacs.org"],
+      "detail_url": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype={type}&eventid={id}",
+      "search_url": "https://www.gdacs.org/gdacsapi/api/events/geteventlist/SEARCH?eventlist={type}&fromdate={from}&todate={to}",
+      "report_url": "https://www.gdacs.org/report.aspx?eventid={id}&episodeid={ep}&eventtype={type}",
+      "independence_group": "gdacs-ecjrc",
+      "quality": "A",
+      "content_rights": "OPEN_LICENCE",
+      "access_method": "API",
+      "automation_permission": "PERMITTED",
+      "original_language": "en",
+      "attribution": "Global Disaster Alert and Coordination System, GDACS",
+      "terms_note": "GDACS Terms of Use (Mar 2025): tropical-cyclone and earthquake notifications are automatic, produced by algorithms and not reviewed by human experts before issuance; they may contain uncertainties and errors and should not be used for decision making without prior confirmation of their validity. Reuse requires acknowledgement of GDACS."
+    }
+  },
+  "event_types": {
+    "TROPICAL_CYCLONE": {"gdacs": "TC", "id_prefix": "tc", "label": "tropical cyclone", "intensity": "wind_kmh", "intensity_range": [30, 400]},
+    "EARTHQUAKE": {"gdacs": "EQ", "id_prefix": "eq", "label": "earthquake", "intensity": "magnitude", "intensity_range": [3.0, 10.0]}
+  },
+  "claim_rules": {
+    "_note": "Evidence needed per claim type. There is deliberately no single source-count rule.",
+    "core_claims": ["occurrence", "period", "location"],
+    "occurrence": {"needs": "one retrieved, dated, register-backed in-remit source whose event id and type match"},
+    "period": {"needs": "stated start date not in the future and ordered before the end date"},
+    "location": {"needs": "at least one tracked country named by the source, with a name that passes the text allowlist"},
+    "intensity": {"needs": "numeric value inside the plausible range and consistent with the source's own text and class label; otherwise excluded"},
+    "alert_level": {"needs": "one of Green, Orange, Red; published only as the provider's own assessment"},
+    "impact": {"needs": "an in-remit statement about people, transport or infrastructure; none exists in this scope, so it is recorded as missing and never inferred"},
+    "status_rules": {
+      "single_independent_chain": "REPORTED",
+      "two_or_more_independent_chains": "CORROBORATED",
+      "never_confirmed_from": ["gdacs-ecjrc"]
+    },
+    "headline_leads_count_for_independence": false
+  },
+  "registry": {
+    "file": "config/source_registry.json",
+    "allowed_tiers": ["TIER_1", "TIER_2"],
+    "allowed_status": ["ACTIVE", "INTEGRATION_READY"],
+    "allowed_automation": ["YES", "REVIEWED"]
+  },
+  "spending": {
+    "_approval": "UNSET. No paid model call is authorised for this agent. The ordinary-code path in this scope needs no model. A model path for narrative evidence exists behind the spending gateway and stays off until Marc approves a capped allowance.",
+    "dry_run": true,
+    "per_task_limit_usd": null,
+    "daily_limit_usd": null,
+    "monthly_limit_usd": null,
+    "total_limit_usd": null,
+    "max_output_tokens": 1200,
+    "model_timeout_seconds": 60,
+    "sonnet_escalation_enabled": false,
+    "opus_enabled": false
+  },
+  "publication": {
+    "enabled": true,
+    "allowed_events": ["schedule", "workflow_dispatch"],
+    "required_ref": "refs/heads/main",
+    "target_branch": "main",
+    "max_events_per_run": 3,
+    "lifecycle_initial": "ALERT",
+    "review_hours": 72,
+    "verification": {
+      "site_url_from": "config/production_controller.json",
+      "timeout_seconds": 900,
+      "interval_seconds": 20,
+      "rollback_on_incorrect_content": true,
+      "max_rechecks": 6,
+      "recheck_timeout_seconds": 120
+    }
+  }
+}

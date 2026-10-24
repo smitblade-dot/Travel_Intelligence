@@ -373,6 +373,45 @@ def publish(data, items, decisions):
     return added
 
 
+CANDIDATE_TTL_DAYS, CANDIDATE_MAX = 7, 200
+
+
+def triage_candidates(items, decisions, countries, now, model=None):
+    """Headline leads the triage selected (``publish`` true), kept in the monitor state so a later agent can investigate them
+    (03AA-04_Investigation_Verification_TI). A lead is not a verified incident. Only completed triage produces any; nothing here
+    changes publication."""
+    known = set(countries)
+    out, used = [], set()
+    for d in decisions:
+        idx, cid = d.get("index"), d.get("countryId")
+        if not isinstance(idx, int) or idx < 0 or idx >= len(items) or idx in used or d.get("publish") is not True or cid not in known:
+            continue
+        used.add(idx)
+        item = items[idx]
+        published = report_published(item)
+        out.append({"id": stable_id("trg", cid + ":" + item["url"]), "countryId": cid, "title": item["title"][:250], "url": item["url"][:600],
+                    "publisher": (item.get("publisher") or "")[:120] or None, "publisherUrl": item.get("publisherUrl"),
+                    "reportPublishedAt": published.isoformat(timespec="seconds") if published else None,
+                    "category": d.get("category") if d.get("category") in CATEGORIES else "OTHER",
+                    "incidentDate": d.get("incidentDate") if isinstance(d.get("incidentDate"), str) else None,
+                    "incidentKey": normalise_incident_key(d.get("incidentKey")), "existingId": d.get("existingId") or None,
+                    "reason": str(d.get("reason") or "")[:200], "triagedAt": now.isoformat(timespec="seconds"), "model": model})
+    return out
+
+
+def merge_candidates(existing, new, now):
+    """Union by id, newest first, bounded by age and count. Never raises on a malformed stored value."""
+    keep = {}
+    cutoff = now - timedelta(days=CANDIDATE_TTL_DAYS)
+    for c in (existing if isinstance(existing, list) else []) + new:
+        try:
+            if isinstance(c, dict) and c.get("id") and datetime.fromisoformat(c["triagedAt"]) >= cutoff:
+                keep[c["id"]] = c
+        except (KeyError, TypeError, ValueError):
+            continue
+    return sorted(keep.values(), key=lambda c: c["triagedAt"], reverse=True)[:CANDIDATE_MAX]
+
+
 PUBLISH_ENV = "TI_MONITOR_PUBLISH"
 STATE_REL, DATA_REL = "data/continuous_monitor_state.json", "data.json"
 MAX_CONSECUTIVE_FAILED = 4           # about an hour of failed triage turns the job red
@@ -571,6 +610,8 @@ def main(env=None):
             st["budget"] = b
             st.pop("lastTriageBlocked", None)
             st["lastTriageCompleted"] = outcome["at"]
+            st["candidates"] = merge_candidates(st.get("candidates"), triage_candidates(
+                fresh, decisions, [c["id"] for c in (snap2.data() or data)["countries"]], now_utc(), outcome.get("model")), now_utc())
             st["consecutiveUntriaged"] = st["consecutiveFailed"] = 0
         elif outcome["headlines"]["pending"]:
             st["lastTriageBlocked"] = {"status": outcome["triage"], "reason": outcome["reason"], "at": outcome["at"]}
