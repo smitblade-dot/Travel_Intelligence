@@ -174,11 +174,30 @@
     "pub-20261022T060000Z-172b64": {
       "id": "pub-20261022T060000Z-172b64",
       "at": "2026-10-22T06:00:00Z",
-      "state": "PENDING",
+      "state": "VERIFIED",
       "records": [
         "iv-tc-gdacs-1001338"
       ],
-      "target": "ti-investigation-rehearsal-target"
+      "target": "ti-investigation-rehearsal-target",
+      "commit": "44d97710c22dfdaf7c3eb5378dda8e52f862aff0",
+      "verifiedAt": "2026-10-22T06:00:00Z",
+      "summary": {
+        "added": [],
+        "updated": [
+          "iv-tc-gdacs-1001338"
+        ],
+        "unchanged": [],
+        "skipped": [],
+        "generated": "2026-10-22T06:00:00Z",
+        "commit": "44d97710c22dfdaf7c3eb5378dda8e52f862aff0"
+      },
+      "served": {
+        "ok": true,
+        "attempts": 1,
+        "served_generated": "2026-10-22T06:00:00Z",
+        "served_sha256": "85ed8458c6f4ed423580c414d4597beaacbef86039fa1db56b97eb96489e4c5e",
+        "url": "https://raw.githubusercontent.com/smitblade-dot/Travel_Intelligence/ti-investigation-rehearsal-target"
+      }
     }
   },
   "exceptions": {},
