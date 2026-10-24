@@ -181,5 +181,27 @@
     }
   },
   "exceptions": {},
-  "runs": []
+  "runs": [
+    {
+      "at": "2026-10-22T06:00:00Z",
+      "atCyprus": "2026-10-22 09:00 EEST",
+      "mode": "publish",
+      "trial": true,
+      "fixture": true,
+      "tasks": 1,
+      "assessed": 1,
+      "ready": 1,
+      "held": 0,
+      "ineligible": 0,
+      "unchanged": 0,
+      "requests": 1,
+      "published": [],
+      "updated": [
+        "iv-tc-gdacs-1001338"
+      ],
+      "publication": "pub-20261022T060000Z-172b64",
+      "publicationSkipped": null,
+      "exit": 0
+    }
+  ]
 }
