@@ -1,6 +1,6 @@
 # 03AA-04_Investigation_Verification_TI
 
-Run at 2026-10-24 20:15 EEST (Cyprus time); stored timestamps are UTC. Mode: **TRIAL (isolated target)**. Scope: TROPICAL_CYCLONE in jp, cn, GDACS alert Orange or higher.
+Run at 2026-10-24 20:25 EEST (Cyprus time); stored timestamps are UTC. Mode: **TRIAL (isolated target)**. Scope: TROPICAL_CYCLONE in jp, cn, GDACS alert Orange or higher.
 
 ## Upstream discovery
 
