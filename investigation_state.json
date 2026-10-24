@@ -20,7 +20,7 @@
       "status": "READY",
       "reason": null,
       "firstSeen": "2026-10-24T16:33:05Z",
-      "lastSeen": "2026-10-24T16:33:05Z",
+      "lastSeen": "2026-10-24T16:35:53Z",
       "signalFingerprint": "8917ba32d1e688",
       "assessedFingerprint": "8917ba32d1e688",
       "payload": {
@@ -71,7 +71,7 @@
       "status": "INELIGIBLE",
       "reason": "already_represented_by:gdacs-tc-1001305",
       "firstSeen": "2026-10-24T16:33:05Z",
-      "lastSeen": "2026-10-24T16:33:05Z",
+      "lastSeen": "2026-10-24T16:35:53Z",
       "signalFingerprint": "df81fba1e93972",
       "assessedFingerprint": null,
       "payload": {
@@ -121,7 +121,7 @@
       "status": "INELIGIBLE",
       "reason": "stale_event_activity_date",
       "firstSeen": "2026-10-24T16:33:05Z",
-      "lastSeen": "2026-10-24T16:33:05Z",
+      "lastSeen": "2026-10-24T16:35:53Z",
       "signalFingerprint": "df8b350e5c5e44",
       "assessedFingerprint": null,
       "payload": {
@@ -171,7 +171,7 @@
       "status": "INELIGIBLE",
       "reason": "stale_event_activity_date",
       "firstSeen": "2026-10-24T16:33:05Z",
-      "lastSeen": "2026-10-24T16:33:05Z",
+      "lastSeen": "2026-10-24T16:35:53Z",
       "signalFingerprint": "9111af03b10d3c",
       "assessedFingerprint": null,
       "payload": {
@@ -220,7 +220,7 @@
       "status": "INELIGIBLE",
       "reason": "stale_event_activity_date",
       "firstSeen": "2026-10-24T16:33:05Z",
-      "lastSeen": "2026-10-24T16:33:05Z",
+      "lastSeen": "2026-10-24T16:35:53Z",
       "signalFingerprint": "b1d5621fe077e8",
       "assessedFingerprint": null,
       "payload": {
@@ -272,7 +272,7 @@
       "status": "INELIGIBLE",
       "reason": "stale_event_activity_date",
       "firstSeen": "2026-10-24T16:33:05Z",
-      "lastSeen": "2026-10-24T16:33:05Z",
+      "lastSeen": "2026-10-24T16:35:53Z",
       "signalFingerprint": "9a400300c9240c",
       "assessedFingerprint": null,
       "payload": {
@@ -321,7 +321,7 @@
       "status": "INELIGIBLE",
       "reason": "stale_event_activity_date",
       "firstSeen": "2026-10-24T16:33:05Z",
-      "lastSeen": "2026-10-24T16:33:05Z",
+      "lastSeen": "2026-10-24T16:35:53Z",
       "signalFingerprint": "ee104eab528d90",
       "assessedFingerprint": null,
       "payload": {
@@ -372,7 +372,7 @@
       "status": "INELIGIBLE",
       "reason": "stale_event_activity_date",
       "firstSeen": "2026-10-24T16:33:05Z",
-      "lastSeen": "2026-10-24T16:33:05Z",
+      "lastSeen": "2026-10-24T16:35:53Z",
       "signalFingerprint": "90ab1ed439b60a",
       "assessedFingerprint": null,
       "payload": {
