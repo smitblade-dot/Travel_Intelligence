@@ -5,11 +5,7 @@
     "paused": false,
     "stopped": false
   },
-  "lease": {
-    "owner": "runnervmr9t6g-2341-89a488",
-    "acquiredAt": "2026-10-24T16:33:05Z",
-    "expiresAt": "2026-10-24T16:53:05Z"
-  },
+  "lease": null,
   "candidates": {
     "cand-gdacs-TC-1001338": {
       "id": "cand-gdacs-TC-1001338",
