@@ -234,7 +234,7 @@ class Engine:
         stats["adopted"] = self._adopt(data, now)
         # 2. intake discovery candidates, 3. plan tasks
         self._tx(lambda st: stats["intake"].update(self._intake(st, data, now)), "intake")
-        tasks = self._tx(lambda st: self._plan(st, data, now), "plan")
+        tasks = self._tx(lambda st: self._plan(st, now), "plan")
         # 4. investigate and assess (bounded), then persist outcomes before any publication
         results = self._investigate(tasks, data, now)
         self._tx(lambda st: self._record_results(st, results, now), "assessment results")
@@ -388,7 +388,7 @@ class Engine:
         st["tasks"][key] = task
         return task, True
 
-    def _plan(self, st, data, now):
+    def _plan(self, st, now):
         """Create at most one task per candidate per window; return the tasks to run now (pending, bounded)."""
         cfg = self.cfg
         bucket = self._bucket(now)
